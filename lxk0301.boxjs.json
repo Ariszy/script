@@ -10,12 +10,20 @@
       "name": "京东水果",
       "keys": [
         "CookieJD",
+        "myFruitShareCode",
         "jd_fruit1",
         "jd_fruit2",
         "jd_fruit3",
         "jd_fruit4"
       ],
       "settings": [
+        {
+          "id": "myFruitShareCode",
+          "name": "自己京东萌宠助力码",
+          "val": "",
+          "type": "text",
+          "desc": "自己的shareCode,可用于分享给其他人帮你助力农场"
+        },
         {
           "id": "CookieJD",
           "name": "CookieJD",
@@ -26,28 +34,28 @@
         {
           "id": "jd_fruit1",
           "name": "互助码1",
-          "val": "2c16353e3af04585b404da175e8ce4f6",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_fruit2",
           "name": "互助码2",
-          "val": "25d6ee2b2dc348bca4e7be5b78504af7",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_fruit3",
           "name": "互助码3",
-          "val": "3759d468c60d4b5a834974eed4e12d8a",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_fruit4",
           "name": "互助码4",
-          "val": "2d9375fd27fb433c94e181454cbf304c",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         }
@@ -64,6 +72,7 @@
       "name": "京东萌宠",
       "keys": [
         "CookieJD",
+        "myPetShareCode",
         "jd_pet1",
         "jd_pet2",
         "jd_pet3",
@@ -71,6 +80,13 @@
         "jd_pet5"
       ],
       "settings": [
+        {
+          "id": "myPetShareCode",
+          "name": "自己东东萌宠助力码",
+          "val": "",
+          "type": "text",
+          "desc": "自己的shareCode,可用于分享给其他人帮你助力萌宠"
+        },
         {
           "id": "CookieJD",
           "name": "CookieJD",
@@ -81,35 +97,35 @@
         {
           "id": "jd_pet1",
           "name": "互助码1",
-          "val": "MTAxODc2NTEzNTAwMDAwMDAyNjMwNDY1MQ==",
+          "val": "",
           "type": "text",
           "desc": "京东萌宠互助码."
         },
         {
           "id": "jd_pet2",
           "name": "互助码2",
-          "val": "MTAxODcxOTI2NTAwMDAwMDAyMDE5MzEyMw==",
+          "val": "",
           "type": "text",
           "desc": "京东萌宠互助码."
         },
         {
           "id": "jd_pet3",
           "name": "互助码3",
-          "val": "MTAxODc2NTEzMjAwMDAwMDAyNDA4ODg3OQ==",
+          "val": "",
           "type": "text",
           "desc": "京东萌宠互助码."
         },
         {
           "id": "jd_pet4",
           "name": "互助码4",
-          "val": "MTAxODc2NTEzNTAwMDAwMDAyNzU0OTk3NQ==",
+          "val": "",
           "type": "text",
           "desc": "京东萌宠互助码."
         },
         {
           "id": "jd_pet5",
           "name": "互助码5",
-          "val": "MTAxODc2NTEzMzAwMDAwMDAyNDg5NDg0NQ==",
+          "val": "",
           "type": "text",
           "desc": "京东萌宠互助码."
         }
@@ -126,11 +142,19 @@
       "name": "京东种豆",
       "keys": [
         "CookieJD",
+        "myPlantBeanShareCode",
         "jd_plantBean1",
         "jd_plantBean2",
         "jd_plantBean3"
       ],
       "settings": [
+        {
+          "id": "myPlantBeanShareCode",
+          "name": "自己种豆助力码",
+          "val": "",
+          "type": "text",
+          "desc": "自己的shareCode,可用于分享给其他人帮你助力种豆"
+        },
         {
           "id": "CookieJD",
           "name": "CookieJD",
@@ -141,21 +165,21 @@
         {
           "id": "jd_plantBean1",
           "name": "互助码1",
-          "val": "uvcpyysxbvh6ocloisu5tkztc7jdzb64tkbqw4i",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_plantBean2",
           "name": "互助码2",
-          "val": "fomklaecyydoc2jp2jllizyvgq",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_plantBean3",
           "name": "互助码3",
-          "val": "6mvapsim7yps6pf3lvz3gwv2u4",
+          "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         }
