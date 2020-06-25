@@ -1,9 +1,9 @@
 {
   "id": "lxk0301.app.sub",
-  "name": "lxk0301自用应用订阅",
+  "name": "lxk0301应用订阅",
   "author": "@lxk0301",
   "icon": "https://avatars0.githubusercontent.com/u/21308593?s=52&v=4",
-  "repo": "https://github.com/chavyleung/scripts",
+  "repo": "https://gitee.com/lxk0301/scripts/",
   "apps": [
     {
       "id": "jd_fruit",
@@ -17,18 +17,18 @@
       ],
       "settings": [
         {
-          "id": "myFruitShareCode",
-          "name": "自己京东萌宠助力码",
-          "val": "",
-          "type": "text",
-          "desc": "自己的shareCode,可用于分享给其他人帮你助力农场"
-        },
-        {
           "id": "CookieJD",
           "name": "CookieJD",
           "val": "",
           "type": "text",
           "desc": "使用NobyDa的京东ck。"
+        },
+        {
+          "id": "myFruitShareCode",
+          "name": "自己京东萌宠助力码",
+          "val": "",
+          "type": "text",
+          "desc": "自己的shareCode,可用于分享给其他人帮你助力农场"
         },
         {
           "id": "jd_fruit1",
@@ -79,18 +79,18 @@
       ],
       "settings": [
         {
-          "id": "myPetShareCode",
-          "name": "自己东东萌宠助力码",
-          "val": "",
-          "type": "text",
-          "desc": "自己的shareCode,可用于分享给其他人帮你助力萌宠"
-        },
-        {
           "id": "CookieJD",
           "name": "CookieJD",
           "val": "",
           "type": "text",
           "desc": "使用NobyDa的京东ck。"
+        },
+        {
+          "id": "myPetShareCode",
+          "name": "自己东东萌宠助力码",
+          "val": "",
+          "type": "text",
+          "desc": "自己的shareCode,可用于分享给其他人帮你助力萌宠"
         },
         {
           "id": "jd_pet1",
@@ -146,18 +146,18 @@
       ],
       "settings": [
         {
-          "id": "myPlantBeanShareCode",
-          "name": "自己种豆助力码",
-          "val": "",
-          "type": "text",
-          "desc": "自己的shareCode,可用于分享给其他人帮你助力种豆"
-        },
-        {
           "id": "CookieJD",
           "name": "CookieJD",
           "val": "",
           "type": "text",
           "desc": "使用NobyDa的京东ck。"
+        },
+        {
+          "id": "myPlantBeanShareCode",
+          "name": "自己种豆助力码",
+          "val": "",
+          "type": "text",
+          "desc": "自己的shareCode,可用于分享给其他人帮你助力种豆"
         },
         {
           "id": "jd_plantBean1",
