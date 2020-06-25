@@ -10,7 +10,6 @@
       "name": "京东水果",
       "keys": [
         "CookieJD",
-        "myFruitShareCode",
         "jd_fruit1",
         "jd_fruit2",
         "jd_fruit3",
@@ -72,7 +71,6 @@
       "name": "京东萌宠",
       "keys": [
         "CookieJD",
-        "myPetShareCode",
         "jd_pet1",
         "jd_pet2",
         "jd_pet3",
@@ -142,7 +140,6 @@
       "name": "京东种豆",
       "keys": [
         "CookieJD",
-        "myPlantBeanShareCode",
         "jd_plantBean1",
         "jd_plantBean2",
         "jd_plantBean3"
