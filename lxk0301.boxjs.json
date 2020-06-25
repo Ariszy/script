@@ -10,6 +10,7 @@
       "name": "京东水果",
       "keys": [
         "CookieJD",
+        "jd_fruit_name",
         "jd_fruit1",
         "jd_fruit2",
         "jd_fruit3",
@@ -24,11 +25,11 @@
           "desc": "使用NobyDa的京东ck。"
         },
         {
-          "id": "myFruitShareCode",
-          "name": "自己京东萌宠助力码",
+          "id": "jd_fruit_name",
+          "name": "京东账号昵称",
           "val": "",
           "type": "text",
-          "desc": "自己的shareCode,可用于分享给其他人帮你助力农场"
+          "desc": "这里可以填你自己京东账号昵称,用于区分账号"
         },
         {
           "id": "jd_fruit1",
@@ -71,6 +72,7 @@
       "name": "京东萌宠",
       "keys": [
         "CookieJD",
+        "jd_pet_name",
         "jd_pet1",
         "jd_pet2",
         "jd_pet3",
@@ -86,11 +88,11 @@
           "desc": "使用NobyDa的京东ck。"
         },
         {
-          "id": "myPetShareCode",
-          "name": "自己东东萌宠助力码",
+          "id": "jd_pet_name",
+          "name": "京东账号昵称",
           "val": "",
           "type": "text",
-          "desc": "自己的shareCode,可用于分享给其他人帮你助力萌宠"
+          "desc": "这里可以填你自己京东账号昵称,用于区分账号"
         },
         {
           "id": "jd_pet1",
@@ -140,6 +142,7 @@
       "name": "京东种豆",
       "keys": [
         "CookieJD",
+        "jd_plant_bean_name",
         "jd_plantBean1",
         "jd_plantBean2",
         "jd_plantBean3"
@@ -153,11 +156,11 @@
           "desc": "使用NobyDa的京东ck。"
         },
         {
-          "id": "myPlantBeanShareCode",
-          "name": "自己种豆助力码",
+          "id": "jd_plant_bean_name",
+          "name": "京东账号昵称",
           "val": "",
           "type": "text",
-          "desc": "自己的shareCode,可用于分享给其他人帮你助力种豆"
+          "desc": "这里可以填你自己京东账号昵称,用于区分账号"
         },
         {
           "id": "jd_plantBean1",
