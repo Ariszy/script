@@ -153,7 +153,7 @@ function taskurl(function_id, body) {
   return {
     // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `${body}`,
+    body: `${escape(JSON.stringify(body))}`,
     headers: {
       'Cookie': cookie,
       'Host': 'ms.jr.jd.com',
