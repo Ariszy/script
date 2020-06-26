@@ -105,7 +105,7 @@ function* step() {
 function user_info() {
   // const data = '{"shareType":1,"source":0,"riskDeviceParam":"{\\\\"fp\\\\":\\\\"\\\\",\\\\"eid\\\\":\\\\"\\\\",\\\\"sdkToken\\\\":\\\\"\\\\",\\\\"sid\\\\":\\\\"\\\\"}"}'
   const data = {
-    'reqData': '{"shareType":1,"source":0,"riskDeviceParam":"{\\\\"fp\\\\":\\\\"\\\\",\\\\"eid\\\\":\\\\"\\\\",\\\\"sdkToken\\\\":\\\\"\\\\",\\\\"sid\\\\":\\\\"\\\\"}"}'
+    'reqData': '{"sharePin": "","shareType": 1,"channelLV": "","source": 0,"riskDeviceParam": "{\\"eid\\":\\"\\",\\"dt\\":\\"iPhone12,1\\",\\"ma\\":\\"\\",\\"im\\":\\"\\",\\"os\\":\\"iOS\\",\\"osv\\":\\"14.0\\",\\"ip\\":\\"\\",\\"apid\\":\\"jdapp\\",\\"ia\\":\\"\\",\\"uu\\":\\"\\",\\"cv\\":\\"9.0.2\\",\\"nt\\":\\"WIFI\\",\\"at\\":\\"1\\",\\"fp\\":\\"\\",\\"token\\":\\"\\"}"}'
   }
   request('login', data);
 }
