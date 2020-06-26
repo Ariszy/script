@@ -94,7 +94,7 @@ const $hammer = (() => {
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD')
 const name = '京东摇钱树'
-const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m/';
+const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let Task = step();
 Task.next();
 
@@ -144,7 +144,7 @@ function taskurl(function_id, body) {
   // console.log(`${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`)
   return {
     // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
-    url: JD_API_HOST + '/function_id' + '?_=' + new Date().getTime()*1000,
+    url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
     body: `body=${JSON.stringify(body)}`,
     headers: {
       Cookie: cookie,
