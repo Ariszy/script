@@ -125,8 +125,15 @@ function taskurl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}/${function_id}?_=${new Date().getTime()*1000}&reqData=${escape(JSON.stringify(body))}`,
     headers: {
-      Cookie: cookie,
-      UserAgent: `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
+      'Cookie': cookie,
+      'Host': 'ms.jr.jd.com',
+      'Accept': 'application/json',
+      'Origin': 'https://uuj.jr.jd.com',
+      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      'Referer': 'https://uuj.jr.jd.com/wxgrowing/moneytree7/index.html?channellv=sy',
+      'Accept-Language': 'zh-CN,en-US;q=0.8',
+      'X-Requested-With': 'com.jd.jrapp',
     }
   }
 }
