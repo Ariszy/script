@@ -103,10 +103,10 @@ function* step() {
   console.log('用户信息', userInfo);
 }
 function user_info() {
-  // const data = '{"shareType":1,"source":0,"riskDeviceParam":"{\\\\"fp\\\\":\\\\"\\\\",\\\\"eid\\\\":\\\\"\\\\",\\\\"sdkToken\\\\":\\\\"\\\\",\\\\"sid\\\\":\\\\"\\\\"}"}'
-  const data = {
-    'reqData': {   "sharePin": "",   "shareType": 1,   "channelLV": "",   "source": 0,   "riskDeviceParam": "{\"eid\":\"\",\"dt\":\"\",\"ma\":\"\",\"im\":\"\",\"os\":\"\",\"osv\":\"\",\"ip\":\"\",\"apid\":\"\",\"ia\":\"\",\"uu\":\"\",\"cv\":\"\",\"nt\":\"\",\"at\":\"1\",\"fp\":\"\",\"token\":\"\"}" }
-  }
+  const data = 'reqData={"shareType":1,"source":0,"riskDeviceParam":"{\\\\"fp\\\\":\\\\"\\\\",\\\\"eid\\\\":\\\\"\\\\",\\\\"sdkToken\\\\":\\\\"\\\\",\\\\"sid\\\\":\\\\"\\\\"}"}'
+  // const data = {
+  //   'reqData={   "sharePin": "",   "shareType": 1,   "channelLV": "",   "source": 0,   "riskDeviceParam": "{\"eid\":\"\",\"dt\":\"\",\"ma\":\"\",\"im\":\"\",\"os\":\"\",\"osv\":\"\",\"ip\":\"\",\"apid\":\"\",\"ia\":\"\",\"uu\":\"\",\"cv\":\"\",\"nt\":\"\",\"at\":\"1\",\"fp\":\"\",\"token\":\"\"}" }'
+  // }
   request('login', data);
 }
 
@@ -154,7 +154,7 @@ function taskurl(function_id, body) {
     // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
     // body: `${escape(JSON.stringify(body))}`,
-    body: `${JSON.stringify(body)}`,
+    body: `${encodeURIComponent(body)}`,
     headers: {
       "Host": "ms.jr.jd.com",
       "Accept": "application/json",
