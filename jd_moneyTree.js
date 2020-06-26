@@ -145,9 +145,10 @@ function taskurl(function_id, body) {
   return {
     // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `body=${JSON.stringify(body)}`,
+    body: `${JSON.stringify(body)}`,
     headers: {
       Cookie: cookie,
+      UserAgent: `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
     }
   }
 }
