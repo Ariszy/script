@@ -103,7 +103,7 @@ function* step() {
   console.log('用户信息', userInfo);
 }
 function user_info() {
-  const data = 'reqData={"shareType":1,"source":0,"riskDeviceParam":"{\\\\"fp\\\\":\\\\"\\\\",\\\\"eid\\\\":\\\\"\\\\",\\\\"sdkToken\\\\":\\\\"\\\\",\\\\"sid\\\\":\\\\"\\\\"}"}'
+  const data = 'reqData={"sharePin":"","shareType":1,"channelLV":"","source":0,"riskDeviceParam":"{\\"eid\\":\\"SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE\\",\\"dt\\":\\"iPhone11,8\\",\\"ma\\":\\"\\",\\"im\\":\\"\\",\\"os\\":\\"iOS\\",\\"osv\\":\\"13.4.1\\",\\"ip\\":\\"112.96.195.152\\",\\"apid\\":\\"jdapp\\",\\"ia\\":\\"F75E8AED-CB48-4EAC-A213-E8CE4018F214\\",\\"uu\\":\\"\\",\\"cv\\":\\"9.0.0\\",\\"nt\\":\\"4G\\",\\"at\\":\\"1\\",\\"fp\\":\\"6ac83e85e8bad60325c9256c79d9dc0e\\",\\"token\\":\\"WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2\\"}"}'
   // const data = {
   //   'reqData={   "sharePin": "",   "shareType": 1,   "channelLV": "",   "source": 0,   "riskDeviceParam": "{\"eid\":\"\",\"dt\":\"\",\"ma\":\"\",\"im\":\"\",\"os\":\"\",\"osv\":\"\",\"ip\":\"\",\"apid\":\"\",\"ia\":\"\",\"uu\":\"\",\"cv\":\"\",\"nt\":\"\",\"at\":\"1\",\"fp\":\"\",\"token\":\"\"}" }'
   // }
