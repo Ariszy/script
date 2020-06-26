@@ -159,15 +159,16 @@ function taskurl(function_id, body) {
     // body: `${encodeURIComponent(body)}`,
     body: `${body}`,
     headers: {
-      "Host": "ms.jr.jd.com",
-      "Accept": "application/json",
-      "Origin": "https://uuj.jr.jd.com",
-      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1",
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-      "Referer": "https://uuj.jr.jd.com/wxgrowing/moneytree7/index.html?channellv=sy",
-      "Accept-Language": "zh-CN,en-US;q=0.8",
-      "X-Requested-With": "com.jd.jrapp",
-      "Cookie": cookie
+      'Accept' : `application/json`,
+      'Origin' : `https://uua.jr.jd.com`,
+      'Accept-Encoding' : `gzip, deflate, br`,
+      'Cookie' : cookie,
+      'Content-Type' : `application/x-www-form-urlencoded;charset=UTF-8`,
+      'Host' : `ms.jr.jd.com`,
+      'Connection' : `keep-alive`,
+      'User-Agent' : `jdapp;iPhone;9.0.0;13.4.1;e35caf0a69be42084e3c97eef56c3af7b0262d01;network/4g;ADID/F75E8AED-CB48-4EAC-A213-E8CE4018F214;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/1;model/iPhone11,8;addressid/2005183373;hasOCPay/0;appBuild/167237;supportBestPay/0;jdSupportDarkMode/0;pv/1287.19;apprpd/MyJD_GameMain;ref/https%3A%2F%2Fuua.jr.jd.com%2Fuc-fe-wxgrowing%2Fmoneytree%2Findex%2F%3Fchannel%3Dyxhd%26lng%3D113.325843%26lat%3D23.204628%26sid%3D2d98e88cf7d182f60d533476c2ce777w%26un_area%3D19_1601_50258_51885;psq/1;ads/;psn/e35caf0a69be42084e3c97eef56c3af7b0262d01|3485;jdv/0|kong|t_1000170135|tuiguang|notset|1593059927172|1593059927;adk/;app_device/IOS;pap/JA2015_311210|9.0.0|IOS 13.4.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`,
+      'Referer' : `https://uua.jr.jd.com/uc-fe-wxgrowing/moneytree/index/?channel=yxhd&lng=113.325896&lat=23.204600&sid=2d98e88cf7d182f60d533476c2ce777w&un_area=19_1601_50258_51885`,
+      'Accept-Language' : `zh-cn`
     }
   }
 }
