@@ -103,7 +103,7 @@ function* step() {
   console.log('用户信息', userInfo);
 }
 function user_info() {
-  const data = 'reqData={"sharePin":"","shareType":1,"channelLV":"","source":0,"riskDeviceParam":"{\\"eid\\":\\"SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE\\",\\"dt\\":\\"iPhone11,8\\",\\"ma\\":\\"\\",\\"im\\":\\"\\",\\"os\\":\\"iOS\\",\\"osv\\":\\"13.4.1\\",\\"ip\\":\\"112.96.195.152\\",\\"apid\\":\\"jdapp\\",\\"ia\\":\\"F75E8AED-CB48-4EAC-A213-E8CE4018F214\\",\\"uu\\":\\"\\",\\"cv\\":\\"9.0.0\\",\\"nt\\":\\"4G\\",\\"at\\":\\"1\\",\\"fp\\":\\"6ac83e85e8bad60325c9256c79d9dc0e\\",\\"token\\":\\"WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2\\"}"}'
+  const data = 'reqData=%7B%22sharePin%22%3A%22%22%2C%22shareType%22%3A1%2C%22channelLV%22%3A%22%22%2C%22source%22%3A0%2C%22riskDeviceParam%22%3A%22%7B%5C%22eid%5C%22%3A%5C%22SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE%5C%22%2C%5C%22dt%5C%22%3A%5C%22iPhone11%2C8%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22iOS%5C%22%2C%5C%22osv%5C%22%3A%5C%2213.4.1%5C%22%2C%5C%22ip%5C%22%3A%5C%22112.96.195.152%5C%22%2C%5C%22apid%5C%22%3A%5C%22jdapp%5C%22%2C%5C%22ia%5C%22%3A%5C%22F75E8AED-CB48-4EAC-A213-E8CE4018F214%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%229.0.0%5C%22%2C%5C%22nt%5C%22%3A%5C%224G%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%226ac83e85e8bad60325c9256c79d9dc0e%5C%22%2C%5C%22token%5C%22%3A%5C%22WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2%5C%22%7D%22%7D'
   // const data = {
   //   'reqData={   "sharePin": "",   "shareType": 1,   "channelLV": "",   "source": 0,   "riskDeviceParam": "{\"eid\":\"\",\"dt\":\"\",\"ma\":\"\",\"im\":\"\",\"os\":\"\",\"osv\":\"\",\"ip\":\"\",\"apid\":\"\",\"ia\":\"\",\"uu\":\"\",\"cv\":\"\",\"nt\":\"\",\"at\":\"1\",\"fp\":\"\",\"token\":\"\"}" }'
   // }
@@ -154,7 +154,8 @@ function taskurl(function_id, body) {
     // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
     // body: `${escape(JSON.stringify(body))}`,
-    body: `${encodeURIComponent(body)}`,
+    // body: `${encodeURIComponent(body)}`,
+    body: `${body}`,
     headers: {
       "Host": "ms.jr.jd.com",
       "Accept": "application/json",
