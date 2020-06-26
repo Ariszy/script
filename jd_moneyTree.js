@@ -99,7 +99,7 @@ let Task = step();
 Task.next();
 
 function* step() {
-  let userInfo = yield plantBeanIndex();
+  let userInfo = yield user_info();
   console.log('用户信息', userInfo);
 }
 function user_info() {
