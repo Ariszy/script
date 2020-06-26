@@ -36,7 +36,7 @@
           "name": "互助码1",
           "val": "",
           "type": "text",
-          "desc": "京东水果互助码."
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_fruit2",
@@ -50,14 +50,14 @@
           "name": "互助码3",
           "val": "",
           "type": "text",
-          "desc": "京东水果互助码."
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_fruit4",
           "name": "互助码4",
           "val": "",
           "type": "text",
-          "desc": "京东水果互助码."
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         }
       ],
       "author": "@lxk0301",
@@ -99,35 +99,35 @@
           "name": "互助码1",
           "val": "",
           "type": "text",
-          "desc": "京东萌宠互助码."
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_pet2",
           "name": "互助码2",
           "val": "",
           "type": "text",
-          "desc": "京东萌宠互助码."
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_pet3",
           "name": "互助码3",
           "val": "",
           "type": "text",
-          "desc": "京东萌宠互助码."
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_pet4",
           "name": "互助码4",
           "val": "",
           "type": "text",
-          "desc": "京东萌宠互助码."
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_pet5",
           "name": "互助码5",
           "val": "",
           "type": "text",
-          "desc": "京东萌宠互助码."
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
         }
       ],
       "author": "@lxk0301",
@@ -167,21 +167,21 @@
           "name": "互助码1",
           "val": "",
           "type": "text",
-          "desc": "京东水果互助码."
+          "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         },
         {
           "id": "jd_plantBean2",
           "name": "互助码2",
           "val": "",
           "type": "text",
-          "desc": "京东水果互助码."
+          "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         },
         {
           "id": "jd_plantBean3",
           "name": "互助码3",
           "val": "",
           "type": "text",
-          "desc": "京东水果互助码."
+          "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         }
       ],
       "author": "@lxk0301",
