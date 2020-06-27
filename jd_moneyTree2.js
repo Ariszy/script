@@ -133,7 +133,7 @@ function sign() {
   const data = 'reqData={"source":2,"workType":1,"opType":2}';
   request('doWork', data).then((res) => {
     console.log(`签到结果:${JSON.stringify(res)}`);
-    gen.next();
+    // gen.next();
   });
 }
 function dayWork(userInfo) {
@@ -156,12 +156,16 @@ function dayWork(userInfo) {
     for (let item of canTask) {
       if (item.workType === 1) {
         //  签到任务
-        sign();
+        if (item.workStatus === 0) {
+          sign();
+        } else if (item.workStatus === 2) {
+          console.log(`签到任务已经做过`)
+        }
       } else if (item.workType === 2) {
         // 分享任务
         if (item.workStatus === 0) {
           share();
-        } else {
+        } else if (item.workStatus === 2) {
           console.log(`分享任务已经做过`)
         }
       }
@@ -178,14 +182,15 @@ function share() {
   const data = 'reqData={"source":0,"workType":2,"opType":1}';
   request('doWork', data).then(res => {
     console.log(`分享111:${JSON.stringify(res)}`)
+    setTimeout(() => {
+      const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
+      request('doWork', data2).then(res => {
+        console.log(`分享222:${JSON.stringify(res)}`)
+      })
+    }, 2000)
   })
   // await sleep(3);
-  setTimeout(() => {
-    const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
-    request('doWork', data2).then(res => {
-      console.log(`分享222:${JSON.stringify(res)}`)
-    })
-  }, 2000)
+
 }
 //等待一下
 function sleep(s) {
