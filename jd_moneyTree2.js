@@ -39,12 +39,26 @@ function request() {
     headers: headers,
     body: body
   };
-  $task.fetch(myRequest).then(response => {
-    console.log(response.statusCode + "\n\n" + response.body);
-    return JSON.parse(response.body);
-  }, reason => {
-    console.log(reason.error);
-  });
+  // $task.fetch(myRequest).then(response => {
+  //   console.log(response.statusCode + "\n\n" + response.body);
+  //   sleep(JSON.parse(response.body));
+  // }, reason => {
+  //   console.log(reason.error);
+  // });
+  $task.fetch(myRequest).then(
+      (response) => {
+        // $.log(response.body)
+        return JSON.parse(response.body)
+      },
+      (reason) => console.log(reason.error, reason)//callback(reason.error, reason, reason)
+  ).then((response) => sleep(response))
 }
 
-
+function sleep(response) {
+  console.log('休息一下');
+  setTimeout(() => {
+    $hammer.log('休息结束');
+    //$hammer.log(response)
+    Task.next(response)
+  }, 2000);
+}
