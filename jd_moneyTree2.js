@@ -127,6 +127,7 @@ function sign() {
   const data = 'reqData={"source":2,"workType":1,"opType":2}';
   request('doWork', data).then((res) => {
     console.log(`签到结果:${JSON.stringify(res)}`);
+    gen.next();
   });
 }
 function dayWork(userInfo) {
