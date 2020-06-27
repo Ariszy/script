@@ -103,8 +103,10 @@ function* entrance() {
     return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   yield user_info();
-  yield sign();//签到
-  yield dayWork(userInfo);
+  // yield sign();//签到
+  console.log(`userInfo: ${JSON.stringify(userInfo)}`)
+  yield dayWork(userInfo);//做任务
+  yield harvest(userInfo);//收获
 }
 
 
@@ -115,11 +117,11 @@ function user_info() {
     console.log(`登录信息:${JSON.stringify(res)}`);
     if (res && res.resultCode === '0') {
       if (res.resultData.data) {
-        userInfo = res.resultData.data
+        userInfo = res.resultData.data;
+        gen.next();
         // dayWork(res.resultData.data)
       }
     }
-    gen.next();
   });
 }
 function sign() {
@@ -131,17 +133,53 @@ function sign() {
   });
 }
 function dayWork(userInfo) {
-  console.log(`开始做任务:${userInfo}`)
+  console.log(`开始做任务userInfo:${userInfo}`)
   const data = 'reqData={"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]}';
   request('dayWork', data).then((response ) => {
-    console.log(`做任务结果:${response}`)
+    console.log(`做任务结果:${JSON.stringify(response)}`)
+    let canTask = [];
+    if (response.resultCode === '0') {
+      if (response.resultData.code === '200') {
+        response.resultData.data.map((item) => {
+          if (item.prizeType === '2') {
+            canTask.push(item);
+          }
+        })
+      }
+    }
+    for (let item of canTask) {
+      if (item.workType === 1) {
+        //  签到任务
+        sign();
+      } else if (item.workType === 2) {
+        // 分享任务
+        if (item.workStatus === 0) {
+          share();
+        } else {
+          console.log(`分享任务已经做过`)
+        }
+      }
+    }
+    gen.next();
   })
 }
 
 function harvest(userInfo) {
-
+  console.log(`收获的操作:${JSON.stringify(userInfo)}`)
 }
-
+function share() {
+  const data = 'reqData={"source":0,"workType":2,"opType":1}';
+  request('doWork', data).then(res => {
+    console.log(`分享111:${JSON.stringify(res)}`)
+  })
+  // await sleep(3);
+  setTimeout(() => {
+    const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
+    request('doWork', data2).then(res => {
+      console.log(`分享222:${JSON.stringify(res)}`)
+    })
+  }, 2000)
+}
 //等待一下
 function sleep(s) {
   return new Promise((resolve, reject) => {
@@ -174,7 +212,7 @@ function sleep(s) {
 
 
 async function request(function_id, body = {}) {
-  await sleep(3); //歇口气儿, 不然会报操作频繁
+  await sleep(2); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
     $hammer.request('POST', taskurl(function_id,body), (error, response) => {
       if(error){
