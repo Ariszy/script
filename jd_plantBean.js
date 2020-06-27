@@ -321,19 +321,17 @@ function* step() {
         // 偷好友
         let stealRes = yield steal();
         console.log(`查询好友列表的情况::${JSON.stringify(stealRes)}`);
-        let canStealFriendList = [];//大于三瓶营养液的好友列表
         if (stealRes.code == 0) {
           if (stealRes.data && stealRes.data.friendInfoList && stealRes.data.friendInfoList.length > 0) {
             for (let item of stealRes.data.friendInfoList) {
               if (item.nutrCount >= 3) {
-                canStealFriendList.push(item);
+                console.log(`可以偷的好友的信息::${JSON.stringify(item)}`);
+                console.log(`可以偷的好友的信息paradiseUuid::${JSON.stringify(item.paradiseUuid)}`);
+                let stealFriendRes = yield collectUserNutr(item.paradiseUuid);
+                console.log(`偷取好友营养液情况:${JSON.stringify(stealFriendRes)}`)
               }
             }
           }
-        }
-        for(let i in canStealFriendList) {
-          let stealFriendRes = yield collectUserNutr(i.paradiseUuid);
-          console.log(`偷取好友营养液情况:${JSON.stringify(stealFriendRes)}`)
         }
         //收获
         let res = yield getReward();
@@ -465,6 +463,8 @@ function steal() {
   request('plantFriendList', body);
 }
 function collectUserNutr(paradiseUuid) {
+  console.log('开始偷好友');
+  console.log(paradiseUuid);
   let functionId = arguments.callee.name.toString();
   const body = {
     "paradiseUuid": paradiseUuid,
