@@ -104,7 +104,7 @@ function* entrance() {
   }
   yield user_info();
   // yield sign();//签到
-  console.log(`userInfo: ${JSON.stringify(userInfo)}`)
+  console.log(`userInfo: ${JSON.stringify(userInfo)}\n`)
   yield dayWork(userInfo);//做任务
   yield harvest(userInfo);//收获
 }
@@ -114,7 +114,7 @@ function user_info() {
   console.log('初始化萌宠信息');
   const data = 'reqData=%7B%22sharePin%22%3A%22%22%2C%22shareType%22%3A1%2C%22channelLV%22%3A%22%22%2C%22source%22%3A0%2C%22riskDeviceParam%22%3A%22%7B%5C%22eid%5C%22%3A%5C%22SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE%5C%22%2C%5C%22dt%5C%22%3A%5C%22iPhone11%2C8%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22iOS%5C%22%2C%5C%22osv%5C%22%3A%5C%2213.4.1%5C%22%2C%5C%22ip%5C%22%3A%5C%22112.96.195.152%5C%22%2C%5C%22apid%5C%22%3A%5C%22jdapp%5C%22%2C%5C%22ia%5C%22%3A%5C%22F75E8AED-CB48-4EAC-A213-E8CE4018F214%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%229.0.0%5C%22%2C%5C%22nt%5C%22%3A%5C%224G%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%226ac83e85e8bad60325c9256c79d9dc0e%5C%22%2C%5C%22token%5C%22%3A%5C%22WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2%5C%22%7D%22%7D'
   request('login', data).then((res) => {
-    console.log(`登录信息:${JSON.stringify(res)}`);
+    console.log(`登录信息:${JSON.stringify(res)}\n`);
     if (res && res.resultCode === 0) {
       console.log('resultCode为0')
       if (res.resultData.data) {
@@ -137,12 +137,12 @@ function sign() {
   });
 }
 function dayWork(userInfo) {
-  console.log(`开始做任务userInfo:${userInfo}`)
+  console.log(`开始做任务userInfo了\n`)
   const data = 'reqData={"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]}';
   request('dayWork', data).then((response ) => {
-    console.log(`做任务结果:${JSON.stringify(response)}`)
+    console.log(`做任务结果:${JSON.stringify(response)}\n`)
     let canTask = [];
-    if (response.resultCode === '0') {
+    if (response.resultCode === 0) {
       if (response.resultData.code === '200') {
         response.resultData.data.map((item) => {
           if (item.prizeType === '2') {
@@ -151,6 +151,7 @@ function dayWork(userInfo) {
         })
       }
     }
+    console.log(`canTask::${canTask}\n`)
     for (let item of canTask) {
       if (item.workType === 1) {
         //  签到任务
@@ -172,6 +173,7 @@ function harvest(userInfo) {
   console.log(`收获的操作:${JSON.stringify(userInfo)}`)
 }
 function share() {
+  console.log(`开始做分享任务了\n`)
   const data = 'reqData={"source":0,"workType":2,"opType":1}';
   request('doWork', data).then(res => {
     console.log(`分享111:${JSON.stringify(res)}`)
