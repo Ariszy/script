@@ -126,7 +126,7 @@ function sign() {
   console.log('每日签到')
   const data = 'reqData={"source":2,"workType":1,"opType":2}';
   request('doWork', data).then((res) => {
-    console.log(`签到结果:${res}`);
+    console.log(`签到结果:${JSON.stringify(res)}`);
   });
 }
 function dayWork(userInfo) {
@@ -180,7 +180,7 @@ async function request(function_id, body = {}) {
         $hammer.log("Error:", error);
       }else{
         console.log('response', response)
-        resolve(JSON.parse(response.body));
+        resolve(JSON.parse(response));
       }
     })
   })
