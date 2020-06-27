@@ -318,6 +318,23 @@ function* step() {
         //水车生产
         let waterWheelRes = yield waterWheel();
         console.log(`水车生产情况::${JSON.stringify(waterWheelRes)}`);
+        // 偷好友
+        let stealRes = yield steal();
+        console.log(`查询好友列表的情况::${JSON.stringify(stealRes)}`);
+        let canStealFriendList = [];//大于三瓶营养液的好友列表
+        if (stealRes.code == 0) {
+          if (stealRes.data && stealRes.data.friendInfoList && stealRes.data.friendInfoList.length > 0) {
+            for (let item of stealRes.data.friendInfoList) {
+              if (item.nutrCount >= 3) {
+                canStealFriendList.push(item);
+              }
+            }
+          }
+        }
+        for(let i in canStealFriendList) {
+          let stealFriendRes = yield collectUserNutr(i.paradiseUuid);
+          console.log(`偷取好友营养液情况:${JSON.stringify(stealFriendRes)}`)
+        }
         //收获
         let res = yield getReward();
         console.log(`收获的---res,${JSON.stringify(res)}`)
@@ -439,6 +456,21 @@ function plantBeanIndex() {
     let functionId = arguments.callee.name.toString();
     let body = { "monitor_source": "plant_app_plant_index", "monitor_refer": "", "version": "9.0.0.1" }
     request(functionId, body);//plantBeanIndexBody
+}
+//偷好友的
+function steal() {
+  const body = {
+    pageNum: '1'
+  }
+  request('plantFriendList', body);
+}
+function collectUserNutr(paradiseUuid) {
+  let functionId = arguments.callee.name.toString();
+  const body = {
+    "paradiseUuid": paradiseUuid,
+    "roundId": currentRoundId
+  }
+  request(functionId, body);
 }
 //收获
 function getReward() {
