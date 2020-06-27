@@ -31,6 +31,7 @@ function request() {
   };
   $task.fetch(myRequest).then(response => {
     console.log(response.statusCode + "\n\n" + response.body);
+    return JSON.parse(response.body);
   }, reason => {
     console.log(reason.error);
   });
