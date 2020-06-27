@@ -103,6 +103,8 @@ function* entrance() {
     return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   yield user_info();
+  yield sign();//签到
+  yield dayWork(userInfo);
 }
 
 
@@ -110,16 +112,29 @@ function user_info() {
   console.log('初始化萌宠信息');
   const data = 'reqData=%7B%22sharePin%22%3A%22%22%2C%22shareType%22%3A1%2C%22channelLV%22%3A%22%22%2C%22source%22%3A0%2C%22riskDeviceParam%22%3A%22%7B%5C%22eid%5C%22%3A%5C%22SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE%5C%22%2C%5C%22dt%5C%22%3A%5C%22iPhone11%2C8%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22iOS%5C%22%2C%5C%22osv%5C%22%3A%5C%2213.4.1%5C%22%2C%5C%22ip%5C%22%3A%5C%22112.96.195.152%5C%22%2C%5C%22apid%5C%22%3A%5C%22jdapp%5C%22%2C%5C%22ia%5C%22%3A%5C%22F75E8AED-CB48-4EAC-A213-E8CE4018F214%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%229.0.0%5C%22%2C%5C%22nt%5C%22%3A%5C%224G%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%226ac83e85e8bad60325c9256c79d9dc0e%5C%22%2C%5C%22token%5C%22%3A%5C%22WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2%5C%22%7D%22%7D'
   request('login', data).then((res) => {
-    console.log('res------', res)
+    console.log(`登录信息:${JSON.stringify(res)}`);
+    if (res && res.resultCode === '0') {
+      if (res.resultData.data) {
+        userInfo = res.resultData.data
+        // dayWork(res.resultData.data)
+      }
+    }
+    gen.next();
   });
 }
 function sign() {
   console.log('每日签到')
   const data = 'reqData={"source":2,"workType":1,"opType":2}';
-  // request('doWork', data);
+  request('doWork', data).then((res) => {
+    console.log(`签到结果:${res}`);
+  });
 }
 function dayWork(userInfo) {
+  console.log(`开始做任务:${userInfo}`)
   const data = 'reqData={"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]}';
+  request('dayWork', data).then((response ) => {
+    console.log(`做任务结果:${response}`)
+  })
 }
 
 function harvest(userInfo) {
@@ -164,6 +179,7 @@ async function request(function_id, body = {}) {
       if(error){
         $hammer.log("Error:", error);
       }else{
+        console.log('response', response)
         resolve(JSON.parse(response.body));
       }
     })
