@@ -315,13 +315,13 @@ function* step() {
         } else {
             console.log(`plantBeanIndexResult:${JSON.stringify(plantBeanIndexResult)}`)
         }
-        //水车生产
-        let waterWheelRes = yield waterWheel();
-        console.log(`水车生产情况::${JSON.stringify(waterWheelRes)}`);
-        // 偷好友
+        // 偷大于等于3瓶好友的营养液
         let stealRes = yield steal();
-        console.log(`查询好友列表的情况::${JSON.stringify(stealRes)}`);
         if (stealRes.code == 0) {
+          if (stealRes.data.tips) {
+            console.log('今日已达上限');
+            return
+          }
           if (stealRes.data && stealRes.data.friendInfoList && stealRes.data.friendInfoList.length > 0) {
             for (let item of stealRes.data.friendInfoList) {
               if (item.nutrCount >= 3) {
@@ -329,13 +329,16 @@ function* step() {
                 console.log(`可以偷的好友的信息paradiseUuid::${JSON.stringify(item.paradiseUuid)}`);
                 let stealFriendRes = yield collectUserNutr(item.paradiseUuid);
                 console.log(`偷取好友营养液情况:${JSON.stringify(stealFriendRes)}`)
+                if (stealFriendRes.code == '0') {
+                  console.log(`偷取好友营养液成功`)
+                }
               }
             }
           }
         }
         //收获
         let res = yield getReward();
-        console.log(`收获的---res,${JSON.stringify(res)}`)
+        console.log(`种豆得豆收获的京豆情况---res,${JSON.stringify(res)}`);
         console.log('结束')
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
@@ -455,13 +458,15 @@ function plantBeanIndex() {
     let body = { "monitor_source": "plant_app_plant_index", "monitor_refer": "", "version": "9.0.0.1" }
     request(functionId, body);//plantBeanIndexBody
 }
-//偷好友的
+//偷营养液大于等于3瓶的好友
+//①查询好友列表
 function steal() {
   const body = {
     pageNum: '1'
   }
   request('plantFriendList', body);
 }
+//②执行偷好友营养液的动作
 function collectUserNutr(paradiseUuid) {
   console.log('开始偷好友');
   console.log(paradiseUuid);
@@ -472,7 +477,7 @@ function collectUserNutr(paradiseUuid) {
   }
   request(functionId, body);
 }
-//收获
+//每轮种豆活动获取结束后,自动收取京豆
 function getReward() {
   if (awardState === '5') {
     const body = {
@@ -480,15 +485,8 @@ function getReward() {
     }
     request('receivedBean', body);
   } else if (awardState === '6') {
-    console.log("您已领奖，去京豆明细页看看");
+    console.log("上轮活动您已领奖，去京豆明细页看看");
   }
-}
-function waterWheel() {
-  const body = {
-    "roundId": currentRoundId,
-    "monitor_refer": "plant_index"
-  }
-  request('receiveNutrients', body);//plantBeanIndexBody
 }
 function requestGet(url){
     const option =  {
