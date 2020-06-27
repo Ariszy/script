@@ -145,13 +145,14 @@ function dayWork(userInfo) {
     if (response.resultCode === 0) {
       if (response.resultData.code === '200') {
         response.resultData.data.map((item) => {
-          if (item.prizeType === '2') {
+          if (item.prizeType === 2) {
             canTask.push(item);
           }
         })
       }
     }
     console.log(`canTask::${canTask}\n`)
+    console.log(`canTask::${JSON.stringify(canTask)}\n`)
     for (let item of canTask) {
       if (item.workType === 1) {
         //  签到任务
