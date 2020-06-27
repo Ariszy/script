@@ -181,8 +181,6 @@ async function dayWork(userInfo) {
       }
     }
   }
-  console.log(`canTask::${canTask}\n`)
-  console.log(`canTask::${JSON.stringify(canTask)}\n`)
   gen.next();
   // request('dayWork', data).then((response ) => {
   //   console.log(`做任务结果:${JSON.stringify(response)}\n`)
