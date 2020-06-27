@@ -136,42 +136,90 @@ function sign() {
     // gen.next();
   });
 }
-function dayWork(userInfo) {
+async function dayWork(userInfo) {
   console.log(`开始做任务userInfo了\n`)
   const data = 'reqData={"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]}';
-  request('dayWork', data).then((response ) => {
-    console.log(`做任务结果:${JSON.stringify(response)}\n`)
-    let canTask = [];
-    if (response.resultCode === 0) {
-      if (response.resultData.code === '200') {
-        response.resultData.data.map((item) => {
-          if (item.prizeType === 2) {
-            canTask.push(item);
-          }
-        })
+  let response = await request('dayWork', data);
+  console.log(`做任务结果:${JSON.stringify(response)}\n`)
+  let canTask = [];
+  if (response.resultCode === 0) {
+    if (response.resultData.code === '200') {
+      response.resultData.data.map((item) => {
+        if (item.prizeType === 2) {
+          canTask.push(item);
+        }
+      })
+    }
+  }
+  console.log(`canTask::${JSON.stringify(canTask)}\n`)
+  for (let item of canTask) {
+    if (item.workType === 1) {
+      //  签到任务
+      if (item.workStatus === 0) {
+        console.log('每日签到')
+        const data = 'reqData={"source":2,"workType":1,"opType":2}';
+        let signRes = await request('doWork', data);
+        console.log(`签到结果:${JSON.stringify(signRes)}`);
+      } else if (item.workStatus === 2) {
+        console.log(`签到任务已经做过`)
+      }
+    } else if (item.workType === 2) {
+      // 分享任务
+      if (item.workStatus === 0) {
+        // share();
+        const data = 'reqData={"source":0,"workType":2,"opType":1}';
+        let shareRes = await request('doWork', data);
+        console.log(`分享111:${JSON.stringify(shareRes)}`);
+        setTimeout(() => {
+          const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
+          request('doWork', data2).then(res => {
+            console.log(`分享222:${JSON.stringify(res)}`)
+          })
+        }, 2000)
+      } else if (item.workStatus === 2) {
+        console.log(`分享任务已经做过`)
       }
     }
-    console.log(`canTask::${canTask}\n`)
-    console.log(`canTask::${JSON.stringify(canTask)}\n`)
-    for (let item of canTask) {
-      if (item.workType === 1) {
-        //  签到任务
-        if (item.workStatus === 0) {
-          sign();
-        } else if (item.workStatus === 2) {
-          console.log(`签到任务已经做过`)
-        }
-      } else if (item.workType === 2) {
-        // 分享任务
-        if (item.workStatus === 0) {
-          share();
-        } else if (item.workStatus === 2) {
-          console.log(`分享任务已经做过`)
-        }
-      }
-    }
-    gen.next();
-  })
+  }
+  console.log(`canTask::${canTask}\n`)
+  console.log(`canTask::${JSON.stringify(canTask)}\n`)
+  gen.next();
+  // request('dayWork', data).then((response ) => {
+  //   console.log(`做任务结果:${JSON.stringify(response)}\n`)
+  //   let canTask = [];
+  //   if (response.resultCode === 0) {
+  //     if (response.resultData.code === '200') {
+  //       response.resultData.data.map((item) => {
+  //         if (item.prizeType === 2) {
+  //           canTask.push(item);
+  //         }
+  //       })
+  //     }
+  //   }
+  //   console.log(`canTask::${canTask}\n`)
+  //   console.log(`canTask::${JSON.stringify(canTask)}\n`)
+  //   for (let item of canTask) {
+  //     if (item.workType === 1) {
+  //       //  签到任务
+  //       if (item.workStatus === 0) {
+  //         console.log('每日签到')
+  //         const data = 'reqData={"source":2,"workType":1,"opType":2}';
+  //         let aa = await request('doWork', data);
+  //         console.log(`签到结果:${JSON.stringify(res)}`);
+  //       } else if (item.workStatus === 2) {
+  //         console.log(`签到任务已经做过`)
+  //       }
+  //     } else if (item.workType === 2) {
+  //       // 分享任务
+  //       if (item.workStatus === 0) {
+  //         share();
+  //       } else if (item.workStatus === 2) {
+  //         console.log(`分享任务已经做过`)
+  //       }
+  //     }
+  //   }
+  //   gen.next();
+  // })
 }
 
 function harvest(userInfo) {
