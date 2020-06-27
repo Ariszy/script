@@ -168,14 +168,20 @@ async function dayWork(userInfo) {
       if (item.workStatus === 0) {
         // share();
         const data = 'reqData={"source":0,"workType":2,"opType":1}';
+        //开始分享
         let shareRes = await request('doWork', data);
         console.log(`分享111:${JSON.stringify(shareRes)}`);
-        setTimeout(() => {
-          const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
-          request('doWork', data2).then(res => {
-            console.log(`分享222:${JSON.stringify(res)}`)
-          })
-        }, 2000)
+        await sleep(2);
+        const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
+        let shareResJL = await request('doWork', data2);
+        console.log(`分享222:${JSON.stringify(shareResJL)}`)
+        // setTimeout(() => {
+        //   // 领取分享后的奖励
+        //   const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
+        //   request('doWork', data2).then(res => {
+        //     console.log(`分享222:${JSON.stringify(res)}`)
+        //   })
+        // }, 2000)
       } else if (item.workStatus === 2) {
         console.log(`分享任务已经做过`)
       }
@@ -221,7 +227,18 @@ async function dayWork(userInfo) {
 }
 
 function harvest(userInfo) {
-  console.log(`收获的操作:${JSON.stringify(userInfo)}`)
+  console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
+  const data = {
+    "reqData": {
+      "source": 2,
+      "sharePin": "",
+      "userId": userInfo.userInfo,
+      "userToken": userInfo.userToken
+    }
+  }
+  request('harvest', data).then((res) => {
+    console.log(`收获的结果:${JSON.stringify(res)}`);
+  })
 }
 function share() {
   console.log(`开始做分享任务了\n`)
