@@ -108,6 +108,10 @@ var plantUuids = [ // 这个列表填入你要助力的好友的plantUuid
     'zanmzshzq4ykx5xirwj7y7lmki',
     'd6wg7f6syive54q4yfrdmaddo4'
 ]
+let currentRoundId = null;//本期活动id
+let lastRoundId = null;//上期id
+let roundList = [];
+let awardState = '';//上期活动的京豆是否收取
 // 添加box功能
 // 【用box订阅的好处】
 // 1️⃣脚本也可以远程挂载了。助力功能只需在box里面设置助力码。
@@ -141,6 +145,10 @@ function* step() {
             //todo
             return
         }
+        roundList = plantBeanIndexResult.data.roundList;
+        currentRoundId = roundList[1].roundId;
+        lastRoundId = roundList[0].roundId;
+        awardState = roundList[0].awardState;
         let shareUrl = plantBeanIndexResult.data.jwordShareInfo.shareUrl
         let myPlantUuid = getParam(shareUrl, 'plantUuid')
         console.log(`你的plantUuid为${myPlantUuid}`)
@@ -307,6 +315,12 @@ function* step() {
         } else {
             console.log(`plantBeanIndexResult:${JSON.stringify(plantBeanIndexResult)}`)
         }
+        //水车生产
+        let waterWheelRes = yield waterWheel();
+        console.log(`水车生产情况::${JSON.stringify(waterWheelRes)}`);
+        //收获
+        let res = yield getReward();
+        console.log(`收获的---res,${JSON.stringify(res)}`)
         console.log('结束')
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
@@ -426,7 +440,24 @@ function plantBeanIndex() {
     let body = { "monitor_source": "plant_app_plant_index", "monitor_refer": "", "version": "9.0.0.1" }
     request(functionId, body);//plantBeanIndexBody
 }
-
+//收获
+function getReward() {
+  if (awardState === '5') {
+    const body = {
+      "roundId": lastRoundId
+    }
+    request('receivedBean', body);
+  } else if (awardState === '6') {
+    console.log("您已领奖，去京豆明细页看看");
+  }
+}
+function waterWheel() {
+  const body = {
+    "roundId": currentRoundId,
+    "monitor_refer": "plant_index"
+  }
+  request('receiveNutrients', body);//plantBeanIndexBody
+}
 function requestGet(url){
     const option =  {
         url: url,
