@@ -97,21 +97,22 @@ function* step() {
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
+  console.log(`start...`);
   const flyTask_state =  yield flyTask_state();
   console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
-function flyTask_start() {
-  const functionId = arguments.callee.name.toString();
-  const body = {
-    "source":"game",
-    "source_id":""
-  }
-  request(functionId, body)
-}
+// function flyTask_start() {
+//   const functionId = arguments.callee.name.toString();
+//   const body = {
+//     "source":"game",
+//     "source_id":""
+//   }
+//   request(functionId, body)
+// }
 function flyTask_state() {
   const functionId = arguments.callee.name.toString();
   const body = {
-    "source":"game",
+    "source":"game"
   }
   request(functionId, body)
 }
