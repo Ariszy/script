@@ -112,7 +112,15 @@ function* entrance() {
 // TODO ,body传值未解决
 function user_info() {
   console.log('初始化摇钱树个人信息');
-  const data = 'reqData=%7B%22sharePin%22%3A%20%22%22%2C%20%22shareType%22%3A%201%2C%20%22channelLV%22%3A%20%22%22%2C%20%22source%22%3A%200%2C%20%22riskDeviceParam%22%3A%20%22%7B%5C%22eid%5C%22%3A%5C%22%5C%22%2C%5C%22dt%5C%22%3A%5C%22%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22%5C%22%2C%5C%22osv%5C%22%3A%5C%22%5C%22%2C%5C%22ip%5C%22%3A%5C%22%5C%22%2C%5C%22apid%5C%22%3A%5C%22%5C%22%2C%5C%22ia%5C%22%3A%5C%22%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%22%5C%22%2C%5C%22nt%5C%22%3A%5C%22%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%22%5C%22%2C%5C%22token%5C%22%3A%5C%22%5C%22%7D%22%7D'
+  const params = {
+    "sharePin":"",
+    "shareType":1,
+    "channelLV":"",
+    "source":0,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  // const data = 'reqData=%7B%22sharePin%22%3A%20%22%22%2C%20%22shareType%22%3A%201%2C%20%22channelLV%22%3A%20%22%22%2C%20%22source%22%3A%200%2C%20%22riskDeviceParam%22%3A%20%22%7B%5C%22eid%5C%22%3A%5C%22%5C%22%2C%5C%22dt%5C%22%3A%5C%22%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22%5C%22%2C%5C%22osv%5C%22%3A%5C%22%5C%22%2C%5C%22ip%5C%22%3A%5C%22%5C%22%2C%5C%22apid%5C%22%3A%5C%22%5C%22%2C%5C%22ia%5C%22%3A%5C%22%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%22%5C%22%2C%5C%22nt%5C%22%3A%5C%22%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%22%5C%22%2C%5C%22token%5C%22%3A%5C%22%5C%22%7D%22%7D'
+  const data = encodeURIComponent(JSON.stringify(params));
   request('login', data).then((res) => {
     console.log(`登录信息:${JSON.stringify(res)}\n`);
     if (res && res.resultCode === 0) {
