@@ -117,13 +117,16 @@ function flyTask_state() {
   request(functionId, body)
 }
 flyTask_state()
+function _jsonpToJson(v) {
+  return v.match(/{.*}/)[0]
+}
 function request(function_id, body = {}) {
   $hammer.request('GET', taskurl(function_id, body), (error, response) => {
     // error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
     if(error){
       $hammer.log("Error:", error);
     }else{
-      sleep(JSON.parse(response));
+      sleep(JSON.parse(_jsonpToJson(response)));
     }
   })
 }
