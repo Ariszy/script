@@ -94,12 +94,12 @@ const $hammer = (() => {
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD')
 const name = '京东摇钱树';
-let message = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null;
 let gen = entrance();
 gen.next();
 function* entrance() {
+  let message = '';
   if (!cookie) {
     // return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
     message = '请先获取cookie\n直接使用NobyDa的京东签到获取';
@@ -107,7 +107,8 @@ function* entrance() {
   yield user_info();
   yield dayWork();//做任务
   yield harvest(userInfo);//收获
-  $hammer.alert(name, message)
+  // $hammer.alert(name, message);
+  $hammer.alert(name, message);
 }
 
 // TODO ,body传值未解决
