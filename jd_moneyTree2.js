@@ -165,8 +165,9 @@ async function dayWork(userInfo) {
       //  签到任务
       if (item.workStatus === 0) {
         console.log('每日签到')
-        const data = {"source":2,"workType":1,"opType":2};
-        let signRes = await request('doWork', data);
+        // const data = {"source":2,"workType":1,"opType":2};
+        // let signRes = await request('doWork', data);
+        let signRes = sign();
         console.log(`签到结果:${JSON.stringify(signRes)}`);
       } else if (item.workStatus === 2) {
         console.log(`签到任务已经做过`)
@@ -177,11 +178,13 @@ async function dayWork(userInfo) {
         // share();
         const data = {"source":0,"workType":2,"opType":1};
         //开始分享
-        let shareRes = await request('doWork', data);
+        // let shareRes = await request('doWork', data);
+        let shareRes = await share(data);
         console.log(`开始分享的动作:${JSON.stringify(shareRes)}`);
         await sleep(2);
         const b = {"source":0,"workType":2,"opType":2};
-        let shareResJL = await request('doWork', b);
+        // let shareResJL = await request('doWork', b);
+        let shareResJL = await share(b);
         console.log(`领取分享后的奖励:${JSON.stringify(shareResJL)}`)
       } else if (item.workStatus === 2) {
         console.log(`分享任务已经做过`)
@@ -239,18 +242,23 @@ function harvest(userInfo) {
     console.log(`收获的结果:${JSON.stringify(res)}`);
   })
 }
-function share() {
+function share(data) {
   console.log(`开始做分享任务了\n`)
-  const data = 'reqData={"source":0,"workType":2,"opType":1}';
-  request('doWork', data).then(res => {
-    console.log(`分享111:${JSON.stringify(res)}`)
-    setTimeout(() => {
-      const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
-      request('doWork', data2).then(res => {
-        console.log(`分享222:${JSON.stringify(res)}`)
-      })
-    }, 2000)
+  return new Promise((rs, rj) => {
+    request('doWork', data).then(response => {
+      rs(response);
+    })
   })
+  // const data = 'reqData={"source":0,"workType":2,"opType":1}';
+  // request('doWork', data).then(res => {
+  //   console.log(`分享111:${JSON.stringify(res)}`)
+  //   setTimeout(() => {
+  //     const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
+  //     request('doWork', data2).then(res => {
+  //       console.log(`分享222:${JSON.stringify(res)}`)
+  //     })
+  //   }, 2000)
+  // })
   // await sleep(3);
 }
 //等待一下
