@@ -123,7 +123,7 @@ function request(function_id, body = {}) {
     if(error){
       $hammer.log("Error:", error);
     }else{
-      console.log('response', response)
+      console.log(response)
       sleep(JSON.parse(response));
     }
   })
@@ -133,7 +133,6 @@ function sleep(response) {
   console.log('休息一下');
   setTimeout(() => {
     $hammer.log('休息结束');
-    $hammer.log(response)
     Task.next(response)
   }, 2000);
 }
