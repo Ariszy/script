@@ -98,8 +98,8 @@ function* step() {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   console.log(`start...`);
-  const flyTask_state =  yield flyTask_state();
-  console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
+  yield flyTask_state();
+  // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
 // function flyTask_start() {
 //   const functionId = arguments.callee.name.toString();
@@ -114,32 +114,42 @@ function flyTask_state() {
   const body = {
     "source":"game"
   }
-  request(functionId, body)
-}
-// flyTask_state()
-function _jsonpToJson(v) {
-  return v.match(/{.*}/)[0]
-}
-function request(function_id, body = {}) {
-  $hammer.request('GET', taskurl(function_id, body), (error, response) => {
-    // error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
-    if(error){
-      $hammer.log("Error:", error);
-    }else{
-      sleep(JSON.parse(_jsonpToJson(response)));
-    }
+  request(functionId, body).then((res) => {
+    console.log(`初始化信息flyTask_state:${res}`)
   })
 }
 
-function sleep(response) {
-  console.log('休息一下');
-  setTimeout(() => {
-    $hammer.log('休息结束');
-    console.log(response)
-    Task.next(response)
-  }, 2000);
+async function request(function_id, body = {}) {
+  // $hammer.request('GET', taskurl(function_id, body), (error, response) => {
+  //   // error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
+  //   if(error){
+  //     $hammer.log("Error:", error);
+  //   }else{
+  //     sleep(JSON.parse(_jsonpToJson(response)));
+  //   }
+  // });
+  await sleep(2);
+  return new Promise((resolve, reject) => {
+    $hammer.request('GET', taskurl(function_id, body), (error, response) => {
+      if(error){
+        $hammer.log("Error:", error);
+      }else{
+        resolve(JSON.parse(_jsonpToJson(response)));
+      }
+    })
+  })
 }
 
+function sleep(s) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, s * 1000);
+  })
+}
+function _jsonpToJson(v) {
+  return v.match(/{.*}/)[0]
+}
 function taskurl(function_id, body) {
   return {
     url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=${function_id}&body=${escape(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}`,
