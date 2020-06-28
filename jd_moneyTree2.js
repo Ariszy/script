@@ -238,14 +238,12 @@ async function dayWork(userInfo) {
 function harvest(userInfo) {
   console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
   const data = {
-    "reqData": {
-      "source": 2,
-      "sharePin": "",
-      "userId": userInfo.userInfo,
-      "userToken": userInfo.userToken
-    }
+    "source": 2,
+    "sharePin": "",
+    "userId": userInfo.userInfo,
+    "userToken": userInfo.userToken
   }
-  const data2 = 'reqData=%7B%22source%22%3A0%2C%22sharePin%22%3A%22%22%2C%22userId%22%3A%2258C1807B20A649919713C73D469DB7E3%22%2C%22userToken%22%3A%222CF3249AE5E1ED0A5C751C02E9415AA3%22%2C%22shareType%22%3A1%2C%22channel%22%3A%22%22%2C%22riskDeviceParam%22%3A%22%7B%5C%22eid%5C%22%3A%5C%22SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE%5C%22%2C%5C%22dt%5C%22%3A%5C%22iPhone11%2C8%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22iOS%5C%22%2C%5C%22osv%5C%22%3A%5C%2213.4.1%5C%22%2C%5C%22ip%5C%22%3A%5C%22112.96.195.152%5C%22%2C%5C%22apid%5C%22%3A%5C%22jdapp%5C%22%2C%5C%22ia%5C%22%3A%5C%22F75E8AED-CB48-4EAC-A213-E8CE4018F214%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%229.0.0%5C%22%2C%5C%22nt%5C%22%3A%5C%224G%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%22caac7fb929a71e2ee1dbc21efcc318d0%5C%22%2C%5C%22token%5C%22%3A%5C%22FERO5URCULYRULFGXZOVXNTDS6Z57WQ3JSRRLLY3FMN4L2IG5NLLQ5X5TNUWAG3A6KTJV2ETUWMGC%5C%22%7D%22%7D';
+  const data2 = 'reqData=' + encodeURIComponent(JSON.stringify(data));
   request('harvest', data2).then((res) => {
     console.log(`收获的结果:${JSON.stringify(res)}`);
   })
