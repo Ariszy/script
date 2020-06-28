@@ -140,7 +140,7 @@ function sleep(response) {
 
 function taskurl(function_id, body) {
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}&appid=memberTaskCenter&body=${decodeURIComponent(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}`,
+    url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=${function_id}&body=${escape(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}`,
     headers: {
       'Cookie': cookie,
       'Host': 'api.m.jd.com',
