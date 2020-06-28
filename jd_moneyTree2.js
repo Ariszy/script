@@ -108,7 +108,7 @@ function* entrance() {
   yield dayWork();//做任务
   yield harvest(userInfo);//收获
   // $hammer.alert(name, message);
-  $hammer.alert(name, message);
+  $hammer.alert('京东摇钱树');
 }
 
 // TODO ,body传值未解决
