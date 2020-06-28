@@ -104,24 +104,30 @@ function* step() {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   userInfo = yield user_info();
-  console.log('用户信息', userInfo);
-  console.log('用户信息', JSON.stringify(userInfo));
-  console.log('用户信息', userInfo.resultMsg);
-  if (userInfo && userInfo.resultCode === '0') {
-    if (userInfo.resultData.data) {
-      dayWork(userInfo.resultData.data)
-    }
-    let signRes = yield sign();
-    console.log('signRes', signRes);
-  }
-  let signRes = yield sign();
-  console.log('signRes', signRes);
+  console.log(userInfo);
+  console.log(`用户信息, ${JSON.stringify(userInfo)}`);
+  // if (userInfo && userInfo.resultCode === '0') {
+  //   if (userInfo.resultData.data) {
+  //     dayWork(userInfo.resultData.data)
+  //   }
+  //   let signRes = yield sign();
+  //   console.log('signRes', signRes);
+  // }
+  // let signRes = yield sign();
+  // console.log('signRes', signRes);
 }
 
 
 function user_info() {
-  const data = 'reqData=%7B%22sharePin%22%3A%22%22%2C%22shareType%22%3A1%2C%22channelLV%22%3A%22%22%2C%22source%22%3A0%2C%22riskDeviceParam%22%3A%22%7B%5C%22eid%5C%22%3A%5C%22SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE%5C%22%2C%5C%22dt%5C%22%3A%5C%22iPhone11%2C8%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22iOS%5C%22%2C%5C%22osv%5C%22%3A%5C%2213.4.1%5C%22%2C%5C%22ip%5C%22%3A%5C%22112.96.195.152%5C%22%2C%5C%22apid%5C%22%3A%5C%22jdapp%5C%22%2C%5C%22ia%5C%22%3A%5C%22F75E8AED-CB48-4EAC-A213-E8CE4018F214%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%229.0.0%5C%22%2C%5C%22nt%5C%22%3A%5C%224G%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%226ac83e85e8bad60325c9256c79d9dc0e%5C%22%2C%5C%22token%5C%22%3A%5C%22WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2%5C%22%7D%22%7D'
-  request('login', data);
+  const params = {
+    "sharePin":"",
+    "shareType":1,
+    "channelLV":"",
+    "source":0,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);
+  request('login', params);
 }
 function sign() {
   console.log('每日签到')
@@ -176,7 +182,7 @@ function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `${body}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
