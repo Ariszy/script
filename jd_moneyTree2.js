@@ -1,4 +1,4 @@
-// 未完成,收取金果的网络请求中body传值解决不了
+// 从 https://github.com/Zero-S1/JD_tools/blob/master/moneyTree.py 改写来的
 // 1、收金果
 // 2、每日签到
 // 3、分享
