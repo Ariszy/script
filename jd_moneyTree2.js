@@ -1,4 +1,4 @@
-// 已弃坑,收取金果的网络请求中body传值解决不了
+// 未完成,收取金果的网络请求中body传值解决不了
 // 1、收金果
 // 2、每日签到
 // 3、分享
@@ -109,7 +109,7 @@ function* entrance() {
   yield harvest(userInfo);//收获
 }
 
-
+// TODO ,body传值未解决
 function user_info() {
   console.log('初始化萌宠信息');
   const data = 'reqData=%7B%22sharePin%22%3A%22%22%2C%22shareType%22%3A1%2C%22channelLV%22%3A%22%22%2C%22source%22%3A0%2C%22riskDeviceParam%22%3A%22%7B%5C%22eid%5C%22%3A%5C%22SCTUHAO57J4VK5VZZK347KLZKWSJJVQY3B4SHL24I7XNJDOYEW6XX2GBIKS3F3SPESTOACPMRTAVBQZVERPVWLSMVE%5C%22%2C%5C%22dt%5C%22%3A%5C%22iPhone11%2C8%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22iOS%5C%22%2C%5C%22osv%5C%22%3A%5C%2213.4.1%5C%22%2C%5C%22ip%5C%22%3A%5C%22112.96.195.152%5C%22%2C%5C%22apid%5C%22%3A%5C%22jdapp%5C%22%2C%5C%22ia%5C%22%3A%5C%22F75E8AED-CB48-4EAC-A213-E8CE4018F214%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%229.0.0%5C%22%2C%5C%22nt%5C%22%3A%5C%224G%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%226ac83e85e8bad60325c9256c79d9dc0e%5C%22%2C%5C%22token%5C%22%3A%5C%22WP3SV4JYWPIYTZXFLXOZ3GDOWIDJAIRIJUOMFBUCDYHBEJNVTKBHASOUPH3CIVUUZFONQB2T57XU2%5C%22%7D%22%7D'
@@ -225,7 +225,7 @@ async function dayWork(userInfo) {
   //   gen.next();
   // })
 }
-
+// TODO ,body传值未解决
 function harvest(userInfo) {
   console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
   const data = {
@@ -254,7 +254,6 @@ function share() {
     }, 2000)
   })
   // await sleep(3);
-
 }
 //等待一下
 function sleep(s) {
@@ -264,28 +263,6 @@ function sleep(s) {
     }, s * 1000);
   })
 }
-// function request(function_id, body = {}) {
-//   $hammer.request('GET', taskurl(function_id, body), (error, response) => {
-//     error ? $hammer.log("Error:", error) : sleep(JSON.parse(response.body));
-//   })
-// }
-// function taskurl(function_id, body = {}) {
-//   return {
-//     url: `${JD_API_HOST}/${function_id}?_=${new Date().getTime()*1000}&reqData=${escape(JSON.stringify(body))}`,
-//     headers: {
-//       'Cookie': cookie,
-//       'Host': 'ms.jr.jd.com',
-//       'Accept': 'application/json',
-//       'Origin': 'https://uuj.jr.jd.com',
-//       'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
-//       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-//       'Referer': 'https://uuj.jr.jd.com/wxgrowing/moneytree7/index.html?channellv=sy',
-//       'Accept-Language': 'zh-CN,en-US;q=0.8',
-//       'X-Requested-With': 'com.jd.jrapp',
-//     }
-//   }
-// }
-
 
 async function request(function_id, body = {}) {
   await sleep(2); //歇口气儿, 不然会报操作频繁
@@ -299,9 +276,6 @@ async function request(function_id, body = {}) {
       }
     })
   })
-  // $hammer.request('POST', taskurl(function_id, body), (error, response) => {
-  //   error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
-  // })
 }
 
 function taskurl(function_id, body) {
