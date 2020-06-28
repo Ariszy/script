@@ -122,7 +122,7 @@ function user_info() {
   params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);
   // const data = 'reqData=%7B%22sharePin%22%3A%20%22%22%2C%20%22shareType%22%3A%201%2C%20%22channelLV%22%3A%20%22%22%2C%20%22source%22%3A%200%2C%20%22riskDeviceParam%22%3A%20%22%7B%5C%22eid%5C%22%3A%5C%22%5C%22%2C%5C%22dt%5C%22%3A%5C%22%5C%22%2C%5C%22ma%5C%22%3A%5C%22%5C%22%2C%5C%22im%5C%22%3A%5C%22%5C%22%2C%5C%22os%5C%22%3A%5C%22%5C%22%2C%5C%22osv%5C%22%3A%5C%22%5C%22%2C%5C%22ip%5C%22%3A%5C%22%5C%22%2C%5C%22apid%5C%22%3A%5C%22%5C%22%2C%5C%22ia%5C%22%3A%5C%22%5C%22%2C%5C%22uu%5C%22%3A%5C%22%5C%22%2C%5C%22cv%5C%22%3A%5C%22%5C%22%2C%5C%22nt%5C%22%3A%5C%22%5C%22%2C%5C%22at%5C%22%3A%5C%221%5C%22%2C%5C%22fp%5C%22%3A%5C%22%5C%22%2C%5C%22token%5C%22%3A%5C%22%5C%22%7D%22%7D'
   // const data = 'reqData=' + encodeURIComponent(JSON.stringify(params));
-  const data = encodeURIComponent(JSON.stringify(params));
+  // const data = encodeURIComponent(JSON.stringify(params));
   request('login', data).then((res) => {
     console.log(`登录信息:${JSON.stringify(res)}\n`);
     if (res && res.resultCode === 0) {
@@ -150,8 +150,8 @@ async function dayWork(userInfo) {
   console.log(`开始做任务userInfo了\n`)
   const a = {"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]};
   // const data = 'reqData={"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]}';
-  const data = JSON.stringify(a);
-  let response = await request('dayWork', data);
+  // const data = JSON.stringify(a);
+  let response = await request('dayWork', a);
   console.log(`做任务结果:${JSON.stringify(response)}\n`)
   let canTask = [];
   if (response.resultCode === 0) {
@@ -171,8 +171,8 @@ async function dayWork(userInfo) {
         console.log('每日签到')
         const a = {"source":2,"workType":1,"opType":2};
         // const data = 'reqData={"source":2,"workType":1,"opType":2}';
-        const data = JSON.stringify(a);
-        let signRes = await request('doWork', data);
+        // const data = JSON.stringify(a);
+        let signRes = await request('doWork', a);
         console.log(`签到结果:${JSON.stringify(signRes)}`);
       } else if (item.workStatus === 2) {
         console.log(`签到任务已经做过`)
@@ -183,15 +183,15 @@ async function dayWork(userInfo) {
         // share();
         const a = {"source":0,"workType":2,"opType":1};
         // const data = 'reqData={"source":0,"workType":2,"opType":1}';
-        const data = JSON.stringify(a);
+        // const data = JSON.stringify(a);
         //开始分享
-        let shareRes = await request('doWork', data);
+        let shareRes = await request('doWork', a);
         console.log(`分享111:${JSON.stringify(shareRes)}`);
         await sleep(2);
         // const data2 = 'reqData={"source":0,"workType":2,"opType":2}';
         const b = {"source":0,"workType":2,"opType":2};
-        const data2 = JSON.stringify(b);
-        let shareResJL = await request('doWork', data2);
+        // const data2 = JSON.stringify(b);
+        let shareResJL = await request('doWork', b);
         console.log(`分享222:${JSON.stringify(shareResJL)}`)
         // setTimeout(() => {
         //   // 领取分享后的奖励
@@ -253,16 +253,14 @@ function harvest(userInfo) {
     "userToken": userInfo.userToken
   }
   // const data2 = 'reqData=' + encodeURIComponent(JSON.stringify(data));
-  const data2 = encodeURIComponent(JSON.stringify(data));
-  request('harvest', data2).then((res) => {
+  // const data2 = encodeURIComponent(JSON.stringify(data));
+  request('harvest', data).then((res) => {
     console.log(`收获的结果:${JSON.stringify(res)}`);
   })
 }
 function share() {
   console.log(`开始做分享任务了\n`)
-  const a = {"source":0,"workType":2,"opType":1};
-  // const data = 'reqData={"source":0,"workType":2,"opType":1}';
-  const data = JSON.stringify(a);
+  const data = 'reqData={"source":0,"workType":2,"opType":1}';
   request('doWork', data).then(res => {
     console.log(`分享111:${JSON.stringify(res)}`)
     setTimeout(() => {
@@ -300,7 +298,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${body}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
