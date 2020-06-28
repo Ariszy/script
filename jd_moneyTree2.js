@@ -134,7 +134,8 @@ function user_info() {
         // dayWork(res.resultData.data)
       }
     } else {
-      console.log('走了else')
+      console.log('走了else');
+      gen.return();
     }
   });
 }
@@ -200,6 +201,7 @@ function harvest(userInfo) {
   }
   request('harvest', data).then((res) => {
     console.log(`收获金果:${JSON.stringify(res)}`);
+    gen.next();
   })
 }
 function sign() {
