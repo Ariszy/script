@@ -108,7 +108,7 @@ function* entrance() {
   yield dayWork();//做任务
   yield harvest(userInfo);//收获
   message += `收金果,签到,分享任务做完了\n`;
-  $hammer.alert(name, message);
+  // $hammer.alert(name, message);
   console.log('收金果,签到,分享任务做完了');
 }
 
