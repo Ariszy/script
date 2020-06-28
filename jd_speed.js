@@ -104,7 +104,7 @@ function flyTask_start() {
   const functionId = arguments.callee.name.toString();
   const body = {
     "source":"game",
-    "source_id":"{source_id}"
+    "source_id":""
   }
   request(functionId, body)
 }
@@ -117,7 +117,6 @@ function flyTask_state() {
 }
 function request(function_id, body = {}) {
   $hammer.request('GET', taskurl(function_id, body), (error, response) => {
-    console.log(response)
     error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
   })
 }
