@@ -197,7 +197,7 @@ function harvest(userInfo) {
     "userToken": userInfo.userToken
   }
   request('harvest', data).then((res) => {
-    console.log(`收获的结果:${JSON.stringify(res)}`);
+    console.log(`收获金果:${JSON.stringify(res)}`);
   })
 }
 function sign() {
