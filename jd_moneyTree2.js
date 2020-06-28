@@ -4,7 +4,7 @@
 // 3、分享
 // 其他功能待测试
 // cron */6 * * * *   # 表示每6分钟收取一次，自行设定运行间隔
-
+// 圈X,Loon,surge均可使用
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -93,20 +93,21 @@ const $hammer = (() => {
 
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD')
-const name = '京东摇钱树'
+const name = '京东摇钱树';
+let message = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null;
 let gen = entrance();
 gen.next();
 function* entrance() {
   if (!cookie) {
-    return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
+    // return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
+    message = '请先获取cookie\n直接使用NobyDa的京东签到获取';
   }
   yield user_info();
-  // yield sign();//签到
-  console.log(`userInfo: ${JSON.stringify(userInfo)}\n`)
-  yield dayWork(userInfo);//做任务
+  yield dayWork();//做任务
   yield harvest(userInfo);//收获
+  $hammer.alert(name, message)
 }
 
 // TODO ,body传值未解决
@@ -135,20 +136,12 @@ function user_info() {
     }
   });
 }
-function sign() {
-  console.log('每日签到')
-  const data = {"source":2,"workType":1,"opType":2};
-  return new Promise((rs, rj) => {
-    request('doWork', data).then(response => {
-      rs(response);
-    })
-  })
-}
-async function dayWork(userInfo) {
+
+async function dayWork() {
   console.log(`开始做任务userInfo了\n`)
   const data = {"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]};
   let response = await request('dayWork', data);
-  console.log(`做任务结果:${JSON.stringify(response)}\n`)
+  console.log(`获取任务的信息:${JSON.stringify(response)}\n`)
   let canTask = [];
   if (response.resultCode === 0) {
     if (response.resultData.code === '200') {
@@ -163,15 +156,16 @@ async function dayWork(userInfo) {
   for (let item of canTask) {
     if (item.workType === 1) {
       //  签到任务
-      if (item.workStatus === 0) {
-        console.log('每日签到')
-        // const data = {"source":2,"workType":1,"opType":2};
-        // let signRes = await request('doWork', data);
-        let signRes = sign();
-        console.log(`签到结果:${JSON.stringify(signRes)}`);
-      } else if (item.workStatus === 2) {
-        console.log(`签到任务已经做过`)
-      }
+      let signRes = await sign();
+      console.log(`签到结果:${JSON.stringify(signRes)}`);
+      // if (item.workStatus === 0) {
+      //   // const data = {"source":2,"workType":1,"opType":2};
+      //   // let signRes = await request('doWork', data);
+      //   let signRes = sign();
+      //   console.log(`签到结果:${JSON.stringify(signRes)}`);
+      // } else if (item.workStatus === 2) {
+      //   console.log(`签到任务已经做过`)
+      // }
     } else if (item.workType === 2) {
       // 分享任务
       if (item.workStatus === 0) {
@@ -192,42 +186,6 @@ async function dayWork(userInfo) {
     }
   }
   gen.next();
-  // request('dayWork', data).then((response ) => {
-  //   console.log(`做任务结果:${JSON.stringify(response)}\n`)
-  //   let canTask = [];
-  //   if (response.resultCode === 0) {
-  //     if (response.resultData.code === '200') {
-  //       response.resultData.data.map((item) => {
-  //         if (item.prizeType === 2) {
-  //           canTask.push(item);
-  //         }
-  //       })
-  //     }
-  //   }
-  //   console.log(`canTask::${canTask}\n`)
-  //   console.log(`canTask::${JSON.stringify(canTask)}\n`)
-  //   for (let item of canTask) {
-  //     if (item.workType === 1) {
-  //       //  签到任务
-  //       if (item.workStatus === 0) {
-  //         console.log('每日签到')
-  //         const data = 'reqData={"source":2,"workType":1,"opType":2}';
-  //         let aa = await request('doWork', data);
-  //         console.log(`签到结果:${JSON.stringify(res)}`);
-  //       } else if (item.workStatus === 2) {
-  //         console.log(`签到任务已经做过`)
-  //       }
-  //     } else if (item.workType === 2) {
-  //       // 分享任务
-  //       if (item.workStatus === 0) {
-  //         share();
-  //       } else if (item.workStatus === 2) {
-  //         console.log(`分享任务已经做过`)
-  //       }
-  //     }
-  //   }
-  //   gen.next();
-  // })
 }
 
 function harvest(userInfo) {
@@ -242,8 +200,22 @@ function harvest(userInfo) {
     console.log(`收获的结果:${JSON.stringify(res)}`);
   })
 }
+function sign() {
+  console.log('每日签到')
+  const data = {"source":2,"workType":1,"opType":2};
+  return new Promise((rs, rj) => {
+    request('doWork', data).then(response => {
+      rs(response);
+    })
+  })
+}
+
 function share(data) {
-  console.log(`开始做分享任务了\n`)
+  if (data.opType === 1) {
+    console.log(`开始做分享任务\n`)
+  } else {
+    console.log(`开始做领取分享后的奖励\n`)
+  }
   return new Promise((rs, rj) => {
     request('doWork', data).then(response => {
       rs(response);
