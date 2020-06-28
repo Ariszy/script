@@ -98,8 +98,8 @@ function* step() {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   console.log(`start...`);
-  const flyTask_state =  yield flyTask_state();
-  console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
+  // const flyTask_state =  yield flyTask_state();
+  // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
 // function flyTask_start() {
 //   const functionId = arguments.callee.name.toString();
