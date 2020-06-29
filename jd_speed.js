@@ -1,5 +1,5 @@
 //京东天天加速活动
-//未完
+//未完,待续
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -106,16 +106,35 @@ function* step() {
   }
   console.log(`start...`);
   yield flyTask_state();
+  if (task_status == 0) {
+    console.log(`开启新任务：${JSON.stringify(destination)}`)
+  } else {
+    console.log(`任务进行中：${JSON.stringify(destination)}`);
+  }
+  yield energyPropList();
   // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
-// function flyTask_start() {
-//   const functionId = arguments.callee.name.toString();
-//   const body = {
-//     "source":"game",
-//     "source_id":""
-//   }
-//   request(functionId, body)
-// }
+//开始新的任务
+function flyTask_start(source_id) {
+  const functionId = arguments.callee.name.toString();
+  const body = {
+    "source":"game",
+    "source_id": source_id
+  }
+  request(functionId, body).then(res => {
+    console.log(`开启新的任务:${JSON.stringify(res)}`)
+  })
+}
+//检查燃料
+function energyPropList() {
+  const body = {
+    "source":"game",
+  }
+  request('energyProp_list', body).then(res => {
+    console.log(`检查可领取燃料列表:${JSON.stringify(res)}`)
+  })
+  gen.next();
+}
 function flyTask_state() {
   const functionId = arguments.callee.name.toString();
   const body = {
@@ -133,6 +152,7 @@ function flyTask_state() {
         source_id = data.source_id//根据source_id 启动flyTask_start()
         task_status = data.task_status //0,没开始；1，已开始
       }
+      gen.next();
     }
   })
 }
