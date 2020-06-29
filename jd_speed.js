@@ -111,6 +111,7 @@ function* step() {
   } else {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
+  console.log('开始检查燃料')
   yield energyPropList();
   // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
@@ -153,6 +154,8 @@ function flyTask_state() {
         task_status = data.task_status //0,没开始；1，已开始
       }
       gen.next();
+    } else {
+      console.log('else????')
     }
   })
 }
