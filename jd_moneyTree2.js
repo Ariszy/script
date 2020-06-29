@@ -95,7 +95,7 @@ const $hammer = (() => {
 const cookie = $hammer.read('CookieJD')
 const name = '京东摇钱树';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
-let userInfo = null;
+let userInfo = null, signDay = 0, canSign = 2;
 let gen = entrance();
 gen.next();
 function* entrance() {
@@ -105,6 +105,7 @@ function* entrance() {
     message = '请先获取cookie\n直接使用NobyDa的京东签到获取';
   }
   yield user_info();
+  yield signOne();//每日签到
   yield dayWork();//做任务
   yield harvest(userInfo);//收获
   message += `收金果,签到,分享任务做完了\n`;
@@ -213,7 +214,34 @@ function sign() {
     })
   })
 }
-
+function signIndex() {
+  const params = {
+    "source":0,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  return new Promise((rs, rj) => {
+    request('signIndex', params).then(response => {
+      rs(response);
+    })
+  })
+}
+async function signOne() {
+  let signIndexRes = await signIndex();
+  console.log(`每日签到条件查询:${JSON.stringify(signIndexRes)}`);
+  if (signIndexRes.resultCode === 0) {
+    if (signIndexRes.resultData && signIndexRes.resultData.canSign == 2) {
+      const params = {
+        "source":0,
+        "signDay": signIndexRes.resultData.signDay,
+        "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+      }
+      request('signOne', params).then(response => {
+        console.log(`每日签到结果:${JSON.stringify(response)}`);
+      })
+    }
+  }
+  gen.next();
+}
 function share(data) {
   if (data.opType === 1) {
     console.log(`开始做分享任务\n`)
@@ -263,7 +291,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${function_id === 'harvest' || function_id === 'login' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,

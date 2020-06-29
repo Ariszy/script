@@ -1,3 +1,5 @@
+//京东天天加速活动
+//未完
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
