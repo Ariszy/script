@@ -315,6 +315,7 @@ async function setUserLinkStatus(missionId) {
 // 领取浏览后的奖励
 function receiveAward(mid) {
   if (!mid) return
+  mid = mid + "";
   const params = {
     "source":0,
     "workType": 7,
