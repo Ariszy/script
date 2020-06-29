@@ -229,11 +229,11 @@ async function signOne() {
   let signIndexRes = await signIndex();
   console.log(`每日签到条件查询:${JSON.stringify(signIndexRes)}`);
   if (signIndexRes.resultCode === 0) {
-    if (signIndexRes.resultData && signIndexRes.resultData.canSign == 2) {
+    if (signIndexRes.resultData && signIndexRes.resultData.data.canSign == 2) {
       console.log('准备每日签到')
       const params = {
         "source":0,
-        "signDay": signIndexRes.resultData.signDay,
+        "signDay": signIndexRes.resultData.data.signDay,
         "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
       }
       request('signOne', params).then(response => {
