@@ -277,7 +277,7 @@ async function setUserLinkStatus(missionId) {
       "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
     }
     let response = await request(arguments.callee.name.toString(), params)
-    console.log(`第${index}次浏览活动完成: ${JSON.stringify(response)}`);
+    console.log(`missionId为${missionId}：：第${index}次浏览活动完成: ${JSON.stringify(response)}`);
     resultCode = response.resultCode;
     code = response.resultData.code;
     // if (resultCode === 0) {
