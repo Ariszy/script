@@ -151,7 +151,7 @@ function user_info() {
 
 async function dayWork() {
   console.log(`开始做任务userInfo了\n`)
-  const data = {"source":2,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]};
+  const data = {"source":0,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]};
   let response = await request('dayWork', data);
   console.log(`获取任务的信息:${JSON.stringify(response)}\n`)
   let canTask = [];
