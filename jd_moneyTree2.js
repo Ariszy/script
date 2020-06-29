@@ -230,6 +230,7 @@ async function signOne() {
   console.log(`每日签到条件查询:${JSON.stringify(signIndexRes)}`);
   if (signIndexRes.resultCode === 0) {
     if (signIndexRes.resultData && signIndexRes.resultData.canSign == 2) {
+      console.log('准备每日签到')
       const params = {
         "source":0,
         "signDay": signIndexRes.resultData.signDay,
@@ -238,6 +239,8 @@ async function signOne() {
       request('signOne', params).then(response => {
         console.log(`每日签到结果:${JSON.stringify(response)}`);
       })
+    } else {
+      console.log('走了signOne的else')
     }
   }
   gen.next();
