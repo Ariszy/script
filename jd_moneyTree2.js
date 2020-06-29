@@ -298,7 +298,7 @@ async function setUserLinkStatus(missionId) {
       "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
     }
     let response = await request('setUserLinkStatus', params)
-    console.log(`missionId为${missionId}：：第${index}次浏览活动完成: ${JSON.stringify(response)}`);
+    console.log(`missionId为${missionId}：：第${index + 1}次浏览活动完成: ${JSON.stringify(response)}`);
     resultCode = response.resultCode;
     code = response.resultData.code;
     // if (resultCode === 0) {
@@ -308,7 +308,26 @@ async function setUserLinkStatus(missionId) {
     index++;
   } while (index < 7)
   console.log('浏览店铺任务结束');
+  console.log('开始领取浏览后的奖励');
+  let receiveAwardRes = await receiveAward(missionId);
+  console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
   gen.next();
+}
+// 领取浏览后的奖励
+function receiveAward(mid) {
+  if (!mid) return
+  const params = {
+    "source":0,
+    "workType": 7,
+    "opType": 2,
+    "mid": mid,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  return new Promise((rs, rj) => {
+    request('dayWork', params).then(response => {
+      rs(response);
+    })
+  })
 }
 function share(data) {
   if (data.opType === 1) {
