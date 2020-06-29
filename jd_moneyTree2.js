@@ -115,7 +115,7 @@ async function* entrance() {
       yield setUserLinkStatus(task.mid);
     } else if (task.mid && task.workStatus === 1){
       console.log('开始领取浏览后的奖励');
-      let receiveAwardRes = await receiveAward(missionId);
+      let receiveAwardRes = await receiveAward(task.mid);
       console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
     } else if (task.mid && task.workStatus === 2) {
       console.log('所有的浏览任务都做完了')
@@ -172,15 +172,9 @@ async function dayWork() {
         if (item.prizeType === 2) {
           canTask.push(item);
         }
-        console.log(item.workType);
-        console.log(item.prizeType);
-        console.log(item.workType === 7);
-        console.log(item.prizeType === 0);
         if (item.workType === 7 && item.prizeType === 0) {
           // missionId.push(item.mid);
           taskInfo.push(item);
-        } else {
-          console.log('浏览任务走了else')
         }
         // if (item.workType === 7 && item.prizeType === 0) {
         //   missionId2 = item.mid;
