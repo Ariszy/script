@@ -4,8 +4,9 @@
 // 3、分享
 // 4、浏览任务
 // 5、自动领取浏览后的奖励
-// 6、七天签到功能（连续不间断签到七天）
-// cron */6 * * * *   # 表示每6分钟收取一次，自行设定运行间隔
+// 6、七天签到（连续不间断签到七天）
+// cron */6 * * * *
+//表示每6分钟收取一次，自行设定运行间隔
 // 圈X,Loon,surge均可使用
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
@@ -126,7 +127,7 @@ async function* entrance() {
   yield harvest(userInfo);//收获
   message += `收金果,签到,分享任务做完了\n`;
   // $hammer.alert(name, message);
-  console.log('收金果,签到,分享任务做完了');
+  console.log('任务做完了');
 }
 
 function user_info() {
