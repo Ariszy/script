@@ -167,6 +167,10 @@ async function dayWork() {
         if (item.prizeType === 2) {
           canTask.push(item);
         }
+        console.log(item.workType);
+        console.log(item.prizeType);
+        console.log(item.workType === 7);
+        console.log(item.prizeType === 0);
         if (item.workType === 7 && item.prizeType === 0) {
           // missionId.push(item.mid);
           taskInfo.push(item);
