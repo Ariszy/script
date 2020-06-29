@@ -306,7 +306,7 @@ async function setUserLinkStatus(missionId) {
     //   console.log(`领取遛狗奖励完成: ${JSON.stringify(sportRevardResult)}`);
     // }
     index++;
-  } while (resultCode === 0 && code === 200)
+  } while (index < 7)
   console.log('浏览店铺任务结束');
   gen.next();
 }
