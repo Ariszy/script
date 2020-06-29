@@ -105,7 +105,7 @@ function* entrance() {
     message = '请先获取cookie\n直接使用NobyDa的京东签到获取';
   }
   yield user_info();
-  yield signOne();//每日签到
+  yield signEveryDay();//每日签到
   yield dayWork();//做任务
   yield harvest(userInfo);//收获
   message += `收金果,签到,分享任务做完了\n`;
@@ -160,16 +160,16 @@ async function dayWork() {
   for (let item of canTask) {
     if (item.workType === 1) {
       //  签到任务
-      let signRes = await sign();
-      console.log(`签到结果:${JSON.stringify(signRes)}`);
-      // if (item.workStatus === 0) {
-      //   // const data = {"source":2,"workType":1,"opType":2};
-      //   // let signRes = await request('doWork', data);
-      //   let signRes = sign();
-      //   console.log(`签到结果:${JSON.stringify(signRes)}`);
-      // } else if (item.workStatus === 2) {
-      //   console.log(`签到任务已经做过`)
-      // }
+      // let signRes = await sign();
+      // console.log(`签到结果:${JSON.stringify(signRes)}`);
+      if (item.workStatus === 0) {
+        // const data = {"source":2,"workType":1,"opType":2};
+        // let signRes = await request('doWork', data);
+        let signRes = await sign();
+        console.log(`三餐签到结果:${JSON.stringify(signRes)}`);
+      } else if (item.workStatus === 2) {
+        console.log(`三餐签到任务已经做过`)
+      }
     } else if (item.workType === 2) {
       // 分享任务
       if (item.workStatus === 0) {
@@ -206,7 +206,7 @@ function harvest(userInfo) {
   })
 }
 function sign() {
-  console.log('每日签到')
+  console.log('开始三餐签到')
   const data = {"source":2,"workType":1,"opType":2};
   return new Promise((rs, rj) => {
     request('doWork', data).then(response => {
@@ -225,25 +225,31 @@ function signIndex() {
     })
   })
 }
-async function signOne() {
+async function signEveryDay() {
   let signIndexRes = await signIndex();
   console.log(`每日签到条件查询:${JSON.stringify(signIndexRes)}`);
   if (signIndexRes.resultCode === 0) {
     if (signIndexRes.resultData && signIndexRes.resultData.data.canSign == 2) {
       console.log('准备每日签到')
-      const params = {
-        "source":0,
-        "signDay": signIndexRes.resultData.data.signDay,
-        "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
-      }
-      request('signOne', params).then(response => {
-        console.log(`每日签到结果:${JSON.stringify(response)}`);
-      })
+      let signOneRes = await signOne(signIndexRes.resultData.data.signDay);
+      console.log(`每日签到结果:${JSON.stringify(signOneRes)}`);
     } else {
       console.log('走了signOne的else')
     }
   }
   gen.next();
+}
+function signOne(signDay) {
+  const params = {
+    "source":0,
+    "signDay": signDay,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  return new Promise((rs, rj) => {
+    request('signOne', params).then(response => {
+      rs(response);
+    })
+  })
 }
 function share(data) {
   if (data.opType === 1) {
