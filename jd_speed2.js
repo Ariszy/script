@@ -163,6 +163,7 @@ function _jsonpToJson(v) {
 }
 function request(function_id, body = {}) {
   $hammer.request('GET', taskurl(function_id, body), (error, response) => {
+    console.log((_jsonpToJson(response)))
     error ? $hammer.log("Error:", error) : sleep(JSON.parse(_jsonpToJson(response)));
   })
 }
@@ -171,7 +172,7 @@ function sleep(response) {
   console.log('休息一下');
   setTimeout(() => {
     $hammer.log('休息结束');
-    // $hammer.log(response)
+    $hammer.log(response)
     Task.next(response)
   }, 2000);
 }
