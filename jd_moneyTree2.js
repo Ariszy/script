@@ -1,3 +1,4 @@
+// 京东摇钱树 ：https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree2.js
 // 现有功能
 // 1、收金果
 // 2、每日签到（也就是三餐签到）
