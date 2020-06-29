@@ -149,20 +149,7 @@ function flyTask_state() {
   const body = {
     "source":"game"
   }
-  request(functionId, body).then((res) => {
-    console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
-    if (res.code === 0) {
-      let data = res.data;
-      if (data.beans_num) {
-        beans_num = data.beans_num
-        distance = data.distance
-        destination = data.destination
-        done_distance = data.done_distance
-        source_id = data.source_id//根据source_id 启动flyTask_start()
-        task_status = data.task_status //0,没开始；1，已开始
-      }
-    }
-  })
+  request(functionId, body)
 }
 /**
  * 初始化农场, 可获取果树及用户信息
