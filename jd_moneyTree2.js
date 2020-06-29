@@ -151,7 +151,12 @@ function user_info() {
 
 async function dayWork() {
   console.log(`开始做任务userInfo了\n`)
-  const data = {"source":0,"linkMissonIds":["666","667"],"LinkMissonIdValues":[7,7]};
+  const data = {
+    "source":0,
+    "linkMissonIds":["666","667"],
+    "LinkMissonIdValues":[7,7],
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  };
   let response = await request('dayWork', data);
   console.log(`获取任务的信息:${JSON.stringify(response)}\n`)
   let canTask = [];
@@ -350,7 +355,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
