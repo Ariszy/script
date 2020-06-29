@@ -114,7 +114,7 @@ async function* entrance() {
       console.log('开始做浏览任务');
       yield setUserLinkStatus(task.mid);
     } else if (task.mid && task.workStatus === 1){
-      console.log('开始领取浏览后的奖励');
+      console.log(`开始领取浏览后的奖励:mid:${task.mid}`);
       let receiveAwardRes = await receiveAward(task.mid);
       console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
     } else if (task.mid && task.workStatus === 2) {
