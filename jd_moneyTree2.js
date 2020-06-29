@@ -1,8 +1,10 @@
-// 从 https://github.com/Zero-S1/JD_tools/blob/master/moneyTree.py 改写来的
+// 现有功能
 // 1、收金果
-// 2、每日签到
+// 2、每日签到（也就是三餐签到）
 // 3、分享
-// 其他功能待测试
+// 4、浏览任务
+// 5、自动领取浏览后的奖励
+// 6、七天签到功能（连续不间断签到七天）
 // cron */6 * * * *   # 表示每6分钟收取一次，自行设定运行间隔
 // 圈X,Loon,surge均可使用
 const $hammer = (() => {
@@ -324,7 +326,7 @@ function receiveAward(mid) {
     "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
   }
   return new Promise((rs, rj) => {
-    request('dayWork', params).then(response => {
+    request('doWork', params).then(response => {
       rs(response);
     })
   })
