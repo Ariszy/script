@@ -95,7 +95,7 @@ const $hammer = (() => {
 const cookie = $hammer.read('CookieJD')
 const name = '京东摇钱树';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
-let userInfo = null, signDay = 0, canSign = 2;
+let userInfo = null, taskInfo = [];
 let gen = entrance();
 gen.next();
 function* entrance() {
@@ -107,6 +107,13 @@ function* entrance() {
   yield user_info();
   yield signEveryDay();//每日签到
   yield dayWork();//做任务
+  for (let task of taskInfo) {
+    if (task.mid && task.workStatus === 0) {
+      yield setUserLinkStatus(task.mid);
+    } else {
+      console.log('所有的浏览任务都做完了')
+    }
+  }
   yield harvest(userInfo);//收获
   message += `收金果,签到,分享任务做完了\n`;
   // $hammer.alert(name, message);
@@ -153,6 +160,14 @@ async function dayWork() {
         if (item.prizeType === 2) {
           canTask.push(item);
         }
+        if (item.workType === 7 && item.prizeType === 0) {
+          // missionId.push(item.mid);
+          taskInfo = [];
+          taskInfo.push(item);
+        }
+        // if (item.workType === 7 && item.prizeType === 0) {
+        //   missionId2 = item.mid;
+        // }
       })
     }
   }
@@ -250,6 +265,29 @@ function signOne(signDay) {
       rs(response);
     })
   })
+}
+// 浏览任务
+async function setUserLinkStatus(missionId) {
+  let resultCode = 0, code = 200, index = 0;
+  do {
+    const params = {
+      "missionId": missionId,
+      "pushStatus": 1,
+      "keyValue": index,
+      "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+    }
+    let response = await request(arguments.callee.name.toString(), params)
+    console.log(`第${index}次浏览活动完成: ${JSON.stringify(response)}`);
+    resultCode = response.resultCode;
+    code = response.resultData.code;
+    // if (resultCode === 0) {
+    //   let sportRevardResult = await getSportReward();
+    //   console.log(`领取遛狗奖励完成: ${JSON.stringify(sportRevardResult)}`);
+    // }
+    index++;
+  } while (resultCode === 0 && code === 200)
+  console.log('浏览店铺任务结束');
+  gen.next();
 }
 function share(data) {
   if (data.opType === 1) {
