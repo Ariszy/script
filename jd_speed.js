@@ -142,7 +142,7 @@ function flyTask_state() {
   }
   request(functionId, body).then((res) => {
     console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
-    if (res.code === 0) {
+    if (res.code == 0) {
       let data = res.data;
       if (data.beans_num) {
         beans_num = data.beans_num
