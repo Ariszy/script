@@ -92,7 +92,7 @@ const $hammer = (() => {
 
 
 //京东接口地址
-const JD_API_HOST = 'https://api.m.jd.com/client.action';
+const JD_API_HOST = 'https://api.m.jd.com/';
 
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD')
@@ -138,13 +138,32 @@ function* step() {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
 
-  let farmInfo = yield initForFarm();
+  let farmInfo = yield flyTask_state();
   console.log(`初始化信息：${JSON.stringify(farmInfo)}`)
   $hammer.alert(name)
   $hammer.done();
 }
 
-
+function flyTask_state() {
+  const functionId = arguments.callee.name.toString();
+  const body = {
+    "source":"game"
+  }
+  request(functionId, body).then((res) => {
+    console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
+    if (res.code === 0) {
+      let data = res.data;
+      if (data.beans_num) {
+        beans_num = data.beans_num
+        distance = data.distance
+        destination = data.destination
+        done_distance = data.done_distance
+        source_id = data.source_id//根据source_id 启动flyTask_start()
+        task_status = data.task_status //0,没开始；1，已开始
+      }
+    }
+  })
+}
 /**
  * 初始化农场, 可获取果树及用户信息
  */
@@ -152,10 +171,12 @@ function initForFarm() {
   let functionId = arguments.callee.name.toString();
   request(functionId);
 }
-
+function _jsonpToJson(v) {
+  return v.match(/{.*}/)[0]
+}
 function request(function_id, body = {}) {
   $hammer.request('GET', taskurl(function_id, body), (error, response) => {
-    error ? $hammer.log("Error:", error) : sleep(JSON.parse(response.body));
+    error ? $hammer.log("Error:", error) : sleep(JSON.parse(_jsonpToJson(response)));
   })
 }
 
@@ -170,7 +191,7 @@ function sleep(response) {
 
 function taskurl(function_id, body = {}) {
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}&appid=wh5&body=${escape(JSON.stringify(body))}`,
+    url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=${function_id}&body=${escape(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}`,
     headers: {
       Cookie: cookie,
       UserAgent: `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
