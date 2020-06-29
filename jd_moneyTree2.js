@@ -155,6 +155,7 @@ async function dayWork() {
   let response = await request('dayWork', data);
   console.log(`获取任务的信息:${JSON.stringify(response)}\n`)
   let canTask = [];
+  taskInfo = [];
   if (response.resultCode === 0) {
     if (response.resultData.code === '200') {
       response.resultData.data.map((item) => {
@@ -163,8 +164,9 @@ async function dayWork() {
         }
         if (item.workType === 7 && item.prizeType === 0) {
           // missionId.push(item.mid);
-          taskInfo = [];
           taskInfo.push(item);
+        } else {
+          console.log('浏览任务走了else')
         }
         // if (item.workType === 7 && item.prizeType === 0) {
         //   missionId2 = item.mid;
@@ -173,6 +175,7 @@ async function dayWork() {
     }
   }
   console.log(`canTask::${JSON.stringify(canTask)}\n`)
+  console.log(`浏览任务列表taskInfo::${JSON.stringify(taskInfo)}\n`)
   for (let item of canTask) {
     if (item.workType === 1) {
       //  签到任务
@@ -205,6 +208,14 @@ async function dayWork() {
       }
     }
   }
+  // console.log(`浏览任务列表：：${JSON.stringify(taskInfo)}`);
+  // for (let task of taskInfo) {
+  //   if (task.mid && task.workStatus === 0) {
+  //     await setUserLinkStatus(task.mid);
+  //   } else {
+  //     console.log('所有的浏览任务都做完了')
+  //   }
+  // }
   gen.next();
 }
 
