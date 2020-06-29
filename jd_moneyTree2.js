@@ -98,7 +98,7 @@ const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [];
 let gen = entrance();
 gen.next();
-function* entrance() {
+async function* entrance() {
   let message = '';
   if (!cookie) {
     // return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
@@ -111,8 +111,13 @@ function* entrance() {
   console.log(`浏览任务列表：：${JSON.stringify(taskInfo)}`);
   for (let task of taskInfo) {
     if (task.mid && task.workStatus === 0) {
+      console.log('开始做浏览任务');
       yield setUserLinkStatus(task.mid);
-    } else {
+    } else if (task.mid && task.workStatus === 1){
+      console.log('开始领取浏览后的奖励');
+      let receiveAwardRes = await receiveAward(missionId);
+      console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
+    } else if (task.mid && task.workStatus === 2) {
       console.log('所有的浏览任务都做完了')
     }
   }
@@ -306,7 +311,7 @@ async function setUserLinkStatus(missionId) {
     //   console.log(`领取遛狗奖励完成: ${JSON.stringify(sportRevardResult)}`);
     // }
     index++;
-  } while (index < 7)
+  } while (index < 7) //不知道结束的条件，目前写死循环7次吧
   console.log('浏览店铺任务结束');
   console.log('开始领取浏览后的奖励');
   let receiveAwardRes = await receiveAward(missionId);
