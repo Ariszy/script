@@ -107,6 +107,8 @@ function* entrance() {
   yield user_info();
   yield signEveryDay();//每日签到
   yield dayWork();//做任务
+  console.log('开始做浏览任务了')
+  console.log(`浏览任务列表：：${JSON.stringify(taskInfo)}`);
   for (let task of taskInfo) {
     if (task.mid && task.workStatus === 0) {
       yield setUserLinkStatus(task.mid);
@@ -120,7 +122,6 @@ function* entrance() {
   console.log('收金果,签到,分享任务做完了');
 }
 
-// TODO ,body传值未解决
 function user_info() {
   console.log('初始化摇钱树个人信息');
   const params = {
@@ -208,7 +209,7 @@ async function dayWork() {
 }
 
 function harvest(userInfo) {
-  console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
+  // console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
   const data = {
     "source": 2,
     "sharePin": "",
@@ -276,7 +277,7 @@ async function setUserLinkStatus(missionId) {
       "keyValue": index,
       "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
     }
-    let response = await request(arguments.callee.name.toString(), params)
+    let response = await request('setUserLinkStatus', params)
     console.log(`missionId为${missionId}：：第${index}次浏览活动完成: ${JSON.stringify(response)}`);
     resultCode = response.resultCode;
     code = response.resultData.code;
@@ -338,7 +339,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
