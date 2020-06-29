@@ -153,8 +153,8 @@ async function dayWork() {
   console.log(`开始做任务userInfo了\n`)
   const data = {
     "source":0,
-    "linkMissonIds":["666","667"],
-    "LinkMissonIdValues":[7,7],
+    "linkMissionIds":["666","667"],
+    "LinkMissionIdValues":[7,7],
     "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
   };
   let response = await request('dayWork', data);
