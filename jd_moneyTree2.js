@@ -149,7 +149,7 @@ function user_info() {
         console.log('res.resultData.data有值')
         userInfo = res.resultData.data;
         if (userInfo.realName) {
-          console.log(`助力码sharePin为：：`${userInfo.sharePin});
+          console.log(`助力码sharePin为：：${userInfo.sharePin}`);
           subTitle = userInfo.treeInfo.treeName;
           message += `【我的金国数量】${userInfo.treeInfo.fruit}\n`;
           message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
