@@ -99,7 +99,7 @@ let distance = null;
 let destination = null;
 let source_id = null;
 let done_distance = null;
-let task_status = null, able_energeProp_list = [], spaceEvents = [];
+let task_status = null, able_energeProp_list = [], spaceEvents = [], energePropUsale = [];
 async function* entrance() {
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
@@ -133,6 +133,24 @@ async function* entrance() {
   } else {
     console.log('没有可处理的特殊事件')
   }
+  yield energePropUsaleList();
+  if (energePropUsale && energePropUsale.length > 0) {
+    for (let i of energePropUsale) {
+      let _energyProp_use = await energyPropUse(i.id);
+      console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+    }
+  } else {
+    console.log('暂无可用燃料')
+  }
+  //执行上面操作后，再进行一次检测
+  yield flyTask_state();
+  if (task_status === 0) {
+    console.log(`开启新任务：${JSON.stringify(destination)}`);
+    yield flyTask_start(source_id)
+  } else if (task_status === 1) {
+    console.log(`任务进行中：${JSON.stringify(destination)}`);
+  }
+  $hammer.alert(name);
 }
 //开始新的任务
 function flyTask_start(source_id) {
@@ -207,10 +225,35 @@ function spaceEventHandleEvent(id, value) {
   const body = {
     "source":"game",
     "eventId": id,
-    options: value
+    "option": value
   }
   return new Promise((res, rej) => {
     request('spaceEvent_handleEvent', body).then((response) => {
+      res(response);
+    })
+  })
+}
+function energePropUsaleList() {
+  const body = {
+    "source":"game"
+  };
+  request('energyProp_usalbeList', body).then(res => {
+    if (res.code === 0 && res.data && res.data.length > 0) {
+      res.data.map(item => {
+        energePropUsale.push(item)
+      })
+    }
+    gen.next();
+  });
+}
+function energyPropUse(id) {
+  if (!id) return
+  const body = {
+    "source":"game",
+    "energy_id": id
+  }
+  return new Promise((res, rej) => {
+    request('energyProp_use', body).then((response) => {
       res(response);
     })
   })
@@ -272,8 +315,14 @@ function _jsonpToJson(v) {
   return v.match(/{.*}/)[0]
 }
 function taskurl(function_id, body) {
+  let url = '';
+  if (function_id === 'spaceEvent_handleEvent') {
+    url = `${JD_API_HOST}?appid=memberTaskCenter&functionId=${function_id}&body=${escape(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}&t=${new Date().getTime()}`
+  } else {
+    url = `${JD_API_HOST}?appid=memberTaskCenter&functionId=${function_id}&body=${escape(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}`;
+  }
   return {
-    url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=${function_id}&body=${escape(JSON.stringify(body))}&jsonp=__jsonp1593330783690&_=${new Date().getTime()}`,
+    url,
     headers: {
       'Cookie': cookie,
       'Host': 'api.m.jd.com',
