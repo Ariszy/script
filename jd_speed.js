@@ -143,9 +143,15 @@ function flyTask_state() {
   }
   request(functionId, body).then((res) => {
     console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
+    console.log(`${res.code}`)
+    console.log(`${res.data}`)
+    console.log(`${res.data.beans_num}`)
+    console.log(`${res.data.distance}`)
     if (res.code == 0) {
+      console.log('走了if--code=0')
       let data = res.data;
       if (data.beans_num) {
+        console.log('走了if--data.beans_num')
         beans_num = data.beans_num
         distance = data.distance
         destination = data.destination
