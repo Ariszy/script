@@ -126,7 +126,6 @@ async function* entrance() {
     }
   }
   yield harvest(userInfo);//收获
-  message += `收金果,签到,分享任务做完了\n`;
   $hammer.alert(name, message, subTitle);
   console.log('任务做完了');
 }
