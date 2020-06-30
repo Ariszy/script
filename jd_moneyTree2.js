@@ -98,7 +98,7 @@ const $hammer = (() => {
 
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD');
-let time = $hammer.read('time') || 0;
+let treeMsgTime = $hammer.read('treeMsgTime') || 0;
 const name = '京东摇钱树';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '';
@@ -126,7 +126,7 @@ async function* entrance() {
     }
   }
   yield harvest(userInfo);//收获
-  console.log(`----${time}`)
+  console.log(`----${treeMsgTime}`)
   msgControl();
   console.log('任务做完了');
 }
@@ -367,18 +367,17 @@ function share(data) {
 }
 function msgControl() {
   console.log('控制弹窗');
-  console.log(time);
-  console.log(typeof (time));
-  time++;
-  time = time.toString();
-  console.log(time);
-  $hammer.write(time, 'time');
-  console.log(`${$hammer.read('time')}`);
-  console.log(`${typeof (Number($hammer.read('time')))}`)
-  console.log(`${ Number($hammer.read('time')) === Notice}`)
-  if (Number($hammer.read('time')) === Notice) {
+  console.log(treeMsgTime);
+  console.log(typeof (treeMsgTime));
+  treeMsgTime++;
+  console.log(treeMsgTime);
+  $hammer.write(`${treeMsgTime}`, 'treeMsgTime');
+  console.log(`${$hammer.read('treeMsgTime')}`);
+  console.log(`${typeof (Number($hammer.read('treeMsgTime')))}`)
+  console.log(`${($hammer.read('treeMsgTime') * 1) === Notice}`)
+  if (($hammer.read('treeMsgTime') * 1) === Notice) {
     $hammer.alert(name, message, subTitle);
-    $hammer.write(0, 'time');
+    $hammer.write('0', 'treeMsgTime');
   }
 }
 //等待一下
