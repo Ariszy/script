@@ -89,8 +89,8 @@ const $hammer = (() => {
 const cookie = $hammer.read('CookieJD')
 const name = '天天加速';
 const JD_API_HOST = 'https://api.m.jd.com/';
-let Task = step();
-Task.next();
+let gen = entrance();
+gen.next();
 
 let farmTask = null;
 // let farmInfo = null;
@@ -100,7 +100,7 @@ let destination = null;
 let source_id = null;
 let done_distance = null;
 let task_status = null;
-function* step() {
+function* entrance() {
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
