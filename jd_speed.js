@@ -189,10 +189,12 @@ function spaceEvent_list() {
       for (let item of response.data) {
         if (item.status === 1) {
           for (let j of item.options) {
-            spaceEvents.push({
-              "id": item.id,
-              "value": j.value
-            })
+            if(j.type === 1) {
+              spaceEvents.push({
+                "id": item.id,
+                "value": j.value
+              })
+            }
           }
         }
       }
