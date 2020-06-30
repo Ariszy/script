@@ -103,10 +103,8 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '';
 let gen = entrance();
 gen.next();
 async function* entrance() {
-  let message = '';
   if (!cookie) {
-    // return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
-    message = '请先获取cookie\n直接使用NobyDa的京东签到获取';
+    return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   yield user_info();
   yield signEveryDay();//每日签到
@@ -152,6 +150,7 @@ function user_info() {
           console.log(`助力码sharePin为：：${userInfo.sharePin}`);
           subTitle = userInfo.treeInfo.treeName;
           message += `【我的金国数量】${userInfo.treeInfo.fruit}\n`;
+          console.log(`初始化信息${message}`)
           // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
           // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
           gen.next();
