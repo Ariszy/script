@@ -9,6 +9,7 @@
 // cron */6 * * * *
 //表示每6分钟收取一次，自行设定运行间隔
 // 圈X,Loon,surge均可使用
+const Notice = 2;//设置运行多少次才通知。(如果cron设置是6分钟运行一次，那么这里默认是(6 * Notice) / 60 = 6小时通知一次)
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -96,7 +97,8 @@ const $hammer = (() => {
 })();
 
 //直接用NobyDa的jd cookie
-const cookie = $hammer.read('CookieJD')
+const cookie = $hammer.read('CookieJD');
+let time = $hammer.read('time') || 0;
 const name = '京东摇钱树';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '';
@@ -124,7 +126,7 @@ async function* entrance() {
     }
   }
   yield harvest(userInfo);//收获
-  $hammer.alert(name, message, subTitle);
+  msgControl();
   console.log('任务做完了');
 }
 
@@ -361,6 +363,14 @@ function share(data) {
   //   }, 2000)
   // })
   // await sleep(3);
+}
+function msgControl() {
+  time++;
+  $hammer.write(time, 'time');
+  if (Number($hammer.read('time')) === Notice) {
+    $hammer.alert(name, message, subTitle);
+    $hammer.write(0, 'time');
+  }
 }
 //等待一下
 function sleep(s) {
