@@ -147,7 +147,7 @@ function energyPropList() {
   request('energyProp_list', body).then(response => {
     console.log(`检查可领取燃料列表:${JSON.stringify(response)}`);
     if (response.code === 0 && response.data && response.data.length > 0) {
-      for (let item of response) {
+      for (let item of response.data) {
         if (item.thaw_time === 0) {
           able_energeProp_list.push(item);
         }
