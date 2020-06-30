@@ -92,7 +92,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 let gen = entrance();
 gen.next();
 
-let farmTask = null;
+let indexState = 0;
 let message = '';
 let beans_num = null;
 let distance = null;
@@ -276,7 +276,10 @@ function flyTask_state() {
         done_distance = data.done_distance
         source_id = data.source_id//根据source_id 启动flyTask_start()
         task_status = data.task_status //0,没开始；1，已开始
-        message += `【空间站】：${destination}`;
+        if (indexState === 1) {
+          message += `【空间站】：${destination}`;
+        }
+        indexState++;
       }
       gen.next();
     } else {
