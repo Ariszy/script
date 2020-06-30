@@ -371,7 +371,7 @@ function msgControl() {
   console.log(typeof (time));
   time++;
   console.log(time);
-  $hammer.write(3, 'time');
+  $hammer.write('lxk0301', 'time');
   console.log(`${$hammer.read('time')}`);
   console.log(`${Number($hammer.read('time'))}`)
   console.log(`${Notice}`)
