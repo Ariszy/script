@@ -99,7 +99,7 @@ let distance = null;
 let destination = null;
 let source_id = null;
 let done_distance = null;
-let task_status = null, able_energeProp_list = [];
+let task_status = null, able_energeProp_list = [], spaceEvents = [];
 async function* entrance() {
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
@@ -114,7 +114,6 @@ async function* entrance() {
   }
   console.log('开始检查可领取燃料')
   yield energyPropList();
-  console.log(`可领取的燃料任务列表${JSON.stringify(able_energeProp_list)}`)
   if (able_energeProp_list && able_energeProp_list.length > 0) {
     //开始领取燃料
     for (let i of able_energeProp_list) {
@@ -124,7 +123,16 @@ async function* entrance() {
   } else {
     console.log('没有可领取的燃料')
   }
-  // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
+  yield spaceEvent_list();
+  console.log(`spaceEvent_list的信息:${JSON.stringify(spaceEvents)}`);
+  if (spaceEvents && spaceEvents.length > 0) {
+    for (let item of spaceEvents) {
+      let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
+      console.log(`处理特殊事件的结果：：${JSON.stringify(spaceEventRes)}`)
+    }
+  } else {
+    console.log('没有可处理的特殊事件')
+  }
 }
 //开始新的任务
 function flyTask_start(source_id) {
@@ -145,7 +153,7 @@ function energyPropList() {
     "source":"game",
   }
   request('energyProp_list', body).then(response => {
-    console.log(`检查可领取燃料列表:${JSON.stringify(response)}`);
+    console.log(`可领取燃料列表:${JSON.stringify(response)}`);
     if (response.code === 0 && response.data && response.data.length > 0) {
       for (let item of response.data) {
         if (item.thaw_time === 0) {
@@ -166,6 +174,41 @@ function _energyProp_gain(energy_id) {
   }
   return new Promise((res, rej) => {
     request('energyProp_gain', body).then((response) => {
+      res(response);
+    })
+  })
+}
+//检查特殊事件
+function spaceEvent_list() {
+  const body = {
+    "source":"game",
+  }
+  request('spaceEvent_list', body).then(response => {
+    console.log(`可领取燃料列表:${JSON.stringify(response)}`);
+    if (response.code === 0 && response.data && response.data.length > 0) {
+      for (let item of response.data) {
+        if (item.status === 1) {
+          for (let j of item.options) {
+            spaceEvents.push({
+              "id": item.id,
+              "value": j.value
+            })
+          }
+        }
+      }
+    }
+    gen.next();
+  })
+}
+function spaceEventHandleEvent(id, value) {
+  if (!id && !value) return;
+  const body = {
+    "source":"game",
+    "eventId": id,
+    options: value
+  }
+  return new Promise((res, rej) => {
+    request('spaceEvent_handleEvent', body).then((response) => {
       res(response);
     })
   })
