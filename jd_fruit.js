@@ -152,6 +152,9 @@ function* step() {
                 if (signResult.todayGotWaterGoalTask.canPop) {
                   let goalResult = yield gotWaterGoalTaskForFarm();
                   console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
+                  if (goalResult.code === '0') {
+                    message += `【被水滴砸中】获取：${goalResult.addEnergy}g\n`
+                  }
                 }
             } else {
                 message += `签到失败,详询日志\n`
