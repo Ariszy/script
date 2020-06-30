@@ -150,7 +150,7 @@ async function* entrance() {
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
-  $hammer.alert(name);
+  $hammer.alert(name, message);
 }
 //开始新的任务
 function flyTask_start(source_id) {
@@ -202,7 +202,7 @@ function spaceEvent_list() {
     "source":"game",
   }
   request('spaceEvent_list', body).then(response => {
-    console.log(`可领取燃料列表:${JSON.stringify(response)}`);
+    console.log(`开始检查特殊事件`);
     if (response.code === 0 && response.data && response.data.length > 0) {
       for (let item of response.data) {
         if (item.status === 1) {
@@ -238,6 +238,7 @@ function energePropUsaleList() {
     "source":"game"
   };
   request('energyProp_usalbeList', body).then(res => {
+    console.log(`检查剩余燃料${res}`)
     if (res.code === 0 && res.data && res.data.length > 0) {
       res.data.map(item => {
         energePropUsale.push(item)
@@ -275,6 +276,7 @@ function flyTask_state() {
         done_distance = data.done_distance
         source_id = data.source_id//根据source_id 启动flyTask_start()
         task_status = data.task_status //0,没开始；1，已开始
+        message += `【空间站】：${destination}`;
       }
       gen.next();
     } else {
