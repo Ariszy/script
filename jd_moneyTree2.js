@@ -124,7 +124,6 @@ async function* entrance() {
     }
   }
   yield harvest(userInfo);//收获
-  console.log(`message：：：${message}`)
   $hammer.alert(name, message, subTitle);
   console.log('任务做完了');
 }
@@ -148,11 +147,10 @@ function user_info() {
         userInfo = res.resultData.data;
         if (userInfo.realName) {
           console.log(`助力码sharePin为：：${userInfo.sharePin}`);
-          subTitle = userInfo.treeInfo.treeName;
+          subTitle = `${userInfo.nick}的${userInfo.treeInfo.treeName}`;
           message += `【我的金国数量】${userInfo.treeInfo.fruit}\n`;
-          console.log(`初始化信息${message}`)
-          // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
-          // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
+          message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
+          message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
           gen.next();
         } else {
           return $hammer.alert(name, `当前京东账号${userInfo.nick}未实名认证，不可参与此活动`);
