@@ -126,6 +126,7 @@ async function* entrance() {
     }
   }
   yield harvest(userInfo);//收获
+  console.log(message)
   $hammer.alert(name, message, subTitle);
   console.log('任务做完了');
 }
