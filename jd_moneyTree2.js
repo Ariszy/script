@@ -148,8 +148,12 @@ function user_info() {
       if (res.resultData.data) {
         console.log('res.resultData.data有值')
         userInfo = res.resultData.data;
-        gen.next();
-        // dayWork(res.resultData.data)
+        if (userInfo.realName) {
+          gen.next();
+        } else {
+          return $hammer.alert(name, `当前京东账号${userInfo.nick}未实名认证，不可参与此活动`);
+          gen.return();
+        }
       }
     } else {
       console.log('走了else');
