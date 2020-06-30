@@ -365,9 +365,10 @@ function share(data) {
   // await sleep(3);
 }
 function msgControl() {
+  console.log('控制弹窗');
   time++;
   $hammer.write(time, 'time');
-  console.log('控制弹窗');
+  console.log(`${$hammer.read('time')}`);
   console.log(`${Number($hammer.read('time'))}`)
   console.log(`${Notice}`)
   console.log(`${ Number($hammer.read('time')) === Notice}`)
