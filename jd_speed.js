@@ -93,7 +93,7 @@ let gen = entrance();
 gen.next();
 
 let farmTask = null;
-// let farmInfo = null;
+let message = '';
 let beans_num = null;
 let distance = null;
 let destination = null;
@@ -280,7 +280,8 @@ function flyTask_state() {
       }
       gen.next();
     } else {
-      console.log('else????')
+      console.log('else????');
+      gen.return()
     }
   })
 }
