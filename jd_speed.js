@@ -116,6 +116,7 @@ async function* entrance() {
   }
   console.log('开始检查可领取燃料')
   yield energyPropList();
+  console.log(`可领取燃料::${JSON.stringify(able_energeProp_list)}`)
   if (able_energeProp_list && able_energeProp_list.length > 0) {
     //开始领取燃料
     for (let i of able_energeProp_list) {
@@ -126,7 +127,7 @@ async function* entrance() {
     console.log('没有可领取的燃料')
   }
   yield spaceEvent_list();
-  console.log(`spaceEvent_list的信息:${JSON.stringify(spaceEvents)}`);
+  console.log(`可处理的特殊事件信息:${JSON.stringify(spaceEvents)}`);
   if (spaceEvents && spaceEvents.length > 0) {
     for (let item of spaceEvents) {
       let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
@@ -173,7 +174,7 @@ function energyPropList() {
     "source":"game",
   }
   request('energyProp_list', body).then(response => {
-    console.log(`可领取燃料列表:${JSON.stringify(response)}`);
+    // console.log(`检查燃料列表:${JSON.stringify(response)}`);
     if (response.code === 0 && response.data && response.data.length > 0) {
       for (let item of response.data) {
         if (item.thaw_time === 0) {
