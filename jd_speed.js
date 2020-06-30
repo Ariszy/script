@@ -1,5 +1,7 @@
 //京东天天加速活动，每天4京豆，再小的苍蝇也是肉
-//未完,待续
+// 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
+//cron 1 0-23/6 * * *
+//建议6小时运行一次，打卡时间间隔是6小时
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -93,7 +95,7 @@ let gen = entrance();
 gen.next();
 
 let indexState = 0;
-let message = '';
+let message = '', subTitle = '';
 let beans_num = null;
 let distance = null;
 let destination = null;
@@ -150,7 +152,7 @@ async function* entrance() {
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
-  $hammer.alert(name, message);
+  $hammer.alert(name, message, subTitle);
 }
 //开始新的任务
 function flyTask_start(source_id) {
@@ -238,7 +240,7 @@ function energePropUsaleList() {
     "source":"game"
   };
   request('energyProp_usalbeList', body).then(res => {
-    console.log(`检查剩余燃料${res}`)
+    console.log(`检查剩余燃料${JSON.stringify(res)}`)
     if (res.code === 0 && res.data && res.data.length > 0) {
       res.data.map(item => {
         energePropUsale.push(item)
@@ -276,8 +278,9 @@ function flyTask_state() {
         done_distance = data.done_distance
         source_id = data.source_id//根据source_id 启动flyTask_start()
         task_status = data.task_status //0,没开始；1，已开始
+        subTitle = `【奖励】：${beans_num}京豆`
         if (indexState === 1) {
-          message += `【空间站】：${destination}`;
+          message += `【空间站】 ${destination}`;
         }
         indexState++;
       }
