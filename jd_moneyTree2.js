@@ -370,6 +370,7 @@ function msgControl() {
   console.log(time);
   console.log(typeof (time));
   time++;
+  console.log(time);
   $hammer.write(time, 'time');
   console.log(`${$hammer.read('time')}`);
   console.log(`${Number($hammer.read('time'))}`)
