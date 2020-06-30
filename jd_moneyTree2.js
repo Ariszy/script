@@ -367,6 +367,8 @@ function share(data) {
 }
 function msgControl() {
   console.log('控制弹窗');
+  console.log(time);
+  console.log(typeof (time));
   time++;
   $hammer.write(time, 'time');
   console.log(`${$hammer.read('time')}`);
