@@ -106,13 +106,12 @@ function* entrance() {
   }
   console.log(`start...`);
   yield flyTask_state();
+  if (task_status == 0) {
+    console.log(`开启新任务：${JSON.stringify(destination)}`)
+  } else {
+    console.log(`任务进行中：${JSON.stringify(destination)}`);
+  }
   console.log('开始检查燃料')
-
-  // if (task_status == 0) {
-  //   console.log(`开启新任务：${JSON.stringify(destination)}`)
-  // } else {
-  //   console.log(`任务进行中：${JSON.stringify(destination)}`);
-  // }
   yield energyPropList();
   // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
@@ -144,25 +143,21 @@ function flyTask_state() {
   }
   request(functionId, body).then((res) => {
     console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
-    console.log(`${res.code}`)
-    console.log(`${res.data.beans_num}`)
-    console.log(`${res.data.distance}`)
     if (res.code === 0) {
       console.log('走了if--code=0')
-      // let data = res.data;
-      // if (data.beans_num) {
-      //   console.log('走了if--data.beans_num')
-      //   beans_num = data.beans_num
-      //   distance = data.distance
-      //   destination = data.destination
-      //   done_distance = data.done_distance
-      //   source_id = data.source_id//根据source_id 启动flyTask_start()
-      //   task_status = data.task_status //0,没开始；1，已开始
-      // }
+      let data = res.data;
+      if (data.beans_num) {
+        beans_num = data.beans_num
+        distance = data.distance
+        destination = data.destination
+        done_distance = data.done_distance
+        source_id = data.source_id//根据source_id 启动flyTask_start()
+        task_status = data.task_status //0,没开始；1，已开始
+      }
+      gen.next();
     } else {
       console.log('else????')
     }
-    gen.next();
   })
 }
 
