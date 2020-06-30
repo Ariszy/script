@@ -1,4 +1,4 @@
-//京东天天加速活动
+//京东天天加速活动，每天4京豆，再小的苍蝇也是肉
 //未完,待续
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
@@ -99,31 +99,44 @@ let distance = null;
 let destination = null;
 let source_id = null;
 let done_distance = null;
-let task_status = null;
-function* entrance() {
+let task_status = null, able_energeProp_list = [];
+async function* entrance() {
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
   console.log(`start...`);
   yield flyTask_state();
-  if (task_status == 0) {
-    console.log(`开启新任务：${JSON.stringify(destination)}`)
-  } else {
+  if (task_status === 0) {
+    console.log(`开启新任务：${JSON.stringify(destination)}`);
+    yield flyTask_start(source_id)
+  } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
-  console.log('开始检查燃料')
+  console.log('开始检查可领取燃料')
   yield energyPropList();
+  console.log(`可领取的燃料任务列表${JSON.stringify(able_energeProp_list)}`)
+  if (able_energeProp_list && able_energeProp_list.length > 0) {
+    //开始领取燃料
+    for (let i of able_energeProp_list) {
+      let memberTaskCenterRes =  await _energyProp_gain(i.id);
+      console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
+    }
+  } else {
+    console.log('没有可领取的燃料')
+  }
   // console.log(`flyTask_state的信息:${JSON.stringify(flyTask_state)}`);
 }
 //开始新的任务
 function flyTask_start(source_id) {
+  if (!source_id) return;
   const functionId = arguments.callee.name.toString();
   const body = {
     "source":"game",
     "source_id": source_id
   }
   request(functionId, body).then(res => {
-    console.log(`开启新的任务:${JSON.stringify(res)}`)
+    console.log(`开启新的任务:${JSON.stringify(res)}`);
+    gen.next();
   })
 }
 //检查燃料
@@ -131,9 +144,28 @@ function energyPropList() {
   const body = {
     "source":"game",
   }
-  request('energyProp_list', body).then(res => {
-    console.log(`检查可领取燃料列表:${JSON.stringify(res)}`);
+  request('energyProp_list', body).then(response => {
+    console.log(`检查可领取燃料列表:${JSON.stringify(response)}`);
+    for (let item of response) {
+      if (item.thaw_time === 0) {
+        able_energeProp_list.push(item);
+      }
+    }
     gen.next();
+  })
+}
+// 领取燃料
+function _energyProp_gain(energy_id) {
+  console.log('energy_id', energy_id)
+  if (!energy_id) return;
+  const body = {
+    "source":"game",
+    "energy_id": energy_id
+  }
+  return new Promise((res, rej) => {
+    request('energyProp_gain', body).then((response) => {
+      res(response);
+    })
   })
 }
 function flyTask_state() {
