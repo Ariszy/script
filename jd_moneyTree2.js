@@ -126,6 +126,7 @@ async function* entrance() {
     }
   }
   yield harvest(userInfo);//收获
+  console.log(`----${time}`)
   msgControl();
   console.log('任务做完了');
 }
