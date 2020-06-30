@@ -367,6 +367,10 @@ function share(data) {
 function msgControl() {
   time++;
   $hammer.write(time, 'time');
+  console.log('控制弹窗');
+  console.log(`${Number($hammer.read('time'))}`)
+  console.log(`${Notice}`)
+  console.log(`${ Number($hammer.read('time')) === Notice}`)
   if (Number($hammer.read('time')) === Notice) {
     $hammer.alert(name, message, subTitle);
     $hammer.write(0, 'time');
