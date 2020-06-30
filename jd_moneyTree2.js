@@ -372,10 +372,9 @@ function msgControl() {
   time++;
   time = time.toString();
   console.log(time);
-  // $hammer.write('lxk0301', 'time');
+  $hammer.write(time, 'time');
   console.log(`${$hammer.read('time')}`);
-  console.log(`${Number($hammer.read('time'))}`)
-  console.log(`${Notice}`)
+  console.log(`${typeof (Number($hammer.read('time')))}`)
   console.log(`${ Number($hammer.read('time')) === Notice}`)
   if (Number($hammer.read('time')) === Notice) {
     $hammer.alert(name, message, subTitle);
