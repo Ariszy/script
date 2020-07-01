@@ -98,7 +98,7 @@ const $hammer = (() => {
 
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD');
-let treeMsgTime = $hammer.read('treeMsgTime') || 0;
+let treeMsgTime = 0;
 const name = '京东摇钱树';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '';
