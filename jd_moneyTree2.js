@@ -10,7 +10,91 @@
 //表示每6分钟收取一次，自行设定运行间隔
 // 圈X,Loon,surge均可使用
 const Notice = 2;//设置运行多少次才通知。(如果cron设置是6分钟运行一次，那么这里默认是(6 * Notice) / 60 = 6小时通知一次)
+const $hammer = (() => {
+  const isRequest = "undefined" != typeof $request,
+      isSurge = "undefined" != typeof $httpClient,
+      isQuanX = "undefined" != typeof $task;
 
+  const log = (...n) => { for (let i in n) console.log(n[i]) };
+  const alert = (title, body = "", subtitle = "", link = "") => {
+    if (isSurge) return $notification.post(title, subtitle, body, link);
+    if (isQuanX) return $notify(title, subtitle, (link && !body ? link : body));
+    log("==============📣系统通知📣==============");
+    log("title:", title, "subtitle:", subtitle, "body:", body, "link:", link);
+  };
+  const read = key => {
+    if (isSurge) return $persistentStore.read(key);
+    if (isQuanX) return $prefs.valueForKey(key);
+  };
+  const write = (val, key) => {
+    if (isSurge) return $persistentStore.write(val, key);
+    if (isQuanX) return $prefs.setValueForKey(val, key);
+  };
+  const request = (method, params, callback) => {
+    /**
+     *
+     * params(<object>): {url: <string>, headers: <object>, body: <string>} | <url string>
+     *
+     * callback(
+     *      error,
+     *      <response-body string>?,
+     *      {status: <int>, headers: <object>, body: <string>}?
+     * )
+     *
+     */
+    let options = {};
+    if (typeof params == "string") {
+      options.url = params;
+    } else {
+      options.url = params.url;
+      if (typeof params == "object") {
+        params.headers && (options.headers = params.headers);
+        params.body && (options.body = params.body);
+      }
+    }
+    method = method.toUpperCase();
+
+    const writeRequestErrorLog = function (m, u) {
+      return err => {
+        log("=== request error -s--");
+        log(`${m} ${u}`, err);
+        log("=== request error -e--");
+      };
+    }(method, options.url);
+
+    if (isSurge) {
+      const _runner = method == "GET" ? $httpClient.get : $httpClient.post;
+      return _runner(options, (error, response, body) => {
+        if (error == null || error == "") {
+          response.body = body;
+          callback("", body, response);
+        } else {
+          writeRequestErrorLog(error);
+          callback(error);
+        }
+      });
+    }
+    if (isQuanX) {
+      options.method = method;
+      $task.fetch(options).then(
+          response => {
+            response.status = response.statusCode;
+            delete response.statusCode;
+            callback("", response.body, response);
+          },
+          reason => {
+            writeRequestErrorLog(reason.error);
+            callback(reason.error);
+          }
+      );
+    }
+  };
+  const done = (value = {}) => {
+    if (isQuanX) return isRequest ? $done(value) : null;
+    if (isSurge) return isRequest ? $done(value) : $done();
+  };
+  return { isRequest, isSurge, isQuanX, log, alert, read, write, request, done };
+})();
 
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD');
@@ -283,12 +367,12 @@ function share(data) {
 }
 function msgControl() {
   console.log('控制弹窗');
-  // console.log(treeMsgTime);
+  console.log(treeMsgTime);
   // console.log(typeof (treeMsgTime));
   treeMsgTime++;
   // console.log(treeMsgTime);
   $hammer.write(`${treeMsgTime}`, 'treeMsgTime');
-  // console.log(`${$hammer.read('treeMsgTime')}`);
+  console.log(`${$hammer.read('treeMsgTime')}`);
   // console.log(`${typeof (Number($hammer.read('treeMsgTime')))}`)
   // console.log(`${($hammer.read('treeMsgTime') * 1) === Notice}`)
   if (($hammer.read('treeMsgTime') * 1) === Notice) {
@@ -337,89 +421,3 @@ function taskurl(function_id, body) {
     }
   }
 }
-
-const $hammer = (() => {
-  const isRequest = "undefined" != typeof $request,
-      isSurge = "undefined" != typeof $httpClient,
-      isQuanX = "undefined" != typeof $task;
-
-  const log = (...n) => { for (let i in n) console.log(n[i]) };
-  const alert = (title, body = "", subtitle = "", link = "") => {
-    if (isSurge) return $notification.post(title, subtitle, body, link);
-    if (isQuanX) return $notify(title, subtitle, (link && !body ? link : body));
-    log("==============📣系统通知📣==============");
-    log("title:", title, "subtitle:", subtitle, "body:", body, "link:", link);
-  };
-  const read = key => {
-    if (isSurge) return $persistentStore.read(key);
-    if (isQuanX) return $prefs.valueForKey(key);
-  };
-  const write = (val, key) => {
-    if (isSurge) return $persistentStore.write(val, key);
-    if (isQuanX) return $prefs.setValueForKey(val, key);
-  };
-  const request = (method, params, callback) => {
-    /**
-     *
-     * params(<object>): {url: <string>, headers: <object>, body: <string>} | <url string>
-     *
-     * callback(
-     *      error,
-     *      <response-body string>?,
-     *      {status: <int>, headers: <object>, body: <string>}?
-     * )
-     *
-     */
-    let options = {};
-    if (typeof params == "string") {
-      options.url = params;
-    } else {
-      options.url = params.url;
-      if (typeof params == "object") {
-        params.headers && (options.headers = params.headers);
-        params.body && (options.body = params.body);
-      }
-    }
-    method = method.toUpperCase();
-
-    const writeRequestErrorLog = function (m, u) {
-      return err => {
-        log("=== request error -s--");
-        log(`${m} ${u}`, err);
-        log("=== request error -e--");
-      };
-    }(method, options.url);
-
-    if (isSurge) {
-      const _runner = method == "GET" ? $httpClient.get : $httpClient.post;
-      return _runner(options, (error, response, body) => {
-        if (error == null || error == "") {
-          response.body = body;
-          callback("", body, response);
-        } else {
-          writeRequestErrorLog(error);
-          callback(error);
-        }
-      });
-    }
-    if (isQuanX) {
-      options.method = method;
-      $task.fetch(options).then(
-          response => {
-            response.status = response.statusCode;
-            delete response.statusCode;
-            callback("", response.body, response);
-          },
-          reason => {
-            writeRequestErrorLog(reason.error);
-            callback(reason.error);
-          }
-      );
-    }
-  };
-  const done = (value = {}) => {
-    if (isQuanX) return isRequest ? $done(value) : null;
-    if (isSurge) return isRequest ? $done(value) : $done();
-  };
-  return { isRequest, isSurge, isQuanX, log, alert, read, write, request, done };
-})();
