@@ -6,10 +6,9 @@
 // 4、浏览任务
 // 5、自动领取浏览后的奖励
 // 6、七天签到（连续不间断签到七天）
-// cron */6 * * * *
-//表示每6分钟收取一次，自行设定运行间隔
+// cron 1 */2 * * * *
 // 圈X,Loon,surge均可使用
-const Notice = 2;//设置运行多少次才通知。(如果cron设置是6分钟运行一次，那么这里默认是(6 * Notice) / 60 = 6小时通知一次)
+const Notice = 2;//设置运行多少次才通知。
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
