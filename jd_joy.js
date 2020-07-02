@@ -140,10 +140,10 @@ function* step() {
                 for (let market of scanMarketTask.scanMarketList) {
                     if (!market.status) {
                         // 解决部分商品market.marketLink为空的时候，浏览不到的bug
-                        let clickResult = yield click(market.marketLink || market.marketLinkH5)
+                        let clickResult = yield click(market.marketLinkH5)
                         console.log(`逛会场点击${market.marketName}结果${JSON.stringify(clickResult)}`)
                         
-                        let scanMarketResult = yield ScanMarket(market.marketLink)
+                        let scanMarketResult = yield ScanMarket(market.marketLinkH5)
                         console.log(`逛会场${market.marketName}结果${JSON.stringify(scanMarketResult)}`)
                     }
                 }
