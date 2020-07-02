@@ -101,7 +101,8 @@ var Task = step();
 Task.next();
 
 function* step() {
-    let message = ''
+    let message = '';
+    let subTitle = '';
     if (cookie) {
         //获取任务信息
         let petTaskConfig = yield getPetTaskConfig()
@@ -195,6 +196,7 @@ function* step() {
             let enterRoomResult = yield enterRoom()
             console.log(`喂养状态${JSON.stringify(enterRoomResult)}`)
             message = `现有积分: ${enterRoomResult.data.petCoin}\n现有狗粮: ${enterRoomResult.data.petFood}\n喂养次数: ${enterRoomResult.data.feedCount}\n宠物等级: ${enterRoomResult.data.petLevel}`
+            subTitle = `【用户名】${enterRoomResult.data.pin}`
         } else {
             console.log(`任务信息${JSON.stringify(petTaskConfig)}`)
             message = petTaskConfig.errorMessage
