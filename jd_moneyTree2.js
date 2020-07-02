@@ -279,7 +279,14 @@ async function signEveryDay() {
     if (signIndexRes.resultData && signIndexRes.resultData.data.canSign == 2) {
       console.log('准备每日签到')
       let signOneRes = await signOne(signIndexRes.resultData.data.signDay);
-      console.log(`每日签到结果:${JSON.stringify(signOneRes)}`);
+      console.log(`第${signIndexRes.resultData.data.signDay}日签到结果:${JSON.stringify(signOneRes)}`);
+      if (signIndexRes.resultData.data.signDay === 7) {
+        let getSignAwardRes = await getSignAward();
+        console.log(`店铺券（49-10）领取结果：${JSON.stringify(getSignAwardRes)}`)
+        if (getSignAwardRes.resultCode === 0 && getSignAwardRes.data.code === 0) {
+          message += `【7日签到奖励领取】${getSignAwardRes.datamessage}`
+        }
+      }
     } else {
       console.log('走了signOne的else')
     }
@@ -294,6 +301,20 @@ function signOne(signDay) {
   }
   return new Promise((rs, rj) => {
     request('signOne', params).then(response => {
+      rs(response);
+    })
+  })
+}
+// 领取七日签到后的奖励
+function getSignAward() {
+  const params = {
+    "source":2,
+    "awardType": 2,
+    "deviceRiskParam": 1,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  return new Promise((rs, rj) => {
+    request('getSignAward', params).then(response => {
       rs(response);
     })
   })
@@ -405,7 +426,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' || function_id === 'getSignAward' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
