@@ -204,7 +204,7 @@ function* step() {
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
-    $hammer.alert(name, message, '')
+    $hammer.alert(name, message, subTitle)
 }
 
 function click(marketLink) {
