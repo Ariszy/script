@@ -284,7 +284,7 @@ async function signEveryDay() {
         let getSignAwardRes = await getSignAward();
         console.log(`店铺券（49-10）领取结果：${JSON.stringify(getSignAwardRes)}`)
         if (getSignAwardRes.resultCode === 0 && getSignAwardRes.data.code === 0) {
-          message += `【7日签到奖励领取】${getSignAwardRes.datamessage}`
+          message += `【7日签到奖励领取】${getSignAwardRes.datamessage}\n`
         }
       }
     } else {
