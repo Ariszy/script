@@ -1,4 +1,5 @@
 // 京东摇钱树 ：https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree2.js
+// 更新时间:2020-07-03
 // 现有功能
 // 1、收金果
 // 2、每日签到（也就是三餐签到）
@@ -281,6 +282,7 @@ function sell() {
     })
   })
 }
+//获取金币和金果数量
 function myWealth() {
   const params = {
     "source": 2,
@@ -349,7 +351,7 @@ function signOne(signDay) {
     })
   })
 }
-// 领取七日签到后的奖励
+// 领取七日签到后的奖励(店铺优惠券)
 function getSignAward() {
   const params = {
     "source":2,
