@@ -143,7 +143,8 @@ async function* entrance() {
     } else {
       console.log('金果数量小于380')
       message += `【我的金果数量】${data.treeInfo.fruit}\n`;
-      message += `【我的金币数量】${data.treeInfo.coin}\n`;
+      //TODO 取不到值， undefined
+      yield myWealth();
     }
   }
   // console.log(`----${treeMsgTime}`)
@@ -288,6 +289,19 @@ function sell() {
     request('sell', params).then(response => {
       rs(response);
     })
+  })
+}
+function myWealth() {
+  const params = {
+    "source": 2,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
+  request('myWealth', params).then(res=> {
+    if (res.resultCode === 0 && res.resultData.code === '200') {
+      message += `【我的金币数量】${res.resultData.data.gcAmount}\n`;
+      gen.next();
+    }
   })
 }
 function sign() {
