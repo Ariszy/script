@@ -144,9 +144,9 @@ async function* entrance() {
       console.log('金果数量小于380')
       message += `【我的金果数量】${data.treeInfo.fruit}\n`;
       //TODO 取不到值， undefined
-      yield myWealth();
     }
   }
+  yield myWealth();
   // console.log(`----${treeMsgTime}`)
   msgControl();
   console.log('任务做完了');
@@ -299,6 +299,7 @@ function myWealth() {
   params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
   request('myWealth', params).then(res=> {
     if (res.resultCode === 0 && res.resultData.code === '200') {
+      console.log(`金币数量和金果：：${JSON.stringify(res)}`)
       message += `【我的金币数量】${res.resultData.data.gcAmount}\n`;
       gen.next();
     }
