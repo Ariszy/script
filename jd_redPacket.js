@@ -100,7 +100,6 @@ function* start() {
 function taskHomePage() {
   const data = {"clientInfo":{}};
   request(arguments.callee.name.toString(), data).then((res) => {
-    console.log(`任务初始化完成:${JSON.stringify(res)}`);
     try {
       // taskInfo = res.data.result.taskInfos;
       console.log(`任务初始化完成:${JSON.stringify(res)}`);
@@ -120,7 +119,7 @@ async function request(function_id, body = {}) {
         $hammer.log("Error:", error);
       }else{
         // 服务器返回的已经是JSON，不需再次格式化
-        resolve(response);
+        resolve(JSON.parse(response.body));
       }
     })
   })
