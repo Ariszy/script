@@ -96,7 +96,7 @@ step.next();
 function* start() {
   yield taskHomePage(); // 初始化任务
 }
-
+//获取任务列表
 function taskHomePage() {
   const data = {"clientInfo":{}};
   request(arguments.callee.name.toString(), data).then((res) => {
@@ -111,6 +111,33 @@ function taskHomePage() {
     }
   })
 }
+//获取具体任务详情
+function getTaskDetailForColor() {
+  const data = {"clientInfo":{},"taskType":"5"};
+  return new Promise((rs, rj) => {
+    request(arguments.callee.name.toString(), data).then((res) =>{
+      rs(res);
+    })
+  })
+}
+//完成任务的动作
+function taskReportForColor() {
+  const data = {"clientInfo":{},"taskType":"0"};
+  return new Promise((rs, rj) => {
+    request(arguments.callee.name.toString(), data).then((res) =>{
+      rs(res);
+    })
+  })
+}
+//领取 领3张券任务后的红包
+function receiveTaskRedpacket() {
+  const data = {"clientInfo":{},"taskType":"5","detailId":"96"};
+  return new Promise((rs, rj) => {
+    request(arguments.callee.name.toString(), data).then((res) =>{
+      rs(res);
+    })
+  })
+}
 async function request(function_id, body = {}) {
   await sleep(2);
   return new Promise((resolve, reject) => {
@@ -118,7 +145,6 @@ async function request(function_id, body = {}) {
       if(error){
         $hammer.log("Error:", error);
       }else{
-        // 服务器返回的已经是JSON，不需再次格式化
         resolve(JSON.parse(response.body));
       }
     })
