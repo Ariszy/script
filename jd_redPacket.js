@@ -120,7 +120,7 @@ async function request(function_id, body = {}) {
       if(error){
         $hammer.log("Error:", error);
       }else{
-        resolve(JSON.parse((response)));
+        resolve(response);
       }
     })
   })
