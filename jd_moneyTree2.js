@@ -130,20 +130,10 @@ async function* entrance() {
   if (harvestRes.resultCode === 0 && harvestRes.resultData.code === '200') {
     let data = harvestRes.resultData.data;
     message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
-    console.log(`${data.treeInfo.fruit}`)
     if (data.treeInfo.fruit > 380) {
       //金果数量大于380，才可以卖出
-      console.log('金果数量大于380')
       let sellRes = await sell();
       console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
-      if (sellRes.resultCode === 0 && sellRes.resultData.code === '200') {
-        message += `【我的金果数量】${sellRes.resultData.data.leftFruit}\n`;
-        message += `【我的金币数量】${sellRes.resultData.data.coin}\n`;
-      }
-    } else {
-      console.log('金果数量小于380')
-      message += `【我的金果数量】${data.treeInfo.fruit}\n`;
-      //TODO 取不到值， undefined
     }
   }
   yield myWealth();
@@ -299,7 +289,8 @@ function myWealth() {
   params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
   request('myWealth', params).then(res=> {
     if (res.resultCode === 0 && res.resultData.code === '200') {
-      console.log(`金币数量和金果：：${JSON.stringify(res)}`)
+      console.log(`金币数量和金果：：${JSON.stringify(res)}`);
+      message += `【我的金果数量】${res.resultData.data.gaAmount}\n`;
       message += `【我的金币数量】${res.resultData.data.gcAmount}\n`;
       gen.next();
     }
