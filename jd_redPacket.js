@@ -86,7 +86,6 @@ const $hammer = (() => {
   return {isRequest, isSurge, isQuanX, log, alert, read, write, request, done};
 })();
 
-const taskInfo = null;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 //直接用NobyDa的js cookie
 const cookie = $hammer.read('CookieJD');
