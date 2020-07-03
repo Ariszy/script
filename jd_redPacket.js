@@ -114,7 +114,7 @@ function taskHomePage() {
 async function request(function_id, body = {}) {
   await sleep(2);
   return new Promise((resolve, reject) => {
-    $hammer.request('GET', taskurl(function_id, body), (error, response) => {
+    $hammer.request('POST', taskurl(function_id, body), (error, response) => {
       if(error){
         $hammer.log("Error:", error);
       }else{
