@@ -283,6 +283,7 @@ function sell() {
     "source": 2,
     "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
   }
+  params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
   return new Promise((rs, rj) => {
     request('sell', params).then(response => {
       rs(response);
