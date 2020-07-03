@@ -115,18 +115,18 @@ async function* entrance() {
   yield dayWork();//做任务
   console.log('开始做浏览任务了')
   console.log(`浏览任务列表：：${JSON.stringify(taskInfo)}`);
-  for (let task of taskInfo) {
-    if (task.mid && task.workStatus === 0) {
-      console.log('开始做浏览任务');
-      yield setUserLinkStatus(task.mid);
-    } else if (task.mid && task.workStatus === 1){
-      console.log(`开始领取浏览后的奖励:mid:${task.mid}`);
-      let receiveAwardRes = await receiveAward(task.mid);
-      console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
-    } else if (task.mid && task.workStatus === 2) {
-      console.log('所有的浏览任务都做完了')
-    }
-  }
+  // for (let task of taskInfo) {
+  //   if (task.mid && task.workStatus === 0) {
+  //     console.log('开始做浏览任务');
+  //     yield setUserLinkStatus(task.mid);
+  //   } else if (task.mid && task.workStatus === 1){
+  //     console.log(`开始领取浏览后的奖励:mid:${task.mid}`);
+  //     let receiveAwardRes = await receiveAward(task.mid);
+  //     console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
+  //   } else if (task.mid && task.workStatus === 2) {
+  //     console.log('所有的浏览任务都做完了')
+  //   }
+  // }
   let harvestRes = await harvest(userInfo);//收获
   if (harvestRes.resultCode === 0 && harvestRes.resultData.code === '200') {
     let data = harvestRes.resultData.data;
@@ -239,6 +239,20 @@ async function dayWork() {
       } else if (item.workStatus === 2) {
         console.log(`分享任务已经做过`)
       }
+    }
+  }
+  for (let task of taskInfo) {
+    if (task.mid && task.workStatus === 0) {
+      console.log('开始做浏览任务');
+      // yield setUserLinkStatus(task.mid);
+      let aa = await setUserLinkStatus(task.mid);
+      console.log(`aaa${JSON.stringify(aa)}`);
+    } else if (task.mid && task.workStatus === 1){
+      console.log(`workStatus === 1开始领取浏览后的奖励:mid:${task.mid}`);
+      let receiveAwardRes = await receiveAward(task.mid);
+      console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
+    } else if (task.mid && task.workStatus === 2) {
+      console.log('所有的浏览任务都做完了')
     }
   }
   // console.log(`浏览任务列表：：${JSON.stringify(taskInfo)}`);
@@ -389,7 +403,10 @@ async function setUserLinkStatus(missionId) {
   console.log('开始领取浏览后的奖励');
   let receiveAwardRes = await receiveAward(missionId);
   console.log(`领取浏览任务奖励成功：${JSON.stringify(receiveAwardRes)}`)
-  gen.next();
+  return new Promise((resolve, reject) => {
+    resolve(receiveAwardRes);
+  })
+  // gen.next();
 }
 // 领取浏览后的奖励
 function receiveAward(mid) {
