@@ -100,6 +100,7 @@ function* start() {
 function taskHomePage() {
   const data = {"clientInfo":{}};
   request(arguments.callee.name.toString(), data).then((res) => {
+    console.log(`任务初始化完成:${JSON.stringify(res)}`);
     try {
       // taskInfo = res.data.result.taskInfos;
       console.log(`任务初始化完成:${JSON.stringify(res)}`);
@@ -115,6 +116,7 @@ async function request(function_id, body = {}) {
   await sleep(2);
   return new Promise((resolve, reject) => {
     $hammer.request('POST', taskurl(function_id, body), (error, response) => {
+      console.log(response)
       if(error){
         $hammer.log("Error:", error);
       }else{
