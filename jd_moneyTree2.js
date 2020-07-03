@@ -137,8 +137,8 @@ async function* entrance() {
       let sellRes = await sell();
       console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
       if (sellRes.resultCode === 0 && sellRes.resultData.code === '200') {
-        message += `【我的金果数量】${sellRes.resultData.data.treeInfo.leftFruit}\n`;
-        message += `【我的金币数量】${sellRes.resultData.data.treeInfo.coin}\n`;
+        message += `【我的金果数量】${sellRes.resultData.data.leftFruit}\n`;
+        message += `【我的金币数量】${sellRes.resultData.data.coin}\n`;
       }
     } else {
       console.log('金果数量小于380')
