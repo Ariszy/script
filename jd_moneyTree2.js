@@ -130,8 +130,10 @@ async function* entrance() {
   if (harvestRes.resultCode === 0 && harvestRes.resultData.code === 200) {
     let data = harvestRes.resultData.data;
     message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
+    console.log(`${data.treeInfo.fruit}`)
     if (data.treeInfo.fruit > 380) {
       //金果数量大于380，才可以卖出
+      console.log('金果数量大于380')
       let sellRes = await sell();
       console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
       if (sellRes.resultCode === 0 && sellRes.resultData.code === 200) {
@@ -139,6 +141,7 @@ async function* entrance() {
         message += `【我的金币数量】${sellRes.resultData.data.treeInfo.coin}\n`;
       }
     } else {
+      console.log('金果数量小于380')
       message += `【我的金果数量】${data.treeInfo.fruit}\n`;
       message += `【我的金币数量】${data.treeInfo.coin}\n`;
     }
