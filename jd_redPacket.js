@@ -103,7 +103,7 @@ function taskHomePage() {
   request(arguments.callee.name.toString(), data).then((res) => {
     try {
       // taskInfo = res.data.result.taskInfos;
-      console.log(`任务初始化完成:${JSON.stringify(taskInfo)}`);
+      console.log(`任务初始化完成:${JSON.stringify(res)}`);
       step.next();
     } catch (e) {
       console.log(e);
