@@ -6,6 +6,8 @@
 // 4、浏览任务
 // 5、自动领取浏览后的奖励
 // 6、七天签到（连续不间断签到七天）
+// 8、七天签到后，自动领取店铺优惠券
+// 9、把金果卖出，换成金币
 // cron 1 */3 * * * *
 // 圈X,Loon,surge均可使用
 const Notice = 2;//设置运行多少次才通知。
@@ -124,7 +126,23 @@ async function* entrance() {
       console.log('所有的浏览任务都做完了')
     }
   }
-  yield harvest(userInfo);//收获
+  let harvestRes = await harvest(userInfo);//收获
+  if (harvestRes.resultCode === 0 && harvestRes.resultData.code === 200) {
+    let data = harvestRes.resultData.data;
+    message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
+    if (data.treeInfo.fruit > 380) {
+      //金果数量大于380，才可以卖出
+      let sellRes = await sell();
+      console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
+      if (sellRes.resultCode === 0 && sellRes.resultData.code === 200) {
+        message += `【我的金果数量】${sellRes.resultData.data.treeInfo.leftFruit}\n`;
+        message += `【我的金币数量】${sellRes.resultData.data.treeInfo.coin}\n`;
+      }
+    } else {
+      message += `【我的金果数量】${data.treeInfo.fruit}\n`;
+      message += `【我的金币数量】${data.treeInfo.coin}\n`;
+    }
+  }
   // console.log(`----${treeMsgTime}`)
   msgControl();
   console.log('任务做完了');
@@ -150,12 +168,12 @@ function user_info() {
         if (userInfo.realName) {
           console.log(`助力码sharePin为：：${userInfo.sharePin}`);
           subTitle = `${userInfo.nick}的${userInfo.treeInfo.treeName}`;
-          message += `【我的金果数量】${userInfo.treeInfo.fruit}\n`;
-          message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
-          message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
+          // message += `【我的金果数量】${userInfo.treeInfo.fruit}\n`;
+          // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
+          // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
           gen.next();
         } else {
-          return $hammer.alert(name, `当前京东账号${userInfo.nick}未实名认证，不可参与此活动`);
+          return $hammer.alert(name, `当前京东金融账号${userInfo.nick}未实名认证，不可参与此活动`);
           gen.return();
         }
       }
@@ -247,9 +265,24 @@ function harvest(userInfo) {
     "userId": userInfo.userInfo,
     "userToken": userInfo.userToken
   }
-  request('harvest', data).then((res) => {
-    console.log(`收获金果:${JSON.stringify(res)}`);
-    gen.next();
+  return new Promise((res, rej) => {
+    request('harvest', data).then((response) => {
+      console.log(`收获金果结果:${JSON.stringify(response)}`);
+      res(response)
+      // gen.next();
+    })
+  })
+}
+//卖出金果，得到金币
+function sell() {
+  const params = {
+    "source": 2,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  return new Promise((rs, rj) => {
+    request('sell', params).then(response => {
+      rs(response);
+    })
   })
 }
 function sign() {
@@ -426,7 +459,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' || function_id === 'getSignAward' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' || function_id === 'getSignAward' || function_id === 'sell' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
