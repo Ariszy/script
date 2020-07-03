@@ -127,8 +127,7 @@ async function* entrance() {
     }
   }
   let harvestRes = await harvest(userInfo);//收获
-  console.log(`harvestRes--${JSON.stringify(harvestRes)}`)
-  if (harvestRes.resultCode === 0 && harvestRes.resultData.code === 200) {
+  if (harvestRes.resultCode === 0 && harvestRes.resultData.code === '200') {
     let data = harvestRes.resultData.data;
     message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
     console.log(`${data.treeInfo.fruit}`)
@@ -137,7 +136,7 @@ async function* entrance() {
       console.log('金果数量大于380')
       let sellRes = await sell();
       console.log(`卖出金果结果:${JSON.stringify(sellRes)}\n`)
-      if (sellRes.resultCode === 0 && sellRes.resultData.code === 200) {
+      if (sellRes.resultCode === 0 && sellRes.resultData.code === '200') {
         message += `【我的金果数量】${sellRes.resultData.data.treeInfo.leftFruit}\n`;
         message += `【我的金币数量】${sellRes.resultData.data.treeInfo.coin}\n`;
       }
