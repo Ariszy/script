@@ -127,6 +127,7 @@ async function* entrance() {
     }
   }
   let harvestRes = await harvest(userInfo);//收获
+  console.log(`harvestRes--${JSON.stringify(harvestRes)}`)
   if (harvestRes.resultCode === 0 && harvestRes.resultData.code === 200) {
     let data = harvestRes.resultData.data;
     message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
@@ -262,16 +263,17 @@ async function dayWork() {
 
 function harvest(userInfo) {
   // console.log(`收获的操作:${JSON.stringify(userInfo)}\n`)
+  if (!userInfo.userInfo && !userInfo.userToken) return
   const data = {
     "source": 2,
     "sharePin": "",
     "userId": userInfo.userInfo,
     "userToken": userInfo.userToken
   }
-  return new Promise((res, rej) => {
+  return new Promise((rs, rj) => {
     request('harvest', data).then((response) => {
       console.log(`收获金果结果:${JSON.stringify(response)}`);
-      res(response)
+      rs(response)
       // gen.next();
     })
   })
