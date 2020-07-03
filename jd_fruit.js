@@ -133,14 +133,14 @@ function* step() {
     //
     let message = '';
     let subTitle = '';
-
+    let option = {};
     if (!cookie) {
         return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
     }
-    
     let farmInfo = yield initForFarm();
     if (farmInfo.farmUserPro) {
-      subTitle = farmInfo.farmUserPro.nickName + '的' + farmInfo.farmUserPro.name;
+        option['media-url'] = farmInfo.farmUserPro.goodsImage;
+        subTitle = farmInfo.farmUserPro.nickName + '的' + farmInfo.farmUserPro.name;
         console.log('shareCode为: ' + farmInfo.farmUserPro.shareCode);
         farmTask = yield taskInitForFarm();
         // console.log(`当前任务详情: ${JSON.stringify(farmTask)}`);
@@ -459,10 +459,11 @@ function* step() {
         console.log('全部任务结束');
     } else {
         console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify(farmInfo)}`);
-        message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
-    }
-    let option = {
-      'media-url': farmInfo.farmUserPro.goodsImage
+        if (farmInfo.code == '3') {
+          message = `【提示】京东cookie已失效或未登录,请重新获取\n`
+        } else {
+          message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
+        }
     }
     $hammer.alert(name, message, subTitle, '', option)
     $hammer.done();
