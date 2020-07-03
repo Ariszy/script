@@ -116,10 +116,10 @@ async function request(function_id, body = {}) {
   await sleep(2);
   return new Promise((resolve, reject) => {
     $hammer.request('POST', taskurl(function_id, body), (error, response) => {
-      console.log(response)
       if(error){
         $hammer.log("Error:", error);
       }else{
+        // 服务器返回的已经是JSON，不需再次格式化
         resolve(response);
       }
     })
