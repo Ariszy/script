@@ -1,5 +1,5 @@
 // 京东摇钱树 ：https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree2.js
-// 更新时间:2020-07-03
+// 更新时间:2020-07-06，修改弹窗提示
 // 现有功能
 // 1、收金果
 // 2、每日签到（也就是三餐签到）
@@ -168,7 +168,7 @@ function user_info() {
           // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
           gen.next();
         } else {
-          return $hammer.alert(name, `当前京东金融账号${userInfo.nick}未实名认证，不可参与此活动`);
+          return $hammer.alert(name, `请先去京东app参加摇钱树活动(我的->游戏与互动->查看更多->摇钱树)`);
           gen.return();
         }
       }
