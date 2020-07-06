@@ -93,10 +93,11 @@ let taskInfo = null;
 let step = start();
 step.next();
 
-async function* start() {
+function* start() {
   yield taskHomePage(); // 初始化任务
-  let test = await getTaskDetailForColor();
-  console.log(`---test---${JSON.stringify(test)}`);
+  // let test = await getTaskDetailForColor();
+  // console.log(`---test---${JSON.stringify(test)}`);
+  yield getTaskDetailForColor();
 }
 //获取任务列表
 function taskHomePage() {
@@ -116,10 +117,13 @@ function taskHomePage() {
 //获取具体任务详情
 function getTaskDetailForColor() {
   const data = {"clientInfo":{},"taskType":"5"};
-  return new Promise((rs, rj) => {
-    request(arguments.callee.name.toString(), data).then((response) =>{
-      rs(response);
-    })
+  // return new Promise((rs, rj) => {
+  //   request(arguments.callee.name.toString(), data).then((response) =>{
+  //     rs(response);
+  //   })
+  // })
+  request(arguments.callee.name.toString(), data).then((test) => {
+    console.log(`---test---${JSON.stringify(test)}`);
   })
 }
 //完成任务的动作
