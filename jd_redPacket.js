@@ -117,6 +117,7 @@ function* start() {
     }
     // yield getTaskDetailForColor();
   }
+  yield newReceiveRvcCouponWithTask()
   $hammer.alert(name);
   // let test = await getTaskDetailForColor();
   // console.log(`---test---${JSON.stringify(test)}`);
@@ -153,7 +154,22 @@ function startTask(taskType) {
     }
   })
 }
+function getCcTaskList() {
 
+}
+function newReceiveRvcCouponWithTask() {
+  const data = {"taskType":"0","extend":"","source":"couponCenter_app","pageClickKey":"CouponCenter","rcType":"1","taskId":"415","childActivityUrl":"","eid":"","shshshfpb":"","lat":"","lng":""};
+  request(arguments.callee.name.toString(), data).then((response) => {
+    try {
+      // taskInfo = res.data.result.taskInfos;
+      console.log(`领券结果:${JSON.stringify(response)}`);
+      step.next();
+    } catch (e) {
+      console.log(e);
+      console.log('初始化任务异常');
+    }
+  })
+}
 async function active(taskType) {
   let getTaskDetailForColorRes = await getTaskDetailForColor(taskType);
   console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
