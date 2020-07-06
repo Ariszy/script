@@ -96,7 +96,7 @@ step.next();
 async function* start() {
   yield taskHomePage(); // 初始化任务
   let test = await getTaskDetailForColor();
-  console.log(`---test---${test}`);
+  console.log(`---test---${JSON.stringify(test)}`);
 }
 //获取任务列表
 function taskHomePage() {
