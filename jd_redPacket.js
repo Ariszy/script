@@ -97,13 +97,13 @@ function* start() {
   yield taskHomePage(); // 初始化任务
   if (taskInfo && taskInfo.length > 0) {
     for (let item of taskInfo) {
-      if (item.innerStatus === 7) {
+      // if (item.innerStatus === 7) {
         yield startTask(item.taskType);//开始领取任务
-        if (item.innerStatus === 4 || item.innerStatus === 5) {
+        if (item.taskType === 4 || item.taskType === 5) {
           //做浏览任务
           yield active()
         }
-      }
+      // }
     }
     // yield getTaskDetailForColor();
   }
