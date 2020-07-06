@@ -158,6 +158,9 @@ function* step() {
         if (roundList[0].awardBeans) {
           message += `【上期${roundList[0].growth}成长值兑换京豆】${roundList[0].awardBeans}\n`;
         }
+        if (roundList[1].dateDesc.indexOf('本期 ') > -1) {
+          roundList[1].dateDesc = roundList[1].dateDesc.substr(roundList[1].dateDesc.indexOf('本期 ') + 3, roundList[1].dateDesc.length);
+        }
         message += `【本期时间】${roundList[1].dateDesc}\n`;
         message += `【本期成长值】${roundList[1].growth}\n`;
         let shareUrl = plantBeanIndexResult.data.jwordShareInfo.shareUrl
