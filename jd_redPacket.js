@@ -1,4 +1,5 @@
 // 京东全民开红包（京东app->主页->领券->抢红包(在底部)）
+// 未完
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -172,7 +173,7 @@ function getTaskDetailForColor(taskType) {
 //完成任务的动作
 function taskReportForColor(taskType, detailId) {
   const data = {"clientInfo":{},"taskType":taskType,"detailId":detailId};
-  console.log(`${detailId}\n`)
+  console.log(`活动id：：：${detailId}\n`)
   return new Promise((rs, rj) => {
     request(arguments.callee.name.toString(), data).then((response) =>{
       rs(response);
