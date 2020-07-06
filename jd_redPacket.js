@@ -149,9 +149,10 @@ async function active(taskType) {
   console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
   const data = getTaskDetailForColorRes.data.result.advertDetails;
   for (let item of data) {
-    if (item.id && item.status == 0)
-    let taskReportForColorRes = await taskReportForColor(item.id);
-    console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
+    if (item.id && item.status == 0) {
+      let taskReportForColorRes = await taskReportForColor(item.id);
+      console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
+    }
   }
   step.next();
 }
