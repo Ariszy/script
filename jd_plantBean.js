@@ -275,6 +275,12 @@ function* step() {
                         console.log(`purchaseRewardTaskResult:${JSON.stringify(purchaseRewardTaskResult)}`)
                     }
                 }
+            } else if (task.taskType == 19) {
+              // 低价包邮
+              if (task.isFinished !== 1) {
+                let plantReceiveNutrientsTaskRes = yield plantReceiveNutrientsTask();
+                console.log(`低价包邮任务结果：：${JSON.stringify(plantReceiveNutrientsTaskRes)}`)
+              }
             } else if (task.taskType == 1) {
                 console.log('跳过签到，NobyDa的会签')
                 // console.log(`【${task.taskName}】未开发${task.awardType},${task.taskType}`)
@@ -373,7 +379,11 @@ function purchaseRewardTask(roundId) {
     }
     request(functionId, body);// `body=${escape(JSON.stringify(body))}&uuid=&appid=ld`
 }
-
+//低价包邮
+function plantReceiveNutrientsTask() {
+  const body = {"monitor_refer":"plant_receiveNutrientsTask","monitor_source":"plant_app_plant_index","awardType":"19","version":"9.0.0.1"};
+  request('receiveNutrientsTask', body);
+}
 function receiveNutrientsTask(awardType) {
     // let functionId = arguments.callee.name.toString();
     // let body = {
