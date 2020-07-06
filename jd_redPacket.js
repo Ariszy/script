@@ -93,16 +93,18 @@ let taskInfo = null;
 let step = start();
 step.next();
 
-function* start() {
+async function* start() {
   yield taskHomePage(); // 初始化任务
+  let test = await getTaskDetailForColor();
+  console.log(`---test---${test}`);
 }
 //获取任务列表
 function taskHomePage() {
   const data = {"clientInfo":{}};
-  request(arguments.callee.name.toString(), data).then((res) => {
+  request(arguments.callee.name.toString(), data).then((response) => {
     try {
       // taskInfo = res.data.result.taskInfos;
-      console.log(`任务初始化完成:${JSON.stringify(res)}`);
+      console.log(`任务初始化完成:${JSON.stringify(response)}`);
       step.next();
     } catch (e) {
       console.log(e);
@@ -115,8 +117,8 @@ function taskHomePage() {
 function getTaskDetailForColor() {
   const data = {"clientInfo":{},"taskType":"5"};
   return new Promise((rs, rj) => {
-    request(arguments.callee.name.toString(), data).then((res) =>{
-      rs(res);
+    request(arguments.callee.name.toString(), data).then((response) =>{
+      rs(response);
     })
   })
 }
@@ -124,8 +126,8 @@ function getTaskDetailForColor() {
 function taskReportForColor() {
   const data = {"clientInfo":{},"taskType":"0"};
   return new Promise((rs, rj) => {
-    request(arguments.callee.name.toString(), data).then((res) =>{
-      rs(res);
+    request(arguments.callee.name.toString(), data).then((response) =>{
+      rs(response);
     })
   })
 }
@@ -133,8 +135,8 @@ function taskReportForColor() {
 function receiveTaskRedpacket() {
   const data = {"clientInfo":{},"taskType":"5","detailId":"96"};
   return new Promise((rs, rj) => {
-    request(arguments.callee.name.toString(), data).then((res) =>{
-      rs(res);
+    request(arguments.callee.name.toString(), data).then((response) =>{
+      rs(response);
     })
   })
 }
