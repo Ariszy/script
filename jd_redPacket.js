@@ -99,17 +99,20 @@ function* start() {
   yield taskHomePage(); // 初始化任务
   if (taskInfo && taskInfo.length > 0) {
     for (let item of taskInfo) {
-      // if (item.innerStatus === 7) {
-        yield startTask(item.taskType);//开始领取任务
-        if (item.taskType === 4 || item.taskType === 5) {
-          //做浏览任务
-          console.log(`开始做浏览任务\n`)
-          yield active(item.taskType)
-        }
-      // }
-      if (item.requireCount === item.alreadyReceivedCount && item.innerStatus === 3) {
+      if (item.requireCount === item.alreadyReceivedCount) {
         // innerStatus=4已领取红包，3：任务已完成，红包未领取，2：任务未完成，7,未领取任务
-        yield receiveTaskRedpacket(item.taskType);
+        if (item.innerStatus === 3) {
+          yield receiveTaskRedpacket(item.taskType);
+        }
+      } else {
+        if (item.innerStatus === 7) {
+          yield startTask(item.taskType);//开始领取任务
+          if (item.taskType === 4 || item.taskType === 5) {
+            //做浏览任务
+            console.log(`开始做浏览任务\n`)
+            yield active(item.taskType)
+          }
+        }
       }
     }
     // yield getTaskDetailForColor();
