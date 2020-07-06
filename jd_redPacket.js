@@ -95,18 +95,31 @@ step.next();
 
 function* start() {
   yield taskHomePage(); // 初始化任务
+  if (taskInfo && taskInfo.length > 0) {
+    for (let item of taskInfo) {
+      if (item.innerStatus === 7) {
+        yield startTask(item.taskType);//开始领取任务
+        if (item.innerStatus === 4 || item.innerStatus === 5) {
+          //做浏览任务
+          yield active()
+        }
+      }
+    }
+    // yield getTaskDetailForColor();
+  }
   // let test = await getTaskDetailForColor();
   // console.log(`---test---${JSON.stringify(test)}`);
-  yield getTaskDetailForColor();
 }
 //获取任务列表
 function taskHomePage() {
   const data = {"clientInfo":{}};
   request(arguments.callee.name.toString(), data).then((response) => {
     try {
-      // taskInfo = res.data.result.taskInfos;
-      console.log(`任务初始化完成:${JSON.stringify(response)}`);
-      step.next();
+      if (response.code === 0) {
+        taskInfo = response.data.result.taskInfos;
+        console.log(`任务初始化完成:${JSON.stringify(response)}`);
+        step.next();
+      }
     } catch (e) {
       console.log(e);
       console.log('初始化任务异常');
@@ -114,25 +127,55 @@ function taskHomePage() {
     }
   })
 }
+//领取任务
+function startTask(taskType) {
+  // 从taskHomePage返回的数据里面拿taskType
+  const data = {"clientInfo":{},"taskType":taskType};
+  request(arguments.callee.name.toString(), data).then((response) => {
+    try {
+      // taskInfo = res.data.result.taskInfos;
+      console.log(`领取任务:${JSON.stringify(response)}`);
+      step.next();
+    } catch (e) {
+      console.log(e);
+      console.log('初始化任务异常');
+    }
+  })
+}
+
+async function active(taskType) {
+  let getTaskDetailForColorRes = await getTaskDetailForColor(taskType);
+  console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
+  const data = getTaskDetailForColorRes.data.result.advertDetails;
+  for (let item of data) {
+    if (item.id && item.status == 0)
+    taskReportForColor(item.id);
+  }
+  step.next();
+}
+
 //获取具体任务详情
-function getTaskDetailForColor() {
-  const data = {"clientInfo":{},"taskType":"5"};
+function getTaskDetailForColor(taskType) {
+  const data = {"clientInfo":{},"taskType":taskType};
+  return new Promise((rs, rj) => {
+    request(arguments.callee.name.toString(), data).then((response) =>{
+      rs(response);
+    })
+  })
+  // request(arguments.callee.name.toString(), data).then((test) => {
+  //   console.log(`---test---${JSON.stringify(test)}`);
+  // })
+}
+//完成任务的动作
+function taskReportForColor(detailId) {
+  const data = {"clientInfo":{},"taskType":"4","detailId":detailId};
   // return new Promise((rs, rj) => {
   //   request(arguments.callee.name.toString(), data).then((response) =>{
   //     rs(response);
   //   })
   // })
-  request(arguments.callee.name.toString(), data).then((test) => {
-    console.log(`---test---${JSON.stringify(test)}`);
-  })
-}
-//完成任务的动作
-function taskReportForColor() {
-  const data = {"clientInfo":{},"taskType":"0"};
-  return new Promise((rs, rj) => {
-    request(arguments.callee.name.toString(), data).then((response) =>{
-      rs(response);
-    })
+  request(arguments.callee.name.toString(), data).then(res => {
+    console.log(`完成任务的动作---${res}`)
   })
 }
 //领取 领3张券任务后的红包
