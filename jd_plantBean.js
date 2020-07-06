@@ -321,7 +321,6 @@ function* step() {
         if (stealRes.code == 0) {
           if (stealRes.data.tips) {
             console.log('今日已达上限');
-            return
           }
           if (stealRes.data && stealRes.data.friendInfoList && stealRes.data.friendInfoList.length > 0) {
             for (let item of stealRes.data.friendInfoList) {
@@ -338,8 +337,12 @@ function* step() {
           }
         }
         //收获
-        let res = yield getReward();
-        console.log(`种豆得豆收获的京豆情况---res,${JSON.stringify(res)}`);
+        if (awardState === '5') {
+          let res = yield getReward();
+          console.log(`种豆得豆收获的京豆情况---res,${JSON.stringify(res)}`);
+        } else if (awardState === '6') {
+          console.log("上轮活动您已领奖，去京豆明细页看看");
+        }
         console.log('结束')
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
@@ -480,15 +483,10 @@ function collectUserNutr(paradiseUuid) {
 }
 //每轮种豆活动获取结束后,自动收取京豆
 function getReward() {
-  console.log(`awardState${awardState}`)
-  if (awardState === '5') {
-    const body = {
-      "roundId": lastRoundId
-    }
-    request('receivedBean', body);
-  } else if (awardState === '6') {
-    console.log("上轮活动您已领奖，去京豆明细页看看");
+  const body = {
+    "roundId": lastRoundId
   }
+  request('receivedBean', body);
 }
 function requestGet(url){
     const option =  {
