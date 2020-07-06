@@ -101,7 +101,8 @@ function* start() {
         yield startTask(item.taskType);//开始领取任务
         if (item.taskType === 4 || item.taskType === 5) {
           //做浏览任务
-          yield active()
+          console.log(`开始做浏览任务\n`)
+          yield active(item.taskType)
         }
       // }
     }
@@ -149,7 +150,8 @@ async function active(taskType) {
   const data = getTaskDetailForColorRes.data.result.advertDetails;
   for (let item of data) {
     if (item.id && item.status == 0)
-    taskReportForColor(item.id);
+    let taskReportForColorRes = await taskReportForColor(item.id);
+    console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
   }
   step.next();
 }
@@ -169,14 +171,15 @@ function getTaskDetailForColor(taskType) {
 //完成任务的动作
 function taskReportForColor(detailId) {
   const data = {"clientInfo":{},"taskType":"4","detailId":detailId};
-  // return new Promise((rs, rj) => {
-  //   request(arguments.callee.name.toString(), data).then((response) =>{
-  //     rs(response);
-  //   })
-  // })
-  request(arguments.callee.name.toString(), data).then(res => {
-    console.log(`完成任务的动作---${res}`)
+  return new Promise((rs, rj) => {
+    request(arguments.callee.name.toString(), data).then((response) =>{
+      rs(response);
+    })
   })
+  // request(arguments.callee.name.toString(), data).then(res => {
+  //   console.log(`完成任务的动作---${res}`)
+  //   step.next();
+  // })
 }
 //领取 领3张券任务后的红包
 function receiveTaskRedpacket() {
