@@ -150,7 +150,7 @@ async function active(taskType) {
   const data = getTaskDetailForColorRes.data.result.advertDetails;
   for (let item of data) {
     if (item.id && item.status == 0) {
-      let taskReportForColorRes = await taskReportForColor(item.id);
+      let taskReportForColorRes = await taskReportForColor(taskType, item.id);
       console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
     }
   }
@@ -170,8 +170,9 @@ function getTaskDetailForColor(taskType) {
   // })
 }
 //完成任务的动作
-function taskReportForColor(detailId) {
-  const data = {"clientInfo":{},"taskType":"4","detailId":detailId};
+function taskReportForColor(taskType, detailId) {
+  const data = {"clientInfo":{},"taskType":taskType,"detailId":detailId};
+  console.log(`${detailId}\n`)
   return new Promise((rs, rj) => {
     request(arguments.callee.name.toString(), data).then((response) =>{
       rs(response);
