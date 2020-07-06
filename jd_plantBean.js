@@ -149,6 +149,7 @@ function* step() {
         currentRoundId = roundList[1].roundId;
         lastRoundId = roundList[0].roundId;
         awardState = roundList[0].awardState;
+        console.log(`awardState------${awardState}`)
         let shareUrl = plantBeanIndexResult.data.jwordShareInfo.shareUrl
         let myPlantUuid = getParam(shareUrl, 'plantUuid')
         console.log(`你的plantUuid为${myPlantUuid}`)
@@ -343,7 +344,7 @@ function* step() {
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
-    $hammer.alert(name, message)
+    $hammer.alert(name, message, '');
 }
 
 function purchaseRewardTask(roundId) {
@@ -479,6 +480,7 @@ function collectUserNutr(paradiseUuid) {
 }
 //每轮种豆活动获取结束后,自动收取京豆
 function getReward() {
+  console.log(`awardState${awardState}`)
   if (awardState === '5') {
     const body = {
       "roundId": lastRoundId
