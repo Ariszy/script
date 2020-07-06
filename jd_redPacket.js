@@ -1,5 +1,10 @@
 // 京东全民开红包（京东app->主页->领券->抢红包(在底部)）
-// 未完
+// 已完成功能：
+// ①浏览活动
+// ②关注频道
+// 领取前两个任务完成后的红包
+// 领3张券功能,邀请好友未实现
+
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -96,6 +101,9 @@ let step = start();
 step.next();
 
 function* start() {
+  if (!cookie) {
+    return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
+  }
   yield taskHomePage(); // 初始化任务
   if (taskInfo && taskInfo.length > 0) {
     for (let item of taskInfo) {
@@ -117,7 +125,6 @@ function* start() {
     }
     // yield getTaskDetailForColor();
   }
-  yield newReceiveRvcCouponWithTask()
   $hammer.alert(name);
   // let test = await getTaskDetailForColor();
   // console.log(`---test---${JSON.stringify(test)}`);
@@ -154,22 +161,7 @@ function startTask(taskType) {
     }
   })
 }
-function getCcTaskList() {
 
-}
-function newReceiveRvcCouponWithTask() {
-  const data = {"taskType":"0","extend":"","source":"couponCenter_app","pageClickKey":"CouponCenter","rcType":"1","taskId":"415","childActivityUrl":"","eid":"","shshshfpb":"","lat":"","lng":""};
-  request(arguments.callee.name.toString(), data).then((response) => {
-    try {
-      // taskInfo = res.data.result.taskInfos;
-      console.log(`领券结果:${JSON.stringify(response)}`);
-      step.next();
-    } catch (e) {
-      console.log(e);
-      console.log('初始化任务异常');
-    }
-  })
-}
 async function active(taskType) {
   let getTaskDetailForColorRes = await getTaskDetailForColor(taskType);
   console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
@@ -218,10 +210,28 @@ function receiveTaskRedpacket(taskType) {
   //   })
   // })
   request(arguments.callee.name.toString(), data).then((res) => {
-    console.log(`领取红包结果：${res}`);
+    console.log(`领取红包结果：${JSON.stringify(res)}`);
     step.next();
   })
 }
+
+function getCcTaskList() {
+
+}
+function newReceiveRvcCouponWithTask() {
+  const data = {"taskType":"0","extend":"","source":"couponCenter_app","pageClickKey":"CouponCenter","rcType":"1","taskId":"415","childActivityUrl":"","eid":"","shshshfpb":"","lat":"","lng":""};
+  request(arguments.callee.name.toString(), data).then((response) => {
+    try {
+      // taskInfo = res.data.result.taskInfos;
+      console.log(`领券结果:${JSON.stringify(response)}`);
+      step.next();
+    } catch (e) {
+      console.log(e);
+      console.log('初始化任务异常');
+    }
+  })
+}
+
 async function request(function_id, body = {}) {
   await sleep(2);
   return new Promise((resolve, reject) => {
