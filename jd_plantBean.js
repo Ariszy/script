@@ -136,7 +136,7 @@ Task.next();
 
 function* step() {
     //
-    let message = ''
+    let message = '', subTitle = '';
     if (cookie) {
         console.log(`获取任务及基本信息`)
         let plantBeanIndexResult = yield plantBeanIndex()
@@ -149,10 +149,14 @@ function* step() {
         currentRoundId = roundList[1].roundId;
         lastRoundId = roundList[0].roundId;
         awardState = roundList[0].awardState;
+        subTitle = plantBeanIndexResult.data.plantUserInfo.plantNickName;
         message += `【上期时间】${roundList[0].dateDesc}\n`;
         message += `【上期成长值】${roundList[0].growth}\n`;
+        if (roundList[0].beanState == 4 && roundList[0].awardState == 4) {
+          message += `【上期状态】${roundList[0].tipBeanEndTitle}\n`;
+        }
         if (roundList[0].awardBeans) {
-          message += `【上期兑换京豆】${roundList[0].awardBeans}\n`;
+          message += `【上期${roundList[0].growth}成长值兑换京豆】${roundList[0].awardBeans}\n`;
         }
         message += `【本期时间】${roundList[1].dateDesc}\n`;
         message += `【本期成长值】${roundList[1].growth}\n`;
@@ -353,7 +357,7 @@ function* step() {
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
-    $hammer.alert(name, message, '');
+    $hammer.alert(name, message, subTitle);
 }
 
 function purchaseRewardTask(roundId) {
