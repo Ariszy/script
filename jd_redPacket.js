@@ -91,6 +91,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
 //直接用NobyDa的js cookie
 const cookie = $hammer.read('CookieJD');
 let taskInfo = null;
+const name = '全民开红包';
 let step = start();
 step.next();
 
@@ -106,9 +107,14 @@ function* start() {
           yield active(item.taskType)
         }
       // }
+      if (item.requireCount === item.alreadyReceivedCount && item.innerStatus === 3) {
+        // innerStatus=4已领取红包，3：任务已完成，红包未领取，2：任务未完成，7,未领取任务
+        yield receiveTaskRedpacket(item.taskType);
+      }
     }
     // yield getTaskDetailForColor();
   }
+  $hammer.alert(name);
   // let test = await getTaskDetailForColor();
   // console.log(`---test---${JSON.stringify(test)}`);
 }
@@ -185,12 +191,16 @@ function taskReportForColor(taskType, detailId) {
   // })
 }
 //领取 领3张券任务后的红包
-function receiveTaskRedpacket() {
-  const data = {"clientInfo":{},"taskType":"5","detailId":"96"};
-  return new Promise((rs, rj) => {
-    request(arguments.callee.name.toString(), data).then((response) =>{
-      rs(response);
-    })
+function receiveTaskRedpacket(taskType) {
+  const data = {"clientInfo":{},"taskType":taskType};
+  // return new Promise((rs, rj) => {
+  //   request(arguments.callee.name.toString(), data).then((response) =>{
+  //     rs(response);
+  //   })
+  // })
+  request(arguments.callee.name.toString(), data).then((res) => {
+    console.log(`领取红包结果：${res}`);
+    step.next();
   })
 }
 async function request(function_id, body = {}) {
