@@ -149,7 +149,13 @@ function* step() {
         currentRoundId = roundList[1].roundId;
         lastRoundId = roundList[0].roundId;
         awardState = roundList[0].awardState;
-        console.log(`awardState------${awardState}`)
+        message += `【上期时间】${roundList[0].dateDesc}\n`;
+        message += `【上期成长值】${roundList[0].growth}\n`;
+        if (roundList[0].awardBeans) {
+          message += `【上期兑换京豆】${roundList[0].awardBeans}\n`;
+        }
+        message += `【本期时间】${roundList[1].dateDesc}\n`;
+        message += `【本期成长值】${roundList[1].growth}\n`;
         let shareUrl = plantBeanIndexResult.data.jwordShareInfo.shareUrl
         let myPlantUuid = getParam(shareUrl, 'plantUuid')
         console.log(`你的plantUuid为${myPlantUuid}`)
