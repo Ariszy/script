@@ -281,9 +281,11 @@ function flyTask_state() {
         done_distance = data.done_distance
         source_id = data.source_id//根据source_id 启动flyTask_start()
         task_status = data.task_status //0,没开始；1，已开始
-        subTitle = `【奖励】：${beans_num}京豆`
+        subTitle = `【奖励】${beans_num}京豆`
         if (indexState === 1) {
           message += `【空间站】 ${destination}`;
+          message += `【结束时间】 ${data['end_time']}`;
+          message += `【进度】 ${new Number(data.done_distance/data.distance).toFixed(2) * 100}%`;
         }
         indexState++;
       }
