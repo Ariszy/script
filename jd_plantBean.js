@@ -1,5 +1,6 @@
 /*
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
+更新时间：2020-07-06，新增完成低价包邮的任务，优化弹窗信息
 会自动关注任务中的店铺跟商品
 // quantumultx
 [task_local]
@@ -279,7 +280,7 @@ function* step() {
               // 低价包邮
               if (task.isFinished !== 1) {
                 let plantReceiveNutrientsTaskRes = yield plantReceiveNutrientsTask();
-                console.log(`低价包邮任务结果：：${JSON.stringify(plantReceiveNutrientsTaskRes)}`)
+                console.log(`${task.taskName}获取营养液：：${plantReceiveNutrientsTaskRes.data && plantReceiveNutrientsTaskRes.data.nutrNum}`)
               }
             } else if (task.taskType == 1) {
                 console.log('跳过签到，NobyDa的会签')
