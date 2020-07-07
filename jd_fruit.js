@@ -140,7 +140,6 @@ function* step() {
     let farmInfo = yield initForFarm();
     if (farmInfo.farmUserPro) {
         option['media-url'] = farmInfo.farmUserPro.goodsImage;
-        option['open-url'] = 'openApp.jdMobile://';
         subTitle = farmInfo.farmUserPro.nickName + '的' + farmInfo.farmUserPro.name;
         console.log('shareCode为: ' + farmInfo.farmUserPro.shareCode);
         if (farmInfo.treeState === 2) {
