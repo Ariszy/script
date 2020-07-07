@@ -286,7 +286,7 @@ async function petSport() {
         times++;
     } while (resultCode == 0 && code == 0)
     if (times > 1) {
-        message += '已完成十次遛狗\n';
+        message += '【十次遛狗】已完成\n';
     }
     gen.next();
 
@@ -440,13 +440,14 @@ async function masterHelpInit() {
         message += `【额外奖励${getHelpAddedBonusResult.result.reward}领取】${getHelpAddedBonusResult.message}\n`;
       } else {
         console.log("已经领取过5好友助力额外奖励");
-        message += `【5好友助力额外奖励】已领取\n`;
+        message += `【额外奖励】已领取\n`;
       }
     } else {
       console.log("助力好友未达到5个")
       message += `【额外奖励领取失败】原因：助力好友未达5个\n`;
     }
-    if (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length >= 0) {
+    if (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length > 0) {
+      console.log('帮您助力的好友的名单开始')
       let str = '';
       res.result.masterHelpPeoples.map((item, index) => {
         if (index === (res.result.masterHelpPeoples.length - 1)) {
