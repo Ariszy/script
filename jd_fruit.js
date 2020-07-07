@@ -248,7 +248,7 @@ function* step() {
                     str += (item.nickName || "匿名用户") + '，';
                   }
                 })
-                message += `【您助力的好友】${str}\n`;
+                message += `【帮您助力的好友】${str}\n`;
             }
         } else {
             console.log("助力好友未达到5个");
