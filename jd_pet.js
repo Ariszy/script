@@ -431,19 +431,32 @@ function inviteFriendsInit() {
 async function masterHelpInit() {
   let res = await request(arguments.callee.name.toString());
   console.log('助力信息: ' , res);
-  if (res.code === '0' && res.resultCode === '0' && (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length >= 5)) {
-    if(!res.result.addedBonusFlag) {
-      console.log("开始领取额外奖励");
-      let getHelpAddedBonusResult = await getHelpAddedBonus();
-      console.log(`领取30g额外奖励结果：【${getHelpAddedBonusResult.message}】`);
-      message += `【额外奖励${getHelpAddedBonusResult.result.reward}领取】${getHelpAddedBonusResult.message}\n`;
+  if (res.code === '0' && res.resultCode === '0') {
+    if (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length >= 5) {
+      if(!res.result.addedBonusFlag) {
+        console.log("开始领取额外奖励");
+        let getHelpAddedBonusResult = await getHelpAddedBonus();
+        console.log(`领取30g额外奖励结果：【${getHelpAddedBonusResult.message}】`);
+        message += `【额外奖励${getHelpAddedBonusResult.result.reward}领取】${getHelpAddedBonusResult.message}\n`;
+      } else {
+        console.log("已经领取过5好友助力额外奖励");
+        message += `【5好友助力额外奖励】已领取\n`;
+      }
     } else {
-      console.log("已经领取过5好友助力额外奖励");
-      message += `【5好友助力额外奖励】已领取\n`;
+      console.log("助力好友未达到5个")
+      message += `【额外奖励领取失败】原因：助力好友未达5个\n`;
     }
-  } else {
-    console.log("助力好友未达到5个")
-    message += `【额外奖励领取失败】原因：助力好友未达5个\n`;
+    if (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length >= 0) {
+      let str = '';
+      res.result.masterHelpPeoples.map((item, index) => {
+        if (index === (res.result.masterHelpPeoples.length - 1)) {
+          str += item.nickName || "匿名用户";
+        } else {
+          str += (item.nickName || "匿名用户") + '，';
+        }
+      })
+      message += `【帮您助力的好友】${str}\n`;
+    }
   }
   gen.next();
 }
