@@ -225,17 +225,30 @@ function* step() {
         }
         const masterHelpResult = yield masterHelpTaskInitForFarm();
         console.log("初始化助力信息", masterHelpResult);
-        if (masterHelpResult.code === '0' && (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples.length >=5)) {
-          // 已有五人助力。领取助力后的奖励
-            if (!masterHelpResult.masterGotFinal ) {
-                const masterGotFinished = yield masterGotFinishedTaskForFarm();
-                if (masterGotFinished.code === '0') {
-                    console.log(`已成功领取好友助力奖励：【${masterGotFinished.amount}】g水`);
-                    message += `【好友助力额外奖励】:${masterGotFinished.amount}g水领取成功\n`;
+        if (masterHelpResult.code === '0') {
+            if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples.length >=5) {
+                // 已有五人助力。领取助力后的奖励
+                if (!masterHelpResult.masterGotFinal ) {
+                    const masterGotFinished = yield masterGotFinishedTaskForFarm();
+                    if (masterGotFinished.code === '0') {
+                      console.log(`已成功领取好友助力奖励：【${masterGotFinished.amount}】g水`);
+                      message += `【好友助力额外奖励】:${masterGotFinished.amount}g水领取成功\n`;
+                    }
+                } else {
+                    console.log("已经领取过5好友助力额外奖励");
+                    message += `【好友助力额外奖励】已被领取过\n`;
                 }
-            } else {
-                console.log("已经领取过5好友助力额外奖励");
-                message += `【好友助力额外奖励】已被领取过\n`;
+            }
+            if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples > 0) {
+                let str = '';
+                masterHelpResult.masterHelpPeoples.map((item, index) => {
+                  if (index === (masterHelpResult.masterHelpPeoples.length - 1)) {
+                    str += item.nickName || "匿名用户";
+                  } else {
+                    str += (item.nickName || "匿名用户") + '，';
+                  }
+                })
+                message += `【您助力的好友】${str}\n`;
             }
         } else {
             console.log("助力好友未达到5个");
@@ -255,6 +268,10 @@ function* step() {
             console.log(`开始助力好友: ${code}`);
             let helpResult = yield masterHelp(code)
             if (helpResult.code == 0) {
+                if(helpResult.helpResult.remainTimes === 0) {
+                  console.log(`您当前助力次数已耗尽，跳出助力`);
+                  break
+                }
                 if (helpResult.helpResult.code === '0') {
                     //助力成功
                     salveHelpAddWater += helpResult.helpResult.salveHelpAddWater;
@@ -369,7 +386,10 @@ function* step() {
           console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g，可继续浇水");
           for (let i = 0; i < parseInt(overageEnergy / 10); i++){
             let res = yield waterGoodForFarm();
-            if (res.totalEnergy <= 100) {
+            if (res.code != 0) {
+              break
+            }
+            if (res.totalEnergy < 110) {
               console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
             } else {
               console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
