@@ -143,7 +143,7 @@ function* step() {
         subTitle = farmInfo.farmUserPro.nickName + '的' + farmInfo.farmUserPro.name;
         console.log('shareCode为: ' + farmInfo.farmUserPro.shareCode);
         if (farmInfo.treeState === 2) {
-          return $hammer.alert(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', subTitle, option);
+          return $hammer.alert(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', subTitle, '', option);
         }
         farmTask = yield taskInitForFarm();
         // console.log(`当前任务详情: ${JSON.stringify(farmTask)}`);
