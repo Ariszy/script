@@ -239,7 +239,7 @@ function* step() {
                     message += `【好友助力额外奖励】已被领取过\n`;
                 }
             }
-            if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples > 0) {
+            if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples.length > 0) {
                 let str = '';
                 masterHelpResult.masterHelpPeoples.map((item, index) => {
                   if (index === (masterHelpResult.masterHelpPeoples.length - 1)) {
@@ -268,10 +268,6 @@ function* step() {
             console.log(`开始助力好友: ${code}`);
             let helpResult = yield masterHelp(code)
             if (helpResult.code == 0) {
-                if(helpResult.helpResult.remainTimes === 0) {
-                  console.log(`您当前助力次数已耗尽，跳出助力`);
-                  break
-                }
                 if (helpResult.helpResult.code === '0') {
                     //助力成功
                     salveHelpAddWater += helpResult.helpResult.salveHelpAddWater;
@@ -286,6 +282,10 @@ function* step() {
                 }
                 console.log(`【今日助力次数还剩】${helpResult.helpResult.remainTimes}次`);
                 remainTimes =  helpResult.helpResult.remainTimes;
+                if(helpResult.helpResult.remainTimes === 0) {
+                  console.log(`您当前助力次数已耗尽，跳出助力`);
+                  break
+                }
             }
         }
         if (helpSuccessPeoples && helpSuccessPeoples.length > 0) {
