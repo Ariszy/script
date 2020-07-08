@@ -1,5 +1,6 @@
 //京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
 // 2020-07-08更新：新增冰淇淋会场任务（可得8g狗粮），有些人京东app看不到，但是微信小程序京东有
+// cron 5 7-17/5 * * *
 const $hammer = (() => {
     const isRequest = "undefined" != typeof $request,
         isSurge = "undefined" != typeof $httpClient,
