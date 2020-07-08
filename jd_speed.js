@@ -121,17 +121,26 @@ function* entrance() {
 
   yield spaceEvent_list();//检查太空特殊事件
   console.log(`可处理的特殊事件信息:${JSON.stringify(spaceEvents)}`);
-  yield spaceEvent();
-
+  if (spaceEvents && spaceEvents.length > 0) {
+    yield spaceEvent();//处理太空特殊事件
+  } else {
+    console.log('没有可处理的特殊事件')
+  }
   console.log('开始检查可领取燃料')
   yield energyPropList();
   console.log(`可领取燃料::${JSON.stringify(able_energeProp_list)}`)
-  yield receiveeEergyProp();
-
+  if (able_energeProp_list && able_energeProp_list.length > 0) {
+    yield receiveeEergyProp();
+  } else {
+    console.log('没有可领取的燃料')
+  }
   yield energePropUsaleList();//检查剩余可用的燃料
   console.log(`可使用燃料${JSON.stringify(energePropUsale)}`)
-  yield useEnergy();
-
+  if (energePropUsale && energePropUsale.length > 0) {
+    yield useEnergy();
+  } else {
+    console.log('暂无可用燃料')
+  }
   //执行上面操作后，再进行一次检测
   yield flyTask_state();
   if (task_status === 0) {
@@ -176,14 +185,10 @@ function energyPropList() {
 }
 
 async function receiveeEergyProp() {
-  if (able_energeProp_list && able_energeProp_list.length > 0) {
-    //开始领取燃料
-    for (let i of able_energeProp_list) {
-      let memberTaskCenterRes =  await _energyProp_gain(i.id);
-      console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
-    }
-  } else {
-    console.log('没有可领取的燃料')
+  //开始领取燃料
+  for (let i of able_energeProp_list) {
+    let memberTaskCenterRes =  await _energyProp_gain(i.id);
+    console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
   }
   gen.next();
 }
@@ -227,13 +232,9 @@ function spaceEvent_list() {
 }
 // 处理太空特殊事件
 async function spaceEvent() {
-  if (spaceEvents && spaceEvents.length > 0) {
-    for (let item of spaceEvents) {
-      let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
-      console.log(`处理特殊事件的结果：：${JSON.stringify(spaceEventRes)}`)
-    }
-  } else {
-    console.log('没有可处理的特殊事件')
+  for (let item of spaceEvents) {
+    let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
+    console.log(`处理特殊事件的结果：：${JSON.stringify(spaceEventRes)}`)
   }
   gen.next();
 }
@@ -268,17 +269,13 @@ function energePropUsaleList() {
 
 //使用能源
 async function useEnergy() {
-  if (energePropUsale && energePropUsale.length > 0) {
-    for (let i of energePropUsale) {
-      let _energyProp_use = await energyPropUse(i.id);
-      console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
-      if (_energyProp_use.code != 0) {
-        console.log(`${_energyProp_use.message},跳出循环`)
-        break
-      }
+  for (let i of energePropUsale) {
+    let _energyProp_use = await energyPropUse(i.id);
+    console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+    if (_energyProp_use.code != 0) {
+      console.log(`${_energyProp_use.message},跳出循环`)
+      break
     }
-  } else {
-    console.log('暂无可用燃料')
   }
   gen.next();
 }
