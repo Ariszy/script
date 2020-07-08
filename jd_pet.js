@@ -431,14 +431,14 @@ function initPetTown() {
 //再次投食
 async function feedPetsAgain() {
   const response = await secondInitPetTown(); //再次初始化萌宠
-  console.log(`再次初始化萌宠的信息${response}`);
+  console.log(`再次初始化萌宠的信息${JSON.stringify(response)}`);
   if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
     let secondPetInfo = response.result;
     let foodAmount = secondPetInfo.foodAmount; //剩余狗粮
     if (foodAmount - 100 >= 10) {
       for (let i = 0; i < parseInt((foodAmount - 100) / 10); i++) {
         const feedPetRes = await feedPets();
-        console.log(`投食feedPetRes${feedPetRes}`);
+        console.log(`投食feedPetRes`);
         if (feedPetRes.resultCode == 0 && feedPetRes.code == 0) {
           console.log('投食成功')
         }
