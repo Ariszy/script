@@ -105,7 +105,7 @@ let destination = null;
 let source_id = null;
 let done_distance = null;
 let task_status = null, able_energeProp_list = [], spaceEvents = [], energePropUsale = [];
-async function* entrance() {
+function* entrance() {
   const startTime = Date.now();
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
