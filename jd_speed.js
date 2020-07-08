@@ -4,6 +4,7 @@
 // cron 1 */3 * * *
 // 建议3小时运行一次，打卡时间间隔是6小时
 //有bug来我这提Issue反馈 https://gitee.com/lxk0301/scripts
+// 感谢@iepngs的兼容代码
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
       isSurge = "undefined" != typeof $httpClient,
@@ -117,38 +118,44 @@ async function* entrance() {
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
+
+  yield spaceEvent_list();//检查太空特殊事件
+  console.log(`可处理的特殊事件信息:${JSON.stringify(spaceEvents)}`);
+  if (spaceEvents && spaceEvents.length > 0) {
+    // for (let item of spaceEvents) {
+    //   let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
+    //   console.log(`处理特殊事件的结果：：${JSON.stringify(spaceEventRes)}`)
+    // }
+    yield spaceEvent();
+  } else {
+    console.log('没有可处理的特殊事件')
+  }
+
   console.log('开始检查可领取燃料')
   yield energyPropList();
   console.log(`可领取燃料::${JSON.stringify(able_energeProp_list)}`)
   if (able_energeProp_list && able_energeProp_list.length > 0) {
     //开始领取燃料
-    for (let i of able_energeProp_list) {
-      let memberTaskCenterRes =  await _energyProp_gain(i.id);
-      console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
-    }
+    // for (let i of able_energeProp_list) {
+    //   let memberTaskCenterRes =  await _energyProp_gain(i.id);
+    //   console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
+    // }
+    yield receiveeEergyProp()
   } else {
     console.log('没有可领取的燃料')
   }
-  yield spaceEvent_list();
-  console.log(`可处理的特殊事件信息:${JSON.stringify(spaceEvents)}`);
-  if (spaceEvents && spaceEvents.length > 0) {
-    for (let item of spaceEvents) {
-      let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
-      console.log(`处理特殊事件的结果：：${JSON.stringify(spaceEventRes)}`)
-    }
-  } else {
-    console.log('没有可处理的特殊事件')
-  }
-  yield energePropUsaleList();
+
+  yield energePropUsaleList();//检查剩余可用的燃料
   if (energePropUsale && energePropUsale.length > 0) {
-    for (let i of energePropUsale) {
-      let _energyProp_use = await energyPropUse(i.id);
-      console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
-      if (_energyProp_use.code != 0) {
-        console.log(`${_energyProp_use.message},跳出循环`)
-        break
-      }
-    }
+    // for (let i of energePropUsale) {
+    //   let _energyProp_use = await energyPropUse(i.id);
+    //   console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+    //   if (_energyProp_use.code != 0) {
+    //     console.log(`${_energyProp_use.message},跳出循环`)
+    //     break
+    //   }
+    // }
+    yield useEnergy();
   } else {
     console.log('暂无可用燃料')
   }
@@ -194,7 +201,16 @@ function energyPropList() {
     gen.next();
   })
 }
-// 领取燃料
+
+async function receiveeEergyProp() {
+  //开始领取燃料
+  for (let i of able_energeProp_list) {
+    let memberTaskCenterRes =  await _energyProp_gain(i.id);
+    console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
+  }
+  gen.next();
+}
+// 领取燃料调用的api
 function _energyProp_gain(energy_id) {
   console.log('energy_id', energy_id)
   if (!energy_id) return;
@@ -232,6 +248,15 @@ function spaceEvent_list() {
     gen.next();
   })
 }
+// 处理太空特殊事件
+async function spaceEvent() {
+  for (let item of spaceEvents) {
+    let spaceEventRes = await spaceEventHandleEvent(item.id, item.value);
+    console.log(`处理特殊事件的结果：：${JSON.stringify(spaceEventRes)}`)
+  }
+  gen.next();
+}
+//处理太空特殊事件调用的api
 function spaceEventHandleEvent(id, value) {
   if (!id && !value) return;
   const body = {
@@ -259,6 +284,19 @@ function energePropUsaleList() {
     gen.next();
   });
 }
+
+//使用能源
+async function useEnergy() {
+  for (let i of energePropUsale) {
+    let _energyProp_use = await energyPropUse(i.id);
+    console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+    if (_energyProp_use.code != 0) {
+      console.log(`${_energyProp_use.message},跳出循环`)
+      break
+    }
+  }
+}
+//使用能源调用的api
 function energyPropUse(id) {
   if (!id) return
   const body = {
