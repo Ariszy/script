@@ -136,11 +136,12 @@ function* entrance() {
   }
   yield energePropUsaleList();//检查剩余可用的燃料
   console.log(`可使用燃料${JSON.stringify(energePropUsale)}`)
-  if (energePropUsale && energePropUsale.length > 0) {
-    yield useEnergy();
-  } else {
-    console.log('暂无可用燃料')
-  }
+  yield useEnergy();
+  // if (energePropUsale && energePropUsale.length > 0) {
+  //   yield useEnergy();
+  // } else {
+  //   console.log('暂无可用燃料')
+  // }
   //执行上面操作后，再进行一次检测
   yield flyTask_state();
   if (task_status === 0) {
@@ -269,13 +270,25 @@ function energePropUsaleList() {
 
 //使用能源
 async function useEnergy() {
-  for (let i of energePropUsale) {
-    let _energyProp_use = await energyPropUse(i.id);
-    console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
-    if (_energyProp_use.code != 0) {
-      console.log(`${_energyProp_use.message},跳出循环`)
-      break
+  // for (let i of energePropUsale) {
+  //   let _energyProp_use = await energyPropUse(i.id);
+  //   console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+  //   if (_energyProp_use.code != 0) {
+  //     console.log(`${_energyProp_use.message},跳出循环`)
+  //     break
+  //   }
+  // }
+  if (energePropUsale && energePropUsale.length > 0) {
+    for (let i of energePropUsale) {
+      let _energyProp_use = await energyPropUse(i.id);
+      console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+      if (_energyProp_use.code != 0) {
+        console.log(`${_energyProp_use.message},跳出循环`)
+        break
+      }
     }
+  } else {
+    console.log('暂无可用燃料')
   }
   gen.next();
 }
