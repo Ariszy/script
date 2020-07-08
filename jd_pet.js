@@ -139,6 +139,7 @@ gen.next();
  * 入口函数
  */
 function* entrance() {
+    const startTime = Date.now();
     if (!cookie) {
         return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
     }
@@ -159,37 +160,13 @@ function* entrance() {
             console.log('任务' + task_name + '已完成');
         }
     }
-    // const response = await secondInitPetTown(); //再次初始化萌宠
-    // console.log('再次初始化萌宠的信息', response);
-    // if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
-    //   let secondPetInfo = response.result;
-    //   let foodAmount = secondPetInfo.foodAmount; //剩余狗粮
-    //   if (foodAmount - 100 >= 10) {
-    //     for (let i = 0; i < parseInt((foodAmount - 100) / 10); i++) {
-    //       const feedPetRes = await feedPets();
-    //       console.log('feedPetRes', feedPetRes);
-    //       if (feedPetRes.resultCode == 0 && feedPetRes.code == 0) {
-    //          console.log('投食成功')
-    //       }
-    //     }
-    //     yield initPetTown(); //初始化萌宠
-    //     subTitle = petInfo.goodsInfo.goodsName;
-    //     message += `【与爱宠相识】${petInfo.meetDays}天\n`;
-    //     message += `【剩余狗粮】${petInfo.foodAmount}g\n`;
-    //   } else {
-    //     console.log("目前剩余狗粮：【" + foodAmount + "】g,不再继续投食,保留100g用于完成第二天任务");
-    //     subTitle = secondPetInfo.goodsInfo.goodsName;
-    //     message += `【与爱宠相识】${secondPetInfo.meetDays}天\n`;
-    //     message += `【剩余狗粮】${secondPetInfo.foodAmount}g\n`;
-    //   }
-    // } else {
-    //   console.log(`初始化萌宠失败:  ${JSON.stringify(petInfo)}`);
-    // }
     yield feedPetsAgain();//所有任务做完后，检测剩余狗粮是否大于110g,大于就继续投食
     yield energyCollect();
     let option = {
       "media-url" : goodsUrl
     }
+    const end = ((Date.now() - startTime) / 1000).toFixed(2);
+    console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
     $hammer.alert(name, message, subTitle, '', option)
     // $notify(name, subTitle, message);
     console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
@@ -431,7 +408,6 @@ function initPetTown() {
 //再次投食
 async function feedPetsAgain() {
   const response = await secondInitPetTown(); //再次初始化萌宠
-  console.log(`再次初始化萌宠的信息${JSON.stringify(response)}`);
   if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
     let secondPetInfo = response.result;
     let foodAmount = secondPetInfo.foodAmount; //剩余狗粮
