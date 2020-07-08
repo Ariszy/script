@@ -146,6 +146,7 @@ async function* entrance() {
   }
 
   yield energePropUsaleList();//检查剩余可用的燃料
+  console.log(`可使用燃料${JSON.stringify(energePropUsale)}`)
   if (energePropUsale && energePropUsale.length > 0) {
     // for (let i of energePropUsale) {
     //   let _energyProp_use = await energyPropUse(i.id);
@@ -275,7 +276,7 @@ function energePropUsaleList() {
     "source":"game"
   };
   request('energyProp_usalbeList', body).then(res => {
-    console.log(`检查剩余燃料${JSON.stringify(res)}`)
+    console.log(`检查剩余燃料`)
     if (res.code === 0 && res.data && res.data.length > 0) {
       res.data.map(item => {
         energePropUsale.push(item)
