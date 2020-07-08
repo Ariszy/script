@@ -248,7 +248,7 @@ function* step() {
                     str += (item.nickName || "匿名用户") + '，';
                   }
                 })
-                message += `【帮您助力的好友】${str}\n`;
+                message += `【助力您的好友】${str}\n`;
             }
         } else {
             console.log("助力好友未达到5个");
@@ -289,12 +289,12 @@ function* step() {
             }
         }
         if (helpSuccessPeoples && helpSuccessPeoples.length > 0) {
-            message += `已成功给${helpSuccessPeoples}助力\n`;
+            message += `【您助力的好友】${helpSuccessPeoples}\n`;
         }
         if (salveHelpAddWater > 0) {
             message += `【助力好友】获得${salveHelpAddWater}g\n`
         }
-        message += `【今日剩余助力次数】：${remainTimes}\n`;
+        message += `【今日剩余助力次数】${remainTimes}\n`;
         console.log('助力好友结束，即将开始每日浇水任务');
         // console.log('当前水滴剩余: ' + farmInfo.farmUserPro.totalEnergy);
         // farmTask = yield taskInitForFarm();
