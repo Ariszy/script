@@ -287,10 +287,11 @@ async function useEnergy() {
         break
       }
     }
+    gen.next();
   } else {
     console.log('暂无可用燃料')
+    gen.next();
   }
-  gen.next();
 }
 //使用能源调用的api
 function energyPropUse(id) {
