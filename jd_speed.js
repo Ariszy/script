@@ -144,6 +144,10 @@ async function* entrance() {
     for (let i of energePropUsale) {
       let _energyProp_use = await energyPropUse(i.id);
       console.log(`使用燃料的结果：：${JSON.stringify(_energyProp_use)}`)
+      if (_energyProp_use.code != 0) {
+        console.log(`${_energyProp_use.message},跳出循环`)
+        break
+      }
     }
   } else {
     console.log('暂无可用燃料')
