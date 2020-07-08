@@ -101,6 +101,7 @@ var Task = step();
 Task.next();
 
 function* step() {
+    const startTime = Date.now();
     let message = '';
     let subTitle = '';
     if (cookie) {
@@ -204,6 +205,8 @@ function* step() {
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
+    const end = ((Date.now() - startTime) / 1000).toFixed(2);
+    console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
     $hammer.alert(name, message, subTitle)
 }
 

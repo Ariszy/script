@@ -105,6 +105,7 @@ let source_id = null;
 let done_distance = null;
 let task_status = null, able_energeProp_list = [], spaceEvents = [], energePropUsale = [];
 async function* entrance() {
+  const startTime = Date.now();
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
@@ -155,6 +156,8 @@ async function* entrance() {
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
+  const end = ((Date.now() - startTime) / 1000).toFixed(2);
+  console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
   $hammer.alert(name, message, subTitle);
 }
 //开始新的任务

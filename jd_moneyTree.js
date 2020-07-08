@@ -107,6 +107,7 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
 let gen = entrance();
 gen.next();
 function* entrance() {
+  const startTime = Date.now();
   if (!cookie) {
     return $hammer.alert(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
@@ -136,6 +137,8 @@ function* entrance() {
   yield myWealth();
   // console.log(`----${treeMsgTime}`)
   msgControl();
+  const end = ((Date.now() - startTime) / 1000).toFixed(2);
+  console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
   console.log('任务做完了');
 }
 

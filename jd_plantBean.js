@@ -138,6 +138,7 @@ Task.next();
 function* step() {
     //
     let message = '', subTitle = '';
+    const startTime = Date.now();
     if (cookie) {
         console.log(`获取任务及基本信息`)
         let plantBeanIndexResult = yield plantBeanIndex()
@@ -367,6 +368,8 @@ function* step() {
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
+    const end = ((Date.now() - startTime) / 1000).toFixed(2);
+    console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
     $hammer.alert(name, message, subTitle);
 }
 
