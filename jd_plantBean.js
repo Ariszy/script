@@ -2,6 +2,7 @@
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
 更新时间：2020-07-06，新增完成低价包邮的任务，优化弹窗信息
 会自动关注任务中的店铺跟商品
+互助码shareCode请先手动运行脚本查看打印可看到
 // quantumultx
 [task_local]
 1 7-21/2 * * * jd_plantBean.js
@@ -167,8 +168,9 @@ function* step() {
         message += `【本期成长值】${roundList[1].growth}\n`;
         let shareUrl = plantBeanIndexResult.data.jwordShareInfo.shareUrl
         let myPlantUuid = getParam(shareUrl, 'plantUuid')
-        console.log(`你的plantUuid为${myPlantUuid}`)
-        for (let task of plantBeanIndexResult.data.taskList) {
+        // console.log(`你的plantUuid为${myPlantUuid}`)
+        console.log(`\n【您的互助码plantUuid】 ${myPlantUuid}\n`);
+      for (let task of plantBeanIndexResult.data.taskList) {
             console.log(`开始【${task.taskName}】任务`)
             if (task.taskType == 7 || task.taskType == 17 || task.taskType == 18) {
                 //具体每个人可能不一样

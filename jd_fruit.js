@@ -5,6 +5,7 @@
 // cron "1 0 7,12,18 * * *" script-path=https://raw.githubusercontent.com/iepngs/Script/master/jd/fruit.js,tag=jd免费水果
 //兼容surge和Loon等软件功能 by@iepngs
 //新增和维护功能 by@lxk0301
+// 互助码shareCode请先手动运行脚本查看打印可看到
 const $hammer = (() => {
     const isRequest = "undefined" != typeof $request,
         isSurge = "undefined" != typeof $httpClient,
@@ -141,7 +142,7 @@ function* step() {
     if (farmInfo.farmUserPro) {
         option['media-url'] = farmInfo.farmUserPro.goodsImage;
         subTitle = farmInfo.farmUserPro.nickName + '的' + farmInfo.farmUserPro.name;
-        console.log('shareCode为: ' + farmInfo.farmUserPro.shareCode);
+        console.log(`\n【您的互助码shareCode】 ${farmInfo.farmUserPro.shareCode}\n`);
         if (farmInfo.treeState === 2) {
           return $hammer.alert(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', subTitle, '', option);
         }

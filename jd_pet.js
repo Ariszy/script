@@ -1,6 +1,7 @@
 //京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
 // 2020-07-08更新：新增冰淇淋会场任务（可得8g狗粮），有些人京东app看不到，但是微信小程序京东有
 // cron 5 7-17/5 * * *
+// 互助码shareCode请先手动运行脚本查看打印可看到
 const $hammer = (() => {
     const isRequest = "undefined" != typeof $request,
         isSurge = "undefined" != typeof $httpClient,
@@ -397,7 +398,7 @@ function initPetTown() {
             petInfo = response.result;
             goodsUrl = response.result.goodsInfo.goodsUrl;
             console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
-            console.log(`您的shareCode为: ${petInfo.shareCode}`);
+            console.log(`\n【您的互助码shareCode】 ${petInfo.shareCode}\n`);
           gen.next();
         } else {
             console.log(`初始化萌宠失败:  ${JSON.stringify(petInfo)}`);
