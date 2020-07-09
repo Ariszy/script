@@ -309,7 +309,7 @@ function flyTask_state() {
     console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
     if (res.code === 0) {
       console.log('走了if--code=0')
-      if (res.isLogin === 0) {
+      if (res.info.isLogin === 0) {
         return $hammer.alert(name, '\n【提示】京东cookie已失效,请重新登录获取\n');
       }
       let data = res.data;
