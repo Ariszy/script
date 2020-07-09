@@ -392,8 +392,8 @@ function feedPets() {
 
 //查询jd宠物信息
 function initPetTown() {
-    console.log('初始化萌宠信息');
     request(arguments.callee.name.toString()).then((response) => {
+        console.log(`初始化萌宠信息${JSON.stringify(response)}`)
         if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
             petInfo = response.result;
             goodsUrl = response.result.goodsInfo.goodsUrl;
