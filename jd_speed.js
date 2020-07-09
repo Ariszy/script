@@ -310,7 +310,7 @@ function flyTask_state() {
     if (res.code === 0) {
       console.log('走了if--code=0')
       if (res.isLogin === 0) {
-        return $hammer.alert(name, '【提示】京东cookie已失效,请重新登录获取');
+        return $hammer.alert(name, '\n【提示】京东cookie已失效,请重新登录获取\n');
       }
       let data = res.data;
       if (data.beans_num) {

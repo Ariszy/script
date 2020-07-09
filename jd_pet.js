@@ -400,8 +400,9 @@ function initPetTown() {
             console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
             console.log(`\n【您的互助码shareCode】 ${petInfo.shareCode}\n`);
           gen.next();
-        } else {
-            console.log(`初始化萌宠失败:  ${JSON.stringify(petInfo)}`);
+        } else if (response.code === '0' && response.resultCode === '2001'){
+            console.log(`初始化萌宠失败:  ${response.message}`);
+            return $hammer.alert(name, '\n【提示】京东cookie已失效,请重新登录获取\n');
             gen.return();
         }
     })

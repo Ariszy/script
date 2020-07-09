@@ -145,6 +145,9 @@ function* step() {
         let plantBeanIndexResult = yield plantBeanIndex()
         if (plantBeanIndexResult.code != "0") {
             console.log(`plantBeanIndexResult:${JSON.stringify(plantBeanIndexResult)}`)
+            if (plantBeanIndexResult.code === '3') {
+              return $hammer.alert(name, '\n【提示】京东cookie已失效,请重新登录获取\n');
+            }
             //todo
             return
         }

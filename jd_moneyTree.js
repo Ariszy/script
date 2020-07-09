@@ -173,6 +173,9 @@ function user_info() {
       }
     } else {
       console.log('走了else');
+      if (res.resultCode === 3) {
+        return $hammer.alert(name, '\n【提示】京东cookie已失效,请重新登录获取\n');
+      }
       gen.return();
     }
   });

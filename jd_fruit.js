@@ -484,7 +484,7 @@ function* step() {
     } else {
         console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify(farmInfo)}`);
         if (farmInfo.code == '3') {
-          message = `【提示】京东cookie已失效或未登录,请重新获取\n`
+          message = `\n【提示】京东cookie已失效或未登录,请重新获取\n`
         } else {
           message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
         }
