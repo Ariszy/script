@@ -145,7 +145,15 @@ function* entrance() {
   yield flyTask_state();
   if (task_status === 0) {
     console.log(`开启新任务：${JSON.stringify(destination)}`);
-    yield flyTask_start(source_id)
+    yield flyTask_start(source_id);
+    // fix bug ，开启新任务后，再次检查可用的燃料，如果有可用的，继续使用
+    yield energePropUsaleList();//检查剩余可用的燃料
+    console.log(`可使用燃料${JSON.stringify(energePropUsale)}`)
+    if (energePropUsale && energePropUsale.length > 0) {
+      yield useEnergy();
+    } else {
+      console.log('暂无可用燃料')
+    }
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
