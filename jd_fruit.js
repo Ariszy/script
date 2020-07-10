@@ -308,19 +308,20 @@ function* step() {
                 console.log(`第${waterCount + 1}次浇水`);
                 let waterResult = yield waterGoodForFarm();
                 console.log(`本次浇水结果:   ${JSON.stringify(waterResult)}`);
-                if (waterResult.code != 0) {//异常中断
+                if (waterResult.code === '0') {//异常中断
+                  console.log(`剩余水滴${waterResult.totalEnergy}g`);
+                  if (waterResult.totalEnergy < 10) {
+                    console.log(`水滴不够，结束浇水`)
                     break
-                }
-                if (waterResult.finished) {
+                  }
+                } else {
+                  if (waterResult.code === '6' && waterResult.finished) {
                     //猜测 还没到那阶段 不知道对不对
                     // message += `【猜测】应该可以领取水果了，请去农场查看\n`;
                     // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
                     isFruitFinished = waterResult.finished;
                     break
-                }
-                if (waterResult.totalEnergy < 10) {
-                    console.log(`水滴不够，结束浇水`)
-                    break
+                  }
                 }
             }
             if (isFruitFinished) {
@@ -394,18 +395,18 @@ function* step() {
           let isFruitFinished = false;
           for (let i = 0; i < parseInt(overageEnergy / 10); i++){
             let res = yield waterGoodForFarm();
-            if (res.code != 0) {
-              break
-            }
-            if (res.finished) {
-              // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
-              isFruitFinished = res.finished;
-              break
-            }
-            if (res.totalEnergy < 110) {
-              console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
+            if (res.code === '0') {
+              if (res.totalEnergy < 110) {
+                console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
+              } else {
+                console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
+              }
             } else {
-              console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
+              if (res.code === '6' && res.finished) {
+                // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
+                isFruitFinished = res.finished;
+                break
+              }
             }
           }
           if (isFruitFinished) {
