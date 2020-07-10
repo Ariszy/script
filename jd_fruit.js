@@ -302,7 +302,8 @@ function* step() {
 
         //浇水10次
         if (farmTask.totalWaterTaskInit.totalWaterTaskTimes < farmTask.totalWaterTaskInit.totalWaterTaskLimit) {
-            let waterCount = 0
+            let waterCount = 0;
+            let isFruitFinished = false;
             for (; waterCount < farmTask.totalWaterTaskInit.totalWaterTaskLimit - farmTask.totalWaterTaskInit.totalWaterTaskTimes; waterCount++) {
                 console.log(`第${waterCount + 1}次浇水`);
                 let waterResult = yield waterGoodForFarm();
@@ -312,13 +313,18 @@ function* step() {
                 }
                 if (waterResult.finished) {
                     //猜测 还没到那阶段 不知道对不对
-                    message += `【猜测】应该可以领取水果了，请去农场查看\n`
+                    // message += `【猜测】应该可以领取水果了，请去农场查看\n`;
+                    // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
+                    isFruitFinished = waterResult.finished;
                     break
                 }
                 if (waterResult.totalEnergy < 10) {
                     console.log(`水滴不够，结束浇水`)
                     break
                 }
+            }
+            if (isFruitFinished) {
+              return $hammer.alert(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', subTitle, '', option);
             }
             farmTask = yield taskInitForFarm();
             message += `【自动浇水】浇水${waterCount}次，今日浇水${farmTask.totalWaterTaskInit.totalWaterTaskTimes}次\n`
@@ -385,9 +391,15 @@ function* step() {
         let overageEnergy = farmInfo.farmUserPro.totalEnergy - 100;
         if (overageEnergy >= 10) {
           console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g，可继续浇水");
+          let isFruitFinished = false;
           for (let i = 0; i < parseInt(overageEnergy / 10); i++){
             let res = yield waterGoodForFarm();
             if (res.code != 0) {
+              break
+            }
+            if (res.finished) {
+              // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
+              isFruitFinished = res.finished;
               break
             }
             if (res.totalEnergy < 110) {
@@ -395,6 +407,9 @@ function* step() {
             } else {
               console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
             }
+          }
+          if (isFruitFinished) {
+            return $hammer.alert(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', subTitle, '', option);
           }
         } else {
           console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g,不再继续浇水,保留100g水滴用于完成第二天任务")
