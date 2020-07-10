@@ -226,9 +226,9 @@ function* step() {
         }
         //打卡领水
         console.log('开始打卡领水活动（签到，关注，领券）')
-        let clockInInit = clockInInitForFarm();
-        console.log(`clockInInit---${JSON.stringify(clockInInit)}`)
-        if (clockInInit.code == 0) {
+        let clockInInit = yield clockInInitForFarm();
+        // console.log(`clockInInit---${JSON.stringify(clockInInit)}`)
+        if (clockInInit.code === '0') {
           // 签到得水滴
           if (!clockInInit.todaySigned) {
             console.log('开始今日签到');
