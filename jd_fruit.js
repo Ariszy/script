@@ -704,7 +704,7 @@ function clockInForFarm() {
 //关注，领券等
 function clockInFollowForFarm(id, type, step) {
   let functionId = arguments.callee.name.toString();
-  const { id, type, step } = {...{...{id}, ...{type}, ...{step}}};
+  const { id, type, step } = {...{...{"id": id}, ...{"type": type}, ...{"step": step}}};
   request(functionId, {...{ id, type, step }});
 }
 
