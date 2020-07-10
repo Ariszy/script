@@ -224,6 +224,67 @@ function* step() {
             // message += '当前不在定时领水时间断或者已经领过\n'
             console.log('当前不在定时领水时间断或者已经领过')
         }
+        //打卡领水
+        console.log('开始打卡领水活动（签到，关注，领券）')
+        let clockInInit = clockInInitForFarm();
+        if (clockInInit.code == 0) {
+          // 签到得水滴
+          if (!clockInInit.todaySigned) {
+            console.log('开始今日签到');
+            // request('clockInForFarm', {"type" : 1});
+            let clockInForFarmRes = yield clockInForFarm();
+            console.log(`打卡结果${JSON.stringify(clockInForFarmRes)}`);
+            if (clockInForFarmRes.code === '0') {
+              message += `【第${clockInForFarmRes.signDay}天签到】获得${clockInForFarmRes.amount}g\n`//连续签到${signResult.signDay}天
+              if (clockInForFarmRes.todayGotWaterGoalTask.canPop) {
+                let goalResult = yield gotWaterGoalTaskForFarm();
+                console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
+                if (goalResult.code === '0') {
+                  message += `【被水滴砸中】获取：${goalResult.addEnergy}g\n`;
+                }
+              }
+            }
+          }
+          // TODO 惊喜礼包
+          if (!clockInInit.gotClockInGift) {
+            console.log('惊喜礼包，未到这一步，到时候再说，待开发');
+          }
+          // 限时关注得水滴
+          if (clockInInit.themes && clockInInit.themes.length > 0) {
+            for (let item of clockInInit.themes) {
+              if (!item.hadGot) {
+                console.log(`关注ID${item.id}`);
+                let themeStep1 = yield clockInFollowForFarm(item.id, "theme", "1");
+                console.log(`themeStep1--结果${JSON.stringify(themeStep1)}`);
+                if (themeStep1.code === '0') {
+                  let themeStep2 = yield clockInFollowForFarm(item.id, "theme", "2");
+                  console.log(`themeStep2--结果${JSON.stringify(themeStep2)}`);
+                  if (themeStep2.code === '0') {
+                    console.log(`关注${item.name}，获得水滴${themeStep2.amount}g`);
+                  }
+                }
+              }
+            }
+          }
+          // 限时领券得水滴
+          if (clockInInit.venderCoupons && clockInInit.venderCoupons.length > 0) {
+            for (let item of clockInInit.venderCoupons) {
+              if (!item.hadGot) {
+                console.log(`领券的ID${item.id}`);
+                let venderCouponStep1 = yield clockInFollowForFarm(item.id, "venderCoupon", "1");
+                console.log(`venderCouponStep1--结果${JSON.stringify(venderCouponStep1)}`);
+                if (venderCouponStep1.code === '0') {
+                  let venderCouponStep2 = yield clockInFollowForFarm(item.id, "venderCoupon", "2");
+                  if (venderCouponStep2.code === '0') {
+                    console.log(`venderCouponStep2--结果${JSON.stringify(venderCouponStep2)}`);
+                    console.log(`从${item.name}领券，获得水滴${venderCouponStep2.amount}g`);
+                  }
+                }
+              }
+            }
+          }
+        }
+        console.log('\n开始打卡领水活动（签到，关注，领券）\n')
         const masterHelpResult = yield masterHelpTaskInitForFarm();
         console.log("初始化助力信息", masterHelpResult);
         if (masterHelpResult.code === '0') {
@@ -498,10 +559,10 @@ function* step() {
 
         console.log('全部任务结束');
     } else {
-        console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify(farmInfo)}`);
         if (farmInfo.code == '3') {
           message = `\n【提示】京东cookie已失效,请重新登录获取\n`
         } else {
+          console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify(farmInfo)}`);
           message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
         }
     }
@@ -627,6 +688,26 @@ function waterRainForFarm() {
   let body = {"type":1,"hongBaoTimes":100,"version":3};
   request(functionId, body);
 }
+
+/**
+ * 打卡领水
+ */
+function clockInInitForFarm() {
+  let functionId = arguments.callee.name.toString();
+  request(functionId);
+}
+// 连续签到
+function clockInForFarm() {
+  let functionId = arguments.callee.name.toString();
+  request(functionId, {"type": 1});
+}
+//关注，领券等
+function clockInFollowForFarm(id, type, step) {
+  let functionId = arguments.callee.name.toString();
+  const { id, type, step } = {...{...{id}, ...{type}, ...{step}}};
+  request(functionId, {...{ id, type, step }});
+}
+
 function request(function_id, body = {}) {
     $hammer.request('GET', taskurl(function_id, body), (error, response) => {
         error ? $hammer.log("Error:", error) : sleep(JSON.parse(response.body));
