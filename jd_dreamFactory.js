@@ -134,8 +134,8 @@ async function request(function_id, body = {}) {
       if(error){
         $hammer.log("Error:", error);
       }else{
-        console.log(response)
-        resolve(JSON.parse(response));
+        // console.log(response)
+        resolve(JSON.parse(response.body));
       }
     })
   })
