@@ -295,7 +295,7 @@ function* step() {
                     const masterGotFinished = yield masterGotFinishedTaskForFarm();
                     if (masterGotFinished.code === '0') {
                       console.log(`已成功领取好友助力奖励：【${masterGotFinished.amount}】g水`);
-                      message += `【好友助力额外奖励】:${masterGotFinished.amount}g水领取成功\n`;
+                      message += `【好友助力额外奖励】${masterGotFinished.amount}g水领取成功\n`;
                     }
                 } else {
                     console.log("已经领取过5好友助力额外奖励");
@@ -384,6 +384,7 @@ function* step() {
                     isFruitFinished = waterResult.finished;
                     break
                   }
+                  break;
                 }
             }
             if (isFruitFinished) {
@@ -469,6 +470,7 @@ function* step() {
                 isFruitFinished = res.finished;
                 break
               }
+              break;
             }
           }
           if (isFruitFinished) {
@@ -478,7 +480,7 @@ function* step() {
           console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g,不再继续浇水,保留100g水滴用于完成第二天任务")
         }
         farmInfo = yield initForFarm();
-        message += `【水果进度】已浇水${farmInfo.farmUserPro.treeEnergy / 10}次,还需${(farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10}次\n`
+        message += `【水果进度】${((farmInfo.farmUserPro.treeEnergy / farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}%，已浇水${farmInfo.farmUserPro.treeEnergy / 10}次,还需${(farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10}次\n`
         if (farmInfo.toFlowTimes > (farmInfo.farmUserPro.treeEnergy / 10)) {
             message += `【开花进度】再浇水${farmInfo.toFlowTimes - farmInfo.farmUserPro.treeEnergy / 10}次开花\n`
         } else if (farmInfo.toFruitTimes > (farmInfo.farmUserPro.treeEnergy / 10)) {
