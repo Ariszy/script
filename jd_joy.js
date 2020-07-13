@@ -9,6 +9,9 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 // [task_local]
 // #京东宠汪汪
 // 15 */3 * * * https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// Loon
+// [Script]
+// cron "15 */3 * * *" script-path=https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_joy.js,tag=京东宠汪汪
 const FEED_NUM = 10   // [10,20,40,80]
 
 const $hammer = (() => {

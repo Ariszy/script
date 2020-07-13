@@ -4,7 +4,10 @@
 // quantumultx
 [task_local]
 #东东萌宠
-5 6-18/6 * * * https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_pet.js, tag=东东农场, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdmc.png, enabled=true
+5 6-18/6 * * * https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_pet.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdmc.png, enabled=true
+// Loon
+[Script]
+cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_pet.js,tag=东东萌宠
 互助码shareCode请先手动运行脚本查看打印可看到
 一天只能帮助5个人。多出的助力码无效
 */

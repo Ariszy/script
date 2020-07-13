@@ -6,6 +6,9 @@
 // [task_local]
 // #京东摇钱树
 // 3 */2 * * * https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/moneyTree.png, enabled=true
+// Loon
+// [Script]
+// cron "3 */2 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js,tag=京东摇钱树
 const Notice = 2;//设置运行多少次才通知。
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
