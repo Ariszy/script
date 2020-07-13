@@ -112,7 +112,7 @@ function userInfo() {
       console.log(`初始化信息:${JSON.stringify(response)}`);
       const production = response.data.productionList[0];
       console.log(`\n我的分享码：${response.data.user.encryptPin}\n`);
-      console.log(`${((production["investedElectric"]/production["needElectric"])*10000) / 100}%\n`);
+      // console.log(`${((production.investedElectric/production.investedElectric)*10000) / 100}%\n`);
       Task.next();
     } catch (e) {
       console.log(e);
