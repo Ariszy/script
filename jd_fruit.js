@@ -285,7 +285,37 @@ function* step() {
             }
           }
         }
-        console.log('\n开始打卡领水活动（签到，关注，领券）\n')
+        console.log('\n开始打卡领水活动（签到，关注，领券）结束\n');
+      // 水滴雨
+      if (!farmTask.waterRainInit.f) {
+        console.log(`水滴雨任务，每天两次，最多可得10g水滴`);
+        console.log(`两次水滴雨任务是否全部完成：${farmTask.waterRainInit.f ? '是' : '否'}`);
+        if (farmTask.waterRainInit.winTimes === 0) {
+          console.log(`开始水滴雨任务,这是第${farmTask.waterRainInit.winTimes + 1}次，剩余${2 - (farmTask.waterRainInit.winTimes + 1)}次`);
+          let waterRain = yield waterRainForFarm();
+          console.log('水滴雨waterRain', waterRain);
+          if (waterRain.code === '0') {
+            console.log('水滴雨任务执行成功，获得水滴：' + waterRain.addEnergy + 'g');
+            message += `【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】获得${waterRain.addEnergy}g水滴\n`
+          }
+        } else {
+          //执行了第一次水滴雨。需等待3小时候才能再次执行
+          if (new Date().getTime()  > (farmTask.waterRainInit.lastTime + 3 * 60 * 60 *1000)) {
+            console.log(`开始水滴雨任务,这是第${farmTask.waterRainInit.winTimes + 1}次，剩余${2 - (farmTask.waterRainInit.winTimes + 1)}次`);
+            let waterRain = yield waterRainForFarm();
+            console.log('水滴雨waterRain', waterRain);
+            if (waterRain.code === '0') {
+              console.log('水滴雨任务执行成功，获得水滴：' + waterRain.addEnergy + 'g');
+              message += `【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】获得${waterRain.addEnergy}g水滴\n`
+            }
+          } else {
+            console.log(`【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】未到时间，请稍后再试\n`)
+            message += `【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】未到时间，请稍后再试\n`
+          }
+        }
+      } else {
+        message += `【当天两次水滴雨任务】已全部完成，获得20g水滴\n`
+      }
         const masterHelpResult = yield masterHelpTaskInitForFarm();
         console.log("初始化助力信息", masterHelpResult);
         if (masterHelpResult.code === '0') {
@@ -417,36 +447,6 @@ function* step() {
             }
         } else if (farmTask.totalWaterTaskInit.totalWaterTaskTimes < farmTask.totalWaterTaskInit.totalWaterTaskLimit) {
             message += `【十次浇水奖励】任务未完成，今日浇水${farmTask.totalWaterTaskInit.totalWaterTaskTimes}次\n`
-        }
-        // 水滴雨
-        if (!farmTask.waterRainInit.f) {
-          console.log(`水滴雨任务，每天两次，最多可得10g水滴`);
-          console.log(`两次水滴雨任务是否全部完成：${farmTask.waterRainInit.f ? '是' : '否'}`);
-          if (farmTask.waterRainInit.winTimes === 0) {
-            console.log(`开始水滴雨任务,这是第${farmTask.waterRainInit.winTimes + 1}次，剩余${2 - (farmTask.waterRainInit.winTimes + 1)}次`);
-            let waterRain = yield waterRainForFarm();
-            console.log('水滴雨waterRain', waterRain);
-            if (waterRain.code === '0') {
-              console.log('水滴雨任务执行成功，获得水滴：' + waterRain.addEnergy + 'g');
-              message += `【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】获得${waterRain.addEnergy}g水滴\n`
-            }
-          } else {
-            //执行了第一次水滴雨。需等待3小时候才能再次执行
-            if (new Date().getTime()  > (farmTask.waterRainInit.lastTime + 3 * 60 * 60 *1000)) {
-              console.log(`开始水滴雨任务,这是第${farmTask.waterRainInit.winTimes + 1}次，剩余${2 - (farmTask.waterRainInit.winTimes + 1)}次`);
-              let waterRain = yield waterRainForFarm();
-              console.log('水滴雨waterRain', waterRain);
-              if (waterRain.code === '0') {
-                console.log('水滴雨任务执行成功，获得水滴：' + waterRain.addEnergy + 'g');
-                message += `【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】获得${waterRain.addEnergy}g水滴\n`
-              }
-            } else {
-              console.log(`【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】未到时间，请稍后再试\n`)
-              message += `【第${farmTask.waterRainInit.winTimes + 1}次水滴雨任务】未到时间，请稍后再试\n`
-            }
-          }
-        } else {
-          message += `【当天两次水滴雨任务】已全部完成，获得20g水滴\n`
         }
         console.log('finished 水果任务完成!');
 
