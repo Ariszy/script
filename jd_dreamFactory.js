@@ -110,7 +110,7 @@ function userInfo() {
     try {
       // taskInfo = res.data.result.taskInfos;
       console.log(`初始化信息:${JSON.stringify(response)}`);
-      step.next();
+      Task.next();
     } catch (e) {
       console.log(e);
       console.log('初始化任务异常');
