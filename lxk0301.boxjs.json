@@ -9,7 +9,6 @@
       "id": "jd_fruit",
       "name": "京东水果",
       "keys": [
-        "CookieJD",
         "jd_fruit_name",
         "jd_fruit1",
         "jd_fruit2",
@@ -18,18 +17,11 @@
       ],
       "settings": [
         {
-          "id": "CookieJD",
-          "name": "CookieJD",
-          "val": "",
-          "type": "text",
-          "desc": "使用NobyDa的京东ck。"
-        },
-        {
           "id": "jd_fruit_name",
           "name": "京东账号昵称",
           "val": "",
           "type": "text",
-          "desc": "这里可以填你自己京东账号昵称,用于区分账号"
+          "desc": "京东账号昵称,用于区分账号(非必填)"
         },
         {
           "id": "jd_fruit1",
@@ -71,7 +63,6 @@
       "id": "jd_pet",
       "name": "京东萌宠",
       "keys": [
-        "CookieJD",
         "jd_pet_name",
         "jd_pet1",
         "jd_pet2",
@@ -81,18 +72,11 @@
       ],
       "settings": [
         {
-          "id": "CookieJD",
-          "name": "CookieJD",
-          "val": "",
-          "type": "text",
-          "desc": "使用NobyDa的京东ck。"
-        },
-        {
           "id": "jd_pet_name",
           "name": "京东账号昵称",
           "val": "",
           "type": "text",
-          "desc": "这里可以填你自己京东账号昵称,用于区分账号"
+          "desc": "京东账号昵称,用于区分账号(非必填)"
         },
         {
           "id": "jd_pet1",
@@ -141,7 +125,6 @@
       "id": "jd_plantBean",
       "name": "京东种豆",
       "keys": [
-        "CookieJD",
         "jd_plant_bean_name",
         "jd_plantBean1",
         "jd_plantBean2",
@@ -149,18 +132,11 @@
       ],
       "settings": [
         {
-          "id": "CookieJD",
-          "name": "CookieJD",
-          "val": "",
-          "type": "text",
-          "desc": "使用NobyDa的京东ck。"
-        },
-        {
           "id": "jd_plant_bean_name",
           "name": "京东账号昵称",
           "val": "",
           "type": "text",
-          "desc": "这里可以填你自己京东账号昵称,用于区分账号"
+          "desc": "京东账号昵称,用于区分账号(非必填)"
         },
         {
           "id": "jd_plantBean1",
