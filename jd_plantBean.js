@@ -5,9 +5,10 @@
 互助码shareCode请先手动运行脚本查看打印可看到
 // quantumultx
 [task_local]
-1 7-21/2 * * * jd_plantBean.js
+1 6-23/2 * * * https://github.com/nzw9314/QuantumultX/raw/master/Task/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png, enabled=true
 // Loon
 cron "1 7-21/2 * * *" script-path=https://github.com/nzw9314/QuantumultX/raw/master/Task/jd_plantBean.js,tag=京东种豆得豆
+一天只能帮助3个人。多出的助力码无效
 */
 
 const $hammer = (() => {

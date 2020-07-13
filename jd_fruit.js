@@ -1,11 +1,15 @@
-//jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-// 更新时间：2020-07-03
-// [task_local]
-// #jd免费水果
-// cron "1 0 7,12,18 * * *" script-path=https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_fruit.js,tag=jd免费水果
-//兼容surge和Loon等软件功能 by@iepngs
-//新增和维护功能 by@lxk0301
-// 互助码shareCode请先手动运行脚本查看打印可看到
+/*
+jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
+更新时间：2020-07-03
+// quantumultx
+[task_local]
+#jd免费水果
+5 6-18/6 * * * https://raw.githubusercontent.com/nzw9314/QuantumultX/master/Task/jd_pet.js, tag=东东农场, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdsg.png, enabled=true
+兼容surge和Loon等软件功能 by@iepngs
+新增和维护功能 by@lxk0301
+互助码shareCode请先手动运行脚本查看打印可看到
+一天只能帮助4个人。多出的助力码无效
+*/
 const $hammer = (() => {
     const isRequest = "undefined" != typeof $request,
         isSurge = "undefined" != typeof $httpClient,
