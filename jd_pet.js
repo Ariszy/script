@@ -398,7 +398,10 @@ function initPetTown() {
         console.log(`初始化萌宠信息${JSON.stringify(response)}`)
         if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
             petInfo = response.result;
-            goodsUrl = response.result.goodsInfo.goodsUrl;
+            if (petInfo.userStatus === 0) {
+              return $hammer.alert(name, '\n【提示】此账号萌宠活动未开始，请手动去京东APP开启活动\n');
+            }
+            goodsUrl = response.result.goodsInfo && response.result.goodsInfo.goodsUrl;
             console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
             console.log(`\n【您的互助码shareCode】 ${petInfo.shareCode}\n`);
           gen.next();

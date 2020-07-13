@@ -551,7 +551,14 @@ function taskurl(function_id, body) {
         url: JD_API_HOST,
         body: `functionId=${function_id}&body=${JSON.stringify(body)}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
         headers: {
-            Cookie: cookie,
+            'Cookie': cookie,
+            'Host': 'api.m.jd.com',
+            'Accept': '*/*',
+            'Connection': 'keep-alive',
+            'User-Agent': 'JD4iPhone/167249 (iPhone;iOS 13.5.1;Scale/3.00)',
+            'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': "application/x-www-form-urlencoded"
         }
     }
 }
