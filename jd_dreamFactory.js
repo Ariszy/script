@@ -157,10 +157,11 @@ function investElectric() {
     try {
       if (res.ret === 0) {
         console.log(`成功投入电力${res.data.investElectric}电力`);
-        Task.next();
+        message += `【投入电力】${res.data.investElectric}`;
       } else {
         console.log(`投入失败，${res.message}`);
       }
+      Task.next();
     } catch (e) {
       console.log('收集电力异常')
     }
