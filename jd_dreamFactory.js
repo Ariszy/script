@@ -171,34 +171,22 @@ function investElectric() {
 function taskList() {
   const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
   request(url).then((res) => {
-    // try {
-    //   console.log(`${JSON.stringify(res)}`)
-    //   if (res.ret === 0) {
-    //     userTaskStatusList = res.data.userTaskStatusList;
-    //     userTaskStatusList.map(item => {
-    //       if (item.dateType === 2) {
-    //         dailyTask.push(item);
-    //       }
-    //       if (item.dateType === 1) {
-    //         produceTask.push(item);
-    //       }
-    //     })
-    //     Task.next();
-    //   }
-    // } catch (e) {
-    //   console.log('初始化任务异常')
-    // }
-    if (res.ret === 0) {
-      userTaskStatusList = res.data.userTaskStatusList;
-      userTaskStatusList.map(item => {
-        if (item.dateType === 2) {
-          dailyTask.push(item);
+    try {
+      console.log(`${JSON.stringify(res)}`)
+      if (res.ret === 0) {
+        userTaskStatusList = res.data.userTaskStatusList;
+        for (let item of res.data.userTaskStatusList) {
+          if (item.dateType === 2) {
+            dailyTask.push(item);
+          }
+          if (item.dateType === 1) {
+            produceTask.push(item);
+          }
         }
-        if (item.dateType === 1) {
-          produceTask.push(item);
-        }
-      })
-      Task.next();
+        Task.next();
+      }
+    } catch (e) {
+      console.log('初始化任务异常')
     }
   }).catch((error) => {
     console.log(error)
