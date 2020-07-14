@@ -157,7 +157,7 @@ function userInfo() {
           subTitle = data.user.pin;
           console.log(`\n我的分享码\n${data.user.encryptPin}\n`);
           // console.log(`进度：${(production.investedElectric/production.needElectric).toFixed(2) * 100}%\n`);
-          // message += `【生产进度】${(production.investedElectric / production.needElectric).toFixed(2) * 100}%\n`
+          message += `【生产进度】${(production.investedElectric / production.needElectric).toFixed(2) * 100}%\n`;
           Task.next();
         } else {
           return $hammer.alert(name, '\n【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
