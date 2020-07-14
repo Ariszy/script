@@ -171,6 +171,7 @@ function taskList() {
   const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
   request(url).then((res) => {
     try {
+      console.log(`${(res)}`)
       if (res.ret === 0) {
         userTaskStatusList = res.data.userTaskStatusList;
         userTaskStatusList.map(item => {
