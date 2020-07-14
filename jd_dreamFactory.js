@@ -97,7 +97,7 @@ const cookie = 'unpl=V2_ZzNtbUAHRRx0DxZVch9aBWIBRllLAhMSfQtDUnxLWVdnBhpcclRCFnQU
 let shareCodes = [
     'V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=',
 ];
-let factoryId, productionId;
+let factoryId, productionId, userTaskStatusList, dailyTask = [], produceTask = [];
 const name = '京喜工厂';
 let message = '';
 let subTitle = '';
@@ -109,10 +109,35 @@ function* step() {
   yield collectElectricity();
   yield investElectric();
   yield taskList();
+  yield produceTaskFun();//生产任务
   const end = ((Date.now() - startTime) / 1000).toFixed(2);
   console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
   $hammer.alert(name, message, subTitle);
 }
+
+function produceTaskFun() {
+  for (let item of produceTask) {
+    if (item.awardStatus !== 1) {
+      if (item.completedTimes >= item.targetTimes) {
+        const url = `/newtasksys/newtasksys_front/Award?source=dreamfactory&bizCode=dream_factory&taskId=${item.taskId}&sceneval=2&g_login_type=1`;
+        request(url).then((res) => {
+          console.log(`每日任务完成结果${JSON.stringify(res)}}`);
+          try {
+            if (res.ret === 0) {
+              console.log(`${item.taskName}任务完成`)
+            } else {
+              break;
+            }
+          } catch (e) {
+            console.log(`${item.taskName}任务异常`)
+          }
+        })
+      }
+    }
+  }
+  Task.next();
+}
+
 // 收取发电机的电力
 function collectElectricity() {
  const url = `/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&apptoken=&pgtimestamp=&phoneID=&factoryid=${factoryId}&doubleflag=1&sceneval=2`;
@@ -149,13 +174,19 @@ function taskList() {
   request(url).then((res) => {
     try {
       if (res.ret === 0) {
-        console.log(`成功投入电力${res.data.investElectric}电力`);
+        userTaskStatusList = res.data.userTaskStatusList;
+        userTaskStatusList.map(item => {
+          if (item.dateType === 2) {
+            dailyTask.push(item);
+          }
+          if (item.dateType === 1) {
+            produceTask.push(item);
+          }
+        })
         Task.next();
-      } else {
-        console.log(`投入失败，${res.message}`);
       }
     } catch (e) {
-      console.log('异常')
+      console.log('初始化任务异常')
     }
   })
 }
@@ -168,7 +199,7 @@ function userInfo() {
       if (response.ret === 0) {
         const { data } = response;
         // !data.productionList && !data.factoryList
-        if (data.factoryList && data.factoryList.length > 0) {
+        if (data.factoryList && data.productionList) {
           const production = data.productionList[0];
           const factory = data.factoryList[0];
           factoryId = factory.factoryId;//工厂ID
