@@ -1,5 +1,6 @@
 /*
 京东京喜工厂
+未完，待续
  */
 const $hammer = (() => {
   const isRequest = "undefined" != typeof $request,
@@ -91,7 +92,11 @@ const $hammer = (() => {
 const JD_API_HOST = 'https://wq.jd.com';
 
 //直接用NobyDa的jd cookie
-const cookie = $hammer.read('CookieJD')
+const cookie = $hammer.read('CookieJD');
+let shareCodes = [
+    'V5LkjP4WRyjeCKR9VRwcRX0bBuTz7MEK0-E99EJ7u0k=',
+];
+let factoryId, productionId;
 const name = '京喜工厂';
 const Task = step()
 Task.next();
@@ -100,10 +105,42 @@ function* step() {
   let message = '';
   let subTitle = '';
   yield userInfo();
+  yield collectElectricity();
+  yield investElectric();
   const end = ((Date.now() - startTime) / 1000).toFixed(2);
   console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
+  $hammer.alert(name, message, subTitle);
 }
-
+// 收取发电机的电力
+function collectElectricity() {
+ const url = `/dreamfactory/generator/CollectCurrentElectricity?zone=dream_factory&apptoken=&pgtimestamp=&phoneID=&factoryid=${factoryId}&doubleflag=1&sceneval=2`;
+ request(url).then((res) => {
+   try {
+     if (res.ret === 0) {
+       console.log(`成功从发电机收取${res.data.CollectElectricity}电力`);
+       Task.next();
+     }
+   } catch (e) {
+     console.log('收集电力异常')
+   }
+ })
+}
+// 投入电力
+function investElectric() {
+  const url = `/dreamfactory/userinfo/InvestElectric?zone=dream_factory&productionId=${productionId}&sceneval=2&g_login_type=1`;
+  request(url).then((res) => {
+    try {
+      if (res.ret === 0) {
+        console.log(`成功投入电力${res.data.investElectric}电力`);
+        Task.next();
+      } else {
+        console.log(`投入失败，${res.message}`);
+      }
+    } catch (e) {
+      console.log('收集电力异常')
+    }
+  })
+}
 function userInfo() {
   const url = `${JD_API_HOST}/dreamfactory/userinfo/GetUserInfo?zone=dream_factory&pin=&sharePin=&shareType=&materialTuanPin=&materialTuanId=&sceneval=2`;
   request(url).then((response) => {
@@ -114,8 +151,12 @@ function userInfo() {
         // !data.productionList && !data.factoryList
         if (data.factoryList && data.factoryList.length > 0) {
           const production = data.productionList[0];
+          factoryId = data.factoryList[0].factoryId;//工厂ID
+          productionId = data.productionList[0].productionId;//商品ID
+          subTitle = data.user.pin;
           console.log(`\n我的分享码\n${data.user.encryptPin}\n`);
-          console.log(`进度：${((production.investedElectric/production.needElectric)*10000) / 100}%\n`);
+          // console.log(`进度：${(production.investedElectric/production.needElectric).toFixed(2) * 100}%\n`);
+          message += `【生产进度】${(production.investedElectric / production.needElectric).toFixed(2) * 100}%\\n`
           Task.next();
         } else {
           return $hammer.alert(name, '\n【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
