@@ -108,6 +108,7 @@ function* step() {
   yield userInfo();
   yield collectElectricity();
   yield investElectric();
+  yield taskList();
   const end = ((Date.now() - startTime) / 1000).toFixed(2);
   console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
   $hammer.alert(name, message, subTitle);
@@ -142,6 +143,23 @@ function investElectric() {
     }
   })
 }
+// 初始化任务
+function taskList() {
+  const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
+  request(url).then((res) => {
+    try {
+      if (res.ret === 0) {
+        console.log(`成功投入电力${res.data.investElectric}电力`);
+        Task.next();
+      } else {
+        console.log(`投入失败，${res.message}`);
+      }
+    } catch (e) {
+      console.log('异常')
+    }
+  })
+}
+//初始化个人信息
 function userInfo() {
   const url = `/dreamfactory/userinfo/GetUserInfo?zone=dream_factory&pin=&sharePin=&shareType=&materialTuanPin=&materialTuanId=&sceneval=2`;
   request(url).then((response) => {
