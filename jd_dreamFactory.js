@@ -143,7 +143,7 @@ function investElectric() {
   })
 }
 function userInfo() {
-  const url = `${JD_API_HOST}/dreamfactory/userinfo/GetUserInfo?zone=dream_factory&pin=&sharePin=&shareType=&materialTuanPin=&materialTuanId=&sceneval=2`;
+  const url = `/dreamfactory/userinfo/GetUserInfo?zone=dream_factory&pin=&sharePin=&shareType=&materialTuanPin=&materialTuanId=&sceneval=2`;
   request(url).then((response) => {
     try {
       // taskInfo = res.data.result.taskInfos;
@@ -182,10 +182,10 @@ function sleep(s) {
   })
 }
 
-async function request(function_id, body = {}) {
+async function request(url, body = {}) {
   await sleep(2); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
-    $hammer.request('GET', taskurl(function_id,body), (error, response) => {
+    $hammer.request('GET', taskurl(url, body), (error, response) => {
       if(error){
         $hammer.log("Error:", error);
       }else{
@@ -198,7 +198,7 @@ async function request(function_id, body = {}) {
 
 function taskurl(url, body) {
   return {
-    url,
+    url: `${JD_API_HOST}${url}`,
     headers: {
       'Cookie' : cookie,
       'Host': 'wq.jd.com',
