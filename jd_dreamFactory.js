@@ -171,23 +171,37 @@ function investElectric() {
 function taskList() {
   const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
   request(url).then((res) => {
-    try {
-      console.log(`${JSON.stringify(res)}`)
-      if (res.ret === 0) {
-        userTaskStatusList = res.data.userTaskStatusList;
-        userTaskStatusList.map(item => {
-          if (item.dateType === 2) {
-            dailyTask.push(item);
-          }
-          if (item.dateType === 1) {
-            produceTask.push(item);
-          }
-        })
-        Task.next();
-      }
-    } catch (e) {
-      console.log('初始化任务异常')
+    // try {
+    //   console.log(`${JSON.stringify(res)}`)
+    //   if (res.ret === 0) {
+    //     userTaskStatusList = res.data.userTaskStatusList;
+    //     userTaskStatusList.map(item => {
+    //       if (item.dateType === 2) {
+    //         dailyTask.push(item);
+    //       }
+    //       if (item.dateType === 1) {
+    //         produceTask.push(item);
+    //       }
+    //     })
+    //     Task.next();
+    //   }
+    // } catch (e) {
+    //   console.log('初始化任务异常')
+    // }
+    if (res.ret === 0) {
+      userTaskStatusList = res.data.userTaskStatusList;
+      userTaskStatusList.map(item => {
+        if (item.dateType === 2) {
+          dailyTask.push(item);
+        }
+        if (item.dateType === 1) {
+          produceTask.push(item);
+        }
+      })
+      Task.next();
     }
+  }).catch((error) => {
+    console.log(error)
   })
 }
 //初始化个人信息
