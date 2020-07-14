@@ -98,12 +98,12 @@ let shareCodes = [
 ];
 let factoryId, productionId;
 const name = '京喜工厂';
+let message = '';
+let subTitle = '';
 const Task = step()
 Task.next();
 function* step() {
   const startTime = Date.now();
-  let message = '';
-  let subTitle = '';
   yield userInfo();
   yield collectElectricity();
   yield investElectric();
@@ -151,12 +151,13 @@ function userInfo() {
         // !data.productionList && !data.factoryList
         if (data.factoryList && data.factoryList.length > 0) {
           const production = data.productionList[0];
-          factoryId = data.factoryList[0].factoryId;//工厂ID
-          productionId = data.productionList[0].productionId;//商品ID
+          const factory = data.factoryList[0];
+          factoryId = factory.factoryId;//工厂ID
+          productionId = production.productionId;//商品ID
           subTitle = data.user.pin;
           console.log(`\n我的分享码\n${data.user.encryptPin}\n`);
           // console.log(`进度：${(production.investedElectric/production.needElectric).toFixed(2) * 100}%\n`);
-          message += `【生产进度】${(production.investedElectric / production.needElectric).toFixed(2) * 100}%\n`
+          // message += `【生产进度】${(production.investedElectric / production.needElectric).toFixed(2) * 100}%\n`
           Task.next();
         } else {
           return $hammer.alert(name, '\n【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
