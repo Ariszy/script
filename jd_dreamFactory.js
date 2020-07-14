@@ -125,8 +125,6 @@ function produceTaskFun() {
           try {
             if (res.ret === 0) {
               console.log(`${item.taskName}任务完成`)
-            } else {
-              break;
             }
           } catch (e) {
             console.log(`${item.taskName}任务异常`)
