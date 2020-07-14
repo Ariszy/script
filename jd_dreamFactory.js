@@ -143,8 +143,8 @@ function collectElectricity() {
    try {
      if (res.ret === 0) {
        console.log(`成功从发电机收取${res.data.CollectElectricity}电力`);
-       Task.next();
      }
+     Task.next();
    } catch (e) {
      console.log('收集电力异常')
    }
@@ -172,7 +172,7 @@ function taskList() {
   const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
   request(url).then((res) => {
     try {
-      console.log(`${(res)}`)
+      console.log(`${JSON.stringify(res)}`)
       if (res.ret === 0) {
         userTaskStatusList = res.data.userTaskStatusList;
         userTaskStatusList.map(item => {
