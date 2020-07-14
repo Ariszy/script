@@ -110,13 +110,19 @@ function userInfo() {
     try {
       // taskInfo = res.data.result.taskInfos;
       console.log(`初始化信息:${JSON.stringify(response)}`);
-      if (!response.data.productionList && !response.data.factoryList) {
-        return $hammer.alert(name, '\n【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
+      if (response.ret === 0) {
+        const { data } = response;
+        // !data.productionList && !data.factoryList
+        if (data.user.npcStep !== 0) {
+          return $hammer.alert(name, '\n【提示】此账号京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动\n');
+        }
+        const production = data.productionList[0];
+        console.log(`\n我的分享码：${data.user.encryptPin}\n`);
+        console.log(`进度：${((production.investedElectric/production.investedElectric)*10000) / 100}%\n`);
+        Task.next();
+      } else {
+        Task.return();
       }
-      const production = response.data.productionList[0];
-      console.log(`\n我的分享码：${response.data.user.encryptPin}\n`);
-      console.log(`进度：${((production.investedElectric/production.investedElectric)*10000) / 100}%\n`);
-      Task.next();
     } catch (e) {
       console.log(e);
       console.log('初始化任务异常');
