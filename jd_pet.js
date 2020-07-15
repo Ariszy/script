@@ -342,10 +342,10 @@ async function browseShopsInit() {
 // 浏览指定店铺 任务
 function browseSingleShopInit() {
     console.log('准备浏览指定店铺');
-    const body = {"index":1,"version":1,"type":1};
+    const body = {"index":0,"version":1,"type":1};
     request("getSingleShopReward", body).then(response => {
         if (response.code === '0' && response.resultCode === '0') {
-            const body2 = {"index":1,"version":1,"type":2};
+            const body2 = {"index":0,"version":1,"type":2};
             request("getSingleShopReward", body2).then(response2 => {
                 if (response2.code === '0' && response2.resultCode === '0') {
                     message += `【浏览指定店铺】获取${response2.result.reward}g\n`;
