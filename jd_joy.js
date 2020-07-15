@@ -197,6 +197,23 @@ function* step() {
             } else {
                 console.log(`浏览商品奖励积分返回结果${JSON.stringify(deskGoodDetails)}`)
             }
+            // 看激励视频得狗粮
+            let taskVideoRes = yield taskVideo();
+            console.log(`视频激--任务列表--${JSON.stringify(taskVideoRes)}`);
+            if (taskVideoRes.success) {
+              let taskArr = {};
+              for (let item of taskVideoRes.datas) {
+                if (item.ViewVideo) {
+                  taskArr = item;
+                }
+              }
+              let joinedCount = taskArr.joinedCount || 0;
+              for (let i = 0; i < new Array(taskArr.taskChance - joinedCount).fill('').length; i++) {
+                console.log(`开始第${i+1}次看激励视频`);
+                  let sanVideoRes = yield sanVideo();
+                console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
+              }
+            }
             // 喂食
             let feedPetsResult = yield feedPets()
             console.log(`喂食结果${JSON.stringify(feedPetsResult)}`)
@@ -272,14 +289,24 @@ function feedPets() {
 function enterRoom() {
     request(`https://jdjoy.jd.com/pet/enterRoom?reqSource=h5`)
 }
-
-function request(url) {
+//看激励视频
+function taskVideo() {
+  request('https://draw.jdfcloud.com//pet/scan?reqSource=weapp', 'weapp')
+}
+function sanVideo() {
+  const body = {
+    "taskType": "ViewVideo",
+    "reqSource": "weapp"
+  }
+  requestPost('https://draw.jdfcloud.com//pet/scan', body, 'application/json', 'weapp')
+}
+function request(url, reqSource) {
     $hammer.log("request url:", url);
     const option =  {
         url: url,
         headers: {
             Cookie: cookie,
-            reqSource: 'h5',
+            reqSource: reqSource || 'h5',
         }
     };
     $hammer.request('GET', option, (error, response) => {
@@ -287,7 +314,7 @@ function request(url) {
     })
 }
 
-function requestPost(url, body, ContentType) {
+function requestPost(url, body, ContentType, reqSource) {
     $hammer.log("request url:", url, "body:", body, "ContetentType:", ContentType);
     const options = {
         url: url,
@@ -295,7 +322,7 @@ function requestPost(url, body, ContentType) {
         headers: {
             Cookie: cookie,
         UserAgent: `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
-            reqSource: 'h5',
+            reqSource: reqSource || 'h5',
             'Content-Type': ContentType,
         }
     };
