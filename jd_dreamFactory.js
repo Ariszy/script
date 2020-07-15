@@ -172,10 +172,10 @@ function taskList() {
   const url = `/newtasksys/newtasksys_front/GetUserTaskStatusList?source=dreamfactory&bizCode=dream_factory&sceneval=2&g_login_type=1`;
   request(url).then((res) => {
     try {
-      console.log(`${JSON.stringify(res)}`)
-      console.log(res)
+      //console.log(`${JSON.stringify(res)}`)
+      //console.log(res)
       if (res.ret === 0) {
-        // userTaskStatusList = res.data.userTaskStatusList;
+        userTaskStatusList = res.data.userTaskStatusList;
         for (let item of res.data.userTaskStatusList) {
           if (item.dateType === 2) {
             dailyTask.push(item);

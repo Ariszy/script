@@ -34,15 +34,15 @@ const $hammer = (() => {
     };
     const request = (method, params, callback) => {
         /**
-         * 
+         *
          * params(<object>): {url: <string>, headers: <object>, body: <string>} | <url string>
-         * 
+         *
          * callback(
-         *      error, 
+         *      error,
          *      <response-body string>?,
          *      {status: <int>, headers: <object>, body: <string>}?
          * )
-         * 
+         *
          */
         let options = {};
         if (typeof params == "string") {
@@ -160,6 +160,12 @@ function* step() {
         subTitle = plantBeanIndexResult.data.plantUserInfo.plantNickName;
         message += `【上期时间】${roundList[0].dateDesc}\n`;
         message += `【上期成长值】${roundList[0].growth}\n`;
+        //定时领取--放到前面执行收取自动生产的营养液
+        if (plantBeanIndexResult.data.timeNutrientsRes.state == 1 && plantBeanIndexResult.data.timeNutrientsRes.nutrCount > 0) {
+          console.log(`开始领取定时产生的营养液`)
+          let receiveNutrientsResult = yield receiveNutrients(plantBeanRound.roundId)
+          console.log(`receiveNutrientsResult:${JSON.stringify(receiveNutrientsResult)}`)
+        }
         if (roundList[0].beanState == 4 && roundList[0].awardState == 4) {
           message += `【上期状态】${roundList[0].tipBeanEndTitle}\n`;
         }
@@ -326,9 +332,22 @@ function* step() {
             }
         }
 
-        //todo 扭蛋
-
-
+        //天天扭蛋功能
+        let eggChance = yield egg();
+        if (eggChance.code == 0) {
+          if (eggChance.data.restLotteryNum > 0) {
+            const eggL = new Array(eggChance.data.restLotteryNum).fill('');
+            for (let i = 0; i < eggL.length; i++) {
+              console.log(`开始第${i+1}次扭蛋`);
+              let plantEggDoLotteryRes = yield plantEggDoLottery();
+              console.log(`天天扭蛋成功：${JSON.stringify(plantEggDoLotteryRes)}`);
+            }
+          } else {
+            console.log('暂无扭蛋机会')
+          }
+        } else {
+          console.log('查询天天扭蛋的机会失败')
+        }
         plantBeanIndexResult = yield plantBeanIndex()
         if (plantBeanIndexResult.code == '0') {
             let plantBeanRound = plantBeanIndexResult.data.roundList[1]
@@ -339,12 +358,6 @@ function* step() {
                     console.log(`收取营养液${bubbleInfo.name}`)
                     let cultureBeanResult = yield cultureBean(plantBeanRound.roundId, bubbleInfo.nutrientsType)
                     console.log(`cultureBeanResult:${JSON.stringify(cultureBeanResult)}`)
-                }
-                //定时领取
-                if (plantBeanIndexResult.data.timeNutrientsRes.state == 1 && plantBeanIndexResult.data.timeNutrientsRes.nutrCount > 0) {
-                    console.log(`开始领取定时产生的营养液`)
-                    let receiveNutrientsResult = yield receiveNutrients(plantBeanRound.roundId)
-                    console.log(`receiveNutrientsResult:${JSON.stringify(receiveNutrientsResult)}`)
                 }
             }
         } else {
@@ -495,7 +508,14 @@ function helpShare(plantUuid) {
     }
     request(`plantBeanIndex`, body);
 }
-
+//查询天天扭蛋的机会
+function egg() {
+  request('plantEggLotteryIndex');
+}
+// 调用扭蛋api
+function plantEggDoLottery() {
+  request('plantEggDoLottery');
+}
 function plantBeanIndex() {
     // https://api.m.jd.com/client.action?functionId=plantBeanIndex
     let functionId = arguments.callee.name.toString();
