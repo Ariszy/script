@@ -1,12 +1,4 @@
-# scripts
-
-#### 使用说明
-
-##### 仅限于iOS系统的surge，Loon,Quantumult X等软件使用 
-
-box使用请查看chavy频道https://t.me/chavyscripts
-
-##### 京东薅羊毛工具（京东app->我的->游戏与互动->查看更多）
+### 京东薅羊毛工具（活动入口：京东app->我的->游戏与互动->查看更多）
 
 1.  京东水果([jd_fruit.js](https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js))
 2.  东东萌宠([jd_fruit.js](https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js))
@@ -14,8 +6,34 @@ box使用请查看chavy频道https://t.me/chavyscripts
 4.  种豆得豆([jd_plantBean.js](https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js))
 5.  天天加速([jd_speed.js](https://gitee.com/lxk0301/scripts/raw/master/.js))
 6.  摇钱树([jd_moneyTree.js](https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js))
+#### 使用说明
+
+##### 仅限于iOS系统的surge，Loon，Quantumult X等软件使用 
+使用box可以实现远程订阅助力好友。
+
+box使用请查看[chavy频道](https://t.me/chavyscripts)
+
+目前京东活动中以下三个脚本可以使用box功能
+
+【1】京东水果
+
+【2】京东萌宠
+
+【3】京东种豆
+
+【用box订阅的好处】
+
+ 1、脚本也可以远程挂载。京东活动助力功能的分享码只需在box里面填写。以后只需远程更新就行。
+
+ 2、所有脚本的cookie都可以备份，方便你迁移到其他支持box的软件。
+
+ 3、box可以支持多账号
+ 
+ [京东活动的box订阅链接](https://gitee.com/lxk0301/scripts/raw/master/lxk0301.boxjs.json)
+
 ```
-//四个京东账号的Qumutumult X cron设置
+
+//示例：四个京东账号的Qumutumult X cron设置
 [task_local]
 #切换会话
 18,36,46,58 1-23 * * * https://raw.githubusercontent.com/chavyleung/scripts/master/box/switcher/box.switcher.js, tag=切换会话, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/BOXJS.png, enabled=true
