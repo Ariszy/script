@@ -174,18 +174,18 @@ function taskList() {
     try {
       console.log(`${JSON.stringify(res)}`)
       console.log(res)
-      // if (res.ret === 0) {
-      //   userTaskStatusList = res.data.userTaskStatusList;
-      //   for (let item of res.data.userTaskStatusList) {
-      //     if (item.dateType === 2) {
-      //       dailyTask.push(item);
-      //     }
-      //     if (item.dateType === 1) {
-      //       produceTask.push(item);
-      //     }
-      //   }
-      //   Task.next();
-      // }
+      if (res.ret === 0) {
+        // userTaskStatusList = res.data.userTaskStatusList;
+        for (let item of res.data.userTaskStatusList) {
+          if (item.dateType === 2) {
+            dailyTask.push(item);
+          }
+          if (item.dateType === 1) {
+            produceTask.push(item);
+          }
+        }
+        Task.next();
+      }
     } catch (e) {
       console.log('初始化任务异常')
     }
@@ -241,7 +241,7 @@ async function request(url, body = {}) {
       if(error){
         $hammer.log("Error:", error);
       }else{
-        console.log(response.body)
+        //console.log(response.body)
         resolve(JSON.parse(response.body));
       }
     })
