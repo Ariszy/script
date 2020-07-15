@@ -297,8 +297,17 @@ async function slaveHelp() {
             shareCode: code
         });
         if (response.code === '0' && response.resultCode === '0') {
-            console.log('已给好友: 【' + response.result.masterNickName + '】助力');
-            helpPeoples += response.result.masterNickName + '，';
+            if (response.result.helpStatus === 0) {
+              console.log('已给好友: 【' + response.result.masterNickName + '】助力');
+              helpPeoples += response.result.masterNickName + '，';
+            } else if (response.result.helpStatus === 1) {
+              // 您今日已无助力机会
+              console.log(`助力好友${response.result.masterNickName}失败，您今日已无助力机会`);
+              break;
+            } else if (response.result.helpStatus === 2) {
+              //该好友已满5人助力，无需您再次助力
+              console.log(`该好友${response.result.masterNickName}已满5人助力，无需您再次助力`);
+            }
         } else {
             console.log(`助理好友结果: ${response.message}`);
         }
