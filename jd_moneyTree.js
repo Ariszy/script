@@ -475,7 +475,7 @@ function msgControl() {
   // console.log(`${typeof (Number($hammer.read('treeMsgTime')))}`)
   // console.log(`${($hammer.read('treeMsgTime') * 1) === Notice}`)
   if (($.getdata('treeMsgTime') * 1) === Notice) {
-    $.msg(name, message, subTitle);
+    $.msg(name, subTitle, message);
     $.setdata('0', 'treeMsgTime');
   }
 }
