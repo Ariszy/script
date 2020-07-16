@@ -365,12 +365,11 @@ async function request(function_id, body = {}) {
 }
 
 function sleep(s) {
-  // return new Promise((resolve, reject) => {
-  //   setTimeout(() => {
-  //     resolve();
-  //   }, s * 1000);
-  // })
-  return new Promise((resolve) => setTimeout(resolve, 2000))
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, s * 1000);
+  })
 }
 function _jsonpToJson(v) {
   return v.match(/{.*}/)[0]
