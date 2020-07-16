@@ -11,91 +11,6 @@
 // Loon
 // [Script]
 // cron "8 */3 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js,tag=京东天天加速
-const $hammer = (() => {
-  const isRequest = "undefined" != typeof $request,
-      isSurge = "undefined" != typeof $httpClient,
-      isQuanX = "undefined" != typeof $task;
-
-  const log = (...n) => { for (let i in n) console.log(n[i]) };
-  const alert = (title, body = "", subtitle = "", link = "") => {
-    if (isSurge) return $notification.post(title, subtitle, body, link);
-    if (isQuanX) return $notify(title, subtitle, (link && !body ? link : body));
-    log("==============📣系统通知📣==============");
-    log("title:", title, "subtitle:", subtitle, "body:", body, "link:", link);
-  };
-  const read = key => {
-    if (isSurge) return $persistentStore.read(key);
-    if (isQuanX) return $prefs.valueForKey(key);
-  };
-  const write = (val, key) => {
-    if (isSurge) return $persistentStore.write(val, key);
-    if (isQuanX) return $prefs.setValueForKey(val, key);
-  };
-  const request = (method, params, callback) => {
-    /**
-     *
-     * params(<object>): {url: <string>, headers: <object>, body: <string>} | <url string>
-     *
-     * callback(
-     *      error,
-     *      <response-body string>?,
-     *      {status: <int>, headers: <object>, body: <string>}?
-     * )
-     *
-     */
-    let options = {};
-    if (typeof params == "string") {
-      options.url = params;
-    } else {
-      options.url = params.url;
-      if (typeof params == "object") {
-        params.headers && (options.headers = params.headers);
-        params.body && (options.body = params.body);
-      }
-    }
-    method = method.toUpperCase();
-
-    const writeRequestErrorLog = function (m, u) {
-      return err => {
-        log("=== request error -s--");
-        log(`${m} ${u}`, err);
-        log("=== request error -e--");
-      };
-    }(method, options.url);
-
-    if (isSurge) {
-      const _runner = method == "GET" ? $httpClient.get : $httpClient.post;
-      return _runner(options, (error, response, body) => {
-        if (error == null || error == "") {
-          response.body = body;
-          callback("", body, response);
-        } else {
-          writeRequestErrorLog(error);
-          callback(error);
-        }
-      });
-    }
-    if (isQuanX) {
-      options.method = method;
-      $task.fetch(options).then(
-          response => {
-            response.status = response.statusCode;
-            delete response.statusCode;
-            callback("", response.body, response);
-          },
-          reason => {
-            writeRequestErrorLog(reason.error);
-            callback(reason.error);
-          }
-      );
-    }
-  };
-  const done = (value = {}) => {
-    if (isQuanX) return isRequest ? $done(value) : null;
-    if (isSurge) return isRequest ? $done(value) : $done();
-  };
-  return { isRequest, isSurge, isQuanX, log, alert, read, write, request, done };
-})();
 const name = '天天加速';
 const $ = new Env(name);
 //直接用NobyDa的jd cookie
@@ -113,7 +28,6 @@ let source_id = null;
 let done_distance = null;
 let task_status = null, able_energeProp_list = [], spaceEvents = [], energePropUsale = [];
 function* entrance() {
-  const startTime = Date.now();
   if (!cookie) {
     return $.msg(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
   }
@@ -164,8 +78,6 @@ function* entrance() {
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
-  const end = ((Date.now() - startTime) / 1000).toFixed(2);
-  console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
   $.msg(name, subTitle, message);
   $.done();
 }
