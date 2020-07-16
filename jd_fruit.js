@@ -160,13 +160,13 @@ function* step() {
             let signResult = yield signForFarm(); //签到
             if (signResult.code == "0") {
                 message += `【签到成功】获得${signResult.amount}g\n`//连续签到${signResult.signDay}天
-                if (signResult.todayGotWaterGoalTask.canPop) {
-                  let goalResult = yield gotWaterGoalTaskForFarm();
-                  console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
-                  if (goalResult.code === '0') {
-                    message += `【被水滴砸中】获取：${goalResult.addEnergy}g\n`
-                  }
-                }
+                // if (signResult.todayGotWaterGoalTask.canPop) {
+                //   let goalResult = yield gotWaterGoalTaskForFarm();
+                //   console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
+                //   if (goalResult.code === '0') {
+                //     message += `【被水滴砸中】获取：${goalResult.addEnergy}g\n`
+                //   }
+                // }
             } else {
                 message += `签到失败,详询日志\n`
                 console.log(`签到结果:  ${JSON.stringify(signResult)}`);
@@ -175,9 +175,16 @@ function* step() {
             console.log(`今天已签到,连续签到${farmTask.signInit.totalSigned},下次签到可得${farmTask.signInit.signEnergyEachAmount}g`);
             // message += `今天已签到,连续签到${farmTask.signInit.totalSigned},下次签到可得${farmTask.signInit.signEnergyEachAmount}g\n`
         }
+        // 被水滴砸中
+        console.log(`被水滴砸中： ${farmInfo.todayGotWaterGoalTask.canPop ? '是' : '否'}`);
+        if (farmInfo.todayGotWaterGoalTask.canPop) {
+          let goalResult = yield gotWaterGoalTaskForFarm();
+          //console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
+          if (goalResult.code === '0') {
+            message += `【被水滴砸中】${goalResult.addEnergy}g\n`
+          }
+        }
         console.log(`签到结束,开始广告浏览任务`);
-        // let goalResult = yield gotWaterGoalTaskForFarm();
-        // console.log('被水滴砸中奖励: ', goalResult);
         if (!farmTask.gotBrowseTaskAdInit.f) {
             let adverts = farmTask.gotBrowseTaskAdInit.userBrowseTaskAds
             let browseReward = 0
@@ -244,18 +251,22 @@ function* step() {
             console.log(`打卡结果${JSON.stringify(clockInForFarmRes)}`);
             if (clockInForFarmRes.code === '0') {
               message += `【第${clockInForFarmRes.signDay}天签到】获得${clockInForFarmRes.amount}g\n`//连续签到${signResult.signDay}天
-              if (clockInForFarmRes.todayGotWaterGoalTask.canPop) {
-                let goalResult = yield gotWaterGoalTaskForFarm();
-                console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
-                if (goalResult.code === '0') {
-                  message += `【被水滴砸中】获取：${goalResult.addEnergy}g\n`;
-                }
-              }
+              // if (clockInForFarmRes.todayGotWaterGoalTask.canPop) {
+              //   let goalResult = yield gotWaterGoalTaskForFarm();
+              //   console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
+              //   if (goalResult.code === '0') {
+              //     message += `【被水滴砸中】${goalResult.addEnergy}g\n`;
+              //   }
+              // }
             }
           }
-          // TODO 惊喜礼包
-          if (!clockInInit.gotClockInGift) {
-            console.log('惊喜礼包，未到这一步，到时候再说，待开发');
+          // 连续七天签到-惊喜礼包
+          if (!clockInInit.gotClockInGift && clockInInit.totalSigned === 7) {
+            console.log('开始领取--惊喜礼包38g水滴');
+            let gotClockInGiftRes = yield gotClockInGift();
+            if (gotClockInGiftRes.code === '0') {
+              message += `【惊喜礼包】${gotClockInGiftRes.amount}g\n`
+            }
           }
           // 限时关注得水滴
           if (clockInInit.themes && clockInInit.themes.length > 0) {
@@ -721,7 +732,10 @@ function clockInFollowForFarm(id, type, step) {
   }
   request(functionId, body);
 }
-
+// 领取连续签到7天的惊喜礼包
+function gotClockInGift() {
+  request('clockInForFarm', {"type": 2})
+}
 function request(function_id, body = {}) {
     $hammer.request('GET', taskurl(function_id, body), (error, response) => {
         error ? $hammer.log("Error:", error) : sleep(JSON.parse(response.body));
