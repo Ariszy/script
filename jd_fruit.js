@@ -358,6 +358,9 @@ function* step() {
                   } else {
                     str += (item.nickName || "匿名用户") + '，';
                   }
+                  let date = new Date(1594856634346);
+                  let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
+                  console.log(`\n${item.nickName || "匿名用户"} 在 ${time} 给您助力\n`);
                 })
                 message += `【助力您的好友】${str}\n`;
             }
