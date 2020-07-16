@@ -295,10 +295,8 @@ function taskVideo() {
   taskVideoRequest('https://draw.jdfcloud.com//pet/scan?reqSource=weapp')
 }
 function sanVideo() {
-  const body = {
-    "taskType": "ViewVideo",
-    "reqSource": "weapp"
-  }
+  let body = {"taskType":"ViewVideo","reqSource":"weapp"};
+  body = encodeURIComponent(JSON.stringify(body));
   taskVideoRequest('https://draw.jdfcloud.com//pet/scan', body)
 }
 function taskVideoRequest(url, body) {
