@@ -100,7 +100,7 @@ const $hammer = (() => {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //直接用NobyDa的js cookie
 const cookie = $hammer.read('CookieJD');
-
+let jdNotify = $hammer.read('jdPetNotify');
 var shareCodes = [ // 这个列表填入你要助力的好友的shareCode, 最多可能是5个? 没有验证过
     'MTAxODcxOTI2NTAwMDAwMDAwMDc4MDExNw==',
     'MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==',
@@ -178,7 +178,9 @@ function* entrance() {
     }
     const end = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
-    $hammer.alert(name, message, subTitle, '', option)
+    if (!jdNotify) {
+      $hammer.alert(name, message, subTitle, '', option);
+    }
     // $notify(name, subTitle, message);
     console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
 }

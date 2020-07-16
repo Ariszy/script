@@ -100,7 +100,7 @@ const $hammer = (() => {
 
 //直接用NobyDa的jd cookie
 const cookie = $hammer.read('CookieJD');
-const jdPlantBeanNotify = $hammer.read('jdPlantBeanNotify');
+let jdNotify = $hammer.read('jdPlantBeanNotify');
 const name = '京东种豆得豆'
 
 //京东接口地址
@@ -397,7 +397,7 @@ function* step() {
     }
     const end = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
-    if (!jdPlantBeanNotify) {
+    if (!jdNotify) {
       $hammer.alert(name, message, subTitle);
     }
 }

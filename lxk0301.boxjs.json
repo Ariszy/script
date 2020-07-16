@@ -7,8 +7,9 @@
   "apps": [
     {
       "id": "jd_fruit",
-      "name": "京东水果",
+      "name": "东东农场",
       "keys": [
+        "jdFruitNotify",
         "jd_fruit_name",
         "jd_fruit1",
         "jd_fruit2",
@@ -16,6 +17,13 @@
         "jd_fruit4"
       ],
       "settings": [
+        {
+          "id": "jdFruitNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行东东农场脚本时不发出系统通知"
+        },
         {
           "id": "jd_fruit_name",
           "name": "京东账号昵称",
@@ -61,8 +69,9 @@
     },
     {
       "id": "jd_pet",
-      "name": "京东萌宠",
+      "name": "东东萌宠",
       "keys": [
+        "jdPetNotify",
         "jd_pet_name",
         "jd_pet1",
         "jd_pet2",
@@ -71,6 +80,13 @@
         "jd_pet5"
       ],
       "settings": [
+        {
+          "id": "jdPetNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行东东萌宠脚本时不发出系统通知"
+        },
         {
           "id": "jd_pet_name",
           "name": "京东账号昵称",
