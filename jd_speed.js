@@ -370,7 +370,7 @@ function sleep(s) {
   //     resolve();
   //   }, s * 1000);
   // })
-  return new Promise((resolve) => setTimeout(resolve, s))
+  return new Promise((resolve) => setTimeout(resolve, 2000))
 }
 function _jsonpToJson(v) {
   return v.match(/{.*}/)[0]
