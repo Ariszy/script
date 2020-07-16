@@ -100,7 +100,7 @@ const $hammer = (() => {
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //直接用NobyDa的js cookie
 const cookie = $hammer.read('CookieJD');
-
+let jdNotify = $hammer.read('jdPetNotify');
 var shareCodes = [ // 这个列表填入你要助力的好友的shareCode, 最多可能是5个? 没有验证过
     'MTAxODcxOTI2NTAwMDAwMDAwMDc4MDExNw==',
     'MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==',
@@ -178,7 +178,9 @@ function* entrance() {
     }
     const end = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
-    $hammer.alert(name, message, subTitle, '', option)
+    if (!jdNotify) {
+      $hammer.alert(name, message, subTitle, '', option);
+    }
     // $notify(name, subTitle, message);
     console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
 }
@@ -297,8 +299,17 @@ async function slaveHelp() {
             shareCode: code
         });
         if (response.code === '0' && response.resultCode === '0') {
-            console.log('已给好友: 【' + response.result.masterNickName + '】助力');
-            helpPeoples += response.result.masterNickName + '，';
+            if (response.result.helpStatus === 0) {
+              console.log('已给好友: 【' + response.result.masterNickName + '】助力');
+              helpPeoples += response.result.masterNickName + '，';
+            } else if (response.result.helpStatus === 1) {
+              // 您今日已无助力机会
+              console.log(`助力好友${response.result.masterNickName}失败，您今日已无助力机会`);
+              break;
+            } else if (response.result.helpStatus === 2) {
+              //该好友已满5人助力，无需您再次助力
+              console.log(`该好友${response.result.masterNickName}已满5人助力，无需您再次助力`);
+            }
         } else {
             console.log(`助理好友结果: ${response.message}`);
         }
@@ -344,9 +355,11 @@ function browseSingleShopInit() {
     console.log('准备浏览指定店铺');
     const body = {"index":0,"version":1,"type":1};
     request("getSingleShopReward", body).then(response => {
+      console.log(`response::${JSON.stringify(response)}`);
         if (response.code === '0' && response.resultCode === '0') {
             const body2 = {"index":0,"version":1,"type":2};
             request("getSingleShopReward", body2).then(response2 => {
+              console.log(`response2::${JSON.stringify(response)}`);
                 if (response2.code === '0' && response2.resultCode === '0') {
                     message += `【浏览指定店铺】获取${response2.result.reward}g\n`;
                 }

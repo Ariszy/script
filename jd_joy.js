@@ -199,8 +199,7 @@ function* step() {
             }
             // 看激励视频得狗粮
             let taskVideoRes = yield taskVideo();
-            let sanVideoRes = yield sanVideo();
-            console.log(`视频激--任务列表--${JSON.stringify(sanVideoRes)}`);
+            console.log(`视频激--任务列表--${JSON.stringify(taskVideoRes)}`);
             if (taskVideoRes.success) {
               let taskArr = {};
               for (let item of taskVideoRes.datas) {
@@ -292,34 +291,14 @@ function enterRoom() {
 }
 //看激励视频
 function taskVideo() {
-  taskVideoRequest('https://draw.jdfcloud.com//pet/scan?reqSource=weapp')
+  request('https://draw.jdfcloud.com//pet/scan?reqSource=weapp', 'weapp')
 }
 function sanVideo() {
-  let body = {"taskType":"ViewVideo","reqSource":"weapp"};
-  body = encodeURIComponent(JSON.stringify(body));
-  taskVideoRequest('https://draw.jdfcloud.com//pet/scan', body)
-}
-function taskVideoRequest(url, body) {
-  $hammer.log("request url:", url, "body:", body);
-  const options = {
-    url,
-    body,
-    headers: {
-      Cookie: cookie,
-      'Host': 'draw.jdfcloud.com',
-      'Accept': '*/*',
-      'Accept-Language': 'zh-cn',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Content-Type': 'application/json',
-      'reqSource': 'weapp',
-      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.14(0x17000e22) NetType/WIFI Language/zh_CN',
-      'Referer': 'https://servicewechat.com/wxccb5c536b0ecd1bf/605/page-frame.html',
-      'Connection': 'keep-alive',
-    }
-  };
-  $hammer.request('POST', options, (error, response) => {
-    error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
-  })
+  const body = {
+    "taskType": "ViewVideo",
+    "reqSource": "weapp"
+  }
+  requestPost('https://draw.jdfcloud.com//pet/scan', body, 'application/json', 'weapp')
 }
 function request(url, reqSource) {
     $hammer.log("request url:", url);
