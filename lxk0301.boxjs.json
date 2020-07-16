@@ -125,12 +125,20 @@
       "id": "jd_plantBean",
       "name": "京东种豆",
       "keys": [
+        "plantBeanNotify",
         "jd_plant_bean_name",
         "jd_plantBean1",
         "jd_plantBean2",
         "jd_plantBean3"
       ],
       "settings": [
+        {
+          "id": "jdPlantBeanNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行种豆脚本时不发出系统通知"
+        },
         {
           "id": "jd_plant_bean_name",
           "name": "京东账号昵称",
