@@ -141,6 +141,7 @@ function* entrance() {
   const end = ((Date.now() - startTime) / 1000).toFixed(2);
   console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
   console.log('任务做完了');
+  $.done();
 }
 
 function user_info() {
