@@ -181,7 +181,7 @@ function* step() {
           let goalResult = yield gotWaterGoalTaskForFarm();
           //console.log(`被水滴砸中奖励:${JSON.stringify(goalResult)}`);
           if (goalResult.code === '0') {
-            message += `【被水滴砸中】${goalResult.addEnergy}g\n`
+            message += `【被水滴砸中】获得 ${goalResult.addEnergy}g\n`
           }
         }
         console.log(`签到结束,开始广告浏览任务`);
@@ -265,7 +265,7 @@ function* step() {
             console.log('开始领取--惊喜礼包38g水滴');
             let gotClockInGiftRes = yield gotClockInGift();
             if (gotClockInGiftRes.code === '0') {
-              message += `【惊喜礼包】${gotClockInGiftRes.amount}g\n`
+              message += `【惊喜礼包】获得 ${gotClockInGiftRes.amount}g\n`
             }
           }
           // 限时关注得水滴
