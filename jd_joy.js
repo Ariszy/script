@@ -199,7 +199,8 @@ function* step() {
             }
             // 看激励视频得狗粮
             let taskVideoRes = yield taskVideo();
-            console.log(`视频激--任务列表--${JSON.stringify(taskVideoRes)}`);
+            let sanVideoRes = yield sanVideo();
+            console.log(`视频激--任务列表--${JSON.stringify(sanVideoRes)}`);
             if (taskVideoRes.success) {
               let taskArr = {};
               for (let item of taskVideoRes.datas) {
@@ -298,14 +299,15 @@ function sanVideo() {
     "taskType": "ViewVideo",
     "reqSource": "weapp"
   }
-  requestPost('https://draw.jdfcloud.com//pet/scan', body, 'application/json', 'weapp')
+  taskVideoRequest('https://draw.jdfcloud.com//pet/scan', body)
 }
-function taskVideoRequest(url) {
-  $hammer.log("request url:", url);
-  const option =  {
-    url: url,
+function taskVideoRequest(url, body) {
+  $hammer.log("request url:", url, "body:", body);
+  const options = {
+    url,
+    body,
     headers: {
-      'Cookie': cookie,
+      Cookie: cookie,
       'Host': 'draw.jdfcloud.com',
       'Accept': '*/*',
       'Accept-Language': 'zh-cn',
@@ -317,7 +319,7 @@ function taskVideoRequest(url) {
       'Connection': 'keep-alive',
     }
   };
-  $hammer.request('GET', option, (error, response) => {
+  $hammer.request('POST', options, (error, response) => {
     error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
   })
 }
