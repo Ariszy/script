@@ -258,16 +258,8 @@ function flyTask_state() {
 }
 
 async function request(function_id, body = {}) {
-  // await sleep(2);
-  await $.wait(2);
+  await $.wait(2000);//延迟两秒
   return new Promise((resolve, reject) => {
-    // $hammer.request('GET', taskurl(function_id, body), (error, response) => {
-    //   if(error){
-    //     $hammer.log("Error:", error);
-    //   }else{
-    //     resolve(JSON.parse(_jsonpToJson(response)));
-    //   }
-    // })
     $.get(taskurl(function_id, body), (err, resp, data) => {
       try {
         resolve(JSON.parse(_jsonpToJson(data)));
@@ -278,13 +270,6 @@ async function request(function_id, body = {}) {
   })
 }
 
-function sleep(s) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve();
-    }, s * 1000);
-  })
-}
 function _jsonpToJson(v) {
   return v.match(/{.*}/)[0]
 }
