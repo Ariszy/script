@@ -566,9 +566,9 @@ async function request(function_id, body = {}) {
         //         resolve(JSON.parse(response.body));
         //     }
         // })
-        $.get(taskurl(function_id, body), (err, resp, response) => {
+        $.get(taskurl(function_id, body), (err, resp, data) => {
           try {
-            resolve(JSON.parse(response.body));
+            resolve(JSON.parse(data.body));
           } catch (e) {
             $.logErr(e, resp)
           }
