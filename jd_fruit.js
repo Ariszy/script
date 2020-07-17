@@ -55,7 +55,6 @@ let farmTask = null;
 // let farmInfo = null;
 
 function* step() {
-    const startTime = Date.now();
     let message = '';
     let subTitle = '';
     let option = {};
@@ -510,8 +509,6 @@ function* step() {
           message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
         }
     }
-    const end = ((Date.now() - startTime) / 1000).toFixed(2);
-    console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
     if (!jdNotify) {
       $.msg(name, subTitle, message, option);
     }

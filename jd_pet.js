@@ -66,7 +66,6 @@ gen.next();
  * 入口函数
  */
 function* entrance() {
-    const startTime = Date.now();
     if (!cookie) {
       return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
     }
@@ -92,8 +91,7 @@ function* entrance() {
     let option = {
       "media-url" : goodsUrl
     }
-    const end = ((Date.now() - startTime) / 1000).toFixed(2);
-    console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
+
     if (!jdNotify) {
       $.msg(name, subTitle, message, option);
     }
