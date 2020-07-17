@@ -3,6 +3,7 @@
 每天4京豆，再小的苍蝇也是肉
 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
 建议3小时运行一次，打卡时间间隔是6小时
+注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 */
 // quantumultx
 // [task_local]
@@ -13,8 +14,9 @@
 // cron "8 */3 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js,tag=京东天天加速
 const name = '天天加速';
 const $ = new Env(name);
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
-const cookie = $.getdata('CookieJD');
+const cookie = $.getdata('CookieJD') || Key;
 const JD_API_HOST = 'https://api.m.jd.com/';
 let gen = entrance();
 gen.next();
