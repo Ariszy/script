@@ -220,9 +220,6 @@ function request(url, reqSource) {
             reqSource: reqSource || 'h5',
         }
     };
-    // $hammer.request('GET', option, (error, response) => {
-    //     error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
-    // })
     $.get(option, (err, resp, data) => {
       try {
         sleep(JSON.parse(data))
@@ -244,9 +241,6 @@ function requestPost(url, body, ContentType, reqSource) {
             'Content-Type': ContentType,
         }
     };
-    // $hammer.request('POST', options, (error, response) => {
-    //     error ? $hammer.log("Error:", error) : sleep(JSON.parse(response));
-    // })
     $.post(options, (err, resp, data) => {
       try {
         sleep(JSON.parse(data))
