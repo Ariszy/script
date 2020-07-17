@@ -95,18 +95,19 @@ const $hammer = (() => {
     };
     return { isRequest, isSurge, isQuanX, log, alert, read, write, request, done };
 })();
-
+const name = '东东萌宠';
+const $ = new Env(name);
+//直接用NobyDa的jd cookie
+const cookie = $.getdata('CookieJD');
 //京东接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
-//直接用NobyDa的js cookie
-const cookie = $hammer.read('CookieJD');
-let jdNotify = $hammer.read('jdPetNotify');
-var shareCodes = [ // 这个列表填入你要助力的好友的shareCode, 最多可能是5个? 没有验证过
-    'MTAxODcxOTI2NTAwMDAwMDAwMDc4MDExNw==',
-    'MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==',
-    'MTAxODc2NTEzMDAwMDAwMDAwNTUwNDUxMw==',
-    'MTAxODc2NTEzOTAwMDAwMDAxODQ5MDg5NQ==',
-    'MTAxODcxOTI2NTAwMDAwMDAxOTQ3MjkzMw=='
+let jdNotify = $.getdata('jdPetNotify');
+let shareCodes = [ // 这个列表填入你要助力的好友的shareCode, 最多可能是5个
+  'MTAxODcxOTI2NTAwMDAwMDAwMDc4MDExNw==',
+  'MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==',
+  'MTAxODc2NTEzMDAwMDAwMDAwNTUwNDUxMw==',
+  'MTAxODc2NTEzOTAwMDAwMDAxODQ5MDg5NQ==',
+  'MTAxODcxOTI2NTAwMDAwMDAxOTQ3MjkzMw=='
 ]
 // 添加box功能
 // 【用box订阅的好处】
@@ -115,20 +116,19 @@ var shareCodes = [ // 这个列表填入你要助力的好友的shareCode, 最�
 let isBox = false //默认没有使用box
 const boxShareCodeArr = ['jd_pet1', 'jd_pet2', 'jd_pet3', 'jd_pet4', 'jd_pet5'];
 isBox = boxShareCodeArr.some((item) => {
-  const boxShareCode = $hammer.read(item);
+  const boxShareCode = $.getdata(item);
   return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
 });
 if (isBox) {
   shareCodes = [];
   for (const item of boxShareCodeArr) {
-    if ($hammer.read(item)) {
-      shareCodes.push($hammer.read(item));
+    if ($.getdata(item)) {
+      shareCodes.push($.getdata(item));
     }
   }
 }
 var petInfo = null;
 var taskInfo = null;
-const name = '东东萌宠';
 let message = '';
 let subTitle = '';
 let goodsUrl = '';
@@ -152,7 +152,7 @@ gen.next();
 function* entrance() {
     const startTime = Date.now();
     if (!cookie) {
-        return $hammer.alert("京东萌宠", '请先获取cookie\n直接使用NobyDa的京东签到获取');
+      return $.msg(name, '【提示】', '\n请先获取cookie\n直接使用NobyDa的京东签到获取\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
     }
     console.log('任务开始');
     yield initPetTown(); //初始化萌宠
@@ -179,10 +179,11 @@ function* entrance() {
     const end = ((Date.now() - startTime) / 1000).toFixed(2);
     console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
     if (!jdNotify) {
-      $hammer.alert(name, message, subTitle, '', option);
+      $.msg(name, subTitle, message, option);
     }
     // $notify(name, subTitle, message);
     console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
+    $.done();
 }
 
 
@@ -247,15 +248,6 @@ async function feedReachInit() {
     console.log('投食任务结束...');
     gen.next();
 
-}
-
-//等待一下
-function sleep(s) {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, s * 1000);
-    })
 }
 
 // 遛狗, 每天次数上限10次, 随机给狗粮, 每次遛狗结束需调用getSportReward领取奖励, 才能进行下一次遛狗
@@ -428,7 +420,7 @@ function initPetTown() {
         if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
             petInfo = response.result;
             if (petInfo.userStatus === 0) {
-              return $hammer.alert(name, '\n【提示】此账号萌宠活动未开始，请手动去京东APP开启活动\n');
+              return $.msg(name, '【提示】', '\n此账号萌宠活动未开始，请手动去京东APP开启活动\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
             }
             goodsUrl = response.result.goodsInfo && response.result.goodsInfo.goodsUrl;
             console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
@@ -436,7 +428,7 @@ function initPetTown() {
           gen.next();
         } else if (response.code === '0' && response.resultCode === '2001'){
             console.log(`初始化萌宠失败:  ${response.message}`);
-            return $hammer.alert(name, '\n【提示】京东cookie已失效,请重新登录获取\n');
+            return $.msg(name, '【提示】', '\n京东cookie已失效,请重新登录获取\n https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
             gen.return();
         }
     })
@@ -565,14 +557,21 @@ function taskInit() {
 
 // 请求
 async function request(function_id, body = {}) {
-    await sleep(3); //歇口气儿, 不然会报操作频繁
+    await $.wait(2000); //歇口气儿, 不然会报操作频繁
     return new Promise((resolve, reject) => {
-        $hammer.request('GET', taskurl(function_id,body), (error, response) => {
-            if(error){
-                $hammer.log("Error:", error);
-            }else{
-                resolve(JSON.parse(response.body));
-            }
+        // $hammer.request('GET', taskurl(function_id,body), (error, response) => {
+        //     if(error){
+        //         $hammer.log("Error:", error);
+        //     }else{
+        //         resolve(JSON.parse(response.body));
+        //     }
+        // })
+        $.post(taskurl(function_id, body), (err, resp, response) => {
+          try {
+            resolve(JSON.parse(response.body));
+          } catch (e) {
+            $.logErr(e, resp)
+          }
         })
     })
 }
@@ -587,3 +586,5 @@ function taskurl(function_id, body = {}) {
     };
 }
 
+// prettier-ignore
+function Env(t,s){return new class{constructor(t,s){this.name=t,this.data=null,this.dataFile="box.dat",this.logs=[],this.logSeparator="\n",this.startTime=(new Date).getTime(),Object.assign(this,s),this.log("",`\ud83d\udd14${this.name}, \u5f00\u59cb!`)}isNode(){return"undefined"!=typeof module&&!!module.exports}isQuanX(){return"undefined"!=typeof $task}isSurge(){return"undefined"!=typeof $httpClient}isLoon(){return"undefined"!=typeof $loon}loaddata(){if(!this.isNode)return{};{this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),s=this.path.resolve(process.cwd(),this.dataFile),e=this.fs.existsSync(t),i=!e&&this.fs.existsSync(s);if(!e&&!i)return{};{const i=e?t:s;try{return JSON.parse(this.fs.readFileSync(i))}catch{return{}}}}}writedata(){if(this.isNode){this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),s=this.path.resolve(process.cwd(),this.dataFile),e=this.fs.existsSync(t),i=!e&&this.fs.existsSync(s),o=JSON.stringify(this.data);e?this.fs.writeFileSync(t,o):i?this.fs.writeFileSync(s,o):this.fs.writeFileSync(t,o)}}lodash_get(t,s,e){const i=s.replace(/\[(\d+)\]/g,".$1").split(".");let o=t;for(const t of i)if(o=Object(o)[t],void 0===o)return e;return o}lodash_set(t,s,e){return Object(t)!==t?t:(Array.isArray(s)||(s=s.toString().match(/[^.[\]]+/g)||[]),s.slice(0,-1).reduce((t,e,i)=>Object(t[e])===t[e]?t[e]:t[e]=Math.abs(s[i+1])>>0==+s[i+1]?[]:{},t)[s[s.length-1]]=e,t)}getdata(t){let s=this.getval(t);if(/^@/.test(t)){const[,e,i]=/^@(.*?)\.(.*?)$/.exec(t),o=e?this.getval(e):"";if(o)try{const t=JSON.parse(o);s=t?this.lodash_get(t,i,""):s}catch(t){s=""}}return s}setdata(t,s){let e=!1;if(/^@/.test(s)){const[,i,o]=/^@(.*?)\.(.*?)$/.exec(s),h=this.getval(i),a=i?"null"===h?null:h||"{}":"{}";try{const s=JSON.parse(a);this.lodash_set(s,o,t),e=this.setval(JSON.stringify(s),i),console.log(`${i}: ${JSON.stringify(s)}`)}catch{const s={};this.lodash_set(s,o,t),e=this.setval(JSON.stringify(s),i),console.log(`${i}: ${JSON.stringify(s)}`)}}else e=$.setval(t,s);return e}getval(t){return this.isSurge()||this.isLoon()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):this.isNode()?(this.data=this.loaddata(),this.data[t]):this.data&&this.data[t]||null}setval(t,s){return this.isSurge()||this.isLoon()?$persistentStore.write(t,s):this.isQuanX()?$prefs.setValueForKey(t,s):this.isNode()?(this.data=this.loaddata(),this.data[s]=t,this.writedata(),!0):this.data&&this.data[s]||null}initGotEnv(t){this.got=this.got?this.got:require("got"),this.cktough=this.cktough?this.cktough:require("tough-cookie"),this.ckjar=this.ckjar?this.ckjar:new this.cktough.CookieJar,t&&(t.headers=t.headers?t.headers:{},void 0===t.headers.Cookie&&void 0===t.cookieJar&&(t.cookieJar=this.ckjar))}get(t,s=(()=>{})){t.headers&&(delete t.headers["Content-Type"],delete t.headers["Content-Length"]),this.isSurge()||this.isLoon()?$httpClient.get(t,(t,e,i)=>{!t&&e&&(e.body=i,e.statusCode=e.status,s(t,e,i))}):this.isQuanX()?$task.fetch(t).then(t=>{const{statusCode:e,statusCode:i,headers:o,body:h}=t;s(null,{status:e,statusCode:i,headers:o,body:h},h)},t=>s(t)):this.isNode()&&(this.initGotEnv(t),this.got(t).on("redirect",(t,s)=>{try{const e=t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();this.ckjar.setCookieSync(e,null),s.cookieJar=this.ckjar}catch(t){this.logErr(t)}}).then(t=>{const{statusCode:e,statusCode:i,headers:o,body:h}=t;s(null,{status:e,statusCode:i,headers:o,body:h},h)},t=>s(t)))}post(t,s=(()=>{})){if(t.body&&t.headers&&!t.headers["Content-Type"]&&(t.headers["Content-Type"]="application/x-www-form-urlencoded"),delete t.headers["Content-Length"],this.isSurge()||this.isLoon())$httpClient.post(t,(t,e,i)=>{!t&&e&&(e.body=i,e.statusCode=e.status,s(t,e,i))});else if(this.isQuanX())t.method="POST",$task.fetch(t).then(t=>{const{statusCode:e,statusCode:i,headers:o,body:h}=t;s(null,{status:e,statusCode:i,headers:o,body:h},h)},t=>s(t));else if(this.isNode()){this.initGotEnv(t);const{url:e,...i}=t;this.got.post(e,i).then(t=>{const{statusCode:e,statusCode:i,headers:o,body:h}=t;s(null,{status:e,statusCode:i,headers:o,body:h},h)},t=>s(t))}}msg(s=t,e="",i="",o){this.isSurge()||this.isLoon()?$notification.post(s,e,i):this.isQuanX()&&$notify(s,e,i),this.logs.push("","==============\ud83d\udce3\u7cfb\u7edf\u901a\u77e5\ud83d\udce3=============="),this.logs.push(s),e&&this.logs.push(e),i&&this.logs.push(i)}log(...t){t.length>0?this.logs=[...this.logs,...t]:console.log(this.logs.join(this.logSeparator))}logErr(t,s){const e=!this.isSurge()&&!this.isQuanX()&&!this.isLoon();e?$.log("",`\u2757\ufe0f${this.name}, \u9519\u8bef!`,t.stack):$.log("",`\u2757\ufe0f${this.name}, \u9519\u8bef!`,t.message)}wait(t){return new Promise(s=>setTimeout(s,t))}done(t=null){const s=(new Date).getTime(),e=(s-this.startTime)/1e3;this.log("",`\ud83d\udd14${this.name}, \u7ed3\u675f! \ud83d\udd5b ${e} \u79d2`),this.log(),(this.isSurge()||this.isQuanX()||this.isLoon())&&$done(t)}}(t,s)}

@@ -24,7 +24,7 @@ gen.next();
 function* entrance() {
   const startTime = Date.now();
   if (!cookie) {
-    return $.msg(name, '请先获取cookie\n直接使用NobyDa的京东签到获取');
+    return $.msg(name, '【提示】', '\n请先获取cookie\n直接使用NobyDa的京东签到获取\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
   }
   yield user_info();
   yield signEveryDay();//每日签到
