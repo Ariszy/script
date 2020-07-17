@@ -398,6 +398,7 @@ function* step() {
     if (!jdNotify) {
       $.msg(name, subTitle, message);
     }
+    $.done();
 }
 
 function purchaseRewardTask(roundId) {
