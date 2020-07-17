@@ -332,11 +332,11 @@ function feedPets() {
 //查询jd宠物信息
 function initPetTown() {
     request(arguments.callee.name.toString()).then((response) => {
-        console.log(`初始化萌宠信息${JSON.stringify(response)}`)
+        // console.log(`初始化萌宠信息${JSON.stringify(response)}`)
         if (response.code === '0' && response.resultCode === '0' && response.message === 'success') {
             petInfo = response.result;
             if (petInfo.userStatus === 0) {
-              return $.msg(name, '【提示】', '\n此账号萌宠活动未开始，请手动去京东APP开启活动\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+              return $.msg(name, '【提示】', '\n此账号萌宠活动未开始，请手动去京东APP开启活动\n', { "open-url": "openapp.jdmoble://" });
             }
             goodsUrl = response.result.goodsInfo && response.result.goodsInfo.goodsUrl;
             // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
