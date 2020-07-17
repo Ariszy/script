@@ -1,5 +1,6 @@
 /*
 京东天天加速活动 国内gitee链接：https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js
+更新时间:2020-07-017
 每天4京豆，再小的苍蝇也是肉
 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
 建议3小时运行一次，打卡时间间隔是6小时
@@ -16,7 +17,7 @@ const name = '天天加速';
 const $ = new Env(name);
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
-const cookie = $.getdata('CookieJD') || Key;
+const cookie =  Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://api.m.jd.com/';
 let gen = entrance();
 gen.next();

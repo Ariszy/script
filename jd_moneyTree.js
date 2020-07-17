@@ -1,6 +1,7 @@
 /*
 京东摇钱树 ：https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js
-更新时间:2020-07-06，可兼容iOS 10设备
+更新时间:2020-07-017
+注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 */
 // quantumultx
 // [task_local]
@@ -12,8 +13,9 @@
 const Notice = 2;//设置运行多少次才通知。
 const name = '京东摇钱树';
 const $ = new Env(name);
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
-const cookie = $.getdata('CookieJD');
+const cookie =  Key ? Key : $.getdata('CookieJD');
 
 let treeMsgTime = $.getdata('treeMsgTime') >= Notice ? 0 : $.getdata('treeMsgTime') || 0;
 

@@ -3,7 +3,8 @@ jd宠汪汪 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f88
 feedCount:自定义 每次喂养数量; 等级只和喂养次数有关，与数量无关
 推荐每次投喂10个，积累狗粮，然后去聚宝盆赌每小时的幸运奖，据观察，投入3000-6000中奖概率大，超过7000基本上注定亏本，即使是第一名
 Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
-2020。07.02 解决部分商品market.marketLink为空的时候，浏览不到的bug，解决浏览商品奖励积分api接口返回空值导致脚本报错的bug
+更新时间:2020-07-017
+注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 */
 // quantumultx
 // [task_local]
@@ -15,8 +16,9 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 const FEED_NUM = 10   //每次喂养数量 [10,20,40,80]
 const name = '京东宠汪汪';
 const $ = new Env(name);
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
-const cookie = $.getdata('CookieJD');
+const cookie =  Key ? Key : $.getdata('CookieJD');
 var Task = step();
 Task.next();
 

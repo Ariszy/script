@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间：2020-07-03
+更新时间:2020-07-017
 // quantumultx
 [task_local]
 #jd免费水果
@@ -12,12 +12,14 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 新增和维护功能 by@lxk0301
 互助码shareCode请先手动运行脚本查看打印可看到
 一天只能帮助4个人。多出的助力码无效
+注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 */
 
 const name = '东东农场';
 const $ = new Env(name);
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
-const cookie = $.getdata('CookieJD');
+const cookie =  Key ? Key : $.getdata('CookieJD');
 //京东接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 
