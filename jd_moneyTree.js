@@ -24,7 +24,7 @@ gen.next();
 function* entrance() {
   const startTime = Date.now();
   if (!cookie) {
-    return $.msg(name, '【提示】', '\n请先获取cookie\n直接使用NobyDa的京东签到获取\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
   }
   yield user_info();
   yield signEveryDay();//每日签到
@@ -83,14 +83,14 @@ function user_info() {
           // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
           gen.next();
         } else {
-          return $.msg(name, `【提示】`, '请先去京东app参加摇钱树活动(我的->游戏与互动->查看更多->摇钱树)\n', {"open-url": "openApp.jdMobile://"});
+          return $.msg(name, `【提示】请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多`, '', {"open-url": "openApp.jdMobile://"});
           gen.return();
         }
       }
     } else {
       console.log('走了else');
       if (res.resultCode === 3) {
-        return $.msg(name, '【提示】', '\n京东cookie已失效,请重新登录获取\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+        return $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
       }
       gen.return();
     }

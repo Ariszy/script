@@ -60,7 +60,7 @@ function* step() {
     let subTitle = '';
     let option = {};
     if (!cookie) {
-        return $.msg(name, '【提示】', '\n请先获取cookie\n直接使用NobyDa的京东签到获取\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+        return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
     }
     let farmInfo = yield initForFarm();
     if (farmInfo.farmUserPro) {
@@ -276,7 +276,7 @@ function* step() {
                   } else {
                     str += (item.nickName || "匿名用户") + '，';
                   }
-                  let date = new Date(1594856634346);
+                  let date = new Date(item.time);
                   let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
                   console.log(`\n京东昵称【${item.nickName || "匿名用户"}】 在 ${time} 给您助过力\n`);
                 })

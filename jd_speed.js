@@ -29,7 +29,7 @@ let done_distance = null;
 let task_status = null, able_energeProp_list = [], spaceEvents = [], energePropUsale = [];
 function* entrance() {
   if (!cookie) {
-    return $.msg(name, '【提示】', '\n请先获取cookie\n直接使用NobyDa的京东签到获取\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
   }
   console.log(`start...`);
   yield flyTask_state();
@@ -231,7 +231,7 @@ function flyTask_state() {
     if (res.code === 0) {
       console.log('走了if--code=0')
       if (res.info.isLogin === 0) {
-        return $.msg(name, '【提示】', '\n京东cookie已失效,请重新登录获取\n https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+        return $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
       }
       let data = res.data;
       if (data.beans_num) {
