@@ -6,7 +6,7 @@
 const $ = new Env('蚂蚁庄园');
 const manor = "alipays://platformapi/startapp?appId=66666674";
 
-$.msg("支付宝", "蚂蚁庄园喂食啦", "alipays://platformapi/startapp?appId=66666674", {"open-url" : manor})
+$.msg("支付宝", "蚂蚁庄园喂食啦", "alipays://platformapi/startapp?appId=66666674", manor)
 
 $.done()
 
