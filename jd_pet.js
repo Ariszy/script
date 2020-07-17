@@ -11,90 +11,6 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 互助码shareCode请先手动运行脚本查看打印可看到
 一天只能帮助5个人。多出的助力码无效
 */
-const $hammer = (() => {
-    const isRequest = "undefined" != typeof $request,
-        isSurge = "undefined" != typeof $httpClient,
-        isQuanX = "undefined" != typeof $task;
-
-    const log = (...n) => { for (let i in n) console.log(n[i]) };
-    const alert = (title, body = "", subtitle = "", link = "", option) => {
-        if (isSurge) return $notification.post(title, subtitle, body, link);
-        if (isQuanX) return $notify(title, subtitle, (link && !body ? link : body), option);
-        log("==============📣系统通知📣==============");
-        log("title:", title, "subtitle:", subtitle, "body:", body, "link:", link);
-    };
-    const read = key => {
-        if (isSurge) return $persistentStore.read(key);
-        if (isQuanX) return $prefs.valueForKey(key);
-    },
-        write = (key, val) => {
-            if (isSurge) return $persistentStore.write(key, val);
-            if (isQuanX) return $prefs.setValueForKey(key, val);
-        };
-    const request = (method, params, callback) => {
-        /**
-         * 
-         * params(<object>): {url: <string>, headers: <object>, body: <string>} | <url string>
-         * 
-         * callback(
-         *      error, 
-         *      {status: <int>, headers: <object>, body: <string>} | ""
-         * )
-         * 
-         */
-        let options = {};
-        if (typeof params == "string") {
-            options.url = params;
-        } else {
-            options.url = params.url;
-            if (typeof params == "object") {
-                params.headers && (options.headers = params.headers);
-                params.body && (options.body = params.body);
-            }
-        }
-        method = method.toUpperCase();
-
-        const writeRequestErrorLog = function (m, u) {
-            return err => {
-                log("=== request error -s--");
-                log(`${m} ${u}`, err);
-                log("=== request error -e--");
-            };
-        }(method, options.url);
-
-        if (isSurge) {
-            const _runner = method == "GET" ? $httpClient.get : $httpClient.post;
-            return _runner(options, (error, response, body) => {
-                if (error == null || error == "") {
-                    response.body = body;
-                    callback("", response);
-                } else {
-                    writeRequestErrorLog(error);
-                    callback(error, "");
-                }
-            });
-        }
-        if (isQuanX) {
-            options.method = method;
-            $task.fetch(options).then(
-                response => {
-                    response.status = response.statusCode;
-                    delete response.statusCode;
-                    callback("", response);
-                },
-                reason => {
-                    writeRequestErrorLog(reason.error);
-                    callback(reason.error, "");
-                }
-            );
-        }
-    };
-    const done = (value = {}) => {
-        if (isQuanX) return isRequest ? $done(value) : null;
-        if (isSurge) return isRequest ? $done(value) : $done();
-    };
-    return { isRequest, isSurge, isQuanX, log, alert, read, write, request, done };
-})();
 const name = '东东萌宠';
 const $ = new Env(name);
 //直接用NobyDa的jd cookie
@@ -423,7 +339,7 @@ function initPetTown() {
               return $.msg(name, '【提示】', '\n此账号萌宠活动未开始，请手动去京东APP开启活动\n https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
             }
             goodsUrl = response.result.goodsInfo && response.result.goodsInfo.goodsUrl;
-            console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
+            // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
             console.log(`\n【您的互助码shareCode】 ${petInfo.shareCode}\n`);
           gen.next();
         } else if (response.code === '0' && response.resultCode === '2001'){
@@ -559,13 +475,6 @@ function taskInit() {
 async function request(function_id, body = {}) {
     await $.wait(2000); //歇口气儿, 不然会报操作频繁
     return new Promise((resolve, reject) => {
-        // $hammer.request('GET', taskurl(function_id,body), (error, response) => {
-        //     if(error){
-        //         $hammer.log("Error:", error);
-        //     }else{
-        //         resolve(JSON.parse(response.body));
-        //     }
-        // })
         $.get(taskurl(function_id, body), (err, resp, data) => {
           try {
             resolve(JSON.parse(data));
