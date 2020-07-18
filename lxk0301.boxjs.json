@@ -195,8 +195,7 @@
       "id": "jd_MoneyTree",
       "name": "京东摇钱树",
       "keys": [
-        "jd_money_tree_name",
-        "CookieJD"
+        "jd_money_tree_name"
       ],
       "settings": [
         {
@@ -225,8 +224,7 @@
       "id": "jd_Speed",
       "name": "京东摇钱树",
       "keys": [
-        "jd_speed_name",
-        "CookieJD"
+        "jd_speed_name"
       ],
       "settings": [
         {
