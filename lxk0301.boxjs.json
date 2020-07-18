@@ -9,6 +9,7 @@
       "id": "jd_fruit",
       "name": "东东农场",
       "keys": [
+        "jdFruitNotify",
         "jd_fruit_name",
         "jd_fruit1",
         "jd_fruit2",
@@ -62,8 +63,8 @@
       "author": "@lxk0301",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js",
       "icons": [
-        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png",
-        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdsg.png",
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdsg.png"
       ]
     },
     {
