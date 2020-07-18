@@ -16,7 +16,7 @@ const $ = new Env(name);
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie =  Key ? Key : $.getdata('CookieJD');
-
+let jdNotify = $.getdata('jdMoneyTreeNotify');
 let treeMsgTime = $.getdata('treeMsgTime') >= Notice ? 0 : $.getdata('treeMsgTime') || 0;
 
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
@@ -24,7 +24,6 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
 let gen = entrance();
 gen.next();
 function* entrance() {
-  const startTime = Date.now();
   if (!cookie) {
     return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
   }
@@ -53,10 +52,15 @@ function* entrance() {
   }
   yield myWealth();
   // console.log(`----${treeMsgTime}`)
-  msgControl();
-  const end = ((Date.now() - startTime) / 1000).toFixed(2);
-  console.log(`\n完成${name}脚本耗时:  ${end} 秒\n`);
+  yield msgControl();
   console.log('任务做完了');
+  if (!jdNotify || jdNotify === 'false') {
+    // $.msg(name, subTitle, message);
+    if (($.getdata('treeMsgTime') * 1) === Notice) {
+      $.msg(name, subTitle, message);
+      $.setdata('0', 'treeMsgTime');
+    }
+  }
   $.done();
 }
 
@@ -389,10 +393,11 @@ function msgControl() {
   console.log(`${$.getdata('treeMsgTime')}`);
   // console.log(`${typeof (Number($hammer.read('treeMsgTime')))}`)
   // console.log(`${($hammer.read('treeMsgTime') * 1) === Notice}`)
-  if (($.getdata('treeMsgTime') * 1) === Notice) {
-    $.msg(name, subTitle, message);
-    $.setdata('0', 'treeMsgTime');
-  }
+  // if (($.getdata('treeMsgTime') * 1) === Notice) {
+  //   $.msg(name, subTitle, message);
+  //   $.setdata('0', 'treeMsgTime');
+  // }
+  gen.next()
 }
 
 async function request(function_id, body = {}) {
