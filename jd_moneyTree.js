@@ -52,8 +52,10 @@ function* entrance() {
   }
   yield myWealth();
   // console.log(`----${treeMsgTime}`)
-  yield msgControl();
+  msgControl();
   console.log('任务做完了');
+  console.log(`是否弹窗${($.getdata('treeMsgTime') * 1) === Notice}`);
+
   if (!jdNotify || jdNotify === 'false') {
     // $.msg(name, subTitle, message);
     if (($.getdata('treeMsgTime') * 1) === Notice) {
@@ -397,7 +399,7 @@ function msgControl() {
   //   $.msg(name, subTitle, message);
   //   $.setdata('0', 'treeMsgTime');
   // }
-  gen.next()
+  // gen.next()
 }
 
 async function request(function_id, body = {}) {
