@@ -514,8 +514,8 @@ function* step() {
     console.log('debug-----start')
     console.log(jdNotify);
     console.log(typeof (jdNotify));
-  console.log('debug-----end')
-    if (!jdNotify) {
+    console.log('debug-----end')
+    if (!jdNotify || jdNotify === 'false') {
       $.msg(name, subTitle, message, option);
     }
     $.done();
