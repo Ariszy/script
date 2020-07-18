@@ -18,6 +18,7 @@ const $ = new Env(name);
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie =  Key ? Key : $.getdata('CookieJD');
+let jdNotify = $.getdata('jdSpeedNotify');
 const JD_API_HOST = 'https://api.m.jd.com/';
 let gen = entrance();
 gen.next();
@@ -81,7 +82,9 @@ function* entrance() {
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   }
-  $.msg(name, subTitle, message);
+  if (!jdNotify || jdNotify === 'false') {
+    $.msg(name, subTitle, message);
+  }
   $.done();
 }
 //开始新的任务
