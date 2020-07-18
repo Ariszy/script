@@ -511,9 +511,10 @@ function* step() {
           message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
         }
     }
-    console.log('debug-----')
+    console.log('debug-----start')
     console.log(jdNotify);
     console.log(typeof (jdNotify));
+  console.log('debug-----end')
     if (!jdNotify) {
       $.msg(name, subTitle, message, option);
     }
