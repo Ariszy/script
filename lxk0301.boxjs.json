@@ -70,7 +70,6 @@
       "id": "jd_pet",
       "name": "东东萌宠",
       "keys": [
-        "jdPetNotify",
         "jd_pet_name",
         "jd_pet1",
         "jd_pet2",
@@ -140,7 +139,6 @@
       "id": "jd_plantBean",
       "name": "京东种豆",
       "keys": [
-        "jdPlantBeanNotify",
         "jd_plant_bean_name",
         "jd_plantBean1",
         "jd_plantBean2",
