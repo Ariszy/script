@@ -1,6 +1,6 @@
 {
   "id": "lxk0301.app.sub",
-  "name": "lxk0301应用订阅",
+  "name": "lxk0301脚本订阅",
   "author": "@lxk0301",
   "icon": "https://avatars0.githubusercontent.com/u/21308593?s=52&v=4",
   "repo": "https://gitee.com/lxk0301/scripts/",
@@ -72,6 +72,7 @@
       "name": "东东萌宠",
       "keys": [
         "jd_pet_name",
+        "CookieJD",
         "jd_pet1",
         "jd_pet2",
         "jd_pet3",
@@ -141,6 +142,7 @@
       "name": "京东种豆",
       "keys": [
         "jd_plant_bean_name",
+        "CookieJD",
         "jd_plantBean1",
         "jd_plantBean2",
         "jd_plantBean3"
@@ -187,6 +189,66 @@
       "icons": [
         "https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png",
         "https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png"
+      ]
+    },
+    {
+      "id": "jd_MoneyTree",
+      "name": "京东摇钱树",
+      "keys": [
+        "jd_money_tree_name",
+        "CookieJD"
+      ],
+      "settings": [
+        {
+          "id": "jdMoneyTreeNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "jd_money_tree_name",
+          "name": "京东账号昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js",
+      "icons": [
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/moneyTree.png",
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/moneyTree.png"
+      ]
+    },
+    {
+      "id": "jd_Speed",
+      "name": "京东摇钱树",
+      "keys": [
+        "jd_speed_name",
+        "CookieJD"
+      ],
+      "settings": [
+        {
+          "id": "jdSpeedNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "jd_speed_name",
+          "name": "京东账号昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js",
+      "icons": [
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdttjs.png",
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdttjs.png"
       ]
     }
   ]
