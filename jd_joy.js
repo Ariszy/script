@@ -144,7 +144,6 @@ function* step() {
     } else {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
-    $.msg(name, subTitle, message);
     if (!jdNotify || jdNotify === 'false') {
       $.msg(name, subTitle, message);
     }
