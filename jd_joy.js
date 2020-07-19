@@ -226,10 +226,17 @@ function request(url, reqSource) {
         }
     };
     $.get(option, (err, resp, data) => {
-      try {
-        sleep(JSON.parse(data))
-      } catch (e) {
-        $.logErr(e, resp)
+      if (err) {
+        console.log("=== request error -s--");
+        console.log("=== request error -e--");
+      } else {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          console.log(e);
+        } finally {
+          sleep(data);
+        }
       }
     })
 }
@@ -247,10 +254,17 @@ function requestPost(url, body, ContentType, reqSource) {
         }
     };
     $.post(options, (err, resp, data) => {
-      try {
-        sleep(JSON.parse(data))
-      } catch (e) {
-        $.logErr(e, resp)
+      if (err) {
+        console.log("=== request error -s--");
+        console.log("=== request error -e--");
+      } else {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          console.log(e);
+        } finally {
+          sleep(data);
+        }
       }
     })
 }

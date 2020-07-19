@@ -407,10 +407,17 @@ async function request(function_id, body = {}) {
   await $.wait(2000); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
     $.post(taskurl(function_id,body), (err, resp, data) => {
-      try {
-        resolve(JSON.parse(data));
-      } catch (e) {
-        $.logErr(e, resp)
+      if (err) {
+        console.log("=== request error -s--");
+        console.log("=== request error -e--");
+      } else {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          console.log(e)
+        } finally {
+          resolve(data)
+        }
       }
     })
   })

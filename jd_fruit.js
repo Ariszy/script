@@ -662,10 +662,17 @@ function gotClockInGift() {
 }
 function request(function_id, body = {}) {
   $.get(taskurl(function_id, body), (err, resp, data) => {
-    try {
-      sleep(JSON.parse(data))
-    } catch (e) {
-      $.logErr(e, resp)
+    if (err) {
+      console.log("=== request error -s--");
+      console.log("=== request error -e--");
+    } else {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        sleep(data);
+      }
     }
   })
 }
