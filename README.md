@@ -1,10 +1,10 @@
 ### 京东薅羊毛工具（活动入口：京东app->我的->游戏与互动->查看更多）
 
 1.  京东水果([jd_fruit.js](https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js))
-2.  东东萌宠([jd_fruit.js](https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js))
+2.  东东萌宠([jd_pet.js](https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js))
 3.  宠汪汪([jd_joy.js](https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js))
 4.  种豆得豆([jd_plantBean.js](https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js))
-5.  天天加速([jd_speed.js](https://gitee.com/lxk0301/scripts/raw/master/.js))
+5.  天天加速([jd_speed.js](https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js))
 6.  摇钱树([jd_moneyTree.js](https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js))
 #### 使用说明
 
