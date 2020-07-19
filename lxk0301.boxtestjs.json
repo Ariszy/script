@@ -32,13 +32,6 @@
           "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         },
         {
-          "id": "jdFruitCookie",
-          "name": "东东农场Cookie",
-          "val": "",
-          "type": "text",
-          "desc": "东东农场Cookie"
-        },
-        {
           "id": "jd_fruit1",
           "name": "互助码1",
           "val": "",
