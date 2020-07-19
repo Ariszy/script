@@ -10,7 +10,6 @@
       "name": "东东农场",
       "keys": [
         "jd_fruit_name",
-        "CookieJD",
         "jd_fruit1",
         "jd_fruit2",
         "jd_fruit3",
@@ -72,7 +71,6 @@
       "name": "东东萌宠",
       "keys": [
         "jd_pet_name",
-        "CookieJD",
         "jd_pet1",
         "jd_pet2",
         "jd_pet3",
@@ -142,7 +140,6 @@
       "name": "京东种豆",
       "keys": [
         "jd_plant_bean_name",
-        "CookieJD",
         "jd_plantBean1",
         "jd_plantBean2",
         "jd_plantBean3"
@@ -193,6 +190,35 @@
     },
     {
       "id": "jd_MoneyTree",
+      "name": "宠汪汪",
+      "keys": [
+        "jd_joy_name"
+      ],
+      "settings": [
+        {
+          "id": "jdJoyNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "jd_joy_name",
+          "name": "京东账号昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js",
+      "icons": [
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png",
+        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png"
+      ]
+    },
+    {
+      "id": "jd_MoneyTree",
       "name": "京东摇钱树",
       "keys": [
         "jd_money_tree_name"
@@ -222,7 +248,7 @@
     },
     {
       "id": "jd_Speed",
-      "name": "京东摇钱树",
+      "name": "京东天天加速",
       "keys": [
         "jd_speed_name"
       ],
@@ -232,7 +258,7 @@
           "name": "静默运行",
           "val": false,
           "type": "boolean",
-          "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
+          "desc": "运行京东天天加速脚本时不发出系统弹窗通知"
         },
         {
           "id": "jd_speed_name",

@@ -19,6 +19,7 @@ const $ = new Env(name);
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie =  Key ? Key : $.getdata('CookieJD');
+let jdNotify = $.getdata('jdJoyNotify');
 var Task = step();
 Task.next();
 
@@ -144,6 +145,9 @@ function* step() {
         message = '请先获取cookie\n直接使用NobyDa的京东签到获取'
     }
     $.msg(name, subTitle, message);
+    if (!jdNotify || jdNotify === 'false') {
+      $.msg(name, subTitle, message);
+    }
     $.done();
 }
 
