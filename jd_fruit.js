@@ -55,6 +55,7 @@ Task.next();
 
 let farmTask = null;
 let waterTimes = 0;
+let waterTimesKey = '';
 // let farmInfo = null;
 
 function* step() {
@@ -73,7 +74,7 @@ function* step() {
           option['open-url'] = "openapp.jdmoble://";
           return $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
         }
-        let waterTimesKey = timeFormat() + farmInfo.farmUserPro.shareCode;
+        waterTimesKey = waterTimesKey + farmInfo.farmUserPro.shareCode;
         if (!$.getdata(waterTimesKey)) {
           //把前一天的清除
           $.setdata('', timeFormat(new Date().getTime() - 24*60*60*1000) + farmInfo.farmUserPro.shareCode);
@@ -440,11 +441,9 @@ function* step() {
         } else {
         }
         let waterTotalT = (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10;//一共还需浇多少次水
-        let waterEveryDayT = $.getdata('waterTimesKey') * 1;//今天到到目前为止，浇了多少次水
+        let waterEveryDayT = $.getdata(waterTimesKey) * 1;//今天到到目前为止，浇了多少次水
         let waterD = Math.ceil(waterTotalT / (waterEveryDayT !== 0 ? waterEveryDayT : 10));
-        console.log('waterEveryDayT', waterEveryDayT);
-        console.log('waterEveryDayT', typeof (waterEveryDayT));
-        subTitle += `，预计需${waterD}天可兑换`;
+        subTitle += `\n预计${waterD}天后可兑换`;
         // if (waterEveryDayT !== 0) {
         //   subTitle += `，预计需${waterD}天可兑换`
         // } else {
