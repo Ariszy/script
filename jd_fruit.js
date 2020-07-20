@@ -15,7 +15,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 */
 
-const name = '东东农场';
+let name = '东东农场';
 const $ = new Env(name);
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
@@ -443,7 +443,7 @@ function* step() {
         let waterTotalT = (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10;//一共还需浇多少次水
         let waterEveryDayT = $.getdata(waterTimesKey) * 1;//今天到到目前为止，浇了多少次水
         let waterD = Math.ceil(waterTotalT / (waterEveryDayT !== 0 ? waterEveryDayT : 10));
-        subTitle += `预计${waterD}天后可兑换`;
+        name += `——预计${waterD}天后可兑换`;
         // if (waterEveryDayT !== 0) {
         //   subTitle += `，预计需${waterD}天可兑换`
         // } else {
