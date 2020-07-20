@@ -254,7 +254,6 @@ function* step() {
         message += `【当天两次水滴雨任务】已全部完成，获得20g水滴\n`
       }
         const masterHelpResult = yield masterHelpTaskInitForFarm();
-        console.log("初始化助力信息", masterHelpResult);
         if (masterHelpResult.code === '0') {
             if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples.length >=5) {
                 // 已有五人助力。领取助力后的奖励

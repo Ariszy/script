@@ -74,7 +74,7 @@ function* step() {
         currentRoundId = roundList[1].roundId;
         lastRoundId = roundList[0].roundId;
         awardState = roundList[0].awardState;
-        subTitle = plantBeanIndexResult.data.plantUserInfo.plantNickName;
+        subTitle = `【京东昵称】${plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
         message += `【上期时间】${roundList[0].dateDesc}\n`;
         message += `【上期成长值】${roundList[0].growth}\n`;
         //定时领取--放到前面执行收取自动生产的营养液
@@ -83,11 +83,23 @@ function* step() {
           let receiveNutrientsResult = yield receiveNutrients(currentRoundId)
           console.log(`receiveNutrientsResult:${JSON.stringify(receiveNutrientsResult)}`)
         }
-        if (roundList[0].beanState == 4 && roundList[0].awardState == 4) {
+        console.log(`【上轮京豆】${awardState === '4' ? '采摘中' : awardState === '5' ? '可收获了' : '已领取'}`);
+        if (awardState === '4') {
+          //京豆采摘中...
           message += `【上期状态】${roundList[0].tipBeanEndTitle}\n`;
-        }
-        if (roundList[0].awardBeans) {
-          message += `【上期${roundList[0].growth}成长值兑换京豆】${roundList[0].awardBeans}\n`;
+        } else if (awardState === '5') {
+          //收获
+          let res = yield getReward();
+          // console.log(`种豆得豆收获的京豆情况---res,${JSON.stringify(res)}`);
+          console.log('开始领取京豆');
+          if (res.code === '0') {
+            console.log('京豆领取成功');
+            message += `【上期兑换京豆】${res.data.awardBean}个\n`;
+            $.msg(name, subTitle, message);
+          }
+        } else if (awardState === '6') {
+          //京豆已领取
+          message += `【上期兑换京豆】${roundList[0].awardBeans}个\n`;
         }
         if (roundList[1].dateDesc.indexOf('本期 ') > -1) {
           roundList[1].dateDesc = roundList[1].dateDesc.substr(roundList[1].dateDesc.indexOf('本期 ') + 3, roundList[1].dateDesc.length);
@@ -244,6 +256,10 @@ function* step() {
             let helpResult = yield helpShare(plantUuid)
             if (helpResult.code == 0) {
                 console.log(`助力好友结果: ${JSON.stringify(helpResult.data.helpShareRes)}`);
+                if (helpResult.data.helpShareRes.state === '2') {
+                  console.log('今日助力机会已耗尽，跳出助力');
+                  break;
+                }
             } else {
                 console.log(`助力好友失败: ${JSON.stringify(helpResult)}`);
             }
@@ -299,13 +315,6 @@ function* step() {
               }
             }
           }
-        }
-        //收获
-        if (awardState === '5') {
-          let res = yield getReward();
-          console.log(`种豆得豆收获的京豆情况---res,${JSON.stringify(res)}`);
-        } else if (awardState === '6') {
-          console.log("上轮活动您已领奖，去京豆明细页看看");
         }
         console.log('结束')
     } else {
