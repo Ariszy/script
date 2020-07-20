@@ -68,7 +68,7 @@ function* step() {
     let farmInfo = yield initForFarm();
     if (farmInfo.farmUserPro) {
         option['media-url'] = farmInfo.farmUserPro.goodsImage;
-        subTitle = `【${farmInfo.farmUserPro.nickName}】 ${farmInfo.farmUserPro.name}`;
+        subTitle = `【${farmInfo.farmUserPro.nickName}】${farmInfo.farmUserPro.name}`;
         console.log(`\n【您的互助码shareCode】 ${farmInfo.farmUserPro.shareCode}\n`);
         if (farmInfo.treeState === 2) {
           option['open-url'] = "openapp.jdmoble://";
