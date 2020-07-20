@@ -443,7 +443,7 @@ function* step() {
         let waterTotalT = (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10;//一共还需浇多少次水
         let waterEveryDayT = $.getdata(waterTimesKey) * 1;//今天到到目前为止，浇了多少次水
         let waterD = Math.ceil(waterTotalT / (waterEveryDayT !== 0 ? waterEveryDayT : 10));
-        subTitle += `\n预计${waterD}天后可兑换`;
+        subTitle += `预计${waterD}天后可兑换`;
         // if (waterEveryDayT !== 0) {
         //   subTitle += `，预计需${waterD}天可兑换`
         // } else {
