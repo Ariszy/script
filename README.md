@@ -6,9 +6,13 @@
 4.  种豆得豆([jd_plantBean.js](https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js))
 5.  天天加速([jd_speed.js](https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js))
 6.  摇钱树([jd_moneyTree.js](https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js))
+
 #### 使用说明
 
-##### 仅限于iOS系统的surge，Loon，Quantumult X等软件使用 
+##### 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
+
+注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
+
 使用box可以实现远程订阅助力好友。
 
 box使用请查看[chavy频道](https://t.me/chavyscripts)
