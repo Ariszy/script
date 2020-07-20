@@ -9,7 +9,7 @@
 
 #### 使用说明
 
-##### 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
 
 注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 
