@@ -268,7 +268,7 @@ function flyTask_state() {
 }
 
 async function request(function_id, body = {}) {
-  await $.wait(2000);//延迟两秒
+  await $.wait(300);//延迟两秒
   return new Promise((resolve, reject) => {
     $.get(taskurl(function_id, body), (err, resp, data) => {
       if (err) {
