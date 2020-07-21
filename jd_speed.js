@@ -44,6 +44,8 @@ function* entrance() {
     yield flyTask_start(source_id)
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
+  } else if (task_status === 2) {
+    $.msg(name, subTitle, '天天加速2个京豆已到账')
   }
 
   yield spaceEvent_list();//检查太空特殊事件
@@ -75,6 +77,8 @@ function* entrance() {
     }
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
+  } else if (task_status === 2) {
+    $.msg(name, subTitle, '天天加速2个京豆已到账');
   }
   if (!jdNotify || jdNotify === 'false') {
     $.msg(name, subTitle, message);
