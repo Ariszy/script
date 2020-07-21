@@ -13,7 +13,7 @@
 // Loon
 // [Script]
 // cron "8 */3 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js,tag=京东天天加速
-const $ = new Env('✈天天加速');
+const $ = new Env('✈️天天加速');
 const Key = '';
 //直接用NobyDa的jd cookie
 const cookie =  Key ? Key : $.getdata('CookieJD');
