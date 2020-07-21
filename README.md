@@ -18,6 +18,8 @@
 2、需自行提供京东cookie填写到脚本第20行(以 [jd_fruit](https://gitee.com/lxk0301/scripts/blob/master/jd_fruit.js) 为例)Key处的单引号内
    
 3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+
+![node运行截图](https://images.gitee.com/uploads/images/2020/0721/095058_0ee8ea3d_938321.png "屏幕截图.png")
    
 #### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
 
