@@ -13,6 +13,8 @@
 
 注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 
+# 【boxjs简单说明】
+
 使用box可以实现远程订阅助力好友。
 
 box使用请查看[chavy频道](https://t.me/chavyscripts)

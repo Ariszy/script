@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-07-20
+更新时间:2020-07-21
 // quantumultx
 [task_local]
 #jd免费水果
@@ -441,9 +441,13 @@ function* step() {
         } else {
         }
         let waterTotalT = (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10;//一共还需浇多少次水
+        if (($.getdata(waterTimesKey) * 1) === 0) {
+          $.setdata('10', waterTimesKey);
+        }
         let waterEveryDayT = $.getdata(waterTimesKey) * 1;//今天到到目前为止，浇了多少次水
-        let waterD = Math.ceil(waterTotalT / (waterEveryDayT !== 0 ? waterEveryDayT : 10));
-        name += `——预计${waterD}天后可兑换`;
+
+        let waterD = Math.ceil(waterTotalT / waterEveryDayT) <= 1 ? 0 : Math.ceil(waterTotalT / waterEveryDayT);
+        name += `——预计${waterD === 0 ? '今' : waterD}天可兑换`;
         // if (waterEveryDayT !== 0) {
         //   subTitle += `，预计需${waterD}天可兑换`
         // } else {
