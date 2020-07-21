@@ -21,7 +21,7 @@
 
 node.js运行结果截图：
 
-![node运行截图](https://images.gitee.com/uploads/images/2020/0721/095058_0ee8ea3d_938321.png "屏幕截图.png")
+![node运行截图](https://images.gitee.com/uploads/images/2020/0721/100942_fec635e9_938321.png "屏幕截图.png")
    
 #### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
 
