@@ -19,7 +19,7 @@
    
 3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
    
-##### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
+#### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
 
 使用box可以实现远程订阅助力好友。
 
@@ -45,7 +45,7 @@
  
  [京东活动的box订阅链接](https://gitee.com/lxk0301/scripts/raw/master/lxk0301.boxjs.json)
 
-##### 2个京东账号的Qumutumult X cron设置(5分钟为间隔)
+#### 2个京东账号的Qumutumult X cron设置(5分钟为间隔)
 
 ```
 [task_local]
