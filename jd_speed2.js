@@ -84,7 +84,7 @@ function jDSpeedUp(sourceId) {
             message += `【空间站】 ${res.data.destination}\n`;
             message += `【结束时间】 ${res.data.end_time}\n`;
             message += `【进度】 ${new Number(res.data.done_distance/res.data.distance).toFixed(2) * 100}%\n`;
-            res.data.task_status = 2;
+            //res.data.task_status = 2;
             if (res.data.task_status === 0) {
               const taskID = res.data.source_id;
               await jDSpeedUp(taskID);
