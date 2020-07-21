@@ -47,7 +47,7 @@ function* entrance() {
   }
 
   yield spaceEvent_list();//检查太空特殊事件
-  console.log(`可处理的特殊事件信息:${JSON.stringify(spaceEvents)}`);
+  console.log(`可处理的太空特殊事件信息:${spaceEvents.length}个`);
   if (spaceEvents && spaceEvents.length > 0) {
     yield spaceEvent();//处理太空特殊事件
   } else {
@@ -55,14 +55,14 @@ function* entrance() {
   }
   console.log('开始检查可领取燃料')
   yield energyPropList();
-  console.log(`可领取燃料::${JSON.stringify(able_energeProp_list)}`)
+  console.log(`可领取燃料::${able_energeProp_list.length}个`)
   if (able_energeProp_list && able_energeProp_list.length > 0) {
     yield receiveeEergyProp();
   } else {
     console.log('没有可领取的燃料')
   }
   yield energePropUsaleList();//检查剩余可用的燃料
-  console.log(`可使用燃料${JSON.stringify(energePropUsale)}`)
+  console.log(`可使用燃料${energePropUsale.length}个`)
   if (energePropUsale && energePropUsale.length > 0) {
     yield useEnergy();
   } else {
@@ -235,7 +235,7 @@ function flyTask_state() {
     "source":"game"
   }
   request(functionId, body).then((res) => {
-    console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
+    // console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
     if (res.code === 0) {
       console.log('走了if--code=0')
       if (res.info.isLogin === 0) {
