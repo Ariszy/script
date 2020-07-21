@@ -30,7 +30,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
   await jDSpeedUp();
   if ($.isLogin) {
     if (!jdNotify || jdNotify === 'false') {
-      $.msg(s.name, subTitle, message);
+      $.msg($.name, subTitle, message);
     }
   }
 })()
