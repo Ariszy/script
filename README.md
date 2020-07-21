@@ -13,11 +13,13 @@
 
 注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 
-# 【boxjs简单说明】
+#### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
 
 使用box可以实现远程订阅助力好友。
 
-box使用请查看[chavy频道](https://t.me/chavyscripts)
+1、boxjs使用教程请查看Chavy频道 [Chavy频道链接](https://t.me/chavyscripts);
+
+2、boxjs教程视频 [视频链接](https://youtu.be/eIpBrRxiy0w);
 
 目前京东活动中以下三个脚本可以使用box功能
 
@@ -37,9 +39,9 @@ box使用请查看[chavy频道](https://t.me/chavyscripts)
  
  [京东活动的box订阅链接](https://gitee.com/lxk0301/scripts/raw/master/lxk0301.boxjs.json)
 
-```
+##### 2个京东账号的Qumutumult X cron设置(5分钟为间隔)
 
-//示例：2个京东账号的Qumutumult X cron设置(5分钟为间隔)
+```
 [task_local]
 #切换会话
 30,59 1-23 * * * https://raw.githubusercontent.com/chavyleung/scripts/master/box/switcher/box.switcher.js, tag=切换会话, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/BOXJS.png, enabled=true
@@ -55,5 +57,4 @@ box使用请查看[chavy频道](https://t.me/chavyscripts)
 5,36 6-18/6 * * * https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js, tag=京东萌宠, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdmc.png, enabled=true
 #种豆得豆
 0,31 6-23/2 * * * https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png, enabled=true
-
 ```
