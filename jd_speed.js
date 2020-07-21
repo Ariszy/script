@@ -1,6 +1,6 @@
 /*
 京东天天加速活动 国内gitee链接：https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js
-更新时间:2020-07-20
+更新时间:2020-07-21
 每天4京豆，再小的苍蝇也是肉
 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
 建议3小时运行一次，打卡时间间隔是6小时
@@ -89,19 +89,6 @@ function* entrance() {
   }
   $.done();
 }
-//开始新的任务
-function flyTask_start(source_id) {
-  if (!source_id) return;
-  const functionId = arguments.callee.name.toString();
-  const body = {
-    "source":"game",
-    "source_id": source_id
-  }
-  request(functionId, body).then(res => {
-    console.log(`开启新的任务:${JSON.stringify(res)}`);
-    gen.next();
-  })
-}
 //检查燃料
 function energyPropList() {
   const body = {
@@ -124,7 +111,7 @@ async function receiveeEergyProp() {
   //开始领取燃料
   for (let i of able_energeProp_list) {
     let memberTaskCenterRes =  await _energyProp_gain(i.id);
-    console.log(`领取燃料结果：：：${JSON.stringify(memberTaskCenterRes)}`)
+    console.log(`领取燃料结果：：：${memberTaskCenterRes.message}`)
   }
   gen.next();
 }
@@ -227,6 +214,19 @@ function energyPropUse(id) {
     request('energyProp_use', body).then((response) => {
       res(response);
     })
+  })
+}
+//开始新的任务
+function flyTask_start(source_id) {
+  if (!source_id) return;
+  const functionId = arguments.callee.name.toString();
+  const body = {
+    "source":"game",
+    "source_id": source_id
+  }
+  request(functionId, body).then(res => {
+    console.log(`新的任务结束时间:${res.data.end_time}`);
+    gen.next();
   })
 }
 function flyTask_state() {
