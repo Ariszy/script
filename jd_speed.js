@@ -50,23 +50,17 @@ function* entrance() {
   console.log(`可处理的太空特殊事件信息:${spaceEvents.length}个`);
   if (spaceEvents && spaceEvents.length > 0) {
     yield spaceEvent();//处理太空特殊事件
-  } else {
-    console.log('没有可处理的特殊事件')
   }
   console.log('开始检查可领取燃料')
   yield energyPropList();
   console.log(`可领取燃料::${able_energeProp_list.length}个`)
   if (able_energeProp_list && able_energeProp_list.length > 0) {
     yield receiveeEergyProp();
-  } else {
-    console.log('没有可领取的燃料')
   }
   yield energePropUsaleList();//检查剩余可用的燃料
   console.log(`可使用燃料${energePropUsale.length}个`)
   if (energePropUsale && energePropUsale.length > 0) {
     yield useEnergy();
-  } else {
-    console.log('暂无可用燃料')
   }
   //执行上面操作后，再进行一次检测
   yield flyTask_state();
@@ -75,11 +69,9 @@ function* entrance() {
     yield flyTask_start(source_id);
     // fix bug ，开启新任务后，再次检查可用的燃料，如果有可用的，继续使用
     yield energePropUsaleList();//检查剩余可用的燃料
-    console.log(`可使用燃料${JSON.stringify(energePropUsale)}`)
+    console.log(`可使用燃料${energePropUsale.length}个`)
     if (energePropUsale && energePropUsale.length > 0) {
       yield useEnergy();
-    } else {
-      console.log('暂无可用燃料')
     }
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
@@ -237,7 +229,6 @@ function flyTask_state() {
   request(functionId, body).then((res) => {
     // console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
     if (res.code === 0) {
-      console.log('走了if--code=0')
       if (res.info.isLogin === 0) {
         $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
         $.done();
@@ -261,7 +252,6 @@ function flyTask_state() {
       }
       gen.next();
     } else {
-      console.log('else????');
       gen.return()
     }
   })
