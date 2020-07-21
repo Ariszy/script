@@ -69,7 +69,9 @@ gen.next();
  */
 function* entrance() {
     if (!cookie) {
-      return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+      $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+      $.done();
+      return
     }
     console.log('任务开始');
     yield initPetTown(); //初始化萌宠
@@ -344,8 +346,8 @@ function initPetTown() {
           gen.next();
         } else if (response.code === '0' && response.resultCode === '2001'){
             console.log(`初始化萌宠失败:  ${response.message}`);
-            return $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-            gen.return();
+            $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+            $.done();
         }
     })
 

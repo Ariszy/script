@@ -25,7 +25,9 @@ let gen = entrance();
 gen.next();
 function* entrance() {
   if (!cookie) {
-    return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+    $.done();
+    return
   }
   yield user_info();
   yield signEveryDay();//每日签到
@@ -99,7 +101,9 @@ function user_info() {
     } else {
       console.log('走了else');
       if (res.resultCode === 3) {
-        return $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+        $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+        $.done();
+        return
       }
       gen.return();
     }

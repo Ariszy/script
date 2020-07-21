@@ -13,7 +13,7 @@
 
 注：
 
-1、如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
+1、如果使用Node.js, 需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`)
    
 2、需自行提供京东cookie填写到脚本第20行(以 [jd_fruit](https://gitee.com/lxk0301/scripts/blob/master/jd_fruit.js) 为例)Key处的单引号内
    

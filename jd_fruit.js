@@ -63,7 +63,9 @@ function* step() {
     let subTitle = '';
     let option = {};
     if (!cookie) {
-        return $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+      $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+      $.done();
+      return
     }
     let farmInfo = yield initForFarm();
     if (farmInfo.farmUserPro) {
@@ -529,7 +531,9 @@ function* step() {
         console.log('全部任务结束');
     } else {
         if (farmInfo.code == '3') {
-          return $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+          $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+          $.done();
+          return
         } else {
           console.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify(farmInfo)}`);
           message = '初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常'
