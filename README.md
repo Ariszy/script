@@ -1,4 +1,4 @@
-### 京东薅羊毛工具（活动入口：京东app->我的->游戏与互动->查看更多）
+## 京东薅羊毛工具（活动入口：京东app->我的->游戏与互动->查看更多）
 
 1.  京东水果([jd_fruit.js](https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js))
 2.  东东萌宠([jd_pet.js](https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js))
@@ -7,13 +7,19 @@
 5.  天天加速([jd_speed.js](https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js))
 6.  摇钱树([jd_moneyTree.js](https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js))
 
-#### 使用说明
+### 使用说明
 
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
 
-注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
+注：
 
-#### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
+1、如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
+   
+2、需自行提供京东cookie填写到脚本第20行(以 [jd_fruit](https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js) 为例)Key处的单引号内
+   
+3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+   
+##### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
 
 使用box可以实现远程订阅助力好友。
 
