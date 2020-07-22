@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-07-21
+更新时间:2020-07-22
 // quantumultx
 [task_local]
 #jd免费水果
@@ -74,7 +74,9 @@ function* step() {
         console.log(`\n【您的互助码shareCode】 ${farmInfo.farmUserPro.shareCode}\n`);
         if (farmInfo.treeState === 2) {
           option['open-url'] = "openapp.jdmoble://";
-          return $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
+          $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
+          $.done();
+          return;
         }
         waterTimesKey = waterTimesKey + farmInfo.farmUserPro.shareCode;
         if (!$.getdata(waterTimesKey)) {
@@ -370,7 +372,9 @@ function* step() {
             }
             if (isFruitFinished) {
               option['open-url'] = "openapp.jdmoble://";
-              return $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
+              $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
+              $.done();
+              return;
             }
             farmTask = yield taskInitForFarm();
             message += `【自动浇水】浇水${waterCount}次，今日浇水${farmTask.totalWaterTaskInit.totalWaterTaskTimes}次\n`
@@ -429,7 +433,9 @@ function* step() {
           }
           if (isFruitFinished) {
             option['open-url'] = "openapp.jdmoble://";
-            return $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
+            $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '',  option);
+            $.done();
+            return;
           }
         } else {
           console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g,不再继续浇水,保留100g水滴用于完成第二天任务")

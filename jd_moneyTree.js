@@ -1,6 +1,6 @@
 /*
 京东摇钱树 ：https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js
-更新时间:2020-07-20
+更新时间:2020-07-22
 注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
 */
 // quantumultx
@@ -94,7 +94,9 @@ function user_info() {
           // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
           gen.next();
         } else {
-          return $.msg(name, `【提示】请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多`, '', {"open-url": "openApp.jdMobile://"});
+          $.msg(name, `【提示】请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多`, '', {"open-url": "openApp.jdMobile://"});
+          $.done();
+          return
           gen.return();
         }
       }
