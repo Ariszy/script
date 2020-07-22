@@ -316,6 +316,7 @@ function* step() {
                     //助力成功
                     salveHelpAddWater += helpResult.helpResult.salveHelpAddWater;
                     console.log(`【助力好友结果】: 已成功给【${helpResult.helpResult.masterUserInfo.nickName}】助力`);
+                    console.log(`给好友【${helpResult.helpResult.masterUserInfo.nickName}】助力获得${helpResult.helpResult.addEnergy}g水滴`)
                     helpSuccessPeoples += helpResult.helpResult.masterUserInfo.nickName + '，';
                 } else if (helpResult.helpResult.code === '8'){
                     console.log(`【助力好友结果】: 助力【${helpResult.helpResult.masterUserInfo.nickName}】失败，您今天助力次数已耗尽`);
