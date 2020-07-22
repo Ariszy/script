@@ -172,7 +172,6 @@ function spaceEventList() {
 //处理太空特殊事件
 function spaceEventHandleEvent(spaceEventList) {
   return new Promise((resolve) => {
-    console.log('//处理太空特殊事件');
     if (spaceEventList && spaceEventList.length > 0) {
       for (let item of spaceEventList) {
         let body = {
