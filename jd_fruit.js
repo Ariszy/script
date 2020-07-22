@@ -273,11 +273,11 @@ function* step() {
                     const masterGotFinished = yield masterGotFinishedTaskForFarm();
                     if (masterGotFinished.code === '0') {
                       console.log(`已成功领取好友助力奖励：【${masterGotFinished.amount}】g水`);
-                      message += `【好友助力额外奖励】${masterGotFinished.amount}g水领取成功\n`;
+                      message += `【额外奖励】${masterGotFinished.amount}g水领取成功\n`;
                     }
                 } else {
                     console.log("已经领取过5好友助力额外奖励");
-                    message += `【好友助力额外奖励】已被领取过\n`;
+                    message += `【额外奖励】已被领取过\n`;
                 }
             }
             if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples.length > 0) {
@@ -296,7 +296,7 @@ function* step() {
             }
         } else {
             console.log("助力好友未达到5个");
-            message += `【额外奖励领取失败】原因：助力好友未达5个\n`;
+            message += `【额外奖励】领取失败,原因：助力好友未达5个\n`;
         }
         //助力
         // masterHelpTaskInitForFarm
