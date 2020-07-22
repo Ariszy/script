@@ -79,8 +79,6 @@ function jDSpeedUp(sourceId) {
             // $.done();
           } else if (res.info.isLogin === 1) {
             $.isLogin = true;
-            console.log('task_status', res.data.task_status);
-            console.log('source_id', res.data.source_id);
             subTitle = `【奖励】${res.data.beans_num}京豆`;
             if (res.data.task_status === 0) {
               const taskID = res.data.source_id;
@@ -263,7 +261,6 @@ function energyPropList() {
 function receiveEnergyProp(CID) {
   return new Promise((resolve) => {
     let NumTask = 0;
-    console.log('CID', CID)
     if (CID) {
       let count = 0
       for (let i = 0; i < CID.length; i++) {
@@ -311,7 +308,6 @@ function receiveEnergyProp(CID) {
 function energyPropUsaleList(EID) {
   return new Promise((resolve) => {
     let TaskCID = '';
-    console.log('EID', EID);
     const body = { "source": "game"};
     const EUrl = {
       // url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_usalbeList&body=%7B%22source%22%3A%22game%22%7D',
@@ -360,7 +356,6 @@ function energyPropUsaleList(EID) {
 //使用能源
 function useEnergy(PropID) {
   return new Promise((resolve) => {
-    console.log('PropID', PropID)
     if (PropID) {
       let PropCount = 0;
       let PropNumTask = 0;
