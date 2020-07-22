@@ -453,7 +453,7 @@ function* step() {
           $.setdata('10', waterTimesKey);
         }
         let waterEveryDayT = $.getdata(waterTimesKey) * 1;//今天到到目前为止，浇了多少次水
-
+        message += `【今日共浇水】${waterEveryDayT}次\n`;
         let waterD = Math.ceil(waterTotalT / waterEveryDayT) <= 1 ? 0 : Math.ceil(waterTotalT / waterEveryDayT);
         name += `——预计${waterD === 0 ? '今' : waterD}天可兑换`;
         // if (waterEveryDayT !== 0) {
