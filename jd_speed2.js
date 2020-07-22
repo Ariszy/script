@@ -239,9 +239,9 @@ function energyPropList() {
             }
             if (TaskID.length > 0) {
               TaskID = TaskID.substr(0, TaskID.length - 1).split(",")
-              console.log("\n天天加速-查询到" + TaskID.length + "个有效道具")
+              console.log("\n天天加速-查询到" + TaskID.length + "个可用燃料")
             } else {
-              console.log("\n天天加速-检查燃料-暂无有效道具")
+              console.log("\n天天加速-检查燃料-暂无可用燃料")
             }
           } else {
             console.log("\n天天加速-查询无道具")
