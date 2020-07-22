@@ -250,7 +250,7 @@ function flyTask_state() {
         if (indexState === 1) {
           message += `【空间站】 ${destination}\n`;
           message += `【结束时间】 ${data['end_time']}\n`;
-          message += `【进度】 ${new Number(data.done_distance/data.distance).toFixed(2) * 100}%\n`;
+          message += `【进度】 ${((res.data.done_distance / res.data.distance) * 100).toFixed(2)}%\n`;
         }
         indexState++;
       }

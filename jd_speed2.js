@@ -90,13 +90,13 @@ function jDSpeedUp(sourceId) {
               console.log("\n天天加速进行中-目前结束时间: \n" + EndTime);
               const space = await spaceEventList()
               const HandleEvent = await spaceEventHandleEvent(space)
-              const step1 = await JDQueryTask()
-              const step2 = await JDReceiveTask(step1)
-              const step3 = await JDQueryTaskID(step2)
-              const step4 = await JDUseProps(step3)
+              const step1 = await energyPropList();//检查燃料
+              const step2 = await receiveEnergyProp(step1);//领取可用的燃料
+              const step3 = await energyPropUsaleList(step2)
+              const step4 = await useEnergy(step3)
               message += `【空间站】 ${res.data.destination}\n`;
               message += `【结束时间】 ${res.data.end_time}\n`;
-              message += `【进度】 ${(res.data.done_distance / res.data.distance).toFixed(2) * 100}%\n`;
+              message += `【进度】 ${((res.data.done_distance / res.data.distance) * 100).toFixed(2)}%\n`;
             } else if (res.data.task_status === 2) {
               if (data.match(/\"beans_num\":\d+/)) {
                 //message += "【上轮奖励】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶";
@@ -126,8 +126,9 @@ function jDSpeedUp(sourceId) {
 function spaceEventList() {
   return new Promise((resolve) => {
     let spaceEvents = [];
+    const body = { "source": "game"};
     const spaceEventUrl = {
-      url: JD_API_HOST + '?appid=memberTaskCenter&functionId=spaceEvent_list&body=%7B%22source%22%3A%22game%22%7D',
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=spaceEvent_list&body=${escape(JSON.stringify(body))}`,
       headers: {
         Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
         Cookie: cookie
@@ -176,8 +177,13 @@ function spaceEventHandleEvent(spaceEventList) {
     console.log('//处理太空特殊事件');
     if (spaceEventList && spaceEventList.length > 0) {
       for (let item of spaceEventList) {
+        let body = {
+          "source":"game",
+          "eventId": item.id,
+          "option": item.value
+        }
         const spaceHandleUrl = {
-          url: JD_API_HOST + '?appid=memberTaskCenter&functionId=spaceEvent_handleEvent&body=%7B%22source%22%3A%22game%22%2C%22eventId%22%3A%22' + item.id + '%22%2C%22option%22%3A%22' + item.value + '%22%7D',
+          url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=spaceEvent_handleEvent&body=${escape(JSON.stringify(body))}`,
           headers: {
             Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
             Cookie: cookie
@@ -210,11 +216,13 @@ function spaceEventHandleEvent(spaceEventList) {
 }
 
 //检查燃料
-function JDQueryTask() {
+function energyPropList() {
   return new Promise((resolve) => {
     let TaskID = "";
+    const body = { "source": "game"};
     const QueryUrl = {
-      url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_list&body=%7B%22source%22%3A%22game%22%7D',
+      // url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_list&body=%7B%22source%22%3A%22game%22%7D',
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=energyProp_list&body=${escape(JSON.stringify(body))}`,
       headers: {
         Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
         Cookie: cookie
@@ -227,7 +235,7 @@ function JDQueryTask() {
         } else {
           const cc = JSON.parse(data)
           if (cc.message === "success" && cc.data.length > 0) {
-            for (var i = 0; i < cc.data.length; i++) {
+            for (let i = 0; i < cc.data.length; i++) {
               if (cc.data[i].thaw_time === 0) {
                 TaskID += cc.data[i].id + ",";
               }
@@ -252,15 +260,20 @@ function JDQueryTask() {
 }
 
 //领取可用的燃料
-function JDReceiveTask(CID) {
+function receiveEnergyProp(CID) {
   return new Promise((resolve) => {
     let NumTask = 0;
     console.log('CID', CID)
     if (CID) {
       let count = 0
       for (let i = 0; i < CID.length; i++) {
+        let body = {
+          "source":"game",
+          "energy_id": CID[i]
+        }
         const TUrl = {
-          url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_gain&body=%7B%22source%22%3A%22game%22%2C%22energy_id%22%3A' + CID[i] + '%7D',
+          // url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_gain&body=%7B%22source%22%3A%22game%22%2C%22energy_id%22%3A' + CID[i] + '%7D',
+          url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=energyProp_gain&body=${escape(JSON.stringify(body))}`,
           headers: {
             Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
             Cookie: cookie
@@ -295,12 +308,14 @@ function JDReceiveTask(CID) {
 }
 
 //检查剩余燃料
-function JDQueryTaskID(EID) {
+function energyPropUsaleList(EID) {
   return new Promise((resolve) => {
     let TaskCID = '';
     console.log('EID', EID);
+    const body = { "source": "game"};
     const EUrl = {
-      url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_usalbeList&body=%7B%22source%22%3A%22game%22%7D',
+      // url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_usalbeList&body=%7B%22source%22%3A%22game%22%7D',
+      url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=energyProp_usalbeList&body=${escape(JSON.stringify(body))}`,
       headers: {
         Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
         Cookie: cookie
@@ -343,15 +358,20 @@ function JDQueryTaskID(EID) {
 }
 
 //使用能源
-function JDUseProps(PropID) {
+function useEnergy(PropID) {
   return new Promise((resolve) => {
     console.log('PropID', PropID)
     if (PropID) {
       let PropCount = 0;
       let PropNumTask = 0;
       for (let i = 0; i < PropID.length; i++) {
+        let body = {
+          "source":"game",
+          "energy_id": PropID[i]
+        }
         const PropUrl = {
-          url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_use&body=%7B%22source%22%3A%22game%22%2C%22energy_id%22%3A%22' + PropID[i] + '%22%7D',
+          // url: JD_API_HOST + '?appid=memberTaskCenter&functionId=energyProp_use&body=%7B%22source%22%3A%22game%22%2C%22energy_id%22%3A%22' + PropID[i] + '%22%7D',
+          url: `${JD_API_HOST}?appid=memberTaskCenter&functionId=energyProp_use&body=${escape(JSON.stringify(body))}`,
           headers: {
             Referer: 'https://h5.m.jd.com/babelDiy/Zeus/6yCQo2eDJPbyPXrC3eMCtMWZ9ey/index.html',
             Cookie: cookie
@@ -365,7 +385,7 @@ function JDUseProps(PropID) {
             } else {
               const cc = JSON.parse(data);
               console.log("\n天天加速-尝试使用第" + PropCount + "个道具")
-              if (cc.message === 'success' && cc.success == true) {
+              if (cc.message === 'success' && cc.success === true) {
                 PropNumTask += 1
               }
             }
