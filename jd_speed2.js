@@ -14,7 +14,7 @@
 // [Script]
 // cron "8 */3 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js,tag=京东天天加速
 const $ = new Env('✈️天天加速');
-const Key = '';
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 let jdNotify = $.getdata('jdSpeedNotify');
@@ -85,16 +85,20 @@ function jDSpeedUp(sourceId) {
               await jDSpeedUp(taskID);
             } else if (res.data.task_status === 1) {
               const EndTime = res.data.end_time ? res.data.end_time : ""
-              console.log("\n天天加速进行中-目前结束时间: \n" + EndTime);
+              console.log("\n天天加速进行中-结束时间: \n" + EndTime);
               const space = await spaceEventList()
               const HandleEvent = await spaceEventHandleEvent(space)
               const step1 = await energyPropList();//检查燃料
               const step2 = await receiveEnergyProp(step1);//领取可用的燃料
               const step3 = await energyPropUsaleList(step2)
               const step4 = await useEnergy(step3)
-              message += `【空间站】 ${res.data.destination}\n`;
-              message += `【结束时间】 ${res.data.end_time}\n`;
-              message += `【进度】 ${((res.data.done_distance / res.data.distance) * 100).toFixed(2)}%\n`;
+              if (step4) {
+                await jDSpeedUp(null);
+              } else {
+                message += `【空间站】 ${res.data.destination}\n`;
+                message += `【结束时间】 ${res.data.end_time}\n`;
+                message += `【进度】 ${((res.data['done_distance'] / res.data.distance) * 100).toFixed(2)}%\n`;
+              }
             } else if (res.data.task_status === 2) {
               if (data.match(/\"beans_num\":\d+/)) {
                 //message += "【上轮奖励】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶";
@@ -355,9 +359,9 @@ function energyPropUsaleList(EID) {
 //使用能源
 function useEnergy(PropID) {
   return new Promise((resolve) => {
+    let PropNumTask = 0;
     if (PropID) {
       let PropCount = 0;
-      let PropNumTask = 0;
       for (let i = 0; i < PropID.length; i++) {
         let body = {
           "source":"game",
