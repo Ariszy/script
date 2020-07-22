@@ -244,11 +244,11 @@ function energyPropList() {
               console.log("\n天天加速-检查燃料-暂无可用燃料")
             }
           } else {
-            console.log("\n天天加速-查询无道具")
+            console.log("\n天天加速-查询无燃料")
           }
         }
       } catch (eor) {
-        $.msg("天天加速-查询道具" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+        $.msg("天天加速-查询燃料" + eor.name + "‼️", JSON.stringify(eor), eor.message)
       } finally {
         resolve(TaskID)
       }
@@ -282,16 +282,16 @@ function receiveEnergyProp(CID) {
               console.log("\n天天加速-领取道具请求失败 ‼️‼️")
             } else {
               const cc = JSON.parse(data)
-              console.log("\n天天加速-尝试领取第" + count + "个道具")
+              console.log("\n天天加速-尝试领取第" + count + "个可用燃料")
               if (cc.message === 'success') {
                 NumTask += 1
               }
             }
           } catch (eor) {
-            $.msg("天天加速-领取道具" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+            $.msg("天天加速-领取可用燃料" + eor.name + "‼️", JSON.stringify(eor), eor.message)
           } finally {
             if (CID.length === count) {
-              console.log("\n天天加速-已成功领取" + NumTask + "个道具")
+              console.log("\n天天加速-已成功领取" + NumTask + "个可用燃料")
               resolve(NumTask)
             }
           }
@@ -330,16 +330,16 @@ function energyPropUsaleList(EID) {
             }
             if (TaskCID.length > 0) {
               TaskCID = TaskCID.substr(0, TaskCID.length - 1).split(",")
-              console.log("\n天天加速-查询成功" + TaskCID.length + "个道具ID")
+              console.log("\n天天加速-查询成功" + TaskCID.length + "个燃料ID")
             } else {
-              console.log("\n天天加速-暂无有效道具ID")
+              console.log("\n天天加速-暂无有效燃料ID")
             }
           } else {
-            console.log("\n天天加速-查询无道具ID")
+            console.log("\n天天加速-查询无燃料ID")
           }
         }
       } catch (eor) {
-        $.msg("天天加速-道具ID" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+        $.msg("天天加速-燃料ID" + eor.name + "‼️", JSON.stringify(eor), eor.message)
       } finally {
         resolve(TaskCID)
       }
@@ -375,19 +375,19 @@ function useEnergy(PropID) {
         $.get(PropUrl, (error, response, data) => {
           try {
             if (error) {
-              console.log("\n天天加速-使用道具请求失败 ‼️‼️")
+              console.log("\n天天加速-使用燃料请求失败 ‼️‼️")
             } else {
               const cc = JSON.parse(data);
-              console.log("\n天天加速-尝试使用第" + PropCount + "个道具")
+              console.log("\n天天加速-尝试使用第" + PropCount + "个燃料")
               if (cc.message === 'success' && cc.success === true) {
                 PropNumTask += 1
               }
             }
           } catch (eor) {
-            $.msg("天天加速-使用道具" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+            $.msg("天天加速-使用燃料" + eor.name + "‼️", JSON.stringify(eor), eor.message)
           } finally {
             if (PropID.length === PropCount) {
-              console.log("\n天天加速-已成功使用" + PropNumTask + "个道具")
+              console.log("\n天天加速-已成功使用" + PropNumTask + "个燃料")
               resolve()
             }
           }
