@@ -410,7 +410,7 @@ function msgControl() {
 }
 
 async function request(function_id, body = {}) {
-  await $.wait(2000); //歇口气儿, 不然会报操作频繁
+  await $.wait(1000); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
     $.post(taskurl(function_id,body), (err, resp, data) => {
       if (err) {
