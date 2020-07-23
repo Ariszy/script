@@ -434,6 +434,7 @@ function* step() {
       for (let i = 0; i < parseInt(overageEnergy / 10); i++) {
         let res = yield waterGoodForFarm();
         if (res.code === '0') {
+          console.log('\n浇水10g成功\n')
           waterTimes = ($.getdata(waterTimesKey) * 1) + 1;
           $.setdata(`${waterTimes}`, waterTimesKey);
           if (res.totalEnergy < 110) {
