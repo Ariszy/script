@@ -33,6 +33,8 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
 
   await msgControl();
   console.log('任务做完了');
+  console.log(`脚本运行次数 ${$.getdata($.treeMsgTime) * 1}`)
+  console.log(`频率 ${Notice}`)
   console.log(`运行脚本次数和设置的次数是否相等::${($.getdata($.treeMsgTime) * 1) === Notice}`);
   console.log(`box订阅静默运行-是否打开::${jdNotify || jdNotify === 'true'}`);
   console.log(`是否弹窗通知::${(($.getdata($.treeMsgTime) * 1) === Notice) && (!jdNotify || jdNotify === 'false')}`);
