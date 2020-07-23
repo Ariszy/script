@@ -13,7 +13,7 @@
 const $ = new Env('京东摇钱树');
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
-const Notice = $.getdata('jdMoneyTreeNoticeTimes') || 2;//设置运行多少次才通知。
+const Notice = $.getdata('jdMoneyTreeNoticeTimes') * 1 || 2;//设置运行多少次才通知。
 const cookie =  Key ? Key : $.getdata('CookieJD');
 let jdNotify = $.getdata('jdMoneyTreeNotify');
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
