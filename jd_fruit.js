@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-07-22
+更新时间:2020-07-23
 // quantumultx
 [task_local]
 #jd免费水果
@@ -750,7 +750,7 @@ function sleep(response) {
   setTimeout(() => {
     console.log('休息结束');
     Task.next(response)
-  }, 2000);
+  }, 1000);
 }
 
 function taskurl(function_id, body = {}) {
