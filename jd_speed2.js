@@ -14,7 +14,7 @@
 // [Script]
 // cron "8 */3 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js,tag=京东天天加速
 const $ = new Env('✈️天天加速');
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+const Key = 'pt_key=AAJfC8e5ADAYEBHDmgPj1_S0lkRytXZkscP5qnStdwDj3yqldekb0Yu8e7PQ2bpPC57L4kNAh3Q;pt_pin=jd_704a2e5e28a66;';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 let jdNotify = $.getdata('jdSpeedNotify');
@@ -177,6 +177,7 @@ function spaceEventList() {
 function spaceEventHandleEvent(spaceEventList) {
   return new Promise((resolve) => {
     if (spaceEventList && spaceEventList.length > 0) {
+      let spaceEventCount = 0, spaceNumTask = 0;
       for (let item of spaceEventList) {
         let body = {
           "source":"game",
@@ -190,23 +191,28 @@ function spaceEventHandleEvent(spaceEventList) {
             Cookie: cookie
           }
         }
+        spaceEventCount += 1
         $.get(spaceHandleUrl, (err, resp, data) => {
           try {
             if (err) {
               console.log("\n京东天天-加速: 处理太空特殊事件请求失败 ‼️‼️")
             } else {
               const cc = JSON.parse(data);
-              console.log(`处理特殊事件的结果：：${JSON.stringify(cc)}`);
-              // if (cc.message === "success" && cc.data.length > 0) {
-              //
-              // } else {
-              //   console.log("\n天天加速-处理太空特殊事件失败")
-              // }
+              // console.log(`处理特殊事件的结果：：${JSON.stringify(cc)}`);
+              console.log("\n天天加速-尝试处理第" + spaceEventCount + "个太空特殊事件")
+              if (cc.message === "success" && cc.success) {
+                spaceNumTask += 1;
+              } else {
+                console.log("\n天天加速-处理太空特殊事件失败")
+              }
             }
           } catch (e) {
             $.msg("天天加速-查询处理太空特殊事件" + e.name + "‼️", JSON.stringify(e), e.message)
           } finally {
-            resolve()
+            if (spaceEventList.length === spaceNumTask) {
+              console.log("\n天天加速-已成功处理" + spaceNumTask + "个太空特殊事件")
+              resolve()
+            }
           }
         })
       }
@@ -263,7 +269,7 @@ function energyPropList() {
 //领取可用的燃料
 function receiveEnergyProp(CID) {
   return new Promise((resolve) => {
-    let NumTask = 0;
+    var NumTask = 0;
     if (CID) {
       let count = 0
       for (let i = 0; i < CID.length; i++) {
@@ -359,9 +365,9 @@ function energyPropUsaleList(EID) {
 //使用能源
 function useEnergy(PropID) {
   return new Promise((resolve) => {
-    let PropNumTask = 0;
+    var PropNumTask = 0;
+    let PropCount = 0
     if (PropID) {
-      let PropCount = 0;
       for (let i = 0; i < PropID.length; i++) {
         let body = {
           "source":"game",
@@ -375,7 +381,7 @@ function useEnergy(PropID) {
             Cookie: cookie
           }
         };
-        PropCount += 1
+        PropCount += 1;
         $.get(PropUrl, (error, response, data) => {
           try {
             if (error) {
@@ -392,13 +398,13 @@ function useEnergy(PropID) {
           } finally {
             if (PropID.length === PropCount) {
               console.log("\n天天加速-已成功使用" + PropNumTask + "个燃料")
-              resolve()
+              resolve(PropNumTask)
             }
           }
         })
       }
     } else {
-      resolve()
+      resolve(PropNumTask)
     }
   })
 }
