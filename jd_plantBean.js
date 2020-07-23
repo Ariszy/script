@@ -256,9 +256,9 @@ function* step() {
             }
             console.log(`开始助力好友: ${plantUuid}`);
             let helpResult = yield helpShare(plantUuid)
-            if (helpResult.code == 0) {
+            if (helpResult.code === '0') {
                 console.log(`助力好友结果: ${JSON.stringify(helpResult.data.helpShareRes)}`);
-                if (helpResult.data.helpShareRes.state === '2') {
+                if (helpResult.data.helpShareRes && helpResult.data.helpShareRes.state === '2') {
                   console.log('今日助力机会已耗尽，跳出助力');
                   break;
                 }
