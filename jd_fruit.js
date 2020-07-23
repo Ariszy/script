@@ -296,6 +296,9 @@ function* step() {
                     console.log("已经领取过5好友助力额外奖励");
                     message += `【额外奖励】已被领取过\n`;
                 }
+            }  else {
+              console.log("助力好友未达到5个");
+              message += `【额外奖励】领取失败,原因：助力好友未达5个\n`;
             }
             if (masterHelpResult.masterHelpPeoples && masterHelpResult.masterHelpPeoples.length > 0) {
                 let str = '';
@@ -311,9 +314,6 @@ function* step() {
                 })
                 message += `【助力您的好友】${str}\n`;
             }
-        } else {
-            console.log("助力好友未达到5个");
-            message += `【额外奖励】领取失败,原因：助力好友未达5个\n`;
         }
         //助力
         // masterHelpTaskInitForFarm
