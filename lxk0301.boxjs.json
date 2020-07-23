@@ -201,13 +201,6 @@
           "val": false,
           "type": "boolean",
           "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
-        },
-        {
-          "id": "jd_joy_name",
-          "name": "京东账号昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         }
       ],
       "author": "@lxk0301",
@@ -230,13 +223,6 @@
           "val": false,
           "type": "boolean",
           "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
-        },
-        {
-          "id": "jd_money_tree_name",
-          "name": "京东账号昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         },
         {
           "id": "jdMoneyTreeNoticeTimes",
@@ -266,13 +252,6 @@
           "val": false,
           "type": "boolean",
           "desc": "运行京东天天加速脚本时不发出系统弹窗通知"
-        },
-        {
-          "id": "jd_speed_name",
-          "name": "京东账号昵称",
-          "val": "",
-          "type": "text",
-          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         }
       ],
       "author": "@lxk0301",
