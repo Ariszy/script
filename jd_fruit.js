@@ -80,7 +80,7 @@ function* step() {
       $.done();
       return;
     }
-    waterTimesKey = waterTimesKey + farmInfo.farmUserPro.shareCode;
+    waterTimesKey = timeFormat() + farmInfo.farmUserPro.shareCode;
     if (!$.getdata(waterTimesKey)) {
       //把前一天的清除
       $.setdata('', timeFormat(new Date().getTime() - 24 * 60 * 60 * 1000) + farmInfo.farmUserPro.shareCode);
