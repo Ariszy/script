@@ -432,7 +432,7 @@ async function masterHelpInit() {
       }
     } else {
       console.log("助力好友未达到5个")
-      message += `【额外奖励领取失败】原因：助力好友未达5个\n`;
+      message += `【额外奖励】领取失败，原因：助力好友未达5个\n`;
     }
     if (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length > 0) {
       console.log('帮您助力的好友的名单开始')
