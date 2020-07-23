@@ -237,6 +237,13 @@
           "val": "",
           "type": "text",
           "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jdMoneyTreeNoticeTimes",
+          "name": "通知频率",
+          "val": 2,
+          "type": "number",
+          "desc": "脚本运行多少次后弹窗通知(默认2次，如果开启静默运行，此设置失效)"
         }
       ],
       "author": "@lxk0301",
