@@ -96,8 +96,8 @@ function user_info() {
           } else {
             if (res.resultCode === 3) {
               $.isLogin = false;
+              $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
               $.msg($.name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
-              $.setdata(null, 'CookieJD');
             }
           }
         }

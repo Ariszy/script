@@ -65,6 +65,7 @@ function* step() {
         if (plantBeanIndexResult.code != "0") {
             console.log(`plantBeanIndexResult:${JSON.stringify(plantBeanIndexResult)}`)
             if (plantBeanIndexResult.code === '3') {
+              $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
               $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
               $.done();
               return

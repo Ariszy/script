@@ -234,6 +234,7 @@ function flyTask_state() {
     // console.log(`初始化信息flyTask_state:${JSON.stringify(res)}`)
     if (res.code === 0) {
       if (res.info.isLogin === 0) {
+        $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
         $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
         $.done();
         return

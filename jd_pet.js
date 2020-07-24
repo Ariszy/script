@@ -348,6 +348,7 @@ function initPetTown() {
           gen.next();
         } else if (response.code === '0' && response.resultCode === '2001'){
             console.log(`初始化萌宠失败:  ${response.message}`);
+            $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
             $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
             $.done();
         }

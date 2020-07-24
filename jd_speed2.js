@@ -75,6 +75,7 @@ function jDSpeedUp(sourceId) {
           if (res.info.isLogin === 0) {
             $.isLogin = false;
             console.log("\n天天加速-Cookie失效")
+            $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
             $.msg($.name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
             // $.done();
           } else if (res.info.isLogin === 1) {
