@@ -53,7 +53,7 @@ if (isBox) {
 const Task = step()
 Task.next();
 
-let farmTask = null;
+let farmTask = null, isFruitFinished = false;
 
 // let farmInfo = null;
 
@@ -73,7 +73,7 @@ function* step() {
     console.log(`\n【您的互助码shareCode】 ${farmInfo.farmUserPro.shareCode}\n`);
     console.log(`\n【已成功兑换水果】${farmInfo.farmUserPro.winTimes}次\n`)
     if (farmInfo.treeState === 2) {
-      option['open-url'] = "openapp.jdmoble://";
+      option['open-url'] = "openApp.jdMobile://";
       $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '', option);
       $.done();
       return;
@@ -357,7 +357,7 @@ function* step() {
     //浇水10次
     if (farmTask.totalWaterTaskInit.totalWaterTaskTimes < farmTask.totalWaterTaskInit.totalWaterTaskLimit) {
       let waterCount = 0;
-      let isFruitFinished = false;
+      isFruitFinished = false;
       for (; waterCount < farmTask.totalWaterTaskInit.totalWaterTaskLimit - farmTask.totalWaterTaskInit.totalWaterTaskTimes; waterCount++) {
         console.log(`第${waterCount + 1}次浇水`);
         let waterResult = yield waterGoodForFarm();
@@ -378,7 +378,7 @@ function* step() {
         }
       }
       if (isFruitFinished) {
-        option['open-url'] = "openapp.jdmoble://";
+        option['open-url'] = "openApp.jdMobile://";
         $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '', option);
         $.done();
         return;
@@ -416,9 +416,32 @@ function* step() {
     farmInfo = yield initForFarm();
     // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于110g,则继续浇水(保留100g是用于完成第二天的浇水10次的任务)
     let overageEnergy = farmInfo.farmUserPro.totalEnergy - 100;
-    if (overageEnergy >= 10) {
+    if (farmInfo.farmUserPro.totalEnergy >= (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy)) {
+      //如果现有的水滴，大于水果可兑换所需的对滴(也就是把水滴浇完，水果就能兑换了)
+      isFruitFinished = false;
+      for (let i = 0; i < (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10; i++) {
+        let resp = yield waterGoodForFarm();
+        if (resp.code === '0') {
+          console.log('\n浇水10g成功\n');
+          console.log(`目前水滴【${resp.totalEnergy}】g,继续浇水，水果马上就可以兑换了`)
+        } else {
+          if (resp.code === '6' && resp.finished) {
+            // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
+            isFruitFinished = resp.finished;
+            break
+          }
+          break;
+        }
+      }
+      if (isFruitFinished) {
+        option['open-url'] = "openApp.jdMobile://";
+        $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '', option);
+        $.done();
+        return;
+      }
+    } else if (overageEnergy >= 10) {
       console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g，可继续浇水");
-      let isFruitFinished = false;
+      isFruitFinished = false;
       for (let i = 0; i < parseInt(overageEnergy / 10); i++) {
         let res = yield waterGoodForFarm();
         if (res.code === '0') {
@@ -438,7 +461,7 @@ function* step() {
         }
       }
       if (isFruitFinished) {
-        option['open-url'] = "openapp.jdmoble://";
+        option['open-url'] = "openApp.jdMobile://";
         $.msg(name, '【提醒】水果已可领取,请去京东APP或微信小程序查看', '', option);
         $.done();
         return;
