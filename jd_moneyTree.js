@@ -1,7 +1,7 @@
 /*
 京东摇钱树 ：https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js
 更新时间:2020-07-23
-注：如果使用Node.js, 需自行安装'got'模块. 例: npm install got -g
+注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 // quantumultx
 // [task_local]
