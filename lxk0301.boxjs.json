@@ -62,8 +62,8 @@
       "author": "@lxk0301",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js",
       "icons": [
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdsg.png",
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdsg.png"
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png"
       ]
     },
     {
@@ -131,8 +131,8 @@
       "author": "@lxk0301",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js",
       "icons": [
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdmc.png",
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdmc.png"
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_pet.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_pet.png"
       ]
     },
     {
@@ -181,11 +181,11 @@
           "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         }
       ],
-      "author": "@lxk0301",
+      "author": "@uniqueque",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js",
       "icons": [
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png",
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png"
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png"
       ]
     },
     {
@@ -203,11 +203,11 @@
           "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
         }
       ],
-      "author": "@lxk0301",
+      "author": "@uniqueque",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js",
       "icons": [
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png",
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png"
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png"
       ]
     },
     {
@@ -235,8 +235,8 @@
       "author": "@lxk0301",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js",
       "icons": [
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/moneyTree.png",
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/moneyTree.png"
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png"
       ]
     },
     {
@@ -257,8 +257,8 @@
       "author": "@lxk0301",
       "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js",
       "icons": [
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdttjs.png",
-        "https://raw.githubusercontent.com/znz1992/Gallery/master/jdttjs.png"
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png"
       ]
     }
   ]
