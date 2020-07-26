@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-07-24
+更新时间:2020-07-26
 // quantumultx
 [task_local]
 #jd免费水果
@@ -383,7 +383,7 @@ function* step() {
         $.done();
         return;
       }
-      // farmTask = yield taskInitForFarm();
+      farmTask = yield taskInitForFarm();
       // message += `【自动浇水】浇水${waterCount}次，今日浇水${farmTask.totalWaterTaskInit.totalWaterTaskTimes}次\n`
     } else {
       console.log('今日已完成10次浇水任务');
