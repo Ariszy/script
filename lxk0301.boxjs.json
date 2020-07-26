@@ -60,7 +60,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js",
       "icons": [
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png"
@@ -129,7 +130,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js",
       "icons": [
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_pet.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_pet.png"
@@ -182,7 +184,8 @@
         }
       ],
       "author": "@uniqueque",
-      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js",
       "icons": [
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png"
@@ -191,9 +194,7 @@
     {
       "id": "jd_Joy",
       "name": "宠汪汪",
-      "keys": [
-        "jd_joy_name"
-      ],
+      "keys": [],
       "settings": [
         {
           "id": "jdJoyNotify",
@@ -204,7 +205,8 @@
         }
       ],
       "author": "@uniqueque",
-      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js",
       "icons": [
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png"
@@ -213,9 +215,7 @@
     {
       "id": "jd_MoneyTree",
       "name": "京东摇钱树",
-      "keys": [
-        "jd_money_tree_name"
-      ],
+      "keys": [],
       "settings": [
         {
           "id": "jdMoneyTreeNotify",
@@ -233,7 +233,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js",
       "icons": [
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png"
@@ -242,9 +243,7 @@
     {
       "id": "jd_Speed",
       "name": "京东天天加速",
-      "keys": [
-        "jd_speed_name"
-      ],
+      "keys": [],
       "settings": [
         {
           "id": "jdSpeedNotify",
@@ -255,7 +254,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js",
       "icons": [
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png"
