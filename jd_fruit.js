@@ -489,7 +489,7 @@ function* step() {
     // } else {
     //   subTitle += `，预计需${Math.ceil(waterTotalT / 10)}天可兑换`
     // }
-    message += `【剩余水滴】${farmInfo.farmUserPro.totalEnergy}g\n`;
+    message += `【剩余水滴💧】${farmInfo.farmUserPro.totalEnergy}g\n`;
     message += `【预测】${Math.floor(waterTotalT / waterEveryDayT) === 0 ? '明天' : Math.floor(waterTotalT / waterEveryDayT)+'天之后'}可兑换水果`
 //        //集卡抽奖活动
 //        console.log('开始集卡活动')
