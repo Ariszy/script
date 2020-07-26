@@ -273,7 +273,7 @@ function* step() {
       //   }
       // }
     } else {
-      message += `【水滴雨】已全部完成，获得20g水滴\n`
+      message += `【水滴雨】已全部完成，获得20g💧\n`
     }
     const masterHelpResult = yield masterHelpTaskInitForFarm();
     if (masterHelpResult.code === '0') {
