@@ -153,6 +153,8 @@ function* step() {
       $.done();
       return
     }
+    console.log(`jdNotify${jdNotify}`)
+    console.log(`jdNotify${jdNotify === 'false'}`)
     if (!jdNotify || jdNotify === 'false') {
       $.msg(name, subTitle, message);
     }
