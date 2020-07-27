@@ -392,6 +392,10 @@ function useEnergy(PropID) {
               console.log("\n天天加速-尝试使用第" + PropCount + "个燃料")
               if (cc.message === 'success' && cc.success === true) {
                 PropNumTask += 1
+              } else if (cc.code !== 0) {
+                console.log(`${cc.message},跳出循环`)
+                $.msg($.name, '', "【上轮太空旅行】2 🐶京豆已到账");
+                break
               }
             }
           } catch (eor) {
