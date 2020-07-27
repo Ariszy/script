@@ -63,8 +63,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js",
       "icons": [
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdnc_mini.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdnc_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png"
       ]
     },
     {
@@ -133,8 +133,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js",
       "icons": [
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_pet.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdmc_mini.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdmc_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_pet.png"
       ]
     },
     {
@@ -187,8 +187,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js",
       "icons": [
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdzd_mini.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdzd_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png"
       ]
     },
     {
@@ -208,8 +208,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js",
       "icons": [
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png"
       ]
     },
     {
@@ -236,8 +236,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js",
       "icons": [
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs_mini.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png"
       ]
     },
     {
@@ -257,8 +257,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js",
       "icons": [
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png"
       ]
     }
   ]
