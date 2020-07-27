@@ -193,7 +193,8 @@ async function useEnergy() {
     let _energyProp_use = await energyPropUse(i.id);
     console.log(`使用燃料的结果：：${_energyProp_use.message}`)
     if (_energyProp_use.code !== 0) {
-      console.log(`${_energyProp_use.message},跳出循环`)
+      console.log(`${_energyProp_use.message},跳出循环`);
+      $.msg($.name, '', "【上轮太空旅行】2 🐶京豆已到账");
       break
     }
   }
