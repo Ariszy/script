@@ -39,13 +39,17 @@ function* entrance() {
   }
   console.log(`start...`);
   yield flyTask_state();
+  console.log(`task_status::${task_status}`)
   if (task_status === 0) {
     console.log(`开启新任务：${JSON.stringify(destination)}`);
     yield flyTask_start(source_id)
   } else if (task_status === 1) {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   } else if (task_status === 2) {
-    $.msg(name, subTitle, '天天加速2个京豆已到账')
+    $.msg(name, subTitle, '天天加速2个京豆已到账');
+    yield flyTask_state();
+    console.log(`task_status::${task_status}`)
+    yield flyTask_start(source_id);
   }
 
   yield spaceEvent_list();//检查太空特殊事件
@@ -79,6 +83,9 @@ function* entrance() {
     console.log(`任务进行中：${JSON.stringify(destination)}`);
   } else if (task_status === 2) {
     $.msg(name, subTitle, '天天加速2个京豆已到账');
+    yield flyTask_state();
+    console.log(`task_status::${task_status}`)
+    yield flyTask_start(source_id);
   }
   if (!jdNotify || jdNotify === 'false') {
     $.msg(name, subTitle, message);
