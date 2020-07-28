@@ -227,14 +227,13 @@ function sanVideo() {
   }
   requestPost('https://draw.jdfcloud.com//pet/scan', body, 'application/json', 'weapp')
 }
-function request(url, reqSource) {
-    console.log(`request url:${url}\n`);
-    console.log(`request reqSource:${reqSource}\n`);
+function request(url) {
+    console.log(`\n request url:：：${url}\n`);
     const option =  {
         url: url,
         headers: {
             Cookie: cookie,
-            reqSource: reqSource || 'h5',
+            reqSource: 'h5',
         }
     };
     $.get(option, (err, resp, data) => {
@@ -254,18 +253,17 @@ function request(url, reqSource) {
     })
 }
 
-function requestPost(url, body, ContentType, reqSource) {
-    console.log(`request url:${url}\n`);
+function requestPost(url, body, ContentType) {
+    console.log(`\n request url:：：${url}\n`);
     console.log(`request body:${body}\n`);
     console.log(`request ContentType:${ContentType}\n`);
-    console.log(`request reqSource:${reqSource}\n`);
     const options = {
         url: url,
         body: body,
         headers: {
             Cookie: cookie,
         UserAgent: `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
-            reqSource: reqSource || 'h5',
+            reqSource: 'h5',
             'Content-Type': ContentType,
         }
     };
