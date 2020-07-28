@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-07-22
+更新时间:2020-07-28
 // quantumultx
 [task_local]
 #东东萌宠
