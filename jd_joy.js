@@ -257,7 +257,8 @@ function request(url, reqSource) {
 function requestPost(url, body, ContentType, reqSource) {
     console.log(`request url:${url}`);
     console.log(`request body:${body}`);
-    console.log(`request ContetentType:${ContetentType}`);
+    console.log(`request ContentType:${ContentType}`);
+    console.log(`request reqSource:${reqSource}`);
     const options = {
         url: url,
         body: body,
