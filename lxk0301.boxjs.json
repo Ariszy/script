@@ -202,6 +202,31 @@
           "val": false,
           "type": "boolean",
           "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "joyFeedCount",
+          "name": "每次喂养数量",
+          "val": "10",
+          "type": "radios",
+          "desc": "每次喂养数量(默认10g)",
+          "items": [
+            {
+              "key": "10",
+              "label": "10g"
+            },
+            {
+              "key": "20",
+              "label": "20g"
+            },
+            {
+              "key": "40",
+              "label": "40g"
+            },
+            {
+              "key": "80",
+              "label": "80g"
+            }
+          ]
         }
       ],
       "author": "@uniqueque",
