@@ -244,19 +244,26 @@ function request(url) {
         }
     };
     $.get(option, (err, resp, data) => {
-      if (err) {
-        console.log("\n京东宠汪汪: API查询请求失败 ‼️‼️")
-        $.msg('京东宠汪汪', `脚本执行中断`, `京东宠汪汪: API查询请求失败 ‼️‼️`);
-        $.done();
-      } else {
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          console.log(e);
-        } finally {
-          sleep(data);
-        }
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        sleep(data);
       }
+      // if (err) {
+      //   console.log("\n京东宠汪汪: API查询请求失败 ‼️‼️")
+      //   $.msg('京东宠汪汪', `脚本执行中断`, `京东宠汪汪: API查询请求失败 ‼️‼️`);
+      //   $.done();
+      // } else {
+      //   try {
+      //     data = JSON.parse(data);
+      //   } catch (e) {
+      //     console.log(e);
+      //   } finally {
+      //     sleep(data);
+      //   }
+      // }
     })
 }
 
