@@ -45,24 +45,21 @@ if (isBox) {
     }
   }
 }
-let petInfo = null
-let taskInfo = null
-let message = '';
-let subTitle = '';
-let goodsUrl = '';
+let petInfo = null, taskInfo = null, message = '', subTitle = '', goodsUrl = '', taskInfoKey = [];
+
 //按顺序执行, 尽量先执行不消耗狗粮的任务, 避免中途狗粮不够, 而任务还没做完
 let function_map = {
   signInit: signInit, //每日签到
   threeMealInit: threeMealInit, //三餐
-  browseSingleShopInit: browseSingleShopInit, //浏览店铺
-  browseSingleShopInit2: browseSingleShopInit2, //浏览店铺
+  browseSingleShopInit: browseSingleShopInit, //浏览店铺1
+  browseSingleShopInit2: browseSingleShopInit2, //浏览店铺2
+  browseSingleShopInit3: browseSingleShopInit3, //浏览店铺3
   browseShopsInit: browseShopsInit, //浏览店铺s, 目前只有一个店铺
   firstFeedInit: firstFeedInit, //首次喂食
   inviteFriendsInit: inviteFriendsInit, //邀请好友, 暂未处理
   feedReachInit: feedReachInit, //喂食10次任务  最后执行投食10次任务, 提示剩余狗粮是否够投食10次完成任务, 并询问要不要继续执行
 }
-// function_map不再写固定死的，改成从初始化任务api那边拿取，避免6.22日下午京东服务器下架一个任务后，脚本对应不上，从而报错的bug
-let taskInfoKey = [];
+
 let gen = entrance();
 gen.next();
 /**
@@ -301,6 +298,23 @@ function browseSingleShopInit2() {
         console.log(`②浏览指定店铺结果: ${JSON.stringify(response2)}`);
         if (response2.code === '0' && response2.resultCode === '0') {
           message += `【冰淇淋会场】获取狗粮${response2.result.reward}g\n`;
+        }
+        gen.next();
+      })
+    }
+  })
+}
+function browseSingleShopInit3() {
+  console.log('准备完成 去参与星品解锁计划');
+  const body = {"index":2,"version":1,"type":1};
+  const body2 = {"index":2,"version":1,"type":2}
+  request("getSingleShopReward", body).then(response => {
+    console.log(`①点击浏览指定店铺结果: ${JSON.stringify(response)}`);
+    if (response.code === '0' && response.resultCode === '0') {
+      request("getSingleShopReward", body2).then(response2 => {
+        console.log(`②浏览指定店铺结果: ${JSON.stringify(response2)}`);
+        if (response2.code === '0' && response2.resultCode === '0') {
+          message += `【去参与星品解锁计划】获取狗粮${response2.result.reward}g\n`;
         }
         gen.next();
       })
