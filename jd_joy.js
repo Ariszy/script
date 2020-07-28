@@ -16,8 +16,6 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 const name = '京东宠汪汪';
 const $ = new Env(name);
 const FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [10,20,40,80]
-console.log($.getdata('joyFeedCount') * 1)
-console.log(FEED_NUM)
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie =  Key ? Key : $.getdata('CookieJD');
