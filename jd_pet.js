@@ -233,7 +233,7 @@ async function slaveHelp() {
         }
     }
     if (helpPeoples && helpPeoples.length > 0) {
-        message += `【您助力的好友】${helpPeoples}\n`;
+        message += `【您助力的好友】${helpPeoples.substr(0, helpPeoples.length - 1)}\n`;
     }
 
     gen.next();
