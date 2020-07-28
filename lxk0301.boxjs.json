@@ -208,23 +208,23 @@
           "name": "每次喂养数量（默认10g）",
           "val": "10",
           "type": "radios",
-          "desc": "每次喂养数量(默认10g)",
+          "desc": "每次喂养狗粮克数(默认10g)",
           "items": [
             {
               "key": "10",
-              "label": "10g"
+              "label": "消耗10g"
             },
             {
               "key": "20",
-              "label": "20g"
+              "label": "消耗20g"
             },
             {
               "key": "40",
-              "label": "40g"
+              "label": "消耗40g"
             },
             {
               "key": "80",
-              "label": "80g"
+              "label": "消耗80g"
             }
           ]
         }
