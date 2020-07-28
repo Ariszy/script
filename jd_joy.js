@@ -266,8 +266,9 @@ function requestPost(url, body, ContentType, reqSource) {
     };
     $.post(options, (err, resp, data) => {
       if (err) {
-        console.log("=== request error -s--");
-        console.log("=== request error -e--");
+        console.log("\n京东宠汪汪: API查询请求失败 ‼️‼️")
+        $.msg('京东宠汪汪', `${err.name}`, `京东宠汪汪: API查询请求失败 ‼️‼️`);
+        $.done();
       } else {
         try {
           data = JSON.parse(data);
@@ -285,7 +286,7 @@ function sleep(response) {
     setTimeout(() => {
         console.log('休息结束');
         Task.next(response)
-    }, 3000);
+    }, 1000);
 }
 
 // https://jdjoy.jd.com/pet/getPetTaskConfig?reqSource=h5
