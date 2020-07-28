@@ -1,7 +1,5 @@
 ## 京东薅羊毛工具（活动入口：京东app->我的->游戏与互动->查看更多）
 
-![Anurag’s github stats](https://github-readme-stats.vercel.app/api?username=lxk0301&show_icons=true&theme=merko)
-
 1.  京东水果([jd_fruit.js](https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js))
 2.  东东萌宠([jd_pet.js](https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js))
 3.  宠汪汪([jd_joy.js](https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js))
