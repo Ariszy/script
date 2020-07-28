@@ -239,7 +239,7 @@ function request(url, reqSource) {
     $.get(option, (err, resp, data) => {
       if (err) {
         console.log("\n京东宠汪汪: API查询请求失败 ‼️‼️")
-        $.msg('京东宠汪汪', `${err.name}`, `京东宠汪汪: API查询请求失败 ‼️‼️`);
+        $.msg('京东宠汪汪', `脚本执行中断`, `京东宠汪汪: API查询请求失败 ‼️‼️`);
         $.done();
       } else {
         try {
