@@ -113,22 +113,22 @@ function* step() {
                 console.log(`浏览商品奖励积分返回结果${JSON.stringify(deskGoodDetails)}`)
             }
             // 看激励视频得狗粮
-            let taskVideoRes = yield taskVideo();
-            console.log(`视频激--任务列表--${JSON.stringify(taskVideoRes)}`);
-            if (taskVideoRes.success) {
-              let taskArr = {};
-              for (let item of taskVideoRes.datas) {
-                if (item.ViewVideo) {
-                  taskArr = item;
-                }
-              }
-              let joinedCount = taskArr.joinedCount || 0;
-              for (let i = 0; i < new Array(taskArr.taskChance - joinedCount).fill('').length; i++) {
-                console.log(`开始第${i+1}次看激励视频`);
-                  let sanVideoRes = yield sanVideo();
-                console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
-              }
-            }
+            // let taskVideoRes = yield taskVideo();
+            // console.log(`视频激--任务列表--${JSON.stringify(taskVideoRes)}`);
+            // if (taskVideoRes.success) {
+            //   let taskArr = {};
+            //   for (let item of taskVideoRes.datas) {
+            //     if (item.ViewVideo) {
+            //       taskArr = item;
+            //     }
+            //   }
+            //   let joinedCount = taskArr.joinedCount || 0;
+            //   for (let i = 0; i < new Array(taskArr.taskChance - joinedCount).fill('').length; i++) {
+            //     console.log(`开始第${i+1}次看激励视频`);
+            //       let sanVideoRes = yield sanVideo();
+            //     console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
+            //   }
+            // }
             // 喂食
             let feedPetsResult = yield feedPets()
             console.log(`喂食结果${JSON.stringify(feedPetsResult)}`)
@@ -234,6 +234,12 @@ function request(url) {
         headers: {
             Cookie: cookie,
             reqSource: 'h5',
+          'Host': 'jdjoy.jd.com',
+          'Connection': 'keep-alive',
+          'Referer': 'https://jdjoy.jd.com/pet/index?un_area=5_274_49707_49973&lng=116.8439659502069&lat=39.95722551778479',
+          'User-Agent': 'jdapp;iPhone;8.5.8;13.4.1;9b812b59e055cd226fd60ebb5fd0981c4d0d235d;network/wifi;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/0;model/iPhone9,2;addressid/138109592;hasOCPay/0;appBuild/167169;supportBestPay/0;jdSupportDarkMode/0;pv/200.75;apprpd/MyJD_Main;ref/MyJdMTAManager;psq/29;ads/;psn/9b812b59e055cd226fd60ebb5fd0981c4d0d235d|608;jdv/0|direct|-|none|-|1587263154256|1587263330;adk/;app_device/IOS;pap/JA2015_311210|8.5.8|IOS 13.4.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+          'Accept-Language': 'zh-cn',
+          'Accept-Encoding': 'gzip, deflate, br',
         }
     };
     $.get(option, (err, resp, data) => {
@@ -265,6 +271,10 @@ function requestPost(url, body, ContentType) {
         UserAgent: `Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1`,
             reqSource: 'h5',
             'Content-Type': ContentType,
+          'Host': 'jdjoy.jd.com',
+          'Referer': 'https://jdjoy.jd.com/pet/index?un_area=5_274_49707_49973&lng=116.8439659502069&lat=39.95722551778479',
+          'Accept-Language': 'zh-cn',
+          'Accept-Encoding': 'gzip, deflate, br',
         }
     };
     $.post(options, (err, resp, data) => {
