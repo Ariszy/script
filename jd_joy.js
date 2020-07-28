@@ -228,7 +228,8 @@ function sanVideo() {
   requestPost('https://draw.jdfcloud.com//pet/scan', body, 'application/json', 'weapp')
 }
 function request(url, reqSource) {
-    console.log("request url:", url);
+    console.log(`request url:${url}`);
+    console.log(`request reqSource:${reqSource}`);
     const option =  {
         url: url,
         headers: {
@@ -254,7 +255,9 @@ function request(url, reqSource) {
 }
 
 function requestPost(url, body, ContentType, reqSource) {
-    console.log("request url:", url, "body:", body, "ContetentType:", ContentType);
+    console.log(`request url:${url}`);
+    console.log(`request body:${body}`);
+    console.log(`request ContetentType:${ContetentType}`);
     const options = {
         url: url,
         body: body,
