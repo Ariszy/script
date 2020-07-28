@@ -245,7 +245,11 @@ function request(url) {
     };
     $.get(option, (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
