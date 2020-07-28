@@ -205,7 +205,7 @@
         },
         {
           "id": "joyFeedCount",
-          "name": "每次喂养数量",
+          "name": "每次喂养数量（默认10g）",
           "val": "10",
           "type": "radios",
           "desc": "每次喂养数量(默认10g)",
