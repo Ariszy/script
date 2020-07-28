@@ -45,8 +45,8 @@ if (isBox) {
     }
   }
 }
-var petInfo = null;
-var taskInfo = null;
+let petInfo = null
+let taskInfo = null
 let message = '';
 let subTitle = '';
 let goodsUrl = '';
@@ -62,7 +62,7 @@ let function_map = {
   feedReachInit: feedReachInit, //喂食10次任务  最后执行投食10次任务, 提示剩余狗粮是否够投食10次完成任务, 并询问要不要继续执行
 }
 // function_map不再写固定死的，改成从初始化任务api那边拿取，避免6.22日下午京东服务器下架一个任务后，脚本对应不上，从而报错的bug
-// function_map = []
+let taskInfoKey = [];
 let gen = entrance();
 gen.next();
 /**
@@ -81,9 +81,14 @@ function* entrance() {
     yield petSport(); // 遛弯
     yield slaveHelp();  // 助力, 在顶部shareCodes中填写需要助力的shareCode
     yield masterHelpInit();//获取助力信息
-
+    taskInfo['taskList'].forEach((val) => {
+      taskInfoKey.push(val);
+    })
     // 任务开始
     for (let task_name in function_map) {
+        if (taskInfoKey.indexOf(task_name) !== -1) {
+          taskInfoKey.splice(taskInfoKey.indexOf(task_name), 1);
+        }
         if (taskInfo[task_name] && !taskInfo[task_name].finished) {
             console.log('任务' + task_name + '开始');
             // yield eval(task_name + '()');
@@ -91,6 +96,10 @@ function* entrance() {
         } else {
             console.log('任务' + task_name + '已完成');
         }
+    }
+    for (let item of taskInfoKey) {
+      console.log(`新任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`);
+      $.msg($.name, subTitle, `新的任务 【${taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`)
     }
     yield feedPetsAgain();//所有任务做完后，检测剩余狗粮是否大于110g,大于就继续投食
     yield energyCollect();
