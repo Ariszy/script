@@ -17,7 +17,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 
 let name = '东东农场';
 const $ = new Env(name);
-const Key = 'pt_key=AAJfCetdADCDahtAlLLr2xI7MFlBjr-sdRP_XlIX7hAH6VQXfQRQoLUaPBz0RTx5AVudSgg2hoI;pt_pin=jd_6cd93e613b0e5;';//单引号内自行填写您抓取的京东Cookie
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 //京东接口地址
