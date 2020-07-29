@@ -1,4 +1,4 @@
-const $ = new Env('签到领现金');
+const $ = new Env('天天签到领现金');
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
@@ -23,22 +23,12 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     .finally(() => {
       $.done();
     })
-function msgShow() {
-  if ($.data.data.bizCode == 0 && $.data.data.success === 'True' ) {
-    $.msg($.name, '今日签到成功', $.data.data.bizMsg);
-
-  } else {
-    $.msg($.name, '今日已签到', $.data.data.bizMsg);
-
-  }
-}
 
 function cash_sign() {
-  // https://api.m.jd.com/client.action?functionId=plantBeanIndex
   let functionId = arguments.callee.name.toString();
   let body = {"remind":0,"inviteCode":"","type":0,"breakReward":0};
   return new Promise((resolve) => {
-    $.post(taskurl(functionId, body), (err, resp, data) => {
+    $.post(taskUrl(functionId, body), (err, resp, data) => {
       if (err) {
         console.log("=== request error -s--");
         console.log("=== request error -e--");
@@ -56,32 +46,64 @@ function cash_sign() {
     })
   })
 }
-function request(function_id, body = {}) {
+function cash_homePage() {
+  let body = {};
   return new Promise((resolve) => {
-    $.post(taskurl(function_id, body), (err, resp, data) => {
-      if (err) {
-        console.log("=== request error -s--");
-        console.log("=== request error -e--");
-      } else {
-        try {
-          data = JSON.parse(data);
-          console.log(`data${JSON.stringify(data)}`)
-          $.data = data;
-        } catch (e) {
-          console.log(e);
-        } finally {
-          resolve()
-        }
+    $.post(taskUrl('cash_homePage', body), (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        console.log(`data${JSON.stringify(data)}`)
+        $.data = data;
+      } catch (e) {
+        console.log(e);
+      } finally {
+        resolve()
       }
+      // if (err) {
+      //   console.log("=== request error -s--");
+      //   console.log("=== request error -e--");
+      // } else {
+      //
+      // }
     })
   })
 }
-function taskurl(function_id, body) {
+
+function msgShow() {
+  if ($.data.data.bizCode === 0 && $.data.data.success === 'True' ) {
+    $.msg($.name, `今日签到${$.data.data.bizMsg}`, `签到获得现金${$.data.data.result.signCash}元`);
+
+  } else {
+    $.msg($.name, '【提示】', $.data.data.bizMsg);
+  }
+}
+// function request(function_id, body = {}) {
+//   return new Promise((resolve) => {
+//     $.post(taskurl(function_id, body), (err, resp, data) => {
+//       if (err) {
+//         console.log("=== request error -s--");
+//         console.log("=== request error -e--");
+//       } else {
+//         try {
+//           data = JSON.parse(data);
+//           console.log(`data${JSON.stringify(data)}`)
+//           $.data = data;
+//         } catch (e) {
+//           console.log(e);
+//         } finally {
+//           resolve()
+//         }
+//       }
+//     })
+//   })
+// }
+function taskUrl(function_id, body = {}) {
   // console.log(`${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`)
   return {
     // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
     url: JD_API_HOST + `?functionId=${function_id}`,
-    body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=%7B%22remind%22%3A0%2C%22inviteCode%22%3A%22%22%2C%22type%22%3A0%2C%22breakReward%22%3A0%7D&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=59c1af6b257421672f1c8f6ab878084d&st=1595926377439&sv=102&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
+    // body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=%7B%22remind%22%3A0%2C%22inviteCode%22%3A%22%22%2C%22type%22%3A0%2C%22breakReward%22%3A0%7D&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=59c1af6b257421672f1c8f6ab878084d&st=1595926377439&sv=102&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
+    body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=${escape(JSON.stringify(body))}&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=59c1af6b257421672f1c8f6ab878084d&st=1595926377439&sv=102&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
     headers: {
       // 'Cookie': cookie,
       "Host": "api.m.jd.com",
