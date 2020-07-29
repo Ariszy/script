@@ -17,7 +17,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 
 let name = '东东农场';
 const $ = new Env(name);
-const Key = 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;';//单引号内自行填写您抓取的京东Cookie
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 //京东接口地址
@@ -74,7 +74,7 @@ function* step() {
     console.log(`\n【已成功兑换水果】${farmInfo.farmUserPro.winTimes}次\n`)
     if (farmInfo.treeState === 2) {
       option['open-url'] = "openApp.jdMobile://";
-      $.msg(name, '【提醒🍉】水果已可领取,请去京东APP或微信小程序查看', '', option);
+      $.msg(name, `【提醒⏰】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       $.done();
       return;
     }
@@ -386,7 +386,7 @@ function* step() {
         } else {
           if (waterResult.code === '6' && waterResult.finished) {
             // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
-            isFruitFinished = waterResult.finished;
+            isFruitFinished = true;
             break
           }
           break;
@@ -394,7 +394,7 @@ function* step() {
       }
       if (isFruitFinished) {
         option['open-url'] = "openApp.jdMobile://";
-        $.msg(name, '【提醒🍉】水果已可领取,请去京东APP或微信小程序查看', '', option);
+        $.msg(name, `【提醒⏰】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
         $.done();
         return;
       }
@@ -444,7 +444,7 @@ function* step() {
         } else {
           if (resp.code === '6' && resp.finished) {
             // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
-            isFruitFinished = resp.finished;
+            isFruitFinished = true;
             break
           }
           break;
@@ -452,7 +452,7 @@ function* step() {
       }
       if (isFruitFinished) {
         option['open-url'] = "openApp.jdMobile://";
-        $.msg(name, `【提醒】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
+        $.msg(name, `【提醒⏰】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
         $.done();
         return;
       }
@@ -471,7 +471,7 @@ function* step() {
         } else {
           if (res.code === '6' && res.finished) {
             // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
-            isFruitFinished = res.finished;
+            isFruitFinished = true;
             break
           }
           break;
@@ -479,34 +479,14 @@ function* step() {
       }
       if (isFruitFinished) {
         option['open-url'] = "openApp.jdMobile://";
-        $.msg(name, `【提醒】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
+        $.msg(name, `【提醒⏰】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
         $.done();
         return;
       }
     } else {
       console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g,不再继续浇水,保留部分水滴用于完成第二天【十次浇水得水滴】任务")
     }
-    const aa = [{code: 0, finished: false}, {code: 0, finished: false}, {code: 0, finished: false}, {
-      code: 0,
-      finished: false
-    }, {code: '6', finished: true}]
-    for(let item of aa) {
-      if (item.code === 0) {
-        console.log('浇水成功')
-      } else {
-        if (item.code === '6' && item.finished){
-          isFruitFinished = item.finished;
-          break;
-        }
-        break;
-      }
-    }
-    if (isFruitFinished) {
-      option['open-url'] = "openApp.jdMobile://";
-      $.msg(name, `【提醒】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
-      $.done();
-      return;
-    }
+
     farmInfo = yield initForFarm();
     message += `【水果🍉进度】${((farmInfo.farmUserPro.treeEnergy / farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}%，已浇水${farmInfo.farmUserPro.treeEnergy / 10}次,还需${(farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10}次\n`
     if (farmInfo.toFlowTimes > (farmInfo.farmUserPro.treeEnergy / 10)) {
