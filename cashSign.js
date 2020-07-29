@@ -34,7 +34,7 @@ function cash_sign() {
     $.post(taskUrl(functionId, body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
-        console.log(`data${JSON.stringify(data)}`)
+        // console.log(`data${JSON.stringify(data)}`)
         $.data = data;
       } catch (e) {
         $.logErr(e, resp);
@@ -115,7 +115,7 @@ function cash_homePage() {
     $.post(homePageUrl, async (err, resp, data) => {
       try {
         data = JSON.parse(data);
-        console.log(`cash_homePage----data${JSON.stringify(data)}`)
+        // console.log(`cash_homePage----data${JSON.stringify(data)}`)
         $.homePage = data;
         // var canDoTaskList = [];
         // if (data.code === 0) {
