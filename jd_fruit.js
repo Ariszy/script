@@ -17,7 +17,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 
 let name = '东东农场';
 const $ = new Env(name);
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+const Key = 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 //京东接口地址
@@ -437,6 +437,7 @@ function* step() {
       isFruitFinished = false;
       for (let i = 0; i < (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10; i++) {
         let resp = yield waterGoodForFarm();
+        console.log(`本次浇水结果:   ${JSON.stringify(waterResult)}`);
         if (resp.code === '0') {
           console.log('\n浇水10g成功\n');
           console.log(`目前水滴【${resp.totalEnergy}】g,继续浇水，水果马上就可以兑换了`)
@@ -451,7 +452,7 @@ function* step() {
       }
       if (isFruitFinished) {
         option['open-url'] = "openApp.jdMobile://";
-        $.msg(name, '【提醒🍉果已可领取,请去京东APP或微信小程序查看', '', option);
+        $.msg(name, `【提醒】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
         $.done();
         return;
       }
@@ -478,12 +479,33 @@ function* step() {
       }
       if (isFruitFinished) {
         option['open-url'] = "openApp.jdMobile://";
-        $.msg(name, '【提醒🍉果已可领取,请去京东APP或微信小程序查看', '', option);
+        $.msg(name, `【提醒】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
         $.done();
         return;
       }
     } else {
       console.log("目前剩余水滴：【" + farmInfo.farmUserPro.totalEnergy + "】g,不再继续浇水,保留部分水滴用于完成第二天【十次浇水得水滴】任务")
+    }
+    const aa = [{code: 0, finished: false}, {code: 0, finished: false}, {code: 0, finished: false}, {
+      code: 0,
+      finished: false
+    }, {code: '6', finished: true}]
+    for(let item of aa) {
+      if (item.code === 0) {
+        console.log('浇水成功')
+      } else {
+        if (item.code === '6' && item.finished){
+          isFruitFinished = item.finished;
+          break;
+        }
+        break;
+      }
+    }
+    if (isFruitFinished) {
+      option['open-url'] = "openApp.jdMobile://";
+      $.msg(name, `【提醒】${farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
+      $.done();
+      return;
     }
     farmInfo = yield initForFarm();
     message += `【水果🍉进度】${((farmInfo.farmUserPro.treeEnergy / farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}%，已浇水${farmInfo.farmUserPro.treeEnergy / 10}次,还需${(farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10}次\n`
@@ -493,7 +515,7 @@ function* step() {
       message += `【结果进度】再浇水${farmInfo.toFruitTimes - farmInfo.farmUserPro.treeEnergy / 10}次结果\n`
     }
     // 预测n天后水果课可兑换功能
-    let waterTotalT = (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10;//一共还需浇多少次水
+    let waterTotalT = (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy - farmInfo.farmUserPro.totalEnergy) / 10;//一共还需浇多少次水
     farmTask = yield taskInitForFarm();
     let waterEveryDayT = farmTask.totalWaterTaskInit.totalWaterTaskTimes;//今天到到目前为止，浇了多少次水
     message += `【今日共浇水】${waterEveryDayT}次\n`;
