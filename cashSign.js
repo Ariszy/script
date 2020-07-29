@@ -1,3 +1,4 @@
+//暂有功能：每日签到
 const $ = new Env('天天签到领现金');
 const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
@@ -10,6 +11,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
   }
   await cash_sign();
   await cash_homePage();
+  // await cash_doTask(2, '1000002389')
   await msgShow();
   // if ($.isLogin) {
   //   if (!jdNotify || jdNotify === 'false') {
@@ -24,35 +26,48 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     .finally(() => {
       $.done();
     })
-
+//每日签到
 function cash_sign() {
   let functionId = arguments.callee.name.toString();
   let body = {"remind":0,"inviteCode":"","type":0,"breakReward":0};
   return new Promise((resolve) => {
     $.post(taskUrl(functionId, body), (err, resp, data) => {
-      if (err) {
-        console.log("=== request error -s--");
-        console.log("=== request error -e--");
-      } else {
-        try {
-          data = JSON.parse(data);
-          console.log(`data${JSON.stringify(data)}`)
-          $.data = data;
-        } catch (e) {
-          console.log(e);
-        } finally {
-          resolve()
-        }
+      try {
+        data = JSON.parse(data);
+        console.log(`data${JSON.stringify(data)}`)
+        $.data = data;
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve()
       }
+      // if (err) {
+      //   console.log("=== request error -s--");
+      //   console.log("=== request error -e--");
+      // } else {
+      //   try {
+      //     data = JSON.parse(data);
+      //     console.log(`data${JSON.stringify(data)}`)
+      //     $.data = data;
+      //   } catch (e) {
+      //     $.logErr(e, resp);
+      //   } finally {
+      //     resolve()
+      //   }
+      // }
     })
   })
 }
-function cash_homePage() {
-  const body = {};
+//做任务
+function cash_doTask(type, taskInfo) {
+  const body = {
+    'type': type,
+    'taskInfo': taskInfo
+  };
   return new Promise((resolve) => {
-    const homePageUrl = {
-      url: JD_API_HOST + `?functionId=cash_homePage`,
-      body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=${escape(JSON.stringify(body))}&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=216d0aa860a52ea89420293976d2ee28&st=1595926359893&sv=101&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
+    const doTaskUrl = {
+      url: JD_API_HOST + `?functionId=cash_doTask`,
+      body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=${escape(JSON.stringify(body))}&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=b2a86a0f477e65a5ea40adc4a7a296cb&st=${Date.now()}&sv=101&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJOnkRxds9DBcksJKOMWtLozcAH/M69g0LniG6s05YlJ4C6nk%2BI1mo0gto0Kw8pej0%2BiVtbzGBGqYDTEvkT7XS8YjpNXWZmM4gEDOL2mHlGnj251JSm9QUxTwQz0qHIHeQDWSErxbtZIA45XJsDxWqIIClWOUUPgFrbDVA11WciAWXJ1lqN41m7g%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
       headers: {
         // 'Cookie': cookie,
         "Host": "api.m.jd.com",
@@ -66,22 +81,65 @@ function cash_homePage() {
         "Accept-Encoding": "gzip, deflate, br"
       }
     }
-    $.post(homePageUrl, (err, resp, data) => {
+    $.post(doTaskUrl, (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        console.log(`做任务----data${JSON.stringify(data)}`)
+        // $.homePage = data;
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+function cash_homePage() {
+  const body = {};
+  return new Promise((resolve) => {
+    const homePageUrl = {
+      url: JD_API_HOST + `?functionId=cash_homePage`,
+      body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=${escape(JSON.stringify(body))}&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=216d0aa860a52ea89420293976d2ee28&st=1595926359893&sv=101&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
+      headers: {
+        'Cookie': cookie,
+        "Host": "api.m.jd.com",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "User-Agent": "JD4iPhone/167283 (iPhone; iOS 13.5.1; Scale/2.00)",
+        "Accept-Language": "zh-Hans-CN;q=1, en-CN;q=0.9, zh-Hant-CN;q=0.8",
+        "Content-Length": "870",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.post(homePageUrl, async (err, resp, data) => {
       try {
         data = JSON.parse(data);
         console.log(`cash_homePage----data${JSON.stringify(data)}`)
         $.homePage = data;
+        // var canDoTaskList = [];
+        // if (data.code === 0) {
+        //   if (data.data.result.taskInfos && data.data.result.taskInfos.length > 0) {
+        //     for (let item of data.data.result.taskInfos) {
+        //       if ((item.type === 2 || item.type === 3 || item.type === 4 || item.type === 17) && item.finishFlag === 2) {
+        //         canDoTaskList.push(item);
+        //         console.log('type', item.type)
+        //         console.log('type', item.desc)
+        //         let aa = await cash_doTask(item.type, item.desc);
+        //         if (aa.code === 0) {
+        //           console.log('重新请求任务列表')
+        //           await cash_homePage();
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+        // canDoTaskList
       } catch (e) {
-        console.log(e);
+        $.logErr(e, resp);
       } finally {
         resolve()
       }
-      // if (err) {
-      //   console.log("=== request error -s--");
-      //   console.log("=== request error -e--");
-      // } else {
-      //
-      // }
     })
   })
 }
@@ -91,7 +149,7 @@ function msgShow() {
     $.msg($.name, `今日签到${$.data.data.bizMsg}`, `【签到获得现金】${$.data.data.result.signCash}元\n【现有红包】${$.homePage.data.result.totalMoney}，${$.homePage.data.result.cashOutStatusTip}\\n`);
 
   } else {
-    $.msg($.name, '今日已签到，请明日再来哦', `【现有红包】${$.homePage.data.result.totalMoney}，${$.homePage.data.result.cashOutStatusTip}\n`);
+    $.msg($.name, '今日已签到，请明日再来哦', `【现有红包】${$.homePage.data.result.totalMoney}元，${$.homePage.data.result.cashOutStatusTip}\n`);
   }
 }
 // function request(function_id, body = {}) {
@@ -122,12 +180,11 @@ function taskUrl(function_id, body = {}) {
     // body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=%7B%22remind%22%3A0%2C%22inviteCode%22%3A%22%22%2C%22type%22%3A0%2C%22breakReward%22%3A0%7D&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=59c1af6b257421672f1c8f6ab878084d&st=1595926377439&sv=102&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
     body: `adid=3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD&area=19_1601_50258_51885&body=${escape(JSON.stringify(body))}&build=167283&client=apple&clientVersion=9.0.4&d_brand=apple&d_model=iPhone11%2C8&eid=eidI42550111OTc2RjFCQzgtMTYxQy00OA%3D%3DrCYdObgFE80GYJdgxMLJ0RlHfdF1uWSVuAwDfNOV%2BH%2BArP2K4Ht7t9Cscz%2B/mkYaC70ypbQutgv8vqJr&isBackground=N&joycious=298&lang=zh_CN&networkType=wifi&networklibtype=JDNetworkBaseAF&openudid=e35caf0a69be42084e3c97eef56c3af7b0262d01&osVersion=13.5.1&partner=apple&rfs=0000&scope=01&screen=828%2A1792&sign=59c1af6b257421672f1c8f6ab878084d&st=1595926377439&sv=102&uts=0f31TVRjBSsqndu4/jgUPz6uymy50MQJcPZxWlSpDrAQ8407rzIXjarvshNNSEsnLV0tV3BB9%2B3IWXJgCfYn8yocpXrWCjeJzfA4MHUq%2BjAyQ7ZUc8ZaXvIx2JM4dUlg6P1v6IgCWZJa1u0j1YuA7IUrZzm3E1eYuNoB7UmQTgXV4%2BFyD/FzKY0DqsmdN6Fvo8yZeblZwy8sAEI//MvESQ%3D%3D&uuid=coW0lj7vbXVin6h7ON%2BtMNFQqYBqMahr&wifiBssid=f7754c40c09909dc5fccf03e8d7e39d4`,
     headers: {
-      // 'Cookie': cookie,
+      'Cookie': cookie,
       "Host": "api.m.jd.com",
       "Content-Type": "application/x-www-form-urlencoded",
       "Accept": "*/*",
       "Connection": "keep-alive",
-      "Cookie": 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;',
       "User-Agent": "JD4iPhone/167283 (iPhone; iOS 13.5.1; Scale/2.00)",
       "Accept-Language": "zh-Hans-CN;q=1, en-CN;q=0.9, zh-Hant-CN;q=0.8",
       "Content-Length": "955",
