@@ -9,6 +9,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     return;
   }
   await cash_sign();
+  await cash_homePage();
   await msgShow();
   // if ($.isLogin) {
   //   if (!jdNotify || jdNotify === 'false') {
@@ -52,8 +53,8 @@ function cash_homePage() {
     $.post(taskUrl('cash_homePage', body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
-        console.log(`data${JSON.stringify(data)}`)
-        $.data = data;
+        console.log(`cash_homePage----data${JSON.stringify(data)}`)
+        // $.data = data;
       } catch (e) {
         console.log(e);
       } finally {
