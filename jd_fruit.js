@@ -379,16 +379,18 @@ function* step() {
         console.log(`本次浇水结果:   ${JSON.stringify(waterResult)}`);
         if (waterResult.code === '0') {
           console.log(`剩余水滴${waterResult.totalEnergy}g`);
-          if (waterResult.totalEnergy < 10) {
-            console.log(`水滴不够，结束浇水`)
-            break
-          }
-        } else {
-          if (waterResult.code === '6' && waterResult.finished) {
+          if (waterResult.finished) {
             // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
             isFruitFinished = true;
             break
+          } else {
+            if (waterResult.totalEnergy < 10) {
+              console.log(`水滴不够，结束浇水`)
+              break
+            }
           }
+        } else {
+          console.log('浇水出现失败异常,跳出不在继续浇水')
           break;
         }
       }
@@ -440,13 +442,15 @@ function* step() {
         console.log(`本次浇水结果(水果马上就可兑换了):   ${JSON.stringify(resp)}`);
         if (resp.code === '0') {
           console.log('\n浇水10g成功\n');
-          console.log(`目前水滴【${resp.totalEnergy}】g,继续浇水，水果马上就可以兑换了`)
-        } else {
-          if (resp.code === '6' && resp.finished) {
+          if (resp.finished) {
             // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
             isFruitFinished = true;
             break
+          } else {
+            console.log(`目前水滴【${resp.totalEnergy}】g,继续浇水，水果马上就可以兑换了`)
           }
+        } else {
+          console.log('浇水出现失败异常,跳出不在继续浇水')
           break;
         }
       }
@@ -463,17 +467,19 @@ function* step() {
         let res = yield waterGoodForFarm();
         if (res.code === '0') {
           console.log('\n浇水10g成功\n')
-          if (res.totalEnergy < (retainWater + 10)) {
-            console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
-          } else {
-            console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
-          }
-        } else {
-          if (res.code === '6' && res.finished) {
+          if (res.finished) {
             // 已证实，waterResult.finished为true，表示水果可以去领取兑换了
             isFruitFinished = true;
             break
+          } else {
+            if (res.totalEnergy < (retainWater + 10)) {
+              console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
+            } else {
+              console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
+            }
           }
+        } else {
+          console.log('浇水出现失败异常,跳出不在继续浇水')
           break;
         }
       }
