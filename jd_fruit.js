@@ -437,7 +437,7 @@ function* step() {
       isFruitFinished = false;
       for (let i = 0; i < (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy) / 10; i++) {
         let resp = yield waterGoodForFarm();
-        console.log(`本次浇水结果:   ${JSON.stringify(waterResult)}`);
+        console.log(`本次浇水结果(水果马上就可兑换了):   ${JSON.stringify(resp)}`);
         if (resp.code === '0') {
           console.log('\n浇水10g成功\n');
           console.log(`目前水滴【${resp.totalEnergy}】g,继续浇水，水果马上就可以兑换了`)
