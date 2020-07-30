@@ -26,11 +26,10 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let jdNotify = $.getdata('jdFruitNotify');
 //助力好友分享码(最多4个,否则后面的助力失败),原因:京东农场每人每天只有四次助力机会
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
-  '6fbd26cc27ac44d6a7fed34092453f77',
+  'a6f686a9f6aa4c80977370b03681c553',
+  'f92cb56c6a1349f5a35f0372aa041ea0',
+  'a9360baeceb04c9baaaa109f5d428d3c',
   '61ff5c624949454aa88561f2cd721bf6',
-  '0a74407df5df4fa99672a037eec61f7e',
-  'dbb21614667246fabcfd9685b6f448f3',
-  '40dbf12bb7ea4b8eb772741afe2125da'
 ]
 // 添加box功能
 // 【用box订阅的好处】
@@ -405,16 +404,16 @@ function* step() {
         let lotteryMasterHelpRes = yield lotteryMasterHelp(code);
         // console.log('天天抽奖助力结果',lotteryMasterHelpRes.helpResult)
         if (lotteryMasterHelpRes.helpResult.code === '0') {
-          console.log(`助力${lotteryMasterHelpRes.helpResult.masterUserInfo.nickName}成功\n`)
+          console.log(`天天抽奖-助力${lotteryMasterHelpRes.helpResult.masterUserInfo.nickName}成功\n`)
         } else if (lotteryMasterHelpRes.helpResult.code === '11') {
-          console.log(`不要重复助力${lotteryMasterHelpRes.helpResult.masterUserInfo.nickName}\n`)
+          console.log(`天天抽奖-不要重复助力${lotteryMasterHelpRes.helpResult.masterUserInfo.nickName}\n`)
         } else if (lotteryMasterHelpRes.helpResult.code === '13') {
-          console.log(`助力${lotteryMasterHelpRes.helpResult.masterUserInfo.nickName}失败,助力次数耗尽\n`);
+          console.log(`天天抽奖-助力${lotteryMasterHelpRes.helpResult.masterUserInfo.nickName}失败,助力次数耗尽\n`);
           break;
         }
         //lotteryMasterHelp
       }
-      console.log(`---抽奖次数remainLotteryTimes----${remainLotteryTimes}次`)
+      console.log(`---天天抽奖次数remainLotteryTimes----${remainLotteryTimes}次`)
       //抽奖
       if (remainLotteryTimes > 0) {
         console.log('开始抽奖')
