@@ -465,6 +465,13 @@ function* step() {
             isFruitFinished = true;
             break
           } else {
+            if (waterResult.waterStatus === '1') {
+              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
+              console.log(`浇水阶段奖励1${gotStageAwardForFarmRes1}`)
+            } else if (waterResult.waterStatus === '2') {
+              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
+              console.log(`浇水阶段奖励1${gotStageAwardForFarmRes2}`)
+            }
             if (waterResult.totalEnergy < 10) {
               console.log(`水滴不够，结束浇水`)
               break
@@ -553,6 +560,13 @@ function* step() {
             isFruitFinished = true;
             break
           } else {
+            if (res.waterStatus === '1') {
+              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
+              console.log(`浇水阶段奖励1${gotStageAwardForFarmRes1}`)
+            } else if (res.waterStatus === '2') {
+              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
+              console.log(`浇水阶段奖励1${gotStageAwardForFarmRes2}`)
+            }
             if (res.totalEnergy < (retainWater + 10)) {
               console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
             } else {
@@ -728,6 +742,12 @@ function browserForTurntableFarm(type) {
   // 浏览爆品会场8秒
 }
 
+/**
+ * 领取浇水过程中的阶段性奖励
+ */
+function gotStageAwardForFarm(type) {
+  request(arguments.callee.name.toString(), {'type': type});
+}
 
 /**
  * 被水滴砸中
