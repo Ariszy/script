@@ -18,7 +18,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 let name = '东东农场';
 const retainWater = 50;//保留水滴大于多少g,默认50g;
 const $ = new Env(name);
-const Key = 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;';//单引号内自行填写您抓取的京东Cookie
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 //京东接口地址
@@ -29,7 +29,7 @@ let jdNotify = $.getdata('jdFruitNotify');
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
   'a6f686a9f6aa4c80977370b03681c553',
   'f92cb56c6a1349f5a35f0372aa041ea0',
-  'a9360baeceb04c9baaaa109f5d428d3c',
+  '6fbd26cc27ac44d6a7fed34092453f77',
   '61ff5c624949454aa88561f2cd721bf6',
 ]
 // 添加box功能
