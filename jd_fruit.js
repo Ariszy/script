@@ -16,8 +16,9 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/nzw9314/Quan
 */
 
 let name = '东东农场';
+const retainWater = 30;//保留水滴大于多少g,默认50g;
 const $ = new Env(name);
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+const Key = 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 //京东接口地址
@@ -478,29 +479,28 @@ function* step() {
             isFruitFinished = true;
             break
           } else {
-            gotStageAwardFun(waterResult.waterStatus);
-            // if (waterResult.waterStatus === '1') {
-            //   console.log('果树发芽了,奖励30g水滴');
-            //   let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
-            //   console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
-            //   if (gotStageAwardForFarmRes1.code === '0') {
-            //     message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
-            //   }
-            // } else if (waterResult.waterStatus === '2') {
-            //   console.log('果树开花了,奖励40g水滴');
-            //   let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
-            //   console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
-            //   if (gotStageAwardForFarmRes2.code === '0') {
-            //     message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
-            //   }
-            // } else if (waterResult.waterStatus === '3') {
-            //   console.log('果树长出小果子啦, 奖励50g水滴');
-            //   let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm('3');
-            //   console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
-            //   if (gotStageAwardForFarmRes3.code === '0') {
-            //     message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
-            //   }
-            // }
+            if (waterResult.waterStatus === 1) {
+              console.log('果树发芽了,奖励30g水滴');
+              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm(waterResult.waterStatus);
+              console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
+              if (gotStageAwardForFarmRes1.code === '0') {
+                message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
+              }
+            } else if (waterResult.waterStatus === 2) {
+              console.log('果树开花了,奖励40g水滴');
+              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm(waterResult.waterStatus);
+              console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
+              if (gotStageAwardForFarmRes2.code === '0') {
+                message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
+              }
+            } else if (waterResult.waterStatus === 3) {
+              console.log('果树长出小果子啦, 奖励50g水滴');
+              let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm(waterResult.waterStatus);
+              console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
+              if (gotStageAwardForFarmRes3.code === '0') {
+                message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
+              }
+            }
             if (waterResult.totalEnergy < 10) {
               console.log(`水滴不够，结束浇水`)
               break
@@ -549,7 +549,6 @@ function* step() {
 
     farmInfo = yield initForFarm();
     // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于60g,则继续浇水(保留部分水滴是用于完成第二天的浇水10次的任务)
-    const retainWater = 50;//保留水滴大于50g;
     let overageEnergy = farmInfo.farmUserPro.totalEnergy - retainWater;
     if (farmInfo.farmUserPro.totalEnergy >= (farmInfo.farmUserPro.treeTotalEnergy - farmInfo.farmUserPro.treeEnergy)) {
       //如果现有的水滴，大于水果可兑换所需的对滴(也就是把水滴浇完，水果就能兑换了)
@@ -589,19 +588,28 @@ function* step() {
             isFruitFinished = true;
             break
           } else {
-            gotStageAwardFun(res.waterStatus);
-            // if (res.waterStatus === '1') {
-            //   let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
-            //   console.log(`浇水阶段奖励1${gotStageAwardForFarmRes1}`)
-            // } else if (res.waterStatus === '2') {
-            //   let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
-            //   console.log(`浇水阶段奖励1${gotStageAwardForFarmRes2}`)
-            // }
-            // if (res.totalEnergy < (retainWater + 10)) {
-            //   console.log(`目前水滴【${res.totalEnergy}】g，不再继续浇水`)
-            // } else {
-            //   console.log(`目前剩余水滴：【${res.totalEnergy}】g，可继续浇水`);
-            // }
+            if (res.waterStatus === 1) {
+              console.log('果树发芽了,奖励30g水滴');
+              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm(res.waterStatus);
+              console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
+              if (gotStageAwardForFarmRes1.code === '0') {
+                message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
+              }
+            } else if (res.waterStatus === 2) {
+              console.log('果树开花了,奖励40g水滴');
+              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm(res.waterStatus);
+              console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
+              if (gotStageAwardForFarmRes2.code === '0') {
+                message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
+              }
+            } else if (res.waterStatus === 3) {
+              console.log('果树长出小果子啦, 奖励50g水滴');
+              let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm(res.waterStatus);
+              console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
+              if (gotStageAwardForFarmRes3.code === '0') {
+                message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
+              }
+            }
           }
         } else {
           console.log('浇水出现失败异常,跳出不在继续浇水')
@@ -778,32 +786,7 @@ function browserForTurntableFarm(type) {
 function gotStageAwardForFarm(type) {
   request(arguments.callee.name.toString(), {'type': type});
 }
-async function gotStageAwardFun(waterStatus) {
-  console.log('哈哈哈---浇水了')
-  await $.wait(5000);
-  if (waterStatus === '1') {
-    console.log('果树发芽了,奖励30g水滴');
-    let gotStageAwardForFarmRes1 = await gotStageAwardForFarm('1');
-    console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
-    if (gotStageAwardForFarmRes1.code === '0') {
-      message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
-    }
-  } else if (waterStatus === '2') {
-    console.log('果树开花了,奖励40g水滴');
-    let gotStageAwardForFarmRes2 = await gotStageAwardForFarm('2');
-    console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
-    if (gotStageAwardForFarmRes2.code === '0') {
-      message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
-    }
-  } else if (waterStatus === '3') {
-    console.log('果树长出小果子啦, 奖励50g水滴');
-    let gotStageAwardForFarmRes3 = await gotStageAwardForFarm('3');
-    console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
-    if (gotStageAwardForFarmRes3.code === '0') {
-      message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
-    }
-  }
-}
+
 /**
  * 被水滴砸中
  * 要弹出来窗口后调用才有效, 暂时不知道如何控制
