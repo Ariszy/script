@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-07-30
+更新时间:2020-08-02
 // quantumultx
 [task_local]
 #jd免费水果
@@ -479,23 +479,23 @@ function* step() {
             isFruitFinished = true;
             break
           } else {
-            if (waterResult.waterStatus === 1) {
+            if (waterResult.waterStatus === 0 && waterResult.treeEnergy === 10) {
               console.log('果树发芽了,奖励30g水滴');
-              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm(waterResult.waterStatus);
+              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
               console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
               if (gotStageAwardForFarmRes1.code === '0') {
                 message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
               }
-            } else if (waterResult.waterStatus === 2) {
+            } else if (waterResult.waterStatus === 1) {
               console.log('果树开花了,奖励40g水滴');
-              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm(waterResult.waterStatus);
+              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
               console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
               if (gotStageAwardForFarmRes2.code === '0') {
                 message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
               }
-            } else if (waterResult.waterStatus === 3) {
+            } else if (waterResult.waterStatus === 2) {
               console.log('果树长出小果子啦, 奖励50g水滴');
-              let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm(waterResult.waterStatus);
+              let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm('3');
               console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
               if (gotStageAwardForFarmRes3.code === '0') {
                 message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
@@ -588,23 +588,23 @@ function* step() {
             isFruitFinished = true;
             break
           } else {
-            if (res.waterStatus === 1) {
+            if (res.waterStatus === 0 && res.treeEnergy === 10) {
               console.log('果树发芽了,奖励30g水滴');
-              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm(res.waterStatus);
+              let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
               console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
               if (gotStageAwardForFarmRes1.code === '0') {
                 message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
               }
-            } else if (res.waterStatus === 2) {
+            } else if (res.waterStatus === 1) {
               console.log('果树开花了,奖励40g水滴');
-              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm(res.waterStatus);
+              let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
               console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
               if (gotStageAwardForFarmRes2.code === '0') {
                 message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
               }
-            } else if (res.waterStatus === 3) {
+            } else if (res.waterStatus === 2) {
               console.log('果树长出小果子啦, 奖励50g水滴');
-              let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm(res.waterStatus);
+              let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm('3');
               console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
               if (gotStageAwardForFarmRes3.code === '0') {
                 message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
