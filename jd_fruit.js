@@ -491,14 +491,14 @@ function* step() {
               let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
               console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
               if (gotStageAwardForFarmRes2.code === '0') {
-                message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
+                message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}g💧\n`
               }
             } else if (waterResult.waterStatus === 2) {
               console.log('果树长出小果子啦, 奖励50g水滴');
               let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm('3');
               console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
               if (gotStageAwardForFarmRes3.code === '0') {
-                message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
+                message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}g💧\n`
               }
             }
             if (waterResult.totalEnergy < 10) {
@@ -593,21 +593,21 @@ function* step() {
               let gotStageAwardForFarmRes1 = yield gotStageAwardForFarm('1');
               console.log(`浇水阶段奖励1领取结果 ${JSON.stringify(gotStageAwardForFarmRes1)}`);
               if (gotStageAwardForFarmRes1.code === '0') {
-                message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}`
+                message += `【果树发芽了】奖励${gotStageAwardForFarmRes1.addEnergy}g💧\n`
               }
             } else if (res.waterStatus === 1) {
               console.log('果树开花了,奖励40g水滴');
               let gotStageAwardForFarmRes2 = yield gotStageAwardForFarm('2');
               console.log(`浇水阶段奖励2领取结果 ${JSON.stringify(gotStageAwardForFarmRes2)}`);
               if (gotStageAwardForFarmRes2.code === '0') {
-                message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}`
+                message += `【果树开花了】奖励${gotStageAwardForFarmRes2.addEnergy}g💧\n`
               }
             } else if (res.waterStatus === 2) {
               console.log('果树长出小果子啦, 奖励50g水滴');
               let gotStageAwardForFarmRes3 = yield gotStageAwardForFarm('3');
               console.log(`浇水阶段奖励3领取结果 ${JSON.stringify(gotStageAwardForFarmRes3)}`)
               if (gotStageAwardForFarmRes3.code === '0') {
-                message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}`
+                message += `【果树结果了】奖励${gotStageAwardForFarmRes3.addEnergy}g💧\n`
               }
             }
           }
