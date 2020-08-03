@@ -11,7 +11,7 @@
 [Script]
 cron "55 23 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_unsubscribe.js,tag=取关京东店铺商品
 // Surge
-自己写，没有软件
+取关京东店铺商品 = type=cron,cronexp=55 23 * * *,wake-system=1,timeout=20,script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_unsubscribe.js
  */
 const $ = new Env('取消京东店铺及商品关注');
 const Key = '';//单引号内自行填写您抓取的京东Cookie
