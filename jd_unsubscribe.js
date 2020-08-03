@@ -127,7 +127,7 @@ function unsubscribeGoods() {
       $.unsubscribeGoodsCount = count;
       if (followGoods.totalNum > 0) {
         for (let item of followGoods.data) {
-          if (item.commTitle.indexOf(stop) === 0) {
+          if (stop && item.commTitle.indexOf(stop) === 0) {
             console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
             break;
           }
