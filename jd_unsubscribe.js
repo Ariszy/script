@@ -15,7 +15,8 @@ cron "55 23 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_u
  */
 const $ = new Env('取消京东店铺及商品关注');
 const Key = '';//单引号内自行填写您抓取的京东Cookie
-const pageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消关注多少个商品及店铺。
+const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。
+const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
@@ -66,7 +67,7 @@ function unsubscribeShops() {
 function getFollowShops() {
   return new Promise((resolve) => {
     const option = {
-      url: `${JD_API_HOST}/shop/QueryShopFavList?cp=1&pageSize=${pageSize}&sceneval=2&g_login_type=1&callback=jsonpCBKA&g_ty=ls`,
+      url: `${JD_API_HOST}/shop/QueryShopFavList?cp=1&pageSize=${shopPageSize}&sceneval=2&g_login_type=1&callback=jsonpCBKA&g_ty=ls`,
       headers: {
         "Host": "wq.jd.com",
         "Accept": "*/*",
@@ -143,7 +144,7 @@ function unsubscribeGoods() {
 function getFollowGoods() {
   return new Promise((resolve) => {
     const option = {
-      url: `${JD_API_HOST}/comm/FavCommQueryFilter?cp=1&pageSize=${pageSize}&category=0&promote=0&cutPrice=0&coupon=0&stock=0&areaNo=1_72_4139_0&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
+      url: `${JD_API_HOST}/comm/FavCommQueryFilter?cp=1&pageSize=${goodPageSize}&category=0&promote=0&cutPrice=0&coupon=0&stock=0&areaNo=1_72_4139_0&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
       headers: {
         "Host": "wq.jd.com",
         "Accept": "*/*",
