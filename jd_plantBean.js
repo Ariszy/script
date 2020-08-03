@@ -1,6 +1,6 @@
 /*
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
-更新时间:2020-07-20
+更新时间:2020-08-03
 会自动关注任务中的店铺跟商品
 互助码shareCode请先手动运行脚本查看打印可看到
 // quantumultx
@@ -135,7 +135,7 @@ function* step() {
                             if (shop.taskState == '2') {
                                 let shopNutrientsTaskResult = yield shopNutrientsTask(shop.shopTaskId, shop.shopId)
                                 if (shopNutrientsTaskResult.code == 0) {
-                                    if (shopNutrientsTaskResult.data.nutrState == '1' && shopNutrientsTaskResult.data.nutrCount > 0) {
+                                    if (shopNutrientsTaskResult.data.nutrState && shopNutrientsTaskResult.data.nutrState == '1' && shopNutrientsTaskResult.data.nutrCount > 0) {
                                         console.log(`关注店铺${shop.shopName}获得${shopNutrientsTaskResult.data.nutrCount}营养液`)
                                         nutrCount += shopNutrientsTaskResult.data.nutrCount
                                         if (nutrCount >= task.totalNum - task.gainedNum) {
@@ -165,7 +165,7 @@ function* step() {
                             if (channel.taskState == '2') {
                                 let plantChannelNutrientsTaskResult = yield plantChannelNutrientsTask(channel.channelTaskId, channel.channelId)
                                 if (plantChannelNutrientsTaskResult.code == '0') {
-                                    if (plantChannelNutrientsTaskResult.data.nutrState == '1' && plantChannelNutrientsTaskResult.data.nutrNum > 0) {
+                                    if (plantChannelNutrientsTaskResult.data.nutrState && plantChannelNutrientsTaskResult.data.nutrState == '1' && plantChannelNutrientsTaskResult.data.nutrNum > 0) {
                                         console.log(`浏览频道${channel.channelName}获得${plantChannelNutrientsTaskResult.data.nutrNum}营养液`)
                                         nutrCount += plantChannelNutrientsTaskResult.data.nutrNum
                                         if (nutrCount >= task.totalNum - task.gainedNum) {
@@ -196,7 +196,7 @@ function* step() {
                             if (productInfo.taskState == '2') {
                                 let productNutrientsTaskResult = yield productNutrientsTask(productInfo.productTaskId, productInfo.skuId)
                                 if (productNutrientsTaskResult.code == '0') {
-                                    if (productNutrientsTaskResult.data.nutrState == '1' && productNutrientsTaskResult.data.nutrCount > 0) {
+                                    if (productNutrientsTaskResult.data.nutrState && productNutrientsTaskResult.data.nutrState == '1' && productNutrientsTaskResult.data.nutrCount > 0) {
                                         console.log(`关注商品${productInfo.productName}获得${productNutrientsTaskResult.data.nutrCount}营养液`)
                                         nutrCount += productNutrientsTaskResult.data.nutrCount
                                         if (nutrCount >= task.totalNum - task.gainedNum) {
