@@ -18,6 +18,7 @@ const Key = '';//单引号内自行填写您抓取的京东Cookie
 const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。
 const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。
 const jdNotify = $.getdata('jdUnsubscribeNotify');
+const stop = $.getdata('jdUnsubscribeStop') || '';//此处内容需去商品详情页（自营处）长按拷贝商品信息
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://wq.jd.com/fav';
@@ -45,6 +46,7 @@ function unsubscribeShops() {
     let followShops = await getFollowShops();
     if (followShops.iRet === '0') {
       let count = 0;
+      $.unsubscribeShopsCount = count;
       if (followShops.totalNum > 0) {
         for (let item of followShops.data) {
           let res = await unsubscribeShopsFun(item.shopId);
@@ -122,8 +124,13 @@ function unsubscribeGoods() {
     let followGoods = await getFollowGoods();
     if (followGoods.iRet === '0') {
       let count = 0;
+      $.unsubscribeGoodsCount = count;
       if (followGoods.totalNum > 0) {
         for (let item of followGoods.data) {
+          if (item.commTitle.indexOf(stop) === 0) {
+            console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
+            break;
+          }
           let res = await unsubscribeGoodsFun(item.commId);
           // console.log('取消关注商品结果', res);
           if (res.iRet === '0') {
