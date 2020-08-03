@@ -285,6 +285,48 @@
         "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png",
         "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png"
       ]
+    },
+    {
+      "id": "jdUnsubscribe",
+      "name": "取关京东店铺商品",
+      "keys": [],
+      "settings": [
+        {
+          "id": "jdUnsubscribeNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "jdUnsubscribePageSize",
+          "name": "每次取消店铺及商品的数量",
+          "val": "10",
+          "type": "radios",
+          "desc": "每次喂养狗粮克数(默认10g)",
+          "items": [
+            {
+              "key": "10",
+              "label": "取消10个店铺及商品"
+            },
+            {
+              "key": "20",
+              "label": "取消20个店铺及商品"
+            },
+            {
+              "key": "30",
+              "label": "取消30个店铺及商品"
+            }
+          ]
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://gitee.com/lxk0301/scripts",
+      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_unsubscribe.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png"
+      ]
     }
   ]
 }
