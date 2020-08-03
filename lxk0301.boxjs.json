@@ -324,8 +324,8 @@
       "repo": "https://gitee.com/lxk0301/scripts",
       "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_unsubscribe.js",
       "icons": [
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png"
+        "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
+        "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
       ]
     }
   ]
