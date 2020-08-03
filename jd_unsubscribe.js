@@ -126,10 +126,10 @@ function unsubscribeGoods() {
           let res = await unsubscribeGoodsFun(item.commId);
           // console.log('取消关注商品结果', res);
           if (res.iRet === '0') {
-            console.log(`取消关注商品---${item.commColor}---成功\n`)
+            console.log(`取消关注商品---${item.commTitle.substring(0, 25).concat('...')}---成功\n`)
             count ++;
           } else {
-            console.log(`取消关注商品---${item.commColor}---失败\n`)
+            console.log(`取消关注商品---${item.commTitle.substring(0, 25).concat('...')}---失败\n`)
           }
         }
         $.unsubscribeGoodsCount = count;
