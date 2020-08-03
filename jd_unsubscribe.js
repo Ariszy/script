@@ -12,7 +12,7 @@ cron "55 23 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_u
 自己写，没有软件
  */
 const $ = new Env('取消京东店铺及商品关注');
-const Key = 'pt_key=AAJfGoKPADCr1fEJpPMgWR3HviKGtCmd9NrzI4xd88aVkN28b1TxbH0urwb4J7Mjgw3MiepAVq0;pt_pin=jd_VTKxDTRDYRje;';//单引号内自行填写您抓取的京东Cookie
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 const pageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消关注多少个商品及店铺。
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 //直接用NobyDa的jd cookie
