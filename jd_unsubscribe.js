@@ -1,6 +1,6 @@
 /*
 因种豆得豆和宠汪汪脚本会关注店铺和商品，故此脚本用来取消已关注的店铺和商品
-默认每运行一次脚本取消关注10个商品，10个店铺。可结合boxjs选择取消多少个，先就这样子吧。
+默认每运行一次脚本取消关注10个商品，10个店铺。可结合boxjs自定义取消多少个（目前测试通过最大数量是一次性取消300个商品无异常，大于300请自行测试）。
 建议此脚本运行时间在 种豆得豆和宠汪汪脚本运行之后 再执行
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -27,6 +27,15 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  await jdUnsubscribe();
+})()
+    .catch((e) => {
+      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+    })
+    .finally(() => {
+      $.done();
+    })
+async function jdUnsubscribe() {
   await Promise.all([
     unsubscribeShops(),
     unsubscribeGoods()
@@ -38,13 +47,7 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, '取消店铺及商品关注成功', `【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
-})()
-    .catch((e) => {
-      $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-    })
-    .finally(() => {
-      $.done();
-    })
+}
 function unsubscribeShops() {
   return new Promise(async (resolve) => {
     let followShops = await getFollowShops();
