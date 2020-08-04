@@ -13,9 +13,9 @@ cron "1 0-18/6" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_818.
 京东818手机节 = type=cron,cronexp=1 0-18/6,wake-system=1,timeout=20,script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_818.js
  */
 const $ = new Env('京东818手机节');
-const Key = 'pt_key=AAJfC8e5ADAYEBHDmgPj1_S0lkRytXZkscP5qnStdwDj3yqldekb0Yu8e7PQ2bpPC57L4kNAh3Q;pt_pin=jd_704a2e5e28a66;';//单引号内自行填写您抓取的京东Cookie
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
-const DualKey = 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;';
+const DualKey = '';
 //直接用NobyDa的jd cookie
 
 let cookie = Key ? Key : $.getdata('CookieJD');
