@@ -1,6 +1,6 @@
-//京东818手机节
+//京东818手机节，可获得京豆
 const $ = new Env('京东818手机节');
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+const Key = 'pt_key=AAJfC8e5ADAYEBHDmgPj1_S0lkRytXZkscP5qnStdwDj3yqldekb0Yu8e7PQ2bpPC57L4kNAh3Q;pt_pin=jd_704a2e5e28a66;';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
@@ -17,7 +17,8 @@ const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
   await listGoods();//逛新品
   await shopInfo();//逛店铺
   await listMeeting();//逛会场
-  $.msg($.name, '京东818手机节脚本运行完毕', '奖品详情查看 https://rdcseason.m.jd.com\n', {"open-url": "https://rdcseason.m.jd.com"});
+  await myRank();//领取往期排名奖励
+  $.msg($.name, '京东818手机节脚本运行完毕', `【往期排名奖励】获得京豆${$.jbeanNum}个\n奖品详情查看 https://rdcseason.m.jd.com/#/hame\n`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
 
 
   // await getGoodsPrize('100007221865');
@@ -335,6 +336,75 @@ function getMeetingPrize(id) {
         // console.log('data1', data);
       } catch (e) {
         $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function myRank() {
+  return new Promise(resolve => {
+    const options = {
+      "url": `${JD_API_HOST}task/myRank?t=${Date.now()}`,
+      "headers": {
+        "Host": "rdcseason.m.jd.com",
+        "Accept": "application/json, text/plain, */*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://rdcseason.m.jd.com/",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.jbeanNum = 0;
+    $.get(options, async (err, resp, data) => {
+      try {
+        // console.log('查询获奖列表data', data);
+        data = JSON.parse(data);
+        if (data.code === 200 && data.data.myHis) {
+          for (let item of data.data.myHis){
+            if (item.status === '21') {
+              await $.wait(1000);
+              console.log('开始领奖')
+              let res = await saveJbean(item.id);
+              // console.log('领奖结果', res)
+              if (res.code === 200 && res.data.rsCode === 200) {
+                $.jbeanNum += Number(res.data.jbeanNum);
+              }
+            }
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function saveJbean(id) {
+  return new Promise(resolve => {
+    const options = {
+      "url": `${JD_API_HOST}task/saveJbean`,
+      "body": `prizeId=${id}`,
+      "headers": {
+        "Host": "rdcseason.m.jd.com",
+        "Accept": "application/json, text/plain, */*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://rdcseason.m.jd.com/",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        // console.log('领取京豆结果', data);
+        data = JSON.parse(data);
+      } catch (e) {
+        $.logErr(e, resp)
       } finally {
         resolve(data);
       }
