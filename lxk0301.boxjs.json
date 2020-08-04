@@ -316,7 +316,7 @@
           "desc": "运行一次脚本取消多少个已关注的店铺（默认10个）"
         },
         {
-          "id": "jdUnsubscribeStop",
+          "id": "jdUnsubscribeStopGoods",
           "name": "遇到此商品不再进行取关",
           "val": "",
           "type": "text",
