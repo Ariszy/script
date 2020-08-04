@@ -19,20 +19,39 @@ cron "55 23 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_u
 const $ = new Env('取关京东店铺和商品');
 //如使用node.js。请在下方单引号内自行填写您抓取的京东Cookie
 const Key = '';
+//如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
+const DualKey = '';
 const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。
 const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 const stop = $.getdata('jdUnsubscribeStopGoods') || $.getdata('jdUnsubscribeStop') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
 const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
 //直接用NobyDa的jd cookie
-const cookie = Key ? Key : $.getdata('CookieJD');
+let cookie = Key ? Key : $.getdata('CookieJD');
+const cookie2 = DualKey ? DualKey : $.getdata('CookieJD2');
+let UserName = '';
 const JD_API_HOST = 'https://wq.jd.com/fav';
 !(async () => {
   if (!cookie) {
-    $.msg('取关京东店铺商品失败', '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-    return;
+    $.msg('【京东账号一】取关京东店铺商品失败', '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+  } else {
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1])
+    await jdUnsubscribe();
   }
-  await jdUnsubscribe();
+  await $.wait(5000);
+
+  if (!cookie2) {
+    $.msg('【京东账号二】取关京东店铺商品失败', '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+  } else {
+    cookie = cookie2;
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
+    await jdUnsubscribe();
+  }
+  // if (cookie2) {
+  //   cookie = cookie2;
+  //   UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
+  //   await jdUnsubscribe();
+  // }
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -50,7 +69,7 @@ async function jdUnsubscribe() {
     getFollowGoods()
   ])
   if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, '取消店铺及商品关注成功', `【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
+    $.msg($.name, `【京东账号】${UserName}取消店铺及商品关注成功`, `【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
 }
 
