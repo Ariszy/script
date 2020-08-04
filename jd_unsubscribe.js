@@ -15,14 +15,14 @@ cron "55 23 * * *" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_u
 // Surge
 取关京东店铺商品 = type=cron,cronexp=55 23 * * *,wake-system=1,timeout=20,script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_unsubscribe.js
  */
-const $ = new Env('取消京东店铺及商品关注');
+const $ = new Env('取关京东店铺和商品');
 //如使用node.js。请在下方单引号内自行填写您抓取的京东Cookie
 const Key = '';
 const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。
 const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 const stop = $.getdata('jdUnsubscribeStop') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
-const StopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
+const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://wq.jd.com/fav';
@@ -151,8 +151,8 @@ function unsubscribeShops() {
       $.unsubscribeShopsCount = count;
       if (followShops.totalNum > 0) {
         for (let item of followShops.data) {
-          if (stop && (item.shopName && item.shopName.indexOf(StopShop) > -1)) {
-            console.log(`匹配到了您设定的店铺--${stop}，不在进行取消关注店铺`)
+          if (stopShop && (item.shopName && item.shopName.indexOf(stopShop) > -1)) {
+            console.log(`匹配到了您设定的店铺--${item.shopName}，不在进行取消关注店铺`)
             break;
           }
           let res = await unsubscribeShopsFun(item.shopId);
