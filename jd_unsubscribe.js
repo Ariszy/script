@@ -27,10 +27,14 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  await unsubscribeShops();
-  await unsubscribeGoods();
-  await getFollowShops();
-  await getFollowGoods();
+  await Promise.all([
+    unsubscribeShops(),
+    unsubscribeGoods()
+  ])
+  await Promise.all([
+    getFollowShops(),
+    getFollowGoods()
+  ])
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, '取消店铺及商品关注成功', `【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
