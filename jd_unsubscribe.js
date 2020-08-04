@@ -27,7 +27,7 @@ const cookie = Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://wq.jd.com/fav';
 !(async () => {
   if (!cookie) {
-    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg('取关京东店铺商品失败', '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
   await jdUnsubscribe();
