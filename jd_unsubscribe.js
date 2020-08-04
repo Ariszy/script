@@ -69,7 +69,7 @@ async function jdUnsubscribe() {
     getFollowGoods()
   ])
   if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, `【京东账号】${UserName}取消店铺及商品关注成功`, `【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
+    $.msg($.name, ``, `【京东账号】${UserName}取消店铺及商品关注成功\n【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
 }
 
