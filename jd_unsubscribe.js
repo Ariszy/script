@@ -22,7 +22,7 @@ const Key = '';
 const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。
 const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。
 const jdNotify = $.getdata('jdUnsubscribeNotify');
-const stop = $.getdata('jdUnsubscribeStop') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
+const stop = $.getdata('jdUnsubscribeStopGoods') || $.getdata('jdUnsubscribeStop') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
 const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');

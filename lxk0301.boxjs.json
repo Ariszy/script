@@ -290,7 +290,8 @@
       "id": "jdUnsubscribe",
       "name": "取关京东店铺和商品",
       "keys": [
-        "jdUnsubscribeStop"
+        "jdUnsubscribeStopGoods",
+        "jdUnsubscribeStopShop"
       ],
       "settings": [
         {
