@@ -94,7 +94,11 @@ function unsubscribeGoods(doubleKey) {
       }
     } else if (followGoods.iRet === '9999') {
       $.msg('取关京东店铺商品失败', `【提示】京东账号${doubleKey ? '二':'一'}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
-      $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+      if (doubleKey) {
+        $.setdata('', 'CookieJD2')
+      } else {
+        $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+      }
       $.done();
     }
   })
