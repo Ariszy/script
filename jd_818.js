@@ -1,34 +1,41 @@
-//京东818手机节，可获得京豆
+/*
+京东818手机节，可获得京豆
+支持京东双账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+// quantumultx
+[task_local]
+#京东818手机节
+1 0-18/6 * * * https://gitee.com/lxk0301/scripts/raw/master/jd_818.js, tag=京东818手机节, enabled=true
+// Loon
+[Script]
+cron "1 0-18/6" script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_818.js,tag=京东818手机节
+// Surge
+京东818手机节 = type=cron,cronexp=1 0-18/6,wake-system=1,timeout=20,script-path=https://gitee.com/lxk0301/scripts/raw/master/jd_818.js
+ */
 const $ = new Env('京东818手机节');
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+const Key = 'pt_key=AAJfC8e5ADAYEBHDmgPj1_S0lkRytXZkscP5qnStdwDj3yqldekb0Yu8e7PQ2bpPC57L4kNAh3Q;pt_pin=jd_704a2e5e28a66;';//单引号内自行填写您抓取的京东Cookie
+//如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
+const DualKey = 'pt_key=AAJfAv31AEBlB0UzN_9K9kXOEs2VvYg5kz8AACQyVpWZs4zInFVXVF01t-a-7ylquYGxUM5DG9F6sSddD4xs_GZV3LYKgX5I;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;';
 //直接用NobyDa的jd cookie
-const cookie = Key ? Key : $.getdata('CookieJD');
+
+let cookie = Key ? Key : $.getdata('CookieJD');
+const cookie2 = DualKey ? DualKey : $.getdata('CookieJD2');
+let UserName = '';
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 
 !(async () => {
   if (!cookie) {
-    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-    return;
+    $.msg('【京东账号一】取关京东店铺商品失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+  } else {
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
+    await JD818();
   }
-  await listGoods();//逛新品
-  await shopInfo();//逛店铺
-  await listMeeting();//逛会场
-
-  await listGoods();//逛新品
-  await shopInfo();//逛店铺
-  await listMeeting();//逛会场
-  await myRank();//领取往期排名奖励
-  $.msg($.name, '京东818手机节脚本运行完毕', `【往期排名奖励】获得京豆${$.jbeanNum}个\n奖品详情查看 https://rdcseason.m.jd.com/#/hame\n`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
-
-
-  // await getGoodsPrize('100007221865');
-  // await msgShow();
-  // if ($.isLogin) {
-  //   if (!jdNotify || jdNotify === 'false') {
-  //     $.msg($.name, subTitle, message);
-  //   }
-  // }
-  // $.msg($.name, subTitle, message);
+  await $.wait(1000);
+  if (cookie2) {
+    cookie = cookie2;
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
+    await JD818(cookie2);
+  }
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -36,7 +43,20 @@ const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
     .finally(() => {
       $.done();
     })
-
+async function JD818(doubleKey) {
+  await Promise.all([
+    listGoods(),//逛新品
+    shopInfo(),//逛店铺
+    listMeeting()//逛会场
+  ])
+  await Promise.all([
+    listGoods(),//逛新品
+    shopInfo(),//逛店铺
+    listMeeting()//逛会场
+  ])
+  await myRank();//领取往期排名奖励
+  $.msg($.name, '', `【京东账号${doubleKey ? '二' : '一'}】${UserName}\n【往期排名奖励】获得京豆${$.jbeanNum}个\n奖品详情查看 https://rdcseason.m.jd.com/#/hame\n`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+}
 function listMeeting() {
   const options = {
     'url': `${JD_API_HOST}task/listMeeting?t=${Date.now()}`,
