@@ -1,6 +1,6 @@
 //京东818手机节，可获得京豆
 const $ = new Env('京东818手机节');
-const Key = 'pt_key=AAJfC8e5ADAYEBHDmgPj1_S0lkRytXZkscP5qnStdwDj3yqldekb0Yu8e7PQ2bpPC57L4kNAh3Q;pt_pin=jd_704a2e5e28a66;';//单引号内自行填写您抓取的京东Cookie
+const Key = '';//单引号内自行填写您抓取的京东Cookie
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
