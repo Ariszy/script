@@ -51,6 +51,97 @@ async function jdUnsubscribe() {
     $.msg($.name, '取消店铺及商品关注成功', `【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
 }
+
+function unsubscribeGoods() {
+  return new Promise(async (resolve) => {
+    let followGoods = await getFollowGoods();
+    if (followGoods.iRet === '0') {
+      let count = 0;
+      $.unsubscribeGoodsCount = count;
+      if (followGoods.totalNum > 0) {
+        for (let item of followGoods.data) {
+          if (stop && item.commTitle.indexOf(stop) === 0) {
+            console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
+            break;
+          }
+          let res = await unsubscribeGoodsFun(item.commId);
+          // console.log('取消关注商品结果', res);
+          if (res.iRet === '0') {
+            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
+            count ++;
+          } else {
+            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
+          }
+        }
+        $.unsubscribeGoodsCount = count;
+        resolve(count)
+      } else {
+        resolve(count)
+      }
+    } else if (followGoods.iRet === '9999') {
+      $.msg('取关京东店铺商品失败', '【提示】京东cookie已失效,请重新登录获取', '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
+      $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+      $.done();
+    }
+  })
+}
+function getFollowGoods() {
+  return new Promise((resolve) => {
+    const option = {
+      url: `${JD_API_HOST}/comm/FavCommQueryFilter?cp=1&pageSize=${goodPageSize}&category=0&promote=0&cutPrice=0&coupon=0&stock=0&areaNo=1_72_4139_0&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
+      headers: {
+        "Host": "wq.jd.com",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://wqs.jd.com/my/fav/goods_fav.shtml?ptag=37146.4.1&sceneval=2&jxsid=15963530166144677970",
+        "Accept-Encoding": "gzip, deflate, br"
+      },
+    }
+    $.get(option, (err, resp, data) => {
+      try {
+        data = JSON.parse(data.slice(14, -13));
+        $.goodsTotalNum = data.totalNum;
+        // console.log('data', data.data.length)
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    });
+  })
+}
+function unsubscribeGoodsFun(commId) {
+  return new Promise(resolve => {
+    const option = {
+      url: `${JD_API_HOST}/comm/FavCommBatchDel?commId=${commId}&sceneval=2&g_login_type=1&callback=jsonpCBKM&g_ty=ls`,
+      headers: {
+        "Host": "wq.jd.com",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
+        'Referer': 'https://wqs.jd.com/my/fav/goods_fav.shtml?ptag=37146.4.1&sceneval=2&jxsid=15960121319555534107',
+        'Cookie': cookie,
+        "Accept-Language": "zh-cn",
+        "Accept-Encoding": "gzip, deflate, br"
+      },
+    }
+    $.get(option, (err, resp, data) => {
+      try {
+        data = JSON.parse(data.slice(14, -13).replace(',}', '}'));
+        // console.log('data', data);
+        // console.log('data', data.errMsg);
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    });
+  })
+}
+
 function unsubscribeShops() {
   return new Promise(async (resolve) => {
     let followShops = await getFollowShops();
@@ -125,91 +216,6 @@ function unsubscribeShopsFun(shopId) {
     $.get(option, (err, resp, data) => {
       try {
         data = JSON.parse(data.slice(14, -13));
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve(data);
-      }
-    });
-  })
-}
-function unsubscribeGoods() {
-  return new Promise(async (resolve) => {
-    let followGoods = await getFollowGoods();
-    if (followGoods.iRet === '0') {
-      let count = 0;
-      $.unsubscribeGoodsCount = count;
-      if (followGoods.totalNum > 0) {
-        for (let item of followGoods.data) {
-          if (stop && item.commTitle.indexOf(stop) === 0) {
-            console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
-            break;
-          }
-          let res = await unsubscribeGoodsFun(item.commId);
-          // console.log('取消关注商品结果', res);
-          if (res.iRet === '0') {
-            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
-            count ++;
-          } else {
-            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
-          }
-        }
-        $.unsubscribeGoodsCount = count;
-        resolve(count)
-      } else {
-        resolve(count)
-      }
-    }
-  })
-}
-function getFollowGoods() {
-  return new Promise((resolve) => {
-    const option = {
-      url: `${JD_API_HOST}/comm/FavCommQueryFilter?cp=1&pageSize=${goodPageSize}&category=0&promote=0&cutPrice=0&coupon=0&stock=0&areaNo=1_72_4139_0&sceneval=2&g_login_type=1&callback=jsonpCBKB&g_ty=ls`,
-      headers: {
-        "Host": "wq.jd.com",
-        "Accept": "*/*",
-        "Connection": "keep-alive",
-        "Cookie": cookie,
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1",
-        "Accept-Language": "zh-cn",
-        "Referer": "https://wqs.jd.com/my/fav/goods_fav.shtml?ptag=37146.4.1&sceneval=2&jxsid=15963530166144677970",
-        "Accept-Encoding": "gzip, deflate, br"
-      },
-    }
-    $.get(option, (err, resp, data) => {
-      try {
-        data = JSON.parse(data.slice(14, -13));
-        $.goodsTotalNum = data.totalNum;
-        // console.log('data', data.data.length)
-      } catch (e) {
-        $.logErr(e, resp);
-      } finally {
-        resolve(data);
-      }
-    });
-  })
-}
-function unsubscribeGoodsFun(commId) {
-  return new Promise(resolve => {
-    const option = {
-      url: `${JD_API_HOST}/comm/FavCommBatchDel?commId=${commId}&sceneval=2&g_login_type=1&callback=jsonpCBKM&g_ty=ls`,
-      headers: {
-        "Host": "wq.jd.com",
-        "Accept": "*/*",
-        "Connection": "keep-alive",
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-        'Referer': 'https://wqs.jd.com/my/fav/goods_fav.shtml?ptag=37146.4.1&sceneval=2&jxsid=15960121319555534107',
-        'Cookie': cookie,
-        "Accept-Language": "zh-cn",
-        "Accept-Encoding": "gzip, deflate, br"
-      },
-    }
-    $.get(option, (err, resp, data) => {
-      try {
-        data = JSON.parse(data.slice(14, -13).replace(',}', '}'));
-        // console.log('data', data);
-        // console.log('data', data.errMsg);
       } catch (e) {
         $.logErr(e, resp);
       } finally {
