@@ -301,13 +301,6 @@
           "desc": "运行脚本时不发出系统弹窗通知"
         },
         {
-          "id": "jdUnsubscribeStop",
-          "name": "遇到此商品不再进行取关",
-          "val": "",
-          "type": "text",
-          "desc": "匹配到此处内容不再进行取关(此处内容需去商品详情页（自营）长按拷贝商品信息)"
-        },
-        {
           "id": "jdUnsubscribePageSize",
           "name": "取消已关注商品的数量",
           "val": 10,
@@ -320,6 +313,13 @@
           "val": 10,
           "type": "number",
           "desc": "运行一次脚本取消多少个已关注的店铺（默认10个）"
+        },
+        {
+          "id": "jdUnsubscribeStop",
+          "name": "遇到此商品不再进行取关",
+          "val": "",
+          "type": "text",
+          "desc": "匹配到此处内容不再进行取关(此处内容需去商品详情页（自营）长按拷贝商品信息)"
         }
       ],
       "author": "@lxk0301",
