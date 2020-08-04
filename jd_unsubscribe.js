@@ -35,7 +35,7 @@ const JD_API_HOST = 'https://wq.jd.com/fav';
   if (!cookie) {
     $.msg('【京东账号一】取关京东店铺商品失败', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
   } else {
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1])
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
     await jdUnsubscribe();
   }
   await $.wait(1000);
@@ -80,7 +80,7 @@ function unsubscribeGoods(doubleKey) {
           }
           let res = await unsubscribeGoodsFun(item.commId);
           // console.log('取消关注商品结果', res);
-          if (res.iRet === '0') {
+          if (res.iRet === 0 && errMsg === 'success') {
             console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
             count ++;
           } else {
@@ -134,13 +134,13 @@ function getFollowGoods() {
 function unsubscribeGoodsFun(commId) {
   return new Promise(resolve => {
     const option = {
-      url: `${JD_API_HOST}/comm/FavCommBatchDel?commId=${commId}&sceneval=2&g_login_type=1&callback=jsonpCBKM&g_ty=ls`,
+      url: `${JD_API_HOST}/comm/FavCommDel?commId=${commId}&_=${Date.now()}&sceneval=2&g_login_type=1&callback=jsonpCBKP&g_ty=ls`,
       headers: {
         "Host": "wq.jd.com",
         "Accept": "*/*",
         "Connection": "keep-alive",
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1',
-        'Referer': 'https://wqs.jd.com/my/fav/goods_fav.shtml?ptag=37146.4.1&sceneval=2&jxsid=15960121319555534107',
+        'Referer': 'https://wqs.jd.com/my/fav/goods_fav.shtml?ptag=37146.4.1&sceneval=2&jxsid=15963530166144677970',
         'Cookie': cookie,
         "Accept-Language": "zh-cn",
         "Accept-Encoding": "gzip, deflate, br"
@@ -219,7 +219,7 @@ function getFollowShops() {
 function unsubscribeShopsFun(shopId) {
   return new Promise(resolve => {
     const option = {
-      url: `${JD_API_HOST}/shop/batchunfollow?shopId=${shopId}&sceneval=2&g_login_type=1&callback=jsonpCBKG&g_ty=ls`,
+      url: `${JD_API_HOST}/shop/DelShopFav?shopId=${shopId}&_=${Date.now()}&sceneval=2&g_login_type=1&callback=jsonpCBKG&g_ty=ls`,
       headers: {
         "Host": "wq.jd.com",
         "Accept": "*/*",
