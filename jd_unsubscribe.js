@@ -74,7 +74,7 @@ function unsubscribeGoods(doubleKey) {
       $.unsubscribeGoodsCount = count;
       if (followGoods.totalNum > 0) {
         for (let item of followGoods.data) {
-          if (stop && item.commTitle.indexOf(stop) === 0) {
+          if (stop && item.commTitle.indexOf(stop.replace(/\s*/g, '')) === 0) {
             console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
             break;
           }
@@ -168,7 +168,7 @@ function unsubscribeShops() {
       $.unsubscribeShopsCount = count;
       if (followShops.totalNum > 0) {
         for (let item of followShops.data) {
-          if (stopShop && (item.shopName && item.shopName.indexOf(stopShop) > -1)) {
+          if (stopShop && (item.shopName && item.shopName.indexOf(stopShop.replace(/\s*/g, '')) > -1)) {
             console.log(`匹配到了您设定的店铺--${item.shopName}，不在进行取消关注店铺`)
             break;
           }
