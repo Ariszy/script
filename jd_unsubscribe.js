@@ -80,7 +80,7 @@ function unsubscribeGoods(doubleKey) {
           }
           let res = await unsubscribeGoodsFun(item.commId);
           // console.log('取消关注商品结果', res);
-          if (res.iRet === 0 && errMsg === 'success') {
+          if (res.iRet === 0 && res.errMsg === 'success') {
             console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
             count ++;
           } else {
