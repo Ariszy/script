@@ -79,7 +79,7 @@ function unsubscribeGoods(doubleKey) {
           console.log(`过滤商品去掉空格后：：${stop.replace(/\ufffc|\s*/g, '')}`)
           console.log(`是否匹配：：${item.commTitle.indexOf(stop.replace(/\ufffc|\s*/, ''))}`)
           console.log(`关注商品222：：${typeof (item.commTitle.indexOf(stop.replace(/\s*/g, '')))}`)
-          if (stop && item.commTitle.indexOf(stop.replace(/\s*/g, '')) === 0) {
+          if (stop && item.commTitle.indexOf(stop.replace(/\ufffc|\s*/g, '')) === 0) {
             console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
             break;
           }
