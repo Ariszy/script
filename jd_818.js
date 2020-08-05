@@ -30,13 +30,13 @@ const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
   if (!cookie) {
     $.msg('【京东账号一】818手机节', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
   } else {
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
     await JD818();
   }
   await $.wait(1000);
   if (cookie2) {
     cookie = cookie2;
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/)[1]);
+    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
     await JD818(cookie2);
   }
 })()
