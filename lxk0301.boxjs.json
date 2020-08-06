@@ -3,7 +3,7 @@
   "name": "lxk0301脚本订阅",
   "author": "@lxk0301",
   "icon": "https://avatars0.githubusercontent.com/u/21308593?s=52&v=4",
-  "repo": "https://gitee.com/lxk0301/scripts/",
+  "repo": "https://github.com/lxk0301/scripts/",
   "apps": [
     {
       "id": "jd_fruit",
@@ -60,11 +60,11 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_fruit.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdnc_mini.png",
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_fruit.png"
+        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_fruit.png"
       ]
     },
     {
@@ -130,8 +130,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_pet.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdmc_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png"
@@ -184,11 +184,11 @@
         }
       ],
       "author": "@uniqueque",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_plantBean.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdzd_mini.png",
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_plantBean.png"
+        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_plantBean.png"
       ]
     },
     {
@@ -230,11 +230,11 @@
         }
       ],
       "author": "@uniqueque",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_joy.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_joy.png"
+        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_joy.png"
       ]
     },
     {
@@ -258,11 +258,11 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_moneyTree.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs_mini.png",
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_moneyTree.png"
+        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_moneyTree.png"
       ]
     },
     {
@@ -279,11 +279,11 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_speed.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png",
-        "https://gitee.com/lxk0301/scripts/raw/master/icon/jd_speed.png"
+        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_speed.png"
       ]
     },
     {
@@ -331,8 +331,8 @@
         }
       ],
       "author": "@lxk0301",
-      "repo": "https://gitee.com/lxk0301/scripts",
-      "script": "https://gitee.com/lxk0301/scripts/raw/master/jd_unsubscribe.js",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js",
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
