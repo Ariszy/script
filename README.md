@@ -1,4 +1,4 @@
-![Anurag’s github stats](https://github-readme-stats.vercel.app/api?username=nzw9314&show_icons=true&theme=merko)
+![Anurag’s github stats](https://github-readme-stats.vercel.app/api?username=lxk0301&show_icons=true&theme=merko)
 
 ## 京东薅羊毛工具（活动入口：京东app->我的->游戏与互动->查看更多）
 
