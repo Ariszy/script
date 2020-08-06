@@ -1,6 +1,6 @@
 /*
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
-更新时间:2020-08-03
+更新时间:2020-08-06
 会自动关注任务中的店铺跟商品
 互助码shareCode请先手动运行脚本查看打印可看到
 // quantumultx
@@ -489,26 +489,36 @@ function requestGet(url){
     };
     $.get(option, (err, resp, data) => {
       try {
-        sleep(JSON.parse(data))
+        if (err) {
+          console.log('\n种豆得豆: API查询请求失败 ‼️‼️')
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp)
+      } finally {
+        sleep(data);
       }
+      // try {
+      //   sleep(JSON.parse(data))
+      // } catch (e) {
+      //   $.logErr(e, resp)
+      // }
     })
 }
 
 function request(function_id, body = {}) {
     $.post(taskurl(function_id, body), (err, resp, data) => {
-      if (err) {
-        console.log("=== request error -s--");
-        console.log("=== request error -e--");
-      } else {
-        try {
+      try {
+        if (err) {
+          console.log('\n种豆得豆: API查询请求失败 ‼️‼️')
+        } else {
           data = JSON.parse(data);
-        } catch (e) {
-          console.log(e);
-        } finally {
-          sleep(data);
         }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        sleep(data);
       }
     })
 }
