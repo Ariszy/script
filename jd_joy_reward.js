@@ -19,7 +19,7 @@ cron "1 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 const $ = new Env('宠汪汪积分兑换奖品');
 //=======node.js使用说明======
 //请在下方单引号内自行填写您抓取的京东Cookie
-const Key = '';
+const Key = 'pt_key=AAJfCetdADCDahtAlLLr2xI7MFlBjr-sdRP_XlIX7hAH6VQXfQRQoLUaPBz0RTx5AVudSgg2hoI;pt_pin=jd_6cd93e613b0e5;';
 //如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
 const DualKey = '';
 //=======node.js使用说明结束=======
@@ -64,17 +64,24 @@ async function joyReward(doubleKey) {
     console.log(`京东昵称 ${pin}\n`);
 
     let todayExchanged =  datas.some((value, index, array) => value.todayExchanged === true)
-    console.log(`今日是否已兑换过奖品  ${todayExchanged ? '是':'否'}`);
+    console.log(`今日是否已兑换过奖品  ${todayExchanged ? '是':'否'}\n`);
     let canReardArr = [];//，满足你当前的等级，以及积分足够的京豆奖品
     if (!todayExchanged) {
       for (let i = 0; i < canPetLevel; i++) {
         for (let j = 0; j < datas[i].rewardDetailVOS.length; j++) {
           if (datas[i].rewardDetailVOS[j].rewardType === 3 && datas[i].rewardDetailVOS[j].petScore < score) {
-            canReardArr.push(datas[i].rewardDetailVOS[j]);
+            canReardArr.push({
+              'petLevel': datas[i].rewardDetailVOS[j].petLevel,
+              'rewardName': datas[i].rewardDetailVOS[j].rewardName,
+              'petScore': datas[i].rewardDetailVOS[j].petScore,
+              'leftStock': datas[i].rewardDetailVOS[j].leftStock,
+              'id': datas[i].rewardDetailVOS[j].id,
+            });
           }
         }
       }
-      // console.log('可兑换京豆的列表长度', canReardArr.length)
+      // console.log('可兑换京豆的列表长度', canReardArr)
+      canReardArr.reverse();//倒序进行兑换奖品
       for (let item of canReardArr) {
         // console.log('leftStock', item.leftStock)
         let levelArea = item.petLevel === 1 ? 'L1-5等级' : item.petLevel === 2 ? 'L6-10等级' : item.petLevel === 3 ? 'L10-15等级' : item.petLevel === 4 ? 'L6-20等级' : item.petLevel === 5 ? 'L21-25等级' : item.petLevel === 6 ? 'L26-30等级' : '最高级';
@@ -85,9 +92,9 @@ async function joyReward(doubleKey) {
               console.log(`【京东账号${doubleKey ? '二':'一'}】${UserName}成功兑换 ${item.rewardName}花费 ${item.petScore}积分`);
               $.msg($.name, `成功兑换 ${item.rewardName}`, `【京东账号${doubleKey ? '二':'一'}】${UserName}\n成功从${levelArea}区域兑换 ${item.rewardName}\n花费 ${item.petScore}积分\n`)
             } else if (exchangeRes.data === 'stock_insufficient') {
-              console.log('奖励兑换失败，原因：已抢光')
+              console.log(`兑换${levelArea}区域的【${item.rewardName}】失败，原因：已抢光`)
             } else if (exchangeRes.data === 'chance_full') {
-              console.log('奖励兑换失败，原因：今日兑换机会已用完')
+              console.log(`兑换${levelArea}区域的【${item.rewardName}】失败，原因：今日兑换机会已用完`)
             }
           } else {
             console.log('兑换奖励API调用失败')
