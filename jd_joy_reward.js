@@ -18,7 +18,7 @@ cron "1 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 const $ = new Env('宠汪汪积分兑换奖品');
 //=======node.js使用说明======
 //请在下方单引号内自行填写您抓取的京东Cookie
-const Key = 'pt_key=AAJfCetdADCDahtAlLLr2xI7MFlBjr-sdRP_XlIX7hAH6VQXfQRQoLUaPBz0RTx5AVudSgg2hoI;pt_pin=jd_6cd93e613b0e5;';
+const Key = '';
 //如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
 const DualKey = '';
 //=======node.js使用说明结束=======
