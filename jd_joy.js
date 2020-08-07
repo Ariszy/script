@@ -132,6 +132,13 @@ function* step() {
             // 喂食
             let feedPetsResult = yield feedPets()
             console.log(`喂食结果${JSON.stringify(feedPetsResult)}`)
+            if (feedPetsResult.success) {
+              if (feedPetsResult.errorCode === 'feed_ok') {
+                console.log('喂食成功')
+              } else if (feedPetsResult.errorCode === 'time_error') {
+                console.log('喂食失败：正在食用')
+              }
+            }
             // 喂养状态
             let enterRoomResult = yield enterRoom()
             console.log(`喂养状态${JSON.stringify(enterRoomResult)}`)
