@@ -1,5 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆(默认兑换条件：1、积分满足，2、等级满足的京豆)！
+更新时间; 2020-08-07
 兑换奖品成功后才会有系统弹窗通知
 每日京豆库存会在0:00、8:00、16:00及时更新。有时候发现晚上23点多也有京豆可兑换，建议cron加上这个时间
 每个京东账户每天只可兑换一次，商品和京豆数量有限，兑完即止。
@@ -57,10 +58,10 @@ async function joyReward(doubleKey) {
     const datas = getExchangeRewardsRes.datas;
     const {score, petLevel, pin} = getExchangeRewardsRes.datas[0];
     const canPetLevel = Math.ceil((petLevel - 0.5)/5);
-    console.log('当前积分', score);
-    console.log('宠物等级', petLevel);
-    console.log(`可兑换阶级 ${canPetLevel === 1 ? 'L1-5等级' : canPetLevel === 2 ? 'L6-10等级' : canPetLevel === 3 ? 'L10-15等级' : canPetLevel === 4 ? 'L6-20等级' : canPetLevel === 5 ? 'L21-25等级' : canPetLevel === 6 ? 'L26-30等级' : '最高级'}`);
-    console.log('昵称', pin);
+    console.log(`当前积分 ${score}\n`);
+    console.log(`宠物等级 ${petLevel}\n`);
+    console.log(`可兑换阶级 ${canPetLevel === 1 ? 'L1-5等级' : canPetLevel === 2 ? 'L6-10等级' : canPetLevel === 3 ? 'L10-15等级' : canPetLevel === 4 ? 'L6-20等级' : canPetLevel === 5 ? 'L21-25等级' : canPetLevel === 6 ? 'L26-30等级' : '最高级'}\n`);
+    console.log(`京东昵称 ${pin}\n`);
 
     let todayExchanged =  datas.some((value, index, array) => value.todayExchanged === true)
     console.log(`今日是否已兑换过奖品  ${todayExchanged ? '是':'否'}`);
