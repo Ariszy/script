@@ -17,7 +17,7 @@ cron "1 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 宠汪汪积分兑换奖品 = type=cron,cronexp=1 0-16/8 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js
  */
 const $ = new Env('宠汪汪积分兑换奖品');
-const joyRewardName = $.getdata('joyRewardName') || 10;//兑换多少数量的京豆，默认兑换20京豆
+const joyRewardName = $.getdata('joyRewardName') || 20;//兑换多少数量的京豆，默认兑换20京豆
 //=======node.js使用说明======
 //请在下方单引号内自行填写您抓取的京东Cookie
 const Key = '';
@@ -71,7 +71,15 @@ async function joyReward(doubleKey) {
       for (let i = 0; i < canPetLevel; i++) {
         for (let j = 0; j < datas[i].rewardDetailVOS.length; j++) {
           if (datas[i].rewardDetailVOS[j].rewardType === 3 && datas[i].rewardDetailVOS[j].petScore < score) {
-            if (joyRewardName * 1 === 20) {
+            if (joyRewardName * 1 === -1) {
+              canReardArr.push({
+                'petLevel': datas[i].rewardDetailVOS[j].petLevel,
+                'rewardName': datas[i].rewardDetailVOS[j].rewardName,
+                'petScore': datas[i].rewardDetailVOS[j].petScore,
+                'leftStock': datas[i].rewardDetailVOS[j].leftStock,
+                'id': datas[i].rewardDetailVOS[j].id,
+              });
+            } else if (joyRewardName * 1 === 20) {
               if (datas[i].rewardDetailVOS[j].rewardName === '20京豆') {
                 canReardArr.push({
                   'petLevel': datas[i].rewardDetailVOS[j].petLevel,
@@ -125,7 +133,7 @@ async function joyReward(doubleKey) {
           }
         }
       }
-      // console.log('可兑换京豆的列表长度', canReardArr)
+      console.log('可兑换京豆的列表长度', canReardArr)
       canReardArr.reverse();//倒序进行兑换奖品
       if (canReardArr && canReardArr.length > 0) {
         for (let item of canReardArr) {
