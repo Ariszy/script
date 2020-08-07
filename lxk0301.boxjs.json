@@ -306,14 +306,14 @@
           "name": "取消已关注商品的数量",
           "val": 10,
           "type": "number",
-          "desc": "运行一次脚本取消多少个已关注的商品（默认10个）"
+          "desc": "运行一次脚本取消多少个已关注的商品（默认10个,输入0表示不取关）"
         },
         {
           "id": "jdUnsubscribeShopPageSize",
           "name": "取消已关注店铺的数量",
           "val": 10,
           "type": "number",
-          "desc": "运行一次脚本取消多少个已关注的店铺（默认10个）"
+          "desc": "运行一次脚本取消多少个已关注的店铺（默认10个,输入0表示不取关）"
         },
         {
           "id": "jdUnsubscribeStopGoods",

@@ -72,28 +72,32 @@ function unsubscribeGoods(doubleKey) {
     if (followGoods.iRet === '0') {
       let count = 0;
       $.unsubscribeGoodsCount = count;
-      if (followGoods.totalNum > 0) {
-        for (let item of followGoods.data) {
+      if (goodPageSize !== '0') {
+        if (followGoods.totalNum > 0) {
+          for (let item of followGoods.data) {
 
-          console.log(`是否匹配：：${item.commTitle.indexOf(stop.replace(/\ufffc|\s*/g, ''))}`)
+            console.log(`是否匹配：：${item.commTitle.indexOf(stop.replace(/\ufffc|\s*/g, ''))}`)
 
-          if (stop && item.commTitle.indexOf(stop.replace(/\ufffc|\s*/g, '')) === 0) {
-            console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
-            break;
+            if (stop && item.commTitle.indexOf(stop.replace(/\ufffc|\s*/g, '')) === 0) {
+              console.log(`匹配到了您设定的商品--${stop}，不在进行取消关注商品`)
+              break;
+            }
+            let res = await unsubscribeGoodsFun(item.commId);
+            // console.log('取消关注商品结果', res);
+            if (res.iRet === 0 && res.errMsg === 'success') {
+              console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
+              count ++;
+            } else {
+              console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
+            }
           }
-          let res = await unsubscribeGoodsFun(item.commId);
-          // console.log('取消关注商品结果', res);
-          if (res.iRet === 0 && res.errMsg === 'success') {
-            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---成功\n`)
-            count ++;
-          } else {
-            console.log(`取消关注商品---${item.commTitle.substring(0, 20).concat('...')}---失败\n`)
-          }
+          $.unsubscribeGoodsCount = count;
+          resolve(count)
+        } else {
+          resolve(count)
         }
-        $.unsubscribeGoodsCount = count;
-        resolve(count)
       } else {
-        resolve(count)
+        resolve(count);
       }
     } else if (followGoods.iRet === '9999') {
       $.msg('取关京东店铺商品失败', `【提示】京东账号${doubleKey ? '二':'一'}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
@@ -169,23 +173,27 @@ function unsubscribeShops() {
     if (followShops.iRet === '0') {
       let count = 0;
       $.unsubscribeShopsCount = count;
-      if (followShops.totalNum > 0) {
-        for (let item of followShops.data) {
-          if (stopShop && (item.shopName && item.shopName.indexOf(stopShop.replace(/\s*/g, '')) > -1)) {
-            console.log(`匹配到了您设定的店铺--${item.shopName}，不在进行取消关注店铺`)
-            break;
+      if (shopPageSize !== '0') {
+        if (followShops.totalNum > 0) {
+          for (let item of followShops.data) {
+            if (stopShop && (item.shopName && item.shopName.indexOf(stopShop.replace(/\s*/g, '')) > -1)) {
+              console.log(`匹配到了您设定的店铺--${item.shopName}，不在进行取消关注店铺`)
+              break;
+            }
+            let res = await unsubscribeShopsFun(item.shopId);
+            // console.log('取消关注店铺结果', res);
+            if (res.iRet === '0') {
+              console.log(`取消已关注店铺---${item.shopName}----成功\n`)
+              count ++;
+            } else {
+              console.log(`取消已关注店铺---${item.shopName}----失败\n`)
+            }
           }
-          let res = await unsubscribeShopsFun(item.shopId);
-          // console.log('取消关注店铺结果', res);
-          if (res.iRet === '0') {
-            console.log(`取消已关注店铺---${item.shopName}----成功\n`)
-            count ++;
-          } else {
-            console.log(`取消已关注店铺---${item.shopName}----失败\n`)
-          }
+          $.unsubscribeShopsCount = count;
+          resolve(count)
+        } else {
+          resolve(count)
         }
-        $.unsubscribeShopsCount = count;
-        resolve(count)
       } else {
         resolve(count)
       }
