@@ -238,6 +238,53 @@
       ]
     },
     {
+      "id": "jd_Joy_Reawrd",
+      "name": "宠汪汪积分兑换奖品",
+      "keys": [],
+      "settings": [
+        {
+          "id": "joyRewardName",
+          "name": "兑换京豆数量（默认兑换20京豆，选择其他数量请保证宠汪汪等级和积分满足相应条件）",
+          "val": "20",
+          "type": "radios",
+          "desc": "选择兑换京豆数量(默认兑换20京豆)",
+          "items": [
+            {
+              "key": "0",
+              "label": "不兑换奖品"
+            },
+            {
+              "key": "20",
+              "label": "兑换20京豆"
+            },
+            {
+              "key": "50",
+              "label": "兑换50京豆"
+            },
+            {
+              "key": "100",
+              "label": "兑换100京豆"
+            },
+            {
+              "key": "500",
+              "label": "兑换500京豆"
+            },
+            {
+              "key": "1000",
+              "label": "兑换1000京豆"
+            }
+          ]
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_joy.png"
+      ]
+    },
+    {
       "id": "jd_MoneyTree",
       "name": "京东摇钱树",
       "keys": [],
