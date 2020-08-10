@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-08-02
+更新时间:2020-08-10
 // quantumultx
 [task_local]
 #jd免费水果
@@ -18,7 +18,8 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 let name = '东东农场';
 const retainWater = 50;//保留水滴大于多少g,默认50g;
 const $ = new Env(name);
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+//单引号内自行填写您抓取的京东Cookie
+const Key = '';
 //直接用NobyDa的jd cookie
 const cookie = Key ? Key : $.getdata('CookieJD');
 //京东接口地址
@@ -408,6 +409,21 @@ function* step() {
       } else {
         console.log('4小时候免费赠送的抽奖机会已领取')
       }
+      if (initForTurntableFarmRes.turntableBrowserAds && initForTurntableFarmRes.turntableBrowserAds.length > 0) {
+        console.log('开始浏览天天抽奖的逛会场任务')
+        if (!initForTurntableFarmRes.turntableBrowserAds[0].status) {
+          const browserForTurntableFarmRes = yield browserForTurntableFarm(initForTurntableFarmRes.turntableBrowserAds[0].adId);
+          if (browserForTurntableFarmRes.code === '0' && browserForTurntableFarmRes.status) {
+            const browserForTurntableFarm2Res = yield browserForTurntableFarm2(initForTurntableFarmRes.turntableBrowserAds[0].adId);
+            if (browserForTurntableFarm2Res.code === '0') {
+              initForTurntableFarmRes = yield initForTurntableFarm();
+              remainLotteryTimes = initForTurntableFarmRes.remainLotteryTimes;
+            }
+          }
+        } else {
+          console.log('天天抽奖浏览任务已经做完')
+        }
+      }
       //天天抽奖助力
       console.log('开始天天抽奖--好友助力--每人每天只有三次助力机会.')
       for (let code of shareCodes) {
@@ -775,11 +791,17 @@ function browserForTurntableFarm(type) {
   if (type === 2) {
     console.log('领取浏览爆品会场奖励');
   }
-
-  request(arguments.callee.name.toString(), {type: type});
+  const body = {"type":1,"adId": type,"version":4,"channel":1};
+  console.log('type', type  + "");
+  console.log(body)
+  // request(arguments.callee.name.toString(), {type: type});
+  request(arguments.callee.name.toString(), body);
   // 浏览爆品会场8秒
 }
-
+function browserForTurntableFarm2(type) {
+  const body = {"type":2,"adId": type,"version":4,"channel":1};
+  request('browserForTurntableFarm', body);
+}
 /**
  * 领取浇水过程中的阶段性奖励
  */
