@@ -14,7 +14,11 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 */
 const name = '东东萌宠';
 const $ = new Env(name);
-const Key = '';//单引号内自行填写您抓取的京东Cookie
+
+// =======node.js使用说明======
+// 单引号内自行填写您抓取的京东Cookie
+const Key = '';
+//=======node.js使用说明结束=======
 //直接用NobyDa的jd cookie
 const cookie =  Key ? Key : $.getdata('CookieJD');
 //京东接口地址
@@ -299,9 +303,9 @@ function browseSingleShopInit2() {
         if (response2.code === '0' && response2.resultCode === '0') {
           message += `【冰淇淋会场】获取狗粮${response2.result.reward}g\n`;
         }
-        gen.next();
       })
     }
+    gen.next();
   })
 }
 function browseSingleShopInit3() {
@@ -316,9 +320,9 @@ function browseSingleShopInit3() {
         if (response2.code === '0' && response2.resultCode === '0') {
           message += `【去参与星品解锁计划】获取狗粮${response2.result.reward}g\n`;
         }
-        gen.next();
       })
     }
+    gen.next();
   })
 }
 // 三餐签到, 每天三段签到时间
