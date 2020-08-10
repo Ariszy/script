@@ -113,22 +113,28 @@ function* step() {
                 console.log(`浏览商品奖励积分返回结果${JSON.stringify(deskGoodDetails)}`)
             }
             // 看激励视频得狗粮
-            // let taskVideoRes = yield taskVideo();
+            let taskVideoRes = yield taskVideo();
             // console.log(`视频激--任务列表--${JSON.stringify(taskVideoRes)}`);
-            // if (taskVideoRes.success) {
-            //   let taskArr = {};
-            //   for (let item of taskVideoRes.datas) {
-            //     if (item.ViewVideo) {
-            //       taskArr = item;
-            //     }
-            //   }
-            //   let joinedCount = taskArr.joinedCount || 0;
-            //   for (let i = 0; i < new Array(taskArr.taskChance - joinedCount).fill('').length; i++) {
-            //     console.log(`开始第${i+1}次看激励视频`);
-            //       let sanVideoRes = yield sanVideo();
-            //     console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
-            //   }
-            // }
+            // let sanVideoRes = yield sanVideo();
+            // console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
+            if (taskVideoRes.success) {
+              let taskArr = {};
+              for (let item of taskVideoRes.datas) {
+                if (item.taskType === 'ViewVideo') {
+                  taskArr = item;
+                }
+              }
+              let joinedCount = taskArr.joinedCount || 0;
+              if (taskArr.taskChance === joinedCount) {
+                console.log('今日激励视频已看完')
+              } else {
+                for (let i = 0; i < new Array(taskArr.taskChance - joinedCount).fill('').length; i++) {
+                  console.log(`开始第${i+1}次看激励视频`);
+                  let sanVideoRes = yield sanVideo();
+                  console.log(`看视频激励结果--${JSON.stringify(sanVideoRes)}`);
+                }
+              }
+            }
             // 好友列表
             let getFriendsResult = yield getFriends()
             for (var i = getFriendsResult.datas.length - 1; i >= 1; i--) {
@@ -158,6 +164,9 @@ function* step() {
                     
                 // }
             }
+            // 领取好友助力后的狗粮
+            let getFoodRes = yield getFood();
+            console.log(`领取好友助力后的狗粮结果${JSON.stringify(getFoodRes)}`)
             // 喂食
             let feedPetsResult = yield feedPets()
             console.log(`喂食结果${JSON.stringify(feedPetsResult)}`)
@@ -254,7 +263,34 @@ function enterRoom() {
 }
 //看激励视频
 function taskVideo() {
-  request('https://draw.jdfcloud.com//pet/scan?reqSource=weapp', 'weapp')
+  const option =  {
+    url: 'https://draw.jdfcloud.com//pet/getPetTaskConfig?reqSource=weapp',
+    headers: {
+      'Cookie': cookie,
+      "Host": "draw.jdfcloud.com",
+      "Content-Type": "application/json",
+      "reqSource": "h5",
+      "Connection": "keep-alive",
+      "Accept": "*/*",
+      "User-Agent": "jdapp;iPhone;9.0.4;13.5.1;e35caf0a69be42084e3c97eef56c3af7b0262d01;network/4g;ADID/3B3AD5BC-B5E6-4A08-B32A-030CD805B5DD;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/1;model/iPhone11,8;addressid/2005183373;hasOCPay/0;appBuild/167283;supportBestPay/0;jdSupportDarkMode/0;pv/206.5;apprpd/MyJD_Main;ref/https%3A%2F%2Fjdjoy.jd.com%2Fpet%2Findex%3Fun_area%3D19_1601_50258_51885%26lng%3D113.3259241595859%26lat%3D23.20459586587208;psq/4;ads/;psn/e35caf0a69be42084e3c97eef56c3af7b0262d01|831;jdv/0|kong|t_1001777500_|jingfen|ca196c5ef31b4f7680c45e9334f94ba2|1596887714965|1596887717;adk/;app_device/IOS;pap/JA2015_311210|9.0.4|IOS 13.5.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+      "Referer": "https://jdjoy.jd.com/pet/index?un_area=19_1601_50258_51885&lng=113.3259241595859&lat=23.20459586587208",
+      "Accept-Language": "zh-cn",
+      "Accept-Encoding": "gzip, deflate, br"
+    }
+  };
+  $.get(option, (err, resp, data) => {
+    try {
+      if (err) {
+        console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+      } else {
+        data = JSON.parse(data);
+      }
+    } catch (e) {
+      $.logErr(e, resp)
+    } finally {
+      sleep(data);
+    }
+  })
 }
 
 //好友列表
@@ -291,23 +327,52 @@ function helpFeed(friendPin) {
 }
 
 function sanVideo() {
-  const body = {
-    "taskType": "ViewVideo",
-    "reqSource": "weapp"
-  }
-  requestPost('https://draw.jdfcloud.com//pet/scan', body, 'application/json', 'weapp')
+  const body = JSON.stringify({"taskType":"ViewVideo","reqSource":"weapp"});
+  const option =  {
+    url: 'https://draw.jdfcloud.com//pet/scan',
+    body: body,
+    headers: {
+      'Cookie': cookie,
+      "Host": "draw.jdfcloud.com",
+      "Connection": "keep-alive",
+      "Content-Length": "44",
+      "Content-Type": "application/json",
+      "reqSource": "weapp",
+      "Accept-Encoding": "gzip,compress,br,deflate",
+      "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.14(0x17000e2b) NetType/4G Language/zh_CN",
+      "Referer": "https://servicewechat.com/wxccb5c536b0ecd1bf/617/page-frame.html"
+    }
+  };
+  $.post(option, (err, resp, data) => {
+    try {
+      if (err) {
+        console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+      } else {
+        data = JSON.parse(data);
+      }
+    } catch (e) {
+      $.logErr(e, resp)
+    } finally {
+      sleep(data);
+    }
+  })
 }
-function request(url) {
+// 领取好友助力后的狗粮
+function getFood() {
+  let url = "https://jdjoy.jd.com/pet/getFood?taskType=InviteUser";
+  request(url)
+}
+function request(url, reqSource) {
     console.log(`\n request url:：：${url}\n`);
     const option =  {
         url: url,
         headers: {
-            Cookie: cookie,
-            reqSource: 'h5',
+          'Cookie': cookie,
+          'reqSource': reqSource || 'h5',
           'Host': 'jdjoy.jd.com',
           'Connection': 'keep-alive',
           'Content-Type': 'application/json',
-          'Referer': 'https://jdjoy.jd.com/pet/index?un_area=5_274_49707_49973&lng=116.8439659502069&lat=39.95722551778479',
+          'Referer': 'https://jdjoy.jd.com/pet/index',
           'User-Agent': 'jdapp;iPhone;8.5.8;13.4.1;9b812b59e055cd226fd60ebb5fd0981c4d0d235d;network/wifi;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/0;model/iPhone9,2;addressid/138109592;hasOCPay/0;appBuild/167169;supportBestPay/0;jdSupportDarkMode/0;pv/200.75;apprpd/MyJD_Main;ref/MyJdMTAManager;psq/29;ads/;psn/9b812b59e055cd226fd60ebb5fd0981c4d0d235d|608;jdv/0|direct|-|none|-|1587263154256|1587263330;adk/;app_device/IOS;pap/JA2015_311210|8.5.8|IOS 13.4.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
           'Accept-Language': 'zh-cn',
           'Accept-Encoding': 'gzip, deflate, br',
