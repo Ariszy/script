@@ -506,17 +506,16 @@ async function request(function_id, body = {}) {
     await $.wait(3000); //歇口气儿, 不然会报操作频繁
     return new Promise((resolve, reject) => {
         $.get(taskurl(function_id, body), (err, resp, data) => {
-          if (err) {
-            console.log("=== request error -s--");
-            console.log("=== request error -e--");
-          } else {
-            try {
+          try {
+            if (err) {
+              console.log('\n东东萌宠: API查询请求失败 ‼️‼️')
+            } else {
               data = JSON.parse(data);
-            } catch (e) {
-              console.log(e)
-            } finally {
-              resolve(data)
             }
+          } catch (e) {
+            console.log(e)
+          } finally {
+            resolve(data)
           }
         })
     })
