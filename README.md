@@ -9,6 +9,7 @@
 5.  天天加速([jd_speed.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js))
 6.  摇钱树([jd_moneyTree.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js))
 7.  宠汪汪兑换奖品([jd_joy_reward.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js))
+8.  取关京东店铺和商品([jd_unsubscribe.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js))
 ### 使用说明
 
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
@@ -70,3 +71,14 @@ node.js运行结果截图：
 #种豆得豆
 0,31 6-23/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png, enabled=true
 ```
+
+### 特别感谢(排名不分先后)：
+* [@NobyDa](https://github.com/NobyDa)
+
+* [@chavyleung](https://github.com/chavyleung)
+
+* [@liuxiaoyucc](https://github.com/liuxiaoyucc)
+
+* [@Zero-S1](https://github.com/Zero-S1)
+
+* [@uniqueque](https://github.com/uniqueque)
