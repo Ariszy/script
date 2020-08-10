@@ -136,7 +136,9 @@ function* step() {
               }
             }
             // 好友列表
-            let getFriendsResult = yield getFriends()
+            let currentPage = 1;
+            let getFriendsResult = yield getFriends(currentPage);
+            const { pages } = getFriendsResult.page;
             for (var i = getFriendsResult.datas.length - 1; i >= 1; i--) {
             	let friendPin = getFriendsResult.datas[i]["friendPin"]
             	console.log(friendPin)
@@ -163,6 +165,37 @@ function* step() {
                 // if (friendPin != "jd_6162cd8a30268") {
                     
                 // }
+            }
+            if (pages > 1) {
+              currentPage ++;
+              getFriendsResult = yield getFriends(currentPage);
+              for (var i = getFriendsResult.datas.length - 1; i >= 1; i--) {
+                let friendPin = getFriendsResult.datas[i]["friendPin"]
+                console.log(friendPin)
+                // 进入好友房间
+                let enterFriendRoomResult = yield enterFriendRoom(friendPin)
+                let friendHomeCoin = enterFriendRoomResult.data["friendHomeCoin"]
+                console.log('friendHomeCoin = ' + friendHomeCoin)
+                if (enterFriendRoomResult.data["friendHomeCoin"] > 0) {
+                  let getFriendCoinResult = yield getFriendCoin(friendPin)
+                  console.log(`收取好友金币结果${JSON.stringify(getFriendCoinResult)}`)
+                }
+                let stealStatus = getFriendsResult.datas[i]["stealStatus"]
+                console.log('stealStatus = ' + stealStatus)
+                if (getFriendsResult.datas[i]["stealStatus"] == "can_steal") {
+                  let getRandomFoodResult = yield getRandomFood(friendPin)
+                  console.log(`收取好友狗粮结果${JSON.stringify(getRandomFoodResult)}`)
+                }
+                let status = getFriendsResult.datas[i]["status"]
+                console.log('status = ' + status)
+                if (getFriendsResult.datas[i]["status"] == "not_feed") {
+                  let helpFeedResult = yield helpFeed(friendPin)
+                  console.log(`帮忙喂食结果${JSON.stringify(helpFeedResult)}`)
+                }
+                // if (friendPin != "jd_6162cd8a30268") {
+
+                // }
+              }
             }
             // 领取好友助力后的狗粮
             let getFoodRes = yield getFood();
@@ -294,8 +327,8 @@ function taskVideo() {
 }
 
 //好友列表
-function getFriends() {
-    request(`https://jdjoy.jd.com/pet/getFriends?itemsPerPage=20&currentPage=1`)
+function getFriends(currentPage) {
+    request(`https://jdjoy.jd.com/pet/getFriends?itemsPerPage=20&currentPage=${currentPage}`)
 }
 
 //进入好友房间
