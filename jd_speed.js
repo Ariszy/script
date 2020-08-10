@@ -276,17 +276,17 @@ async function request(function_id, body = {}) {
   await $.wait(300);//延迟两秒
   return new Promise((resolve, reject) => {
     $.get(taskurl(function_id, body), (err, resp, data) => {
-      if (err) {
-        console.log("=== request error -s--");
-        console.log("=== request error -e--");
-      } else {
-        try {
+      try {
+        if (err) {
+          console.log("=== request error -s--");
+          console.log("=== request error -e--");
+        } else {
           data = JSON.parse(_jsonpToJson(data))
-        } catch (e) {
-          console.log(e)
-        } finally {
-          resolve(data)
         }
+      } catch (e) {
+        console.log(e)
+      } finally {
+        resolve(data)
       }
     })
   })
