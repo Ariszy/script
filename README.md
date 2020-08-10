@@ -26,13 +26,13 @@ node.js运行结果截图：
 
 ![node运行截图](https://images.gitee.com/uploads/images/2020/0721/100942_fec635e9_938321.png "屏幕截图.png")
    
-#### 【boxjs简单说明】[boxjs仓库地址](https://github.com/chavyleung/scripts/)
+#### 【BoxJs简单说明】[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
 
 使用box可以实现远程订阅助力好友。
 
-1、boxjs使用教程请查看Chavy频道 [Chavy频道链接](https://t.me/chavyscripts);
+1、BoxJs使用教程请查看Chavy频道 [Chavy频道链接](https://t.me/chavyscripts);
 
-2、boxjs教程视频 [视频链接](https://youtu.be/eIpBrRxiy0w);
+2、BoxJs教程视频 [视频链接](https://youtu.be/eIpBrRxiy0w);
 
 目前京东活动中以下三个脚本可以使用box功能
 
