@@ -58,7 +58,8 @@ async function JD818(doubleKey) {
     listMeeting()//逛会场
   ])
   await myRank();//领取往期排名奖励
-  $.msg($.name, '', `【京东账号${doubleKey ? '二' : '一'}】${UserName}\n【往期排名奖励】获得京豆${$.jbeanNum}个\n奖品详情查看 https://rdcseason.m.jd.com/#/hame\n`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+  // $.msg($.name, '', `【京东账号${doubleKey ? '二' : '一'}】${UserName}\n【往期排名奖励】获得京豆${$.jbeanNum}个\n奖品详情查看 https://rdcseason.m.jd.com/#/hame\n`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+  $.msg($.name, '818活动已结束', `请禁用脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
 }
 function listMeeting() {
   const options = {
