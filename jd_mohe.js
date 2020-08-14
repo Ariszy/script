@@ -7,12 +7,12 @@
 // quantumultx
 [task_local]
 #热8超级魔盒
-1 0-18/6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js, tag=热8超级魔盒, enabled=true
+1 0,1-23/3 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js, tag=热8超级魔盒, enabled=true
 // Loon
 [Script]
-cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js,tag=热8超级魔盒
+cron "1 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js,tag=热8超级魔盒
 // Surge
-热8超级魔盒 = type=cron,cronexp=1 0-18/6 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js
+热8超级魔盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js
  */
 const $ = new Env('热8超级魔盒');
 const Key = '';
