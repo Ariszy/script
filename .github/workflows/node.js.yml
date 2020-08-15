@@ -23,3 +23,4 @@ jobs:
         node test2.js
       env:
         CI: true
+        JD_COOKIE: ${{ secrets.JD_COOKIE }}
