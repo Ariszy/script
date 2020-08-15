@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-08-13
+更新时间:2020-08-15
 // quantumultx
 [task_local]
 #东东萌宠
@@ -16,11 +16,11 @@ const name = '东东萌宠';
 const $ = new Env(name);
 
 // =======node.js使用说明======
-// 单引号内自行填写您抓取的京东Cookie
-const Key = '';
-//=======node.js使用说明结束=======
-//直接用NobyDa的jd cookie
-const cookie =  Key ? Key : $.getdata('CookieJD');
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
+//ios等软件用户直接用NobyDa的jd cookie
+const cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
 //京东接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let jdNotify = $.getdata('jdPetNotify');

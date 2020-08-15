@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-08-10
+更新时间:2020-08-15
 // quantumultx
 [task_local]
 #jd免费水果
@@ -18,10 +18,12 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 let name = '东东农场';
 const retainWater = 50;//保留水滴大于多少g,默认50g;
 const $ = new Env(name);
-//单引号内自行填写您抓取的京东Cookie
-const Key = '';
-//直接用NobyDa的jd cookie
-const cookie = Key ? Key : $.getdata('CookieJD');
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
+//ios等软件用户直接用NobyDa的jd cookie
+const cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
+
 //京东接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 

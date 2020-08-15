@@ -20,8 +20,8 @@ const $ = new Env('热8超级魔盒');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //直接用NobyDa的jd cookie
-let cookie = $.getdata('CookieJD') || jdCookieNode.CookieJD;
-const cookie2 = $.getdata('CookieJD2') || jdCookieNode.CookieJD2;
+let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
+const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
 let UserName = '';
 const JD_API_HOST = 'https://blindbox.jd.com';
 let shareId = '';

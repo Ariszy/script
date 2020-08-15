@@ -1,6 +1,6 @@
 /*
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_joy.js
-更新时间:2020-08-06
+更新时间:2020-08-15
 会自动关注任务中的店铺跟商品
 互助码shareCode请先手动运行脚本查看打印可看到
 // quantumultx
@@ -15,9 +15,11 @@ cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 
 const name = '京东种豆得豆';
 const $ = new Env(name);
-const Key = '';//单引号内自行填写您抓取的京东Cookie
-//直接用NobyDa的jd cookie
-const cookie =  Key ? Key : $.getdata('CookieJD');
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
+//ios等软件用户直接用NobyDa的jd cookie
+const cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
 let jdNotify = $.getdata('jdPlantBeanNotify');
 
 //京东接口地址

@@ -11,10 +11,12 @@
 // [Script]
 // cron "3 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js,tag=京东摇钱树
 const $ = new Env('京东摇钱树');
-const Key = '';//单引号内自行填写您抓取的京东Cookie
-//直接用NobyDa的jd cookie
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
+//ios等软件用户直接用NobyDa的jd cookie
+const cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
 const Notice = $.getdata('jdMoneyTreeNoticeTimes') * 1 || 2;//设置运行多少次才通知。
-const cookie =  Key ? Key : $.getdata('CookieJD');
 let jdNotify = $.getdata('jdMoneyTreeNotify');
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
