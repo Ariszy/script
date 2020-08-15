@@ -17,18 +17,18 @@ cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts
 取关京东店铺商品 = type=cron,cronexp=55 23 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js
  */
 const $ = new Env('取关京东店铺和商品');
-//如使用node.js。请在下方单引号内自行填写您抓取的京东Cookie
-const Key = '';
-//如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
-const DualKey = '';
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
+//直接用NobyDa的jd cookie
+let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
+const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
 const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。数字0表示不取关任何商品
 const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。数字0表示不取关任何店铺
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 const stop = $.getdata('jdUnsubscribeStopGoods') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
 const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
-//直接用NobyDa的jd cookie
-let cookie = Key ? Key : $.getdata('CookieJD');
-const cookie2 = DualKey ? DualKey : $.getdata('CookieJD2');
+
 let UserName = '';
 const JD_API_HOST = 'https://wq.jd.com/fav';
 !(async () => {

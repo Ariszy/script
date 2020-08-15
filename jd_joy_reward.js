@@ -1,6 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆(默认兑换条件：1、积分满足，2、等级满足的京豆)！
-更新时间; 2020-08-07
+更新时间; 2020-08-15
 兑换奖品成功后才会有系统弹窗通知
 每日京豆库存会在0:00、8:00、16:00及时更新。有时候发现晚上23点多也有京豆可兑换，建议cron加上这个时间
 每个京东账户每天只可兑换一次，商品和京豆数量有限，兑完即止。
@@ -19,14 +19,12 @@ cron "1 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 const $ = new Env('宠汪汪积分兑换奖品');
 const joyRewardName = $.getdata('joyRewardName') || 20;//兑换多少数量的京豆，默认兑换20京豆
 //=======node.js使用说明======
-//请在下方单引号内自行填写您抓取的京东Cookie
-const Key = '';
-//如需双账号签到,此处单引号内填写抓取的"账号2"Cookie, 否则请勿填写
-const DualKey = '';
-//=======node.js使用说明结束=======
+//Node.js用户请在jdCookie.js处填写京东ck;
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+
 //直接用NobyDa的jd cookie
-let cookie = Key ? Key : $.getdata('CookieJD');
-const cookie2 = DualKey ? DualKey : $.getdata('CookieJD2');
+let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
+const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
 let UserName = '';
 const JD_API_HOST = 'https://jdjoy.jd.com/pet/';
 !(async () => {
