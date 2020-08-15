@@ -16,7 +16,7 @@
 
 注：如果使用Node.js, 请认真阅读下面三点
 
-1、需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`) 例: npm install crypto-js http-server tough-cookie got --save
+1、需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`) 例: `npm install crypto-js http-server tough-cookie got --save`
    
 2、需自行提供京东cookie填写到jdCookie.js里面(以 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 为例)
    
