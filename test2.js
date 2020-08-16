@@ -4,7 +4,7 @@ console.log('ACCESS_TOKEN', process.env.ACCESS_TOKEN);
 console.log('JD_COOKIE', process.env.JD_COOKIE);
 console.log('github action test');
 
-const $ = new Env(京东宠汪汪test);
+const $ = new Env('京东宠汪汪test');
 //Node.js用户请在jdCookie.js处填写京东ck;
 // const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
