@@ -43,6 +43,7 @@ const JD_API_HOST = 'https://api.m.jd.com/'
   if (cookie2) {
     cookie = cookie2;
     UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
+    message = '';
     console.log(`\n开始【京东账号二】${UserName}\n`)
     await jDSpeedUp('', cookie2);
     if ($.isLogin) {
