@@ -22,4 +22,5 @@ jobs:
         npm run build --if-present
         node test2.js
       env:
-        CI: true
+        JD_COOKIE: ${{ secrets.JD_COOKIE }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
