@@ -3,7 +3,9 @@
 
 name: jd_speed
 
-on: [push]
+on:
+  schedule:
+    - cron: '*/2 * * * *'
 
 jobs:
   build:
@@ -19,7 +21,7 @@ jobs:
     - name: npm install
       run: |
         npm install
-    - name: 'node 天天加速'
+    - name: '运行 【天天加速】'
       run: |
         node jd_speed.js
       env:
