@@ -64,7 +64,7 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdnc_mini.png",
-        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_fruit.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdnc.png"
       ]
     },
     {
@@ -188,7 +188,7 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdzd_mini.png",
-        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_plantBean.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png"
       ]
     },
     {
@@ -234,7 +234,7 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
-        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_joy.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
       ]
     },
     {
@@ -286,7 +286,7 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
-        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_joy.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
       ]
     },
     {
@@ -314,7 +314,7 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs_mini.png",
-        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_moneyTree.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png"
       ]
     },
     {
@@ -335,7 +335,7 @@
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js",
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jdjs_mini.png",
-        "https://raw.githubusercontent.com/lxk0301/scripts/master/icon/jd_speed.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdjs.png"
       ]
     },
     {
