@@ -19,7 +19,6 @@ jobs:
     - name: npm install, build
       run: |
         npm install
-        npm run build --if-present
         node test2.js
       env:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
