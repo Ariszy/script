@@ -4,6 +4,16 @@
 第9行代码处填写第二个京东账号ck
  */
 //此处单引号里面填写京东账号一cookie
-exports.CookieJD = '';
+let CookieJD = '';
+
 //此处单引号里面填写京东账号二cookie
-exports.CookieJD2 = '';
+let CookieJD2 = '';
+
+
+if (process.env.JD_COOKIE && process.env.JD_COOKIE.split('&') && process.env.JD_COOKIE.split('&').length > 0) {
+  const temp = process.env.JD_COOKIE.split('&');
+  CookieJD = temp[0];
+  CookieJD2 = temp[1];
+}
+exports.CookieJD = CookieJD;
+exports.CookieJD2 = CookieJD2;
