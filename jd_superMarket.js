@@ -7,7 +7,7 @@
 // quantumultx
 [task_local]
 #京小超
-11 1-23/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js, tag=京小超, enabled=true
+11 1-23/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js, tag=京小超, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 // Loon
 [Script]
 cron "11 1-23/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js,tag=京小超
@@ -21,6 +21,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //iOS等软件直接用NobyDa的jd cookie
 let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
 const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
+const jdNotify = $.getdata('jdSuperMarketNotify');//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 let UserName = '', todayDay = 0, message = '';
 const JD_API_HOST = 'https://api.m.jd.com/api';
 !(async () => {
@@ -51,7 +52,9 @@ async function jdSuperMarket(DoubleKey) {
   await smtgSignList();
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
-  $.msg($.name, '', `【京东账号${DoubleKey?'二':'一'}】${UserName}\n ${message}`);
+  if (!jdNotify || jdNotify === 'false') {
+    $.msg($.name, '', `【京东账号${DoubleKey?'二':'一'}】${UserName}\n ${message}`);
+  }
 }
 async function doDailyTask() {
   const smtgQueryShopTaskRes = await smtgQueryShopTask();
