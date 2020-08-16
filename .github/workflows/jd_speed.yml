@@ -4,6 +4,8 @@
 name: jd_speed
 
 on:
+  push:
+    branches: [ master ]
   schedule:
     - cron: '33 */3 * * *'
 
