@@ -5,7 +5,7 @@ name: jd_speed
 
 on:
   schedule:
-    - cron: '*/2 * * * *'
+    - cron: '33 */3 * * *'
 
 jobs:
   build:
@@ -26,4 +26,3 @@ jobs:
         node jd_speed.js
       env:
         JD_COOKIE: ${{ secrets.JD_COOKIE }}
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}

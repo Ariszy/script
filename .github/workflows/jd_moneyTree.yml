@@ -5,7 +5,7 @@ name: jd_moneyTree
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
+    - cron: '40 */2 * * *'
 
 jobs:
   build:
@@ -26,4 +26,3 @@ jobs:
           node jd_moneyTree.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
