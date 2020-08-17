@@ -4,8 +4,6 @@
 name: jd_joy
 
 on:
-  push:
-    branches: [ master ]
   schedule:
     - cron: '23 */1 * * *'
 
