@@ -3,7 +3,7 @@
 更新时间：2020-08-17
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币
 支持京东双账号
-每天收小费(蓝币)上限是1千个,通过测试脚本一次收取20个,一天运行4次脚本就能收满小费.
+领蓝币请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
@@ -51,7 +51,7 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     })
 async function jdSuperMarket(DoubleKey) {
   await receiveGoldCoin();//收金币
-  await receiveBlueCoin();//收蓝币（小费）
+  //await receiveBlueCoin();//收蓝币（小费）
   await smtgSignList();
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
