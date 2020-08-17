@@ -46,10 +46,8 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket&functionId=smt
       $.coincount = 0;
       //console.log($.coincount);
       await smtg_receiveCoin();
-      console.log('111')
       if ($.data.data.bizCode === 300)
       {
-        console.log('333')
         $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
         continue;
       } else if ($.data.data.bizCode === 810 && $.coincount === 0)
@@ -85,20 +83,15 @@ function smtg_receiveCoin(timeout = 0) {
     $.get(url, async (err, resp, data) => {
       try {
         data = JSON.parse(data);
-        console.log('data', data)
         $.data = data;
-        console.log('222')
         if ($.data.data.bizCode !== 0 && $.data.data.bizCode !== 809) {
           return
         }
-        console.log('666')
         if  ($.data.data.bizCode === 0) {
           $.coincount += $.data.data.result.receivedBlue;
           if (!$.data.data.result.isNextReceived) return;
         }
-        console.log('4444')
         await  smtg_receiveCoin(3000);
-        console.log('5555')
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -112,7 +105,6 @@ function smtg_receiveCoin(timeout = 0) {
 
 //通知
 function msgShow() {
-  console.log('msgShow')
   $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【共收取蓝币】【${$.coincount}】个\n`);
 }
 

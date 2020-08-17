@@ -19,28 +19,35 @@ const $ = new Env('京小超');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
-//iOS等软件直接用NobyDa的jd cookie
-let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
-const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
+//IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [], cookie = '';
+if ($.isNode()) {
+  Object.keys(jdCookieNode).forEach((item) => {
+    cookiesArr.push(jdCookieNode[item])
+  })
+} else {
+  cookiesArr.push($.getdata('CookieJD'));
+  cookiesArr.push($.getdata('CookieJD2'));
+}
+
 const jdNotify = $.getdata('jdSuperMarketNotify');//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 const receiveBlueCoinTimes = 20; //运行一次脚本收取多少次小费(蓝币),默认20次,如达到上限,会跳出,不继续浪费时间收取
 let UserName = '', todayDay = 0, message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 !(async () => {
-  if (!cookie) {
-    $.msg(`【京东账号一】${$.name}`, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-  } else {
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    console.log(`\n开始【京东账号一】${UserName}\n`)
-    await jdSuperMarket();
+  if (!cookiesArr[0]) {
+    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
   }
-  if (cookie2) {
-    cookie = cookie2;
-    message = '';
-    subTitle = '';
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    console.log(`\n开始【京东账号二】${UserName}\n`)
-    await jdSuperMarket(cookie2);
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.index = i + 1;
+      console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
+      message = '';
+      subTitle = '';
+      await jdSuperMarket();
+    }
   }
 })()
     .catch((e) => {
@@ -57,7 +64,7 @@ async function jdSuperMarket(DoubleKey) {
   await doDailyTask();//做日常任务，分享，关注店铺，
   await smtgHome();
   if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, subTitle ,`【京东账号${DoubleKey?'二':'一'}】${UserName}\n${message}`);
+    $.msg($.name, subTitle ,`【京东账号${$.index}】${UserName}\n${message}`);
   }
 }
 async function doDailyTask() {
@@ -125,14 +132,29 @@ async function receiveBlueCoin() {
 }
 
 async function receiveGoldCoin() {
-  const data = await smtgReceiveCoin(0);
-  if (data.data.bizCode === 0) {
-    console.log(`领取金币成功${data.data.result.receivedGold}`)
-    message += `【领取金币】${data.data.result.receivedGold}个\n`;
-  } else {
-    console.log(`${data.data.bizMsg}`);
-    message += `【领取金币】失败，${data.data.bizMsg}\n`;
-  }
+  return new Promise(async resolve => {
+    const data = await smtgReceiveCoin(0);
+    // console.log('data-----------', data)
+    if (data.data.bizCode === 0) {
+      console.log(`领取金币成功${data.data.result.receivedGold}`)
+      message += `【领取金币】${data.data.result.receivedGold}个\n`;
+      resolve();
+    } else {
+      console.log(`${data.data.bizMsg}`);
+      if (data.data.bizCode === 300) {
+        $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+        if ($.index === 1) {
+          $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+        } else if ($.index === 2){
+          $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+        }
+        resolve()
+      } else {
+        message += `【领取金币】失败，${data.data.bizMsg}\n`;
+        resolve();
+      }
+    }
+  })
 }
 function smtgReceiveCoin(type) {
   return new Promise((resolve) => {

@@ -15,28 +15,35 @@ const $ = new Env('京东摇钱树');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
-//ios等软件用户直接用NobyDa的jd cookie
-let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
-const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
+//IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [], cookie = '';
+if ($.isNode()) {
+  Object.keys(jdCookieNode).forEach((item) => {
+    cookiesArr.push(jdCookieNode[item])
+  })
+} else {
+  cookiesArr.push($.getdata('CookieJD'));
+  cookiesArr.push($.getdata('CookieJD2'));
+}
 
 const Notice = $.getdata('jdMoneyTreeNoticeTimes') * 1 || 2;//设置运行多少次才通知。默认运行两次脚本通知，其他设置请在BoxJs进行设置
 let jdNotify = $.getdata('jdMoneyTreeNotify');
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0, UserName = '';
 !(async () => {
-  if (!cookie) {
+  if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-  } else {
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-    console.log(`\n开始【京东账号一】${UserName}\n`);
-    await jd_moneyTree()
   }
-  if (cookie2) {
-    cookie = cookie2;
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    message = '';
-    console.log(`\n开始【京东账号二】${UserName}\n`);
-    await jd_moneyTree(cookie2);
+  for (let i = 0; i < cookiesArr.length; i++) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.index = i + 1;
+      console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
+      message = '';
+      subTitle = '';
+      await jd_moneyTree();
+    }
   }
 })()
     .catch((e) => {
@@ -45,8 +52,8 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0,
     .finally(() => {
       $.done();
     })
-async function jd_moneyTree(DoubleKey) {
-  const userRes = await user_info(DoubleKey);
+async function jd_moneyTree() {
+  const userRes = await user_info();
   if (!userRes || !userRes.realName) return
   await signEveryDay();
   await dayWork();
@@ -67,7 +74,7 @@ async function jd_moneyTree(DoubleKey) {
     }
   }
 }
-function user_info(DoubleKey) {
+function user_info() {
   console.log('初始化摇钱树个人信息');
   const params = {
     "sharePin":"",
@@ -106,14 +113,18 @@ function user_info(DoubleKey) {
                 // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
                 // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
               } else {
-                $.msg($.name, `【提示】京东账号${DoubleKey ? '二':'一'}${UserName}运行失败`, '请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多', {"open-url": "openApp.jdMobile://"});
+                $.msg($.name, `【提示】京东账号${$.index}${UserName}运行失败`, '请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多', {"open-url": "openApp.jdMobile://"});
               }
             }
           } else {
             if (res.resultCode === 3) {
               $.isLogin = false;
-              $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-              $.msg($.name, `【提示】京东账号${DoubleKey ? '二':'一'}${UserName}cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+              $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+              if ($.index === 1) {
+                $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+              } else if ($.index === 2){
+                $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+              }
             }
           }
         }

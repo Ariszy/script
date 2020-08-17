@@ -38,8 +38,8 @@ const JD_API_HOST = 'https://api.m.jd.com/'
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
-    cookie = cookiesArr[i];
-    if (cookie) {
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
       UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
