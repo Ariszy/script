@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-08-15
+更新时间:2020-08-17
 // quantumultx
 [task_local]
 #东东萌宠
@@ -49,7 +49,7 @@ if (isBox) {
     }
   }
 }
-let petInfo = null, taskInfo = null, message = '', subTitle = '', goodsUrl = '', taskInfoKey = [];
+let petInfo = null, taskInfo = null, message = '', subTitle = '', goodsUrl = '', taskInfoKey = [], option = {};
 
 //按顺序执行, 尽量先执行不消耗狗粮的任务, 避免中途狗粮不够, 而任务还没做完
 let function_map = {
@@ -104,10 +104,7 @@ function* entrance() {
     }
     yield feedPetsAgain();//所有任务做完后，检测剩余狗粮是否大于110g,大于就继续投食
     yield energyCollect();
-    let option = {
-      "media-url" : goodsUrl
-    }
-
+    option['media-url'] = goodsUrl;
     if (!jdNotify || jdNotify === 'false') {
       $.msg(name, subTitle, message, option);
     }
@@ -371,8 +368,15 @@ function initPetTown() {
               $.done();
               return
             }
-            goodsUrl = response.result.goodsInfo && response.result.goodsInfo.goodsUrl;
+            goodsUrl = petInfo.goodsInfo && petInfo.goodsInfo.goodsUrl;
             // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
+            if (petInfo.petStatus === 5 && petInfo.showHongBaoExchangePop) {
+              option['open-url'] = "openApp.jdMobile://";
+              option['media-url'] = goodsUrl;
+              $.msg($.name, `【提醒⏰】${petInfo.goodsInfo.goodsName}已可领取`, '请去京东APP或微信小程序查看', option);
+              $.done();
+              return
+            }
             console.log(`\n【您的互助码shareCode】 ${petInfo.shareCode}\n`);
           gen.next();
         } else if (response.code === '0' && response.resultCode === '2001'){
@@ -499,7 +503,7 @@ function taskInit() {
         }
         taskInfo = response.result;
         // function_map = taskInfo.taskList;
-        console.log(`任务初始化完成: ${JSON.stringify(taskInfo)}`);
+        // console.log(`任务初始化完成: ${JSON.stringify(taskInfo)}`);
         gen.next();
     })
 
