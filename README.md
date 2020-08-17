@@ -10,6 +10,7 @@
 6.  摇钱树([jd_moneyTree.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js))
 7.  宠汪汪兑换奖品([jd_joy_reward.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js))
 8.  取关京东店铺和商品([jd_unsubscribe.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js))
+9.  京小超([jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js))
 ### 使用说明
 
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
@@ -18,7 +19,7 @@
 
 1、需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`) 例: `npm install crypto-js http-server tough-cookie got --save`
    
-2、需自行提供京东cookie填写到jdCookie.js里面(以 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 为例)
+2、需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
    
 3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
 
