@@ -1,18 +1,19 @@
 /*
 京小超
-更新时间：2020-08-16
+更新时间：2020-08-17
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币
 支持京东双账号
+每天收小费(蓝币)上限是1千个,通过测试脚本一次收取20个,一天运行4次脚本就能收满小费.
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
 #京小超
-11 1-23/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js, tag=京小超, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
+11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js, tag=京小超, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 // Loon
 [Script]
-cron "11 1-23/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js,tag=京小超
+cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js,tag=京小超
 // Surge
-京小超 = type=cron,cronexp=11 1-23/2 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js
+京小超 = type=cron,cronexp=11 1-23/5 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js
  */
 const $ = new Env('京小超');
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -22,6 +23,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
 const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
 const jdNotify = $.getdata('jdSuperMarketNotify');//用来是否关闭弹窗通知，true表示关闭，false表示开启。
+const receiveBlueCoinTimes = 20; //运行一次脚本收取多少次小费(蓝币),默认20次,如达到上限,会跳出,不继续浪费时间收取
 let UserName = '', todayDay = 0, message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 !(async () => {
@@ -48,8 +50,8 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       $.done();
     })
 async function jdSuperMarket(DoubleKey) {
-  await smtgReceiveCoin(0);//收金币
-  await smtgReceiveCoin(2);//收蓝币（小费）
+  await receiveGoldCoin();//收金币
+  await receiveBlueCoin();//收蓝币（小费）
   await smtgSignList();
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
@@ -98,6 +100,40 @@ async function doDailyTask() {
     }
   }
 }
+async function receiveBlueCoin() {
+  let receivedBlue = 0;
+  const res = await smtgReceiveCoin(2);
+  console.log('开始收取蓝币')
+  if (res.data.bizCode === 0) {
+    console.log(`第1次收取蓝币成功,${res.data.result.receivedBlue}个`)
+    receivedBlue += res.data.result.receivedBlue;
+    for (let i = 0; i < new Array(receiveBlueCoinTimes).fill('').length; i++) {
+      await $.wait(3000);
+      const data = await smtgReceiveCoin(2);
+      if (data.data.bizCode === 0) {
+        console.log(`第${i + 2}次收取蓝币成功,${data.data.result.receivedBlue}个`)
+        receivedBlue += data.data.result.receivedBlue;
+      } else {
+        console.log(`蓝币:${data.data.bizMsg}`);
+        break;
+      }
+    }
+    message += `【领取蓝币】${receivedBlue}个\n`
+  } else {
+    console.log('今日领小费(蓝币)已达上限')
+  }
+}
+
+async function receiveGoldCoin() {
+  const data = await smtgReceiveCoin(0);
+  if (data.data.bizCode === 0) {
+    console.log(`领取金币成功${data.data.result.receivedGold}`)
+    message += `【领取金币】${data.data.result.receivedGold}个\n`;
+  } else {
+    console.log(`${data.data.bizMsg}`);
+    message += `【领取金币】失败，${data.data.bizMsg}\n`;
+  }
+}
 function smtgReceiveCoin(type) {
   return new Promise((resolve) => {
     const body = {
@@ -106,22 +142,22 @@ function smtgReceiveCoin(type) {
     $.get(taskUrl('smtg_receiveCoin', body), (err, resp, data) => {
       try {
         data = JSON.parse(data);
-        if (data.data.bizCode === 0) {
-          if (type === 0) {
-            console.log(`领取金币成功${data.data.result.receivedGold}`)
-            message += `【领取金币】${data.data.result.receivedGold}个\n`;
-          } else if (type === 2) {
-            console.log(`领取蓝币成功${data.data.result.receivedBlue}`);
-            message += `【领取蓝币】${data.data.result.receivedBlue}个\n`;
-          }
-        } else {
-          console.log(`${data.data.bizMsg}`);
-          if (type === 0) {
-            message += `【领取金币】失败，${data.data.bizMsg}\n`;
-          } else if (type === 2) {
-            message += `【领取蓝币】失败，${data.data.bizMsg}\n`;
-          }
-        }
+        // if (data.data.bizCode === 0) {
+        //   if (type === 0) {
+        //     console.log(`领取金币成功${data.data.result.receivedGold}`)
+        //     message += `【领取金币】${data.data.result.receivedGold}个\n`;
+        //   } else if (type === 2) {
+        //     console.log(`领取蓝币成功${data.data.result.receivedBlue}`);
+        //     message += `【领取蓝币】${data.data.result.receivedBlue}个\n`;
+        //   }
+        // } else {
+        //   console.log(`${data.data.bizMsg}`);
+        //   if (type === 0) {
+        //     message += `【领取金币】失败，${data.data.bizMsg}\n`;
+        //   } else if (type === 2) {
+        //     message += `【领取蓝币】失败，${data.data.bizMsg}\n`;
+        //   }
+        // }
       } catch (e) {
         $.logErr(e, resp);
       } finally {

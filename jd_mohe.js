@@ -3,8 +3,8 @@
 活动地址: https://blindbox.jd.com
 活动时间到18号
 支持京东双账号
-更新时间：2020-08-15
-脚本兼容: QuantumultX, Surge, JSBox, Node.js(Loon运行此脚本会有问题，提示未登陆)
+更新时间：2020-08-17
+脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 // quantumultx
 [task_local]
 #热8超级魔盒
