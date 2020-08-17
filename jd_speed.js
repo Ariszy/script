@@ -18,37 +18,38 @@ const $ = new Env('✈️天天加速');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
-//直接用NobyDa的jd cookie
-let cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');
-const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
+//IOS等用户直接用NobyDa的jd cookie
+let cookiesArr = [], cookie = '';
+if ($.isNode()) {
+  Object.keys(jdCookieNode).forEach((item) => {
+    cookiesArr.push(jdCookieNode[item])
+  })
+} else {
+  cookiesArr.push($.getdata('CookieJD'));
+  cookiesArr.push($.getdata('CookieJD2'));
+}
 let jdNotify = $.getdata('jdSpeedNotify');
 let message = '', subTitle = '', UserName = '';
 const JD_API_HOST = 'https://api.m.jd.com/'
 
 !(async () => {
-  if (!cookie) {
+  if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-    // $.done();
     return;
-  } else {
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
-    console.log(`\n开始【京东账号一】${UserName}\n`);
-    await jDSpeedUp();
-    if ($.isLogin) {
-      if (!jdNotify || jdNotify === 'false') {
-        $.msg($.name, subTitle, `【京东账号一】${UserName}\n` + message);
-      }
-    }
   }
-  if (cookie2) {
-    cookie = cookie2;
-    UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    message = '';
-    console.log(`\n开始【京东账号二】${UserName}\n`)
-    await jDSpeedUp('', cookie2);
-    if ($.isLogin) {
-      if (!jdNotify || jdNotify === 'false') {
-        $.msg($.name, subTitle, `【京东账号二】${UserName}\n` + message);
+  for (let i = 0; i < cookiesArr.length; i++) {
+    cookie = cookiesArr[i];
+    if (cookie) {
+      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.index = i + 1;
+      console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
+      message = '';
+      subTitle = '';
+      await jDSpeedUp();
+      if ($.isLogin) {
+        if (!jdNotify || jdNotify === 'false') {
+          $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
+        }
       }
     }
   }
@@ -94,11 +95,11 @@ function jDSpeedUp(sourceId, doubleKey) {
           if (res.info.isLogin === 0) {
             $.isLogin = false;
             console.log("\n天天加速-Cookie失效")
-            $.msg($.name, `【提示】京东账号${doubleKey ? '二':'一'}${UserName}\ncookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-            if (doubleKey) {
-              $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-            } else {
+            $.msg($.name, `【提示】京东账号${$.index}${UserName}\n cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+            if ($.index === 1) {
               $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+            } else if ($.index === 2){
+              $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
             }
             // $.done();
           } else if (res.info.isLogin === 1) {
@@ -127,7 +128,7 @@ function jDSpeedUp(sourceId, doubleKey) {
               if (data.match(/\"beans_num\":\d+/)) {
                 //message += "【上轮奖励】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶";
                 if (!jdNotify || jdNotify === 'false') {
-                  $.msg($.name, '', `【京东账号${doubleKey ? '二':'一'}】\n` + "【上轮太空旅行】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶");
+                  $.msg($.name, '', `【京东账号${$.index}】${UserName}\n` + "【上轮太空旅行】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶");
                 }
               } else {
                 console.log("京东天天-加速: 成功, 明细: 无京豆 🐶")
