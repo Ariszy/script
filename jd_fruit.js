@@ -351,7 +351,7 @@ function* step() {
           salveHelpAddWater += helpResult.helpResult.salveHelpAddWater;
           console.log(`【助力好友结果】: 已成功给【${helpResult.helpResult.masterUserInfo.nickName}】助力`);
           console.log(`给好友【${helpResult.helpResult.masterUserInfo.nickName}】助力获得${helpResult.helpResult.salveHelpAddWater}g水滴`)
-          helpSuccessPeoples += helpResult.helpResult.masterUserInfo.nickName + '，';
+          helpSuccessPeoples += helpResult.helpResult.masterUserInfo.nickName || '匿名用户' + ',';
         } else if (helpResult.helpResult.code === '8') {
           console.log(`【助力好友结果】: 助力【${helpResult.helpResult.masterUserInfo.nickName}】失败，您今天助力次数已耗尽`);
         } else if (helpResult.helpResult.code === '9') {

@@ -1,5 +1,5 @@
 /*
-热8超级魔盒，可抽奖获得京豆，建议在凌晨0点时运行脚本，白天抽奖基本没有京东
+热8超级盲盒，可抽奖获得京豆，建议在凌晨0点时运行脚本，白天抽奖基本没有京东
 活动地址: https://blindbox.jd.com
 活动时间到18号
 支持京东双账号
@@ -7,15 +7,15 @@
 脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
 // quantumultx
 [task_local]
-#热8超级魔盒
-1 0,1-23/3 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js, tag=热8超级魔盒, enabled=true
+#热8超级盲盒
+1 0,1-23/3 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js, tag=热8超级盲盒, enabled=true
 // Loon
 [Script]
-cron "1 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js,tag=热8超级魔盒
+cron "1 0,1-23/3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js,tag=热8超级盲盒
 // Surge
-热8超级魔盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js
+热8超级盲盒 = type=cron,cronexp=1 0,1-23/3 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_mohe.js
  */
-const $ = new Env('热8超级魔盒');
+const $ = new Env('热8超级盲盒');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -27,11 +27,11 @@ const JD_API_HOST = 'https://blindbox.jd.com';
 let shareId = '';
 !(async () => {
   if (!cookie) {
-    $.msg('【京东账号一】热8超级魔盒', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    $.msg('【京东账号一】热8超级盲盒', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
   } else {
     UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
-    await shareUrl();
-    await addShare();
+    // await shareUrl();
+    // await addShare();
     await getCoin();//领取每三小时自动生产的热力值
     await Promise.all([
       task0(),
@@ -39,7 +39,11 @@ let shareId = '';
     ])
     await taskList();
     await getAward();//抽奖
-    $.msg($.name, '', `【京东账号一】${UserName}\n任务已做完.\n 抽奖详情查看 https://blindbox.jd.com\n`, {"open-url": "https://blindbox.jd.com"});
+    if ($.time('yyyy-MM-dd') === '2020-08-19') {
+      $.msg($.name, '活动已结束', `请禁用或删除脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
+    } else {
+      $.msg($.name, '', `【京东账号一】${UserName}\n任务已做完.\n 抽奖详情查看 https://blindbox.jd.com\n`, {"open-url": "https://blindbox.jd.com"});
+    }
   }
   await $.wait(1000);
   if (cookie2) {
@@ -110,8 +114,6 @@ async function task1() {
     }
   }
 }
-function shareUrl(){return new Promise((resolve)=>{const url=`shareUrl?t=${Date.now()}`;const options={'url':`${JD_API_HOST}/active/${url}`,'headers':{"accept":"*/*","accept-encoding":"gzip, deflate, br","accept-language":"zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6","content-type":"application/x-www-form-urlencoded","cookie":'pt_key=AAJfKpaxAEBdRN4DgKrh9lhxAp2lqzyZY2hipLPYCe-mISz4Nyq14IoNCVBXhUEhEuPVJ9D0KkfDjqln4heol2dt6cdt7efp;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;',"referer":"https://blindbox.jd.com/","user-agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/84.0.4147.125"}};$.get(options,(err,resp,data)=>{try{console.log('ddd----ddd',data);data=JSON.parse(data);shareId=data.data}catch(e){$.logErr(e,resp)}finally{resolve(shareId)}})})}
-
 function addShare(id) {
   console.log(`shareId${shareId}`);
   return new Promise((resolve) => {
