@@ -5,7 +5,7 @@ name: jd_joy
 
 on:
   schedule:
-    - cron: '23 */1 * * *'
+    - cron: '33 17 * * *'
 
 jobs:
   build:
