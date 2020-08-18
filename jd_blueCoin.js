@@ -49,6 +49,11 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket&functionId=smt
       if ($.data.data.bizCode === 300)
       {
         $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+        if ($.index === 1) {
+          $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+        } else if ($.index === 2){
+          $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+        }
         continue;
       } else if ($.data.data.bizCode === 810 && $.coincount === 0)
       {
@@ -63,7 +68,8 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket&functionId=smt
   .finally(() => $.done())
 
 
-//签到
+//领蓝币
+let index = 0;
 function smtg_receiveCoin(timeout = 0) {
   return new Promise((resolve) => {
     setTimeout( ()=>{
@@ -89,6 +95,8 @@ function smtg_receiveCoin(timeout = 0) {
         }
         if  ($.data.data.bizCode === 0) {
           $.coincount += $.data.data.result.receivedBlue;
+          index ++;
+          console.log(`【京东账号${$.index}】${UserName} 第${index}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
           if (!$.data.data.result.isNextReceived) return;
         }
         await  smtg_receiveCoin(3000);
@@ -105,7 +113,7 @@ function smtg_receiveCoin(timeout = 0) {
 
 //通知
 function msgShow() {
-  $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【共收取蓝币】【${$.coincount}】个\n`);
+  $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【共收取蓝币】${$.coincount}个\n`);
 }
 
 

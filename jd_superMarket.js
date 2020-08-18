@@ -250,7 +250,7 @@ function smtgSign(day) {
         data = JSON.parse(data);
         // console.log('ddd----ddd', data)
         if (data.code === 0 && data.data.success) {
-          message += `【每日签到】第${todayDay}天签到成功，奖励${data.data.result.jdBeanCount}京豆，${data.data.result.rewardBlue}蓝币\n`
+          message += `【每日签到】第${todayDay}天签到成功，奖励${data.data.result.rewardBlue}蓝币\n`
         } else {
           message += `【每日签到】${data.data.bizMsg}\n`
         }
