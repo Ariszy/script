@@ -9,10 +9,10 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 // quantumultx
 // [task_local]
 // #京东宠汪汪
-// 15 */1 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// 15 1,2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
 // Loon
 // [Script]
-// cron "15 */1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
+// cron "15 1,2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
 const name = '京东宠汪汪';
 const $ = new Env(name);
 //Node.js用户请在jdCookie.js处填写京东ck;
