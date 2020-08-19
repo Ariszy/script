@@ -12,6 +12,7 @@
 // [Script]
 // cron "3 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js,tag=京东摇钱树
 const $ = new Env('京东摇钱树');
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -124,6 +125,9 @@ function user_info() {
                 $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
               } else if ($.index === 2){
                 $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+              }
+              if ($.isNode() && notify.SCKEY) {
+                await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
               }
             }
           }

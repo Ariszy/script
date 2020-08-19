@@ -18,6 +18,7 @@ cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scr
 const $ = new Env('京小超');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -147,6 +148,9 @@ async function receiveGoldCoin() {
           $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
         } else if ($.index === 2){
           $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+        }
+        if ($.isNode() && notify.SCKEY) {
+          await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
         }
         resolve()
       } else {

@@ -15,6 +15,7 @@
 // [Script]
 // cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js,tag=京东天天加速
 const $ = new Env('✈️天天加速');
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -100,6 +101,9 @@ function jDSpeedUp(sourceId, doubleKey) {
               $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
             } else if ($.index === 2){
               $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+            }
+            if ($.isNode() && notify.SCKEY) {
+              await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
             }
             // $.done();
           } else if (res.info.isLogin === 1) {

@@ -15,6 +15,7 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 // cron "15 1,2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
 const name = '京东宠汪汪';
 const $ = new Env(name);
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -228,6 +229,9 @@ function* step() {
           if (petTaskConfig.errorCode === 'B0001') {
             $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
             $.msg(name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+            if ($.isNode() && notify.SCKEY) {
+              notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
+            }
             $.done();
             return
           } else {

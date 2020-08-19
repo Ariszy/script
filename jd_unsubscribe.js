@@ -19,6 +19,7 @@ cron "55 23 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts
 const $ = new Env('取关京东店铺和商品');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const notify = $.isNode() ? require('./sendNotify') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -113,6 +114,9 @@ function unsubscribeGoods(doubleKey) {
         $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
       } else if ($.index === 2){
         $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+      }
+      if ($.isNode() && notify.SCKEY) {
+        await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
       }
       $.done();
     }

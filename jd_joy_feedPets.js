@@ -6,6 +6,7 @@
  ****/
 
 const $ = new Env('宠汪汪🐕喂食');
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -137,6 +138,17 @@ function ThreeMeals() {
           }
         } else {
           console.log('三餐请求失败')
+          if (data.errorCode === 'B0001') {
+            if ($.index === 1) {
+              $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+            } else if ($.index === 2){
+              $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+            }
+            console.log(`${data.errorMessage}`)
+            if ($.isNode() && notify.SCKEY) {
+              await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
+            }
+          }
         }
       } catch (e) {
         $.logErr(resp, e);
