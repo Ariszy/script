@@ -1,3 +1,10 @@
+/*****
+宠汪汪喂食(如果喂食80g失败，降级一个档次喂食（40g）,依次类推),三餐，建议一小时运行一次
+更新时间：2020-08-19
+支持京东多个账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+ ****/
+
 const $ = new Env('宠汪汪🐕喂食');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -15,7 +22,7 @@ if ($.isNode()) {
 let jdNotify = $.getdata('jdSpeedNotify');
 let message = '', subTitle = '', UserName = '';
 const JD_API_HOST = 'https://jdjoy.jd.com'
-const FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [10,20,40,80]
+let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,40,80
 
 !(async () => {
   if (!cookiesArr[0]) {
@@ -30,11 +37,11 @@ const FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [1
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
       message = '';
       subTitle = '';
-      await feedPets();
-      if ($.isLogin) {
-        if (!jdNotify || jdNotify === 'false') {
-          $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
-        }
+      FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;
+      await feedPets();//喂食
+      await ThreeMeals();//三餐
+      if (!jdNotify || jdNotify === 'false') {
+        $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
       }
     }
   }
@@ -45,6 +52,7 @@ const FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [1
     .finally(() => {
       $.done();
     })
+
 function feedPets() {
   return new Promise(resolve => {
     const options = {
@@ -61,15 +69,74 @@ function feedPets() {
         'Accept-Encoding': 'gzip, deflate, br',
       }
     }
-    $.get(options, (err, resp, data) => {
+    $.get(options, async (err, resp, data) => {
       try {
         $.data = JSON.parse(data);
         if ($.data.success) {
           if ($.data.errorCode === 'feed_ok') {
             console.log('喂食成功')
+            message += `【喂食成功】${FEED_NUM}g`;
           } else if ($.data.errorCode === 'time_error') {
             console.log('喂食失败：正在食用')
+            message += `【喂食失败】您的汪汪正在食用`;
+          } else if ($.data.errorCode === 'food_insufficient') {
+            console.log(`当前喂食${FEED_NUM}g狗粮不够`)
+            if ((FEED_NUM) === 80) {
+              FEED_NUM = 40;
+            } else if ((FEED_NUM) === 40) {
+              FEED_NUM = 20;
+            } else if ((FEED_NUM) === 20) {
+              FEED_NUM = 10;
+            } else if ((FEED_NUM) === 10) {
+              FEED_NUM = 0;
+            }
+            // 如果喂食设置的数量失败, 就降低一个档次喂食.
+            if ((FEED_NUM) !== 0) {
+              await feedPets();
+            } else {
+              console.log('您的狗粮已不足10g')
+              message += `【喂食失败】您的狗粮已不足10g`;
+            }
+          } else {
+            console.log(`其他状态${$.data.errorCode}`)
           }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve($.data);
+      }
+    })
+  })
+}
+
+//三餐
+function ThreeMeals() {
+  return new Promise(resolve => {
+    const options = {
+      url: `${JD_API_HOST}/pet/getFood?taskType=ThreeMeals`,
+      headers: {
+        'Cookie': cookie,
+        'reqSource': 'h5',
+        'Host': 'jdjoy.jd.com',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json',
+        'Referer': 'https://jdjoy.jd.com/pet/index',
+        'User-Agent': 'jdapp;iPhone;8.5.8;13.4.1;9b812b59e055cd226fd60ebb5fd0981c4d0d235d;network/wifi;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/0;model/iPhone9,2;addressid/138109592;hasOCPay/0;appBuild/167169;supportBestPay/0;jdSupportDarkMode/0;pv/200.75;apprpd/MyJD_Main;ref/MyJdMTAManager;psq/29;ads/;psn/9b812b59e055cd226fd60ebb5fd0981c4d0d235d|608;jdv/0|direct|-|none|-|1587263154256|1587263330;adk/;app_device/IOS;pap/JA2015_311210|8.5.8|IOS 13.4.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1',
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        if (data.success) {
+          if (data.errorCode === 'received') {
+            console.log(`三餐结果领取成功`)
+            message += `【三餐】领取成功，活动${data.data}g狗粮`;
+          }
+        } else {
+          console.log('三餐请求失败')
         }
       } catch (e) {
         $.logErr(resp, e);
