@@ -75,12 +75,12 @@ function feedPets() {
         if ($.data.success) {
           if ($.data.errorCode === 'feed_ok') {
             console.log('喂食成功')
-            message += `【喂食成功】${FEED_NUM}g`;
+            message += `【喂食成功】${FEED_NUM}g\n`;
           } else if ($.data.errorCode === 'time_error') {
             console.log('喂食失败：正在食用')
-            message += `【喂食失败】您的汪汪正在食用`;
+            message += `【喂食失败】您的汪汪正在食用\n`;
           } else if ($.data.errorCode === 'food_insufficient') {
-            console.log(`当前喂食${FEED_NUM}g狗粮不够`)
+            console.log(`当前喂食${FEED_NUM}g狗粮不够\n`)
             if ((FEED_NUM) === 80) {
               FEED_NUM = 40;
             } else if ((FEED_NUM) === 40) {
@@ -95,7 +95,7 @@ function feedPets() {
               await feedPets();
             } else {
               console.log('您的狗粮已不足10g')
-              message += `【喂食失败】您的狗粮已不足10g`;
+              message += `【喂食失败】您的狗粮已不足10g\n`;
             }
           } else {
             console.log(`其他状态${$.data.errorCode}`)
@@ -133,7 +133,7 @@ function ThreeMeals() {
         if (data.success) {
           if (data.errorCode === 'received') {
             console.log(`三餐结果领取成功`)
-            message += `【三餐】领取成功，活动${data.data}g狗粮`;
+            message += `【三餐】领取成功，获得${data.data}g狗粮\n`;
           }
         } else {
           console.log('三餐请求失败')
