@@ -124,6 +124,7 @@ function smtg_receiveCoin(timeout = 0) {
 }
 //换京豆
 function smtg_obtainPrize(timeout = 0) {
+  //1000京豆，prizeId为8501374698
   return new Promise((resolve) => {
     setTimeout( ()=>{
       let url = {

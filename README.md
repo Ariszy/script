@@ -11,23 +11,39 @@
 7.  宠汪汪兑换奖品([jd_joy_reward.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js))
 8.  取关京东店铺和商品([jd_unsubscribe.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js))
 9.  京小超([jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js))
-### 使用说明
+
 
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js 
 
-注：如果使用Node.js, 请认真阅读下面三点
+## 食用方法
 
-1、需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`) 例: `npm install crypto-js http-server tough-cookie got --save`
-   
-2、需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
-   
-3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+- 方法一：本地安装Node.js，
 
-node.js运行结果截图：
+缺点：需要手动运行脚本，不能自动定时运行脚本
 
-![node运行截图](https://images.gitee.com/uploads/images/2020/0721/100942_fec635e9_938321.png "屏幕截图.png")
+需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`) 例: `npm install crypto-js http-server tough-cookie got --save`
+
+- 方法二：云服务器，腾讯云函数等等
+
+需自行有云服务器，云函数等
+
+- 方法三：GitHub action，使用教程暂且可看 [这里](https://github.com/lxk0301/scripts/issues/8)
+
+注：以上三种运行机制都是nodejs，故您需仔细阅读下面几点
+
+
    
-#### 【BoxJs简单说明】[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
+1、如果使用方法一与方法三，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
+   
+2、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+
+- 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
+
+#### 以下内容只针对iOS用户
+
+#### ios使用多个京东账号，需要使用BoxJs保存多会话进行切换 
+  
+##### 【BoxJs简单说明】[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
 
 使用box可以实现远程订阅助力好友。
 
@@ -72,6 +88,8 @@ node.js运行结果截图：
 #种豆得豆
 0,31 6-23/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png, enabled=true
 ```
+
+#### 最后，农场萌宠种豆得豆互相助力可进此[telegram讨论组](https://t.me/JD_fruit_pet)
 
 ### 特别感谢(排名不分先后)：
 * [@NobyDa](https://github.com/NobyDa)
