@@ -5,7 +5,7 @@ name: jd_joy_feedPets
 
 on:
   schedule:
-    - cron: '23 */1 * * *'
+    - cron: '*/20 */1 * * *'
 
 jobs:
   build:
