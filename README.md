@@ -17,7 +17,7 @@
 
 ## 食用方法
 
-- 方法一：本地安装Node.js，
+- 方法一：本地安装Node.js，下载本库脚本
 
 缺点：需要手动运行脚本，不能自动定时运行脚本
 
@@ -34,8 +34,10 @@
 
    
 1、如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
+
+2、方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
    
-2、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
 
 - 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
 
