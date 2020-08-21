@@ -128,7 +128,7 @@ function smtg_obtainPrize(timeout = 0) {
   return new Promise((resolve) => {
     setTimeout( ()=>{
       let url = {
-        url : `${JD_API_HOST}&functionId=smtg_obtainPrize&clientVersion=8.0.0&client=m&body=%7B%22prizeId%22:%228501374697%22%7D&t=${Date.now()}`,
+        url : `${JD_API_HOST}&functionId=smtg_obtainPrize&clientVersion=8.0.0&client=m&body=%7B%22prizeId%22:%224401379725%22%7D&t=${Date.now()}`,
         headers : {
           'Origin' : `https://jdsupermarket.jd.com`,
           'Cookie' : cookie,
