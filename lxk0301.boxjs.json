@@ -430,7 +430,16 @@
       ],
       "author": "@lxk0301",
       "repo": "https://github.com/lxk0301/scripts",
-      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js",
+      "scripts":[
+        {
+          "name" : "做任务收金币",
+          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js"
+        },
+        {
+          "name" : "收蓝币兑京豆",
+          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js"
+        }
+      ],
       "icons": [
         "https://raw.githubusercontent.com/58xinian/icon/master/jxc_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jxc.png"
