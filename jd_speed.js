@@ -96,14 +96,14 @@ function jDSpeedUp(sourceId, doubleKey) {
           if (res.info.isLogin === 0) {
             $.isLogin = false;
             console.log("\n天天加速-Cookie失效")
-            $.msg($.name, `【提示】京东账号${$.index}${UserName}\n cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+            $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
             if ($.index === 1) {
               $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
             } else if ($.index === 2){
               $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
             }
             if ($.isNode() && notify.SCKEY) {
-              await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
+              await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
             }
             // $.done();
           } else if (res.info.isLogin === 1) {

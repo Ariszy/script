@@ -116,7 +116,7 @@ function unsubscribeGoods(doubleKey) {
         $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
       }
       if ($.isNode() && notify.SCKEY) {
-        await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
+        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
       }
       $.done();
     }

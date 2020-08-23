@@ -55,7 +55,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       {
         $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
         if ($.isNode() && notify.SCKEY) {
-          await notify.sendNotify(`京东账号${UserName}cookie已失效`, '请重新登录获取cookie');
+          await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
         }
         if ($.index === 1) {
           $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
