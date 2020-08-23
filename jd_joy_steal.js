@@ -1,6 +1,7 @@
 /*
 jd宠汪汪偷好友积分与狗粮,及给好友喂食
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 更新时间:2020-08-23
 建议凌晨0-1点左右运行，可偷好友狗粮与积分
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
