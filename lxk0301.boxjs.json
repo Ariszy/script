@@ -204,6 +204,13 @@
           "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
         },
         {
+          "id": "jdJoyHelpFeed",
+          "name": "是否给好友喂食",
+          "val": true,
+          "type": "boolean",
+          "desc": "默认给好友喂食（给好友喂食可得积分，但会消耗自己狗粮）"
+        },
+        {
           "id": "joyFeedCount",
           "name": "每次喂养数量（默认10g）",
           "val": "10",

@@ -32,7 +32,7 @@ if ($.isNode()) {
 let message = '', subTitle = '', UserName = '';
 let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [10,20,40,80]
 
-let jdNotify = $.getdata('jdJoyNotify');
+let jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 !(async () => {
