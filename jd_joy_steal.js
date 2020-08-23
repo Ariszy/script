@@ -189,7 +189,7 @@ async function stealFriendCoin(friendPin) {
 //进入好友房间
 function enterFriendRoom(friendPin) {
   return new Promise(resolve => {
-    $.get(taskUrl('enterFriendRoom', friendPin), (err, resp, data) => {
+    $.get(taskUrl('enterFriendRoom', (friendPin)), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
@@ -342,7 +342,7 @@ function showMsg() {
 
 function taskUrl(functionId, friendPin) {
   return {
-    url: `${weAppUrl}/${functionId}?friendPin=${friendPin}`,
+    url: `${weAppUrl}/${functionId}?friendPin=${encodeURI(friendPin)}`,
     headers: {
       'Cookie': cookie,
       'reqSource': 'weapp',
