@@ -16,7 +16,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 */
 
 let name = '东东农场';
-const retainWater = 50;//保留水滴大于多少g,默认50g;
+const retainWater = 100;//保留水滴大于多少g,默认100g;
 const $ = new Env(name);
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
