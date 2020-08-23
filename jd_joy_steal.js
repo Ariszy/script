@@ -33,7 +33,7 @@ if ($.isNode()) {
 let message = '', subTitle = '', UserName = '';
 
 const jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
-const jdJoyHelpFeed = $.getdata('jdJoyHelpFeed') || true//是否给好友喂食，false为不给喂食，true为给好友喂食，默认是给
+let jdJoyHelpFeed = 'true'//是否给好友喂食，'false'为不给喂食，'true'为给好友喂食，默认是给
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 !(async () => {
   if (!cookiesArr[0]) {
@@ -106,7 +106,9 @@ async function jdJoySteal() {
         }
         if ($.help_feed !== 200) {
           //可给好友喂食
-          if (jdJoyHelpFeed || jdJoyHelpFeed === 'true') {
+          // TODO
+          jdJoyHelpFeed = $.getdata('jdJoyHelpFeed') ? $.getdata('jdJoyHelpFeed') : jdJoyHelpFeed
+          if (jdJoyHelpFeed && jdJoyHelpFeed === 'true') {
             const helpFeedRes = await helpFeed(friendPin);
             if (helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
               $.helpFood += 10;
