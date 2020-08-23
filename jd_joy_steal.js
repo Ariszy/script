@@ -232,7 +232,7 @@ function helpFeed(friendPin) {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log('帮忙喂食', JSON.parse(data))
+          console.log(`帮忙喂食${data}`)
           data = JSON.parse(data);
         }
       } catch (e) {
