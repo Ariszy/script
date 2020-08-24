@@ -2,19 +2,19 @@
 jd宠汪汪偷好友积分与狗粮,及给好友喂食
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-更新时间:2020-08-23
+更新时间:2020-08-24
 建议凌晨0-1点左右运行，可偷好友狗粮与积分
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 // quantumultx
 // [task_local]
 // #宠汪汪偷好友积分与狗粮
-// 0 1 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// 0 1,6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
 // Loon
 // [Script]
-// cron "0 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
+// cron "0 1,6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
 // Surge
-// 宠汪汪偷好友积分与狗粮 = type=cron,cronexp=0 1 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js
+// 宠汪汪偷好友积分与狗粮 = type=cron,cronexp=0 1,6 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js
 const $ = new Env('宠汪汪偷好友积分与狗粮');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -106,15 +106,21 @@ async function jdJoySteal() {
         }
         if ($.help_feed !== 200) {
           //可给好友喂食
-          // TODO
           jdJoyHelpFeed = $.getdata('jdJoyHelpFeed') ? $.getdata('jdJoyHelpFeed') : jdJoyHelpFeed
           if (jdJoyHelpFeed && jdJoyHelpFeed === 'true') {
-            const helpFeedRes = await helpFeed(friendPin);
-            if (helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
-              $.helpFood += 10;
-            } else if (helpFeedRes.errorCode === 'chance_full') {
-              console.log('喂食已达上限,不再喂食')
-              break
+            if (status === 'not_feed') {
+              const helpFeedRes = await helpFeed(friendPin);
+              if (helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
+                $.helpFood += 10;
+              } else if (helpFeedRes.errorCode === 'chance_full') {
+                console.log('喂食已达上限,不再喂食')
+                break
+              } else if (helpFeedRes.errorCode === 'food_insufficient') {
+                console.log('帮好友喂食失败，您的狗粮不足10g')
+                break
+              }
+            } else if (status === 'time_error') {
+              console.log(`好友 ${friendPin} 的汪汪正在食用`)
             }
           }
         } else {
@@ -179,11 +185,13 @@ async function stealFriendCoin(friendPin) {
   const { friendHomeCoin, stealFood, helpFeedStatus } = enterFriendRoomRes.data;
   if (friendHomeCoin > 0) {
     //领取好友积分
-    console.log(`好友 ${friendPin}的房间可领取积分${friendHomeCoin}个`)
+    console.log(`好友 ${friendPin}的房间可领取积分${friendHomeCoin}个\n`)
     const getFriendCoinRes = await getFriendCoin(friendPin);
     //TODO
-    $.stealFriendCoin += friendHomeCoin;
-    console.log('getFriendCoinRes', getFriendCoinRes)
+    console.log(`偷好友积分结果：${getFriendCoinRes}\n`)
+    if (getFriendCoinRes.errorCode === 'coin_took_ok') {
+      $.stealFriendCoin += getFriendCoinRes.data;
+    }
   } else {
     console.log(`好友 ${friendPin}的房间暂无可领取积分`)
   }
