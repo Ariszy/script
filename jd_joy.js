@@ -362,10 +362,10 @@ function feedPets() {
           if (data.success) {
             if (data.errorCode === 'feed_ok') {
               console.log('喂食成功')
-              message += `【喂食成功】${FEED_NUM}g\n`;
+              message += `【喂食成功】消耗${FEED_NUM}g狗粮\n`;
             } else if (data.errorCode === 'time_error') {
-              console.log('喂食失败：正在食用')
-              message += `【喂食失败】您的汪汪正在食用\n`;
+              console.log('喂食失败：您的汪汪正在食用中,请稍后再喂食')
+              message += `【喂食失败】您的汪汪正在食用中,请稍后再喂食\n`;
             } else if (data.errorCode === 'food_insufficient') {
               console.log(`当前狗粮不够您设定的喂食${FEED_NUM}g, 现为您降低一档次喂食\n`)
               if ((FEED_NUM) === 80) {
