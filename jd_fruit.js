@@ -1,6 +1,7 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-08-15
+更新时间:2020-08-24
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
 #jd免费水果
@@ -8,8 +9,8 @@ jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d978574
 // Loon
 [Script]
 cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js,tag=东东农场
-兼容surge和Loon等软件功能 by@iepngs
-新增和维护功能 by@lxk0301
+// Surge
+// 宠汪汪偷好友积分与狗粮 = type=cron,cronexp=5 6-18/6 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js
 互助码shareCode请先手动运行脚本查看打印可看到
 一天只能帮助4个人。多出的助力码无效
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
@@ -30,8 +31,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let jdNotify = $.getdata('jdFruitNotify');
 //助力好友分享码(最多4个,否则后面的助力失败),原因:京东农场每人每天只有四次助力机会
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
-  'a6f686a9f6aa4c80977370b03681c553',
-  'f92cb56c6a1349f5a35f0372aa041ea0',
+  '0a74407df5df4fa99672a037eec61f7e',
+  'dbb21614667246fabcfd9685b6f448f3',
   '6fbd26cc27ac44d6a7fed34092453f77',
   '61ff5c624949454aa88561f2cd721bf6',
 ]
@@ -62,17 +63,18 @@ let farmTask = null, isFruitFinished = false;
 
 function* step() {
   let message = '';
-  let subTitle = '';
+  let subTitle = '', UserName = '';
   let option = {};
   if (!cookie) {
     $.msg(name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     $.done();
     return
   }
+  UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
   let farmInfo = yield initForFarm();
   if (farmInfo.farmUserPro) {
     option['media-url'] = farmInfo.farmUserPro.goodsImage;
-    subTitle = `【${farmInfo.farmUserPro.nickName}】${farmInfo.farmUserPro.name}`;
+    subTitle = `【${UserName}】${farmInfo.farmUserPro.name}`;
     console.log(`\n【您的互助码shareCode】 ${farmInfo.farmUserPro.shareCode}\n`);
     console.log(`\n【已成功兑换水果】${farmInfo.farmUserPro.winTimes}次\n`)
     if (farmInfo.treeState === 0) {
@@ -351,7 +353,7 @@ function* step() {
           salveHelpAddWater += helpResult.helpResult.salveHelpAddWater;
           console.log(`【助力好友结果】: 已成功给【${helpResult.helpResult.masterUserInfo.nickName}】助力`);
           console.log(`给好友【${helpResult.helpResult.masterUserInfo.nickName}】助力获得${helpResult.helpResult.salveHelpAddWater}g水滴`)
-          helpSuccessPeoples += helpResult.helpResult.masterUserInfo.nickName || '匿名用户' + '，';
+          helpSuccessPeoples += helpResult.helpResult.masterUserInfo.nickName || '匿名用户' + ',';
         } else if (helpResult.helpResult.code === '8') {
           console.log(`【助力好友结果】: 助力【${helpResult.helpResult.masterUserInfo.nickName}】失败，您今天助力次数已耗尽`);
         } else if (helpResult.helpResult.code === '9') {
@@ -375,7 +377,7 @@ function* step() {
     }
     if (helpSuccessPeoples) {
       if ($.getdata(helpSuccessPeoplesKey)) {
-        $.setdata($.getdata(helpSuccessPeoplesKey) + helpSuccessPeoples, helpSuccessPeoplesKey);
+        $.setdata($.getdata(helpSuccessPeoplesKey) + ',' + helpSuccessPeoples, helpSuccessPeoplesKey);
       } else {
         $.setdata(helpSuccessPeoples, helpSuccessPeoplesKey);
       }
