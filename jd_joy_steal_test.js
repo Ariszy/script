@@ -331,8 +331,8 @@ function getCoinChanges() {
                 $.visit_friend = item.changeCoin;
               }
             }
-            console.log('$.help_feed', $.help_feed);
-            console.log('$.visit_friend', $.visit_friend);
+            console.log(`$.help_feed给好友喂食获得积分：${$.help_feed}`);
+            console.log(`$.visit_friend领取好友积分：${$.visit_friend}`);
           }
         }
       } catch (e) {
