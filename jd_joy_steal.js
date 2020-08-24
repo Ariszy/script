@@ -114,10 +114,10 @@ async function jdJoySteal() {
                 $.helpFood += 10;
               } else if (helpFeedRes.errorCode === 'chance_full') {
                 console.log('喂食已达上限,不再喂食')
-                break
+                //break
               } else if (helpFeedRes.errorCode === 'food_insufficient') {
                 console.log('帮好友喂食失败，您的狗粮不足10g')
-                break
+                //break
               }
             } else if (status === 'time_error') {
               console.log(`好友 ${friendPin} 的汪汪正在食用`)
@@ -188,7 +188,7 @@ async function stealFriendCoin(friendPin) {
     console.log(`好友 ${friendPin}的房间可领取积分${friendHomeCoin}个\n`)
     const getFriendCoinRes = await getFriendCoin(friendPin);
     //TODO
-    console.log(`偷好友积分结果：${getFriendCoinRes}\n`)
+    console.log(`偷好友积分结果：${JSON.stringify(getFriendCoinRes)}\n`)
     if (getFriendCoinRes.errorCode === 'coin_took_ok') {
       $.stealFriendCoin += getFriendCoinRes.data;
     }
