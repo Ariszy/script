@@ -45,7 +45,8 @@ const JD_API_HOST = 'https://jdjoy.jd.com/pet/';
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
       message = '';
       subTitle = '';
-      await joyReward();
+      // await joyReward();
+      $.msg($.name, '兑换脚本暂不能使用', `请停止使用，等待后期更新\n如果新版本兑换您有兑换机会，请抓包兑换\n再把抓包数据发送telegram用户@lxk0301`);
     }
   }
 })()
