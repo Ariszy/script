@@ -325,7 +325,7 @@ function* step() {
           if (index === (masterHelpResult.masterHelpPeoples.length - 1)) {
             str += item.nickName || "匿名用户";
           } else {
-            str += (item.nickName || "匿名用户") + '，';
+            str += (item.nickName || "匿名用户") + ',';
           }
           let date = new Date(item.time);
           let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
