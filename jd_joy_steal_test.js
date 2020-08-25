@@ -96,6 +96,7 @@ async function jdJoySteal() {
         if (stealStatus === 'can_steal') {
           //可偷狗粮
           //偷好友狗粮
+          await enterFriendRoom(friendPin);
           await doubleRandomFood(friendPin);
           const getRandomFoodRes = await getRandomFood(friendPin);
           console.log(`偷好友狗粮结果::${JSON.stringify(getRandomFoodRes)}`)
