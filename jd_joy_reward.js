@@ -16,7 +16,7 @@ cron "0 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 宠汪汪积分兑换奖品 = type=cron,cronexp=0 0-16/8 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js
  */
 const $ = new Env('宠汪汪积分兑换奖品');
-//const joyRewardName = $.getdata('joyRewardName') || 20;//兑换多少数量的京豆，默认兑换20京豆
+let joyRewardName = '1';//是否兑换京豆，默认开启兑换功能，其中'1'为兑换，'0'为不兑换京豆
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -75,21 +75,26 @@ async function joyReward() {
         giftName = item.giftName;
       }
     }
-    if (leftStock) {
-      if (!saleInfoId) return
-      //开始兑换
-      const exchangeRes = await exchange(saleInfoId, 'pet');
-      if (exchangeRes.success) {
-        if (exchangeRes.errorCode === 'buy_success') {
-          console.log('兑换京豆成功')
-          $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】UserName\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
-        } else if (exchangeRes.errorCode === 'buy_limit') {
-          console.log('兑换京豆已达上限，请把机会留给更多的小伙伴~')
-          //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
+    joyRewardName = $.getdata('joyRewardName');
+    if (joyRewardName === '1') {
+      if (leftStock) {
+        if (!saleInfoId) return
+        //开始兑换
+        const exchangeRes = await exchange(saleInfoId, 'pet');
+        if (exchangeRes.success) {
+          if (exchangeRes.errorCode === 'buy_success') {
+            console.log('兑换京豆成功')
+            $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+          } else if (exchangeRes.errorCode === 'buy_limit') {
+            console.log('兑换京豆已达上限，请把机会留给更多的小伙伴~')
+            //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
+          }
         }
+      } else {
+        console.log('京豆库存不足，已抢完，请下一场再兑换')
       }
     } else {
-      console.log('京豆库存不足，已抢完，请下一场再兑换')
+      console.log('您设置了不兑换京豆')
     }
   } else if (!getExchangeRewardsRes.success && getExchangeRewardsRes.errorCode === 'B0001') {
     $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
