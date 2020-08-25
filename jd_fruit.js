@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-08-24
+更新时间:2020-08-26
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
@@ -348,12 +348,13 @@ function* step() {
       console.log(`开始助力好友: ${code}`);
       let helpResult = yield masterHelp(code)
       if (helpResult.code == 0) {
+        helpSuccessPeoples += (helpResult.helpResult.masterUserInfo.nickName || '匿名用户') + ',';
         if (helpResult.helpResult.code === '0') {
           //助力成功
           salveHelpAddWater += helpResult.helpResult.salveHelpAddWater;
           console.log(`【助力好友结果】: 已成功给【${helpResult.helpResult.masterUserInfo.nickName}】助力`);
           console.log(`给好友【${helpResult.helpResult.masterUserInfo.nickName}】助力获得${helpResult.helpResult.salveHelpAddWater}g水滴`)
-          helpSuccessPeoples += helpResult.helpResult.masterUserInfo.nickName || '匿名用户' + ',';
+          helpSuccessPeoples += (helpResult.helpResult.masterUserInfo.nickName || '匿名用户') + ',';
         } else if (helpResult.helpResult.code === '8') {
           console.log(`【助力好友结果】: 助力【${helpResult.helpResult.masterUserInfo.nickName}】失败，您今天助力次数已耗尽`);
         } else if (helpResult.helpResult.code === '9') {
