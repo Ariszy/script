@@ -2,8 +2,8 @@
 jd宠汪汪偷好友积分与狗粮,及给好友喂食
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-更新时间:2020-08-25
-建议凌晨0-1点左右运行，可偷好友狗粮与积分
+更新时间:2020-08-26
+如果开启了给好友喂食功能，建议先凌晨0点运行jd_joy.js脚本获取狗粮后，再运行此脚本(jd_joy_steal.js)可偷好友积分，6点运行可偷好友狗粮
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 // quantumultx
@@ -35,6 +35,7 @@ let message = '', subTitle = '', UserName = '';
 const jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
 let jdJoyHelpFeed = 'true'//是否给好友喂食，'false'为不给喂食，'true'为给好友喂食，默认是给
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
+const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -84,25 +85,12 @@ async function jdJoySteal() {
       $.stealFood = 0;
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
-        console.log(`${friendPin}--偷食状态：${stealStatus}`);
-        console.log(`${friendPin}--喂食状态：${status}`);
+        console.log(`\n好友【${friendPin}】--偷食状态：${stealStatus}`);
+        console.log(`好友【${friendPin}】--喂食状态：${status}\n`);
         if ($.visit_friend !== 100) {
           await stealFriendCoin(friendPin);//领好友积分
         } else {
-          $.stealFriendCoin = `已达上限(100积分)`
-        }
-        if (stealStatus === 'can_steal') {
-          //可偷狗粮
-          //偷好友狗粮
-          await doubleRandomFood(friendPin);
-          const getRandomFoodRes = await getRandomFood(friendPin);
-          if (getRandomFoodRes.success && getRandomFoodRes.errorCode === 'steal_ok') {
-            $.stealFood += getRandomFoodRes.data;
-          }
-        } else if (stealStatus === 'chance_full') {
-          $.stealFood = '已达上限';
-        } else if (stealStatus === 'cannot_steal') {
-          $.stealFood = '未到可偷时间，请稍后再试';
+          $.stealFriendCoin = `已达上限(已获得100积分)`
         }
         if ($.help_feed !== 200) {
           //可给好友喂食
@@ -122,9 +110,30 @@ async function jdJoySteal() {
             } else if (status === 'time_error') {
               console.log(`好友 ${friendPin} 的汪汪正在食用`)
             }
+          } else {
+            console.log('您已设置不为好友喂食，现在跳过喂食')
           }
         } else {
-          $.helpFood = '已达上限(20个好友)'
+          $.helpFood = '已达上限(已帮喂20个好友获得200积分)'
+        }
+
+        if (stealStatus === 'can_steal') {
+          //可偷狗粮
+          //偷好友狗粮
+          await enterFriendRoom(friendPin);
+          await doubleRandomFood(friendPin);
+          const getRandomFoodRes = await getRandomFood(friendPin);
+          console.log(`偷好友狗粮结果::${JSON.stringify(getRandomFoodRes)}`)
+          if (getRandomFoodRes.success) {
+            if (getRandomFoodRes.errorCode === 'steal_ok') {
+              $.stealFood += getRandomFoodRes.data;
+            }
+            // else if (getRandomFoodRes.errorCode === 'chance_full') {
+            //   $.stealFood = '已达上限';
+            // } else if (getRandomFoodRes.errorCode === 'cannot_steal') {
+            //   $.stealFood = '失败,好友已无多余狗粮';
+            // }
+          }
         }
       }
       await showMsg();
@@ -149,11 +158,11 @@ async function jdJoySteal() {
 function getFriends(currentPage = '1') {
   return new Promise(resolve => {
     const options = {
-      url: `${weAppUrl}/getFriends?itemsPerPage=20&currentPage=${currentPage}`,
+      url: `${JD_API_HOST}/getFriends?itemsPerPage=20&currentPage=${currentPage}`,
       headers: {
         'Cookie': cookie,
-        'reqSource': 'weapp',
-        'Host': 'draw.jdfcloud.com',
+        'reqSource': 'h5',
+        'Host': 'jdjoy.jd.com',
         'Connection': 'keep-alive',
         'Content-Type': 'application/json',
         'Referer': 'https://jdjoy.jd.com/pet/index',
@@ -182,12 +191,11 @@ function getFriends(currentPage = '1') {
 async function stealFriendCoin(friendPin) {
   // console.log(`进入好友 ${friendPin}的房间`)
   const enterFriendRoomRes = await enterFriendRoom(friendPin);
-  const { friendHomeCoin, stealFood, helpFeedStatus } = enterFriendRoomRes.data;
+  const { friendHomeCoin } = enterFriendRoomRes.data;
   if (friendHomeCoin > 0) {
     //领取好友积分
     console.log(`好友 ${friendPin}的房间可领取积分${friendHomeCoin}个\n`)
     const getFriendCoinRes = await getFriendCoin(friendPin);
-    //TODO
     console.log(`偷好友积分结果：${JSON.stringify(getFriendCoinRes)}\n`)
     if (getFriendCoinRes.errorCode === 'coin_took_ok') {
       $.stealFriendCoin += getFriendCoinRes.data;
@@ -223,7 +231,7 @@ function getFriendCoin(friendPin) {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log('收集好友金币', JSON.parse(data))
+          console.log(`收集好友金币结果--${data}`)
           data = JSON.parse(data);
         }
       } catch (e) {
@@ -242,7 +250,7 @@ function helpFeed(friendPin) {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log(`帮忙喂食${data}`)
+          console.log(`帮忙喂食结果--${data}`)
           data = JSON.parse(data);
         }
       } catch (e) {
@@ -262,7 +270,7 @@ function doubleRandomFood(friendPin) {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log('分享', JSON.parse(data))
+          // console.log('分享', JSON.parse(data))
           // $.appGetPetTaskConfigRes = JSON.parse(data);
         }
       } catch (e) {
@@ -281,7 +289,7 @@ function getRandomFood(friendPin) {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log('领取双倍狗粮', JSON.parse(data))
+          console.log(`领取双倍狗粮结果--data`)
           data = JSON.parse(data);
         }
       } catch (e) {
@@ -295,11 +303,11 @@ function getRandomFood(friendPin) {
 function getCoinChanges() {
   return new Promise(resolve => {
     const options = {
-      url: `${weAppUrl}/getCoinChanges?changeDate=${Date.now()}`,
+      url: `${JD_API_HOST}/getCoinChanges?changeDate=${Date.now()}`,
       headers: {
         'Cookie': cookie,
-        'reqSource': 'weapp',
-        'Host': 'draw.jdfcloud.com',
+        'reqSource': 'h5',
+        'Host': 'jdjoy.jd.com',
         'Connection': 'keep-alive',
         'Content-Type': 'application/json',
         'Referer': 'https://jdjoy.jd.com/pet/index',
@@ -326,8 +334,8 @@ function getCoinChanges() {
                 $.visit_friend = item.changeCoin;
               }
             }
-            console.log('$.help_feed', $.help_feed);
-            console.log('$.visit_friend', $.visit_friend);
+            console.log(`$.help_feed给好友喂食获得积分：${$.help_feed}`);
+            console.log(`$.visit_friend领取好友积分：${$.visit_friend}`);
           }
         }
       } catch (e) {
@@ -340,9 +348,9 @@ function getCoinChanges() {
 }
 function showMsg() {
   if (!jdNotify || jdNotify === 'false') {
-    $.stealFood = $.stealFood > 0 ? `【偷好友狗粮】获取${$.stealFood}g狗粮\n` : `【偷好友狗粮】${$.stealFood}\n`;
-    $.stealFriendCoin = $.stealFriendCoin > 0 ? `【领取好友积分】获取${$.stealFriendCoin}个\n` : `【领取好友积分】${$.stealFriendCoin}\n`;
-    $.helpFood = $.helpFood > 0 ? `【给好友喂食】消耗${$.helpFood}g狗粮,获取积分${$.helpFood}\n` : `【给好友喂食】${$.helpFood}\n`;
+    $.stealFood = $.stealFood >= 0 ? `【偷好友狗粮】获取${$.stealFood}g狗粮\n` : `【偷好友狗粮】${$.stealFood}\n`;
+    $.stealFriendCoin = $.stealFriendCoin >= 0 ? `【领取好友积分】获得${$.stealFriendCoin}个\n` : `【领取好友积分】${$.stealFriendCoin}\n`;
+    $.helpFood = $.helpFood >= 0 ? `【给好友喂食】消耗${$.helpFood}g狗粮,获得积分${$.helpFood}个\n` : `【给好友喂食】${$.helpFood}\n`;
     message += $.stealFriendCoin;
     message += $.stealFood;
     message += $.helpFood;
@@ -352,11 +360,11 @@ function showMsg() {
 
 function taskUrl(functionId, friendPin) {
   return {
-    url: `${weAppUrl}/${functionId}?friendPin=${encodeURI(friendPin)}`,
+    url: `${JD_API_HOST}/${functionId}?friendPin=${encodeURI(friendPin)}`,
     headers: {
       'Cookie': cookie,
-      'reqSource': 'weapp',
-      'Host': 'draw.jdfcloud.com',
+      'reqSource': 'h5',
+      'Host': 'jdjoy.jd.com',
       'Connection': 'keep-alive',
       'Content-Type': 'application/json',
       'Referer': 'https://jdjoy.jd.com/pet/index',
