@@ -93,7 +93,8 @@ async function joyReward() {
             }
           }
         } else {
-          console.log(`兑换失败，原因：您目前积分只有${data.coin}，已不足兑换${giftName}所需的${salePrice}积分`)
+          console.log(`兑换失败，原因：您目前只有${data.coin}积分，已不足兑换${giftName}所需的${salePrice}积分`)
+          $.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
         }
       } else {
         console.log('兑换失败，原因：京豆库存不足，已抢完，请下一场再兑换')
