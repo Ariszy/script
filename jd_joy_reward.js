@@ -75,7 +75,8 @@ async function joyReward() {
         giftName = item.giftName;
       }
     }
-    if (joyRewardName === '1') {
+    // 兼容之前BoxJs兑换设置的数据
+    if (joyRewardName && (joyRewardName === '-1' || joyRewardName === '1' || joyRewardName === '20' || joyRewardName === '50' || joyRewardName === '100' || joyRewardName === '500' || joyRewardName === '1000')) {
       if (leftStock) {
         if (!saleInfoId) return
         //开始兑换
