@@ -1,5 +1,5 @@
 const $ = new Env();
-const SCKEY = 'SCU53275T49b8dc8ff4033c3bf677a6f85ed436af5f3cde67a2737' || process.env.PUSH_KEY;//此处填你申请的SCKEY.注：github action用户SCKEY填写到Settings-Secrets里面
+const SCKEY = '' || process.env.PUSH_KEY;//此处填你申请的SCKEY.注：github action用户SCKEY填写到Settings-Secrets里面
 
 function sendNotify(text, desp) {
   return  new Promise(resolve => {
