@@ -1,6 +1,6 @@
 /*****
 宠汪汪喂食(如果喂食80g失败，降级一个档次喂食（40g）,依次类推),三餐，建议一小时运行一次
-更新时间：2020-08-19
+更新时间：2020-08-25
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
  ****/
@@ -20,7 +20,7 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
-let jdNotify = $.getdata('jdSpeedNotify');
+let jdNotify = $.getdata('jdJoyNotify');
 let message = '', subTitle = '', UserName = '';
 const JD_API_HOST = 'https://jdjoy.jd.com'
 let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,40,80
