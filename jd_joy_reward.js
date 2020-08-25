@@ -3,7 +3,7 @@
 更新时间; 2020-08-25
 10级以下：1600机会兑换100京豆， 11-20级：800机会兑换 50 ，21-25级：1600机会兑换100京豆。在往上的等级目前不知，欢迎大家提供信息
 兑换奖品成功后才会有系统弹窗通知
-每日京豆库存会在0:00、8:00、16:00及时更新
+每日京豆库存会在0:00、8:00、16:00更新
 支持京东双账号
 脚本兼容: Quantumult X, Surge, Loon, JSBox, Node.js
 // Quantumult X
@@ -81,21 +81,25 @@ async function joyReward() {
       if (leftStock) {
         if (!saleInfoId) return
         //开始兑换
-        const exchangeRes = await exchange(saleInfoId, 'pet');
-        if (exchangeRes.success) {
-          if (exchangeRes.errorCode === 'buy_success') {
-            console.log('兑换京豆成功')
-            $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
-          } else if (exchangeRes.errorCode === 'buy_limit') {
-            console.log('兑换京豆已达上限，请把机会留给更多的小伙伴~')
-            //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
+        if (data.coin >= salePrice) {
+          const exchangeRes = await exchange(saleInfoId, 'pet');
+          if (exchangeRes.success) {
+            if (exchangeRes.errorCode === 'buy_success') {
+              console.log('兑换京豆成功')
+              $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+            } else if (exchangeRes.errorCode === 'buy_limit') {
+              console.log('兑换失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~')
+              //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
+            }
           }
+        } else {
+          console.log(`兑换失败，原因：您目前积分只有${data.coin}，已不足兑换${giftName}所需的${salePrice}积分`)
         }
       } else {
-        console.log('京豆库存不足，已抢完，请下一场再兑换')
+        console.log('兑换失败，原因：京豆库存不足，已抢完，请下一场再兑换')
       }
     } else {
-      console.log('您设置了不兑换京豆')
+      console.log('您设置了不兑换京豆,如需兑换京豆，请去BoxJs重新设置或修改第20行代码')
     }
   } else if (!getExchangeRewardsRes.success && getExchangeRewardsRes.errorCode === 'B0001') {
     $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
