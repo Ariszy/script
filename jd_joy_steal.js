@@ -214,6 +214,7 @@ function enterFriendRoom(friendPin) {
         } else {
           // console.log('进入好友房间', JSON.parse(data))
           data = JSON.parse(data);
+          console.log(`可偷狗粮：${data.data.stealFood}`)
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -289,7 +290,7 @@ function getRandomFood(friendPin) {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log(`领取双倍狗粮结果--data`)
+          console.log(`领取双倍狗粮结果--${data}`)
           data = JSON.parse(data);
         }
       } catch (e) {
