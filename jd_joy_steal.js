@@ -2,7 +2,7 @@
 jd宠汪汪偷好友积分与狗粮,及给好友喂食
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-更新时间:2020-08-26
+更新时间:2020-08-25
 如果开启了给好友喂食功能，建议先凌晨0点运行jd_joy.js脚本获取狗粮后，再运行此脚本(jd_joy_steal.js)可偷好友积分，6点运行可偷好友狗粮
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
@@ -120,19 +120,20 @@ async function jdJoySteal() {
         if (stealStatus === 'can_steal') {
           //可偷狗粮
           //偷好友狗粮
-          await enterFriendRoom(friendPin);
-          await doubleRandomFood(friendPin);
-          const getRandomFoodRes = await getRandomFood(friendPin);
-          console.log(`偷好友狗粮结果::${JSON.stringify(getRandomFoodRes)}`)
-          if (getRandomFoodRes.success) {
-            if (getRandomFoodRes.errorCode === 'steal_ok') {
-              $.stealFood += getRandomFoodRes.data;
+          const enterFriendRoomRes = await enterFriendRoom(friendPin);
+          if (enterFriendRoomRes.data.stealFood && enterFriendRoomRes.data.stealFood > 0) {
+            await doubleRandomFood(friendPin);
+            const getRandomFoodRes = await getRandomFood(friendPin);
+            if (getRandomFoodRes.success) {
+              if (getRandomFoodRes.errorCode === 'steal_ok') {
+                $.stealFood += getRandomFoodRes.data;
+              }
+              // else if (getRandomFoodRes.errorCode === 'chance_full') {
+              //   $.stealFood = '已达上限';
+              // } else if (getRandomFoodRes.errorCode === 'cannot_steal') {
+              //   $.stealFood = '失败,好友已无多余狗粮';
+              // }
             }
-            // else if (getRandomFoodRes.errorCode === 'chance_full') {
-            //   $.stealFood = '已达上限';
-            // } else if (getRandomFoodRes.errorCode === 'cannot_steal') {
-            //   $.stealFood = '失败,好友已无多余狗粮';
-            // }
           }
         }
       }
