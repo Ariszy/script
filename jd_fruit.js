@@ -382,8 +382,9 @@ function* step() {
         $.setdata(helpSuccessPeoples, helpSuccessPeoplesKey);
       }
     }
-
+    console.log(`helpSuccessPeoples-非缓存数据--debug:::${helpSuccessPeoples}\n`)
     helpSuccessPeoples = $.getdata(helpSuccessPeoplesKey);
+    console.log(`helpSuccessPeoples-拿到缓存后的数据--debug:::${helpSuccessPeoples}\n`)
     if (helpSuccessPeoples && helpSuccessPeoples.length > 0) {
       message += `【您助力的好友👬】${helpSuccessPeoples.substr(0, helpSuccessPeoples.length - 1)}\n`;
     }
