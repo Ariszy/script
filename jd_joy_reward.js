@@ -16,7 +16,7 @@ cron "0 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 宠汪汪积分兑换奖品 = type=cron,cronexp=0 0-16/8 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js
  */
 const $ = new Env('宠汪汪积分兑换奖品');
-let joyRewardName = '1';//是否兑换京豆，默认开启兑换功能，其中'1'为兑换，'0'为不兑换京豆
+const joyRewardName = $.getdata('joyRewardName') || '1';//是否兑换京豆，默认开启兑换功能，其中'1'为兑换，'0'为不兑换京豆
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -75,7 +75,6 @@ async function joyReward() {
         giftName = item.giftName;
       }
     }
-    joyRewardName = $.getdata('joyRewardName');
     if (joyRewardName === '1') {
       if (leftStock) {
         if (!saleInfoId) return
