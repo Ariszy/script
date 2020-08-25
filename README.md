@@ -8,7 +8,7 @@
 4.  种豆得豆([jd_plantBean.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js))
 5.  天天加速([jd_speed.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js))
 6.  摇钱树([jd_moneyTree.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js))
-7.  ~~宠汪汪兑换奖品([jd_joy_reward.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js))~~
+7.  宠汪汪兑换奖品([jd_joy_reward.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js))
 8.  取关京东店铺和商品([jd_unsubscribe.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_unsubscribe.js))
 9.  京小超([jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js))
 10. 京小超领蓝币(兑换京豆)([jd_blueCoin.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js))
@@ -16,7 +16,7 @@
 
 **脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js**
 
-**前可多账号的脚本：宠汪汪，天天加速，摇钱树，取关京东店铺和商品，京小超，京小超领蓝币，宠汪汪偷好友狗粮与积分**
+**目前可多账号的脚本：宠汪汪，天天加速，摇钱树，取关京东店铺和商品，京小超，京小超领蓝币，宠汪汪偷好友狗粮与积分**
 
 ## 食用方法
 
