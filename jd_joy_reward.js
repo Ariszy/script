@@ -86,9 +86,9 @@ async function joyReward() {
           if (exchangeRes.success) {
             if (exchangeRes.errorCode === 'buy_success') {
               console.log('兑换京豆成功')
-              $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+              $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
               if ($.isNode() && notify.SCKEY) {
-                await notify.sendNotify(`${$.name}兑换京豆成功`, `【京东账号${$.index}】 ${UserName}\n\n【消耗积分】${salePrice}分\n\n【当前剩余】${data.coin - salePrice}积分\n\n`);
+                await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n\n【兑换${giftName}】成功\n\n【宠物等级】${data.level}\n\n【消耗积分】${salePrice}分\n\n【当前剩余】${data.coin - salePrice}积分\n\n`);
               }
             } else if (exchangeRes.errorCode === 'buy_limit') {
               console.log('兑换失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~')
