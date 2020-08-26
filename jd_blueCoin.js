@@ -1,7 +1,7 @@
 /*
 京小超领蓝币(小费)
 感谢@yangtingxiao提供
-更新时间：2020-08-22
+更新时间：2020-08-26
 运行脚本一次收取今天所有的蓝币(耗时会比较久)
 支持京东多个账号
 每天收小费(蓝币)上限是1千个
@@ -63,13 +63,9 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
           $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
         }
         continue;
-      } /*else if ($.data.data.bizCode === 810 && $.coincount === 0)
-      {
-        $.msg($.name, $.data.data.bizMsg);
-        continue;
-      }*/
+      }
       if (coinToBeans) {
-        await smtg_obtainPrize();
+        await smtg_queryPrize();
       }
       await msgShow();
     }
@@ -122,13 +118,54 @@ function smtg_receiveCoin(timeout = 0) {
     },timeout)
   })
 }
+//查询任务
+function smtg_queryPrize(timeout = 0){
+  return new Promise((resolve) => {
+    setTimeout( ()=>{
+      let url = {
+        url : `${JD_API_HOST}&functionId=smtg_queryPrize&clientVersion=8.0.0&client=m&body=%7B%7D&t=${Date.now()}`,
+        headers : {
+          'Origin' : `https://jdsupermarket.jd.com`,
+          'Cookie' : cookie,
+          'Connection' : `keep-alive`,
+          'Accept' : `application/json, text/plain, */*`,
+          'Referer' : `https://jdsupermarket.jd.com/game/?tt=1597540727225`,
+          'Host' : `api.m.jd.com`,
+          'Accept-Encoding' : `gzip, deflate, br`,
+          'Accept-Language' : `zh-cn`
+        }
+      }
+      $.post(url, async (err, resp, data) => {
+        try {
+          data = JSON.parse(data);
+          if (data.data.bizCode !== 0) {
+            $.beanerr = `${data.data.bizMsg}`;
+            return
+          }
+          if (data.data.bizCode === 0) {
+            console.log(`查询换500京豆ID成功，ID:${data.data.result.prizeList[0].prizeId}`)
+            if (data.data.result.prizeList[0].targetNum === data.data.result.prizeList[0].finishNum) {
+              $.beanerr = `${data.data.result.prizeList[0].subTitle}`;
+              return ;
+            }
+          }
+          await  smtg_obtainPrize(data.data.result.prizeList[0].prizeId,1000);
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve()
+        }
+      })
+    },timeout)
+  })
+}
 //换京豆
-function smtg_obtainPrize(timeout = 0) {
+function smtg_obtainPrize(prizeId, timeout = 0) {
   //1000京豆，prizeId为4401379726
   return new Promise((resolve) => {
     setTimeout( ()=>{
       let url = {
-        url : `${JD_API_HOST}&functionId=smtg_obtainPrize&clientVersion=8.0.0&client=m&body=%7B%22prizeId%22:%224401379725%22%7D&t=${Date.now()}`,
+        url : `${JD_API_HOST}&functionId=smtg_obtainPrize&clientVersion=8.0.0&client=m&body=%7B%22prizeId%22:%22${prizeId}%22%7D&t=${Date.now()}`,
         headers : {
           'Origin' : `https://jdsupermarket.jd.com`,
           'Cookie' : cookie,
@@ -154,7 +191,7 @@ function smtg_obtainPrize(timeout = 0) {
             console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换京豆成功`)
             if ($.data.data.result.exchangeNum === 20 || $.beanscount == coinToBeans || $.data.data.result.blur < 500) return;
           }
-          await  smtg_obtainPrize(1000);
+          await  smtg_obtainPrize(prizeId,1000);
         } catch (e) {
           $.logErr(e, resp);
         } finally {
