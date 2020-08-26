@@ -1,27 +1,28 @@
 /**
 来客有礼宠汪汪强制助力（助力一个好友可以获得30机会，一天上限是3好友，获得积分即90积分）
-注：这不是task脚本，而是重写
 更新地址：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
 更新时间：2020-08-26
 目前提供了122位好友的friendPin供使用。助力成功后，退出小程序重写点击进去。
+欢迎大家使用 https://jdjoy.jd.com/pet/getFriends?itemsPerPage=20&currentPage=1 (currentPage=1表示第一页好友，=2表示第二页好友)
+提供各自账号列表的friendPin给我
 如果想设置固定好友，那下载下来放到本地使用，可以修改friendPin换好友(助力一好友后，更换一次friendPin里面的内容)
 感谢github @Zero-S1提供
 使用方法：
 ①设置好相应软件的重写
 ②从京东APP宠汪汪->领狗粮->邀请好友助力，分享给你小号微信或者微信的文件传输助手。 自己再打开刚才的分享，助力成功后，退出小程序重新进去刚才分享的小程序即可
 
-重写：
 [MITM]
 hostname = draw.jdfcloud.com
 surge
+[Script]
 来客有礼宠汪汪强制助力= type=http-request,pattern=(^https:\/\/draw\.jdfcloud\.com\/\/pet\/enterRoom\?reqSource=weapp&invitePin=\w+(&inviteSource=task_invite&shareSource=h5&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com\/\/pet\/helpFriend\?friendPin=\w+),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
 
-
  //圈x
+[rewrite_local]
 ^https:\/\/draw\.jdfcloud\.com\/\/pet\/enterRoom\?reqSource=weapp&invitePin=.*+(&inviteSource=task_invite&shareSource=\w+&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com\/\/pet\/helpFriend\?friendPin url script-request-header https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
 
-
  LOON：
+[Script]
 http-request ^https:\/\/draw\.jdfcloud\.com\/\/pet\/enterRoom\?reqSource=weapp&invitePin=.*+(&inviteSource=task_invite&shareSource=\w+&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com\/\/pet\/helpFriend\?friendPin script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
  , requires-body=true, timeout=10, tag=来客有礼宠汪汪强制助力
 
