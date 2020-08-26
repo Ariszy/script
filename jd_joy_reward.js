@@ -85,7 +85,7 @@ async function joyReward() {
           const exchangeRes = await exchange(saleInfoId, 'pet');
           if (exchangeRes.success) {
             if (exchangeRes.errorCode === 'buy_success') {
-              console.log('兑换京豆成功')
+              console.log(`兑换${giftName}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
               $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
               if ($.isNode() && notify.SCKEY) {
                 await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n\n【兑换${giftName}】成功\n\n【宠物等级】${data.level}\n\n【消耗积分】${salePrice}分\n\n【当前剩余】${data.coin - salePrice}积分\n\n`);
