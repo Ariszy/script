@@ -10,7 +10,7 @@ IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 // quantumultx
 // [task_local]
 // #宠汪汪偷好友积分与狗粮
-// 0 1,6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// 0 1,6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js, tag=宠汪汪偷好友积分与狗粮, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
 // Loon
 // [Script]
 // cron "0 1,6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js,tag=宠汪汪偷好友积分与狗粮
