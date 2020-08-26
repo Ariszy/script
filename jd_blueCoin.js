@@ -143,7 +143,7 @@ function smtg_queryPrize(timeout = 0){
             return
           }
           if (data.data.bizCode === 0) {
-            console.log(`查询换500京豆ID成功，ID:${data.data.result.prizeList[0].prizeId}`)
+            console.log(`查询换${data.data.result.prizeList[0].title}ID成功，ID:${data.data.result.prizeList[0].prizeId}`)
             if (data.data.result.prizeList[0].targetNum === data.data.result.prizeList[0].finishNum) {
               $.beanerr = `${data.data.result.prizeList[0].subTitle}`;
               return ;
