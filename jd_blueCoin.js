@@ -20,7 +20,7 @@ const $ = new Env('京小超领蓝币');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆，默认兑换不兑换
+const coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20，目前最多20），0默认兑换不兑换
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -66,6 +66,8 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       }
       if (coinToBeans) {
         await smtg_queryPrize();
+      } else {
+        console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans')
       }
       await msgShow();
     }
