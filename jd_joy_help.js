@@ -1,6 +1,8 @@
 /**
 来客有礼宠汪汪强制助力（助力一个好友可以获得30机会，一天上限是3好友，获得积分即90积分）
 注：这不是task脚本，而是重写
+更新地址：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
+更新时间：2020-08-26
 目前提供了122位好友的friendPin供使用。助力成功后，退出小程序重写点击进去。
 如果想设置固定好友，那下载下来放到本地使用，可以修改friendPin换好友(助力一好友后，更换一次friendPin里面的内容)
 感谢github @Zero-S1提供
