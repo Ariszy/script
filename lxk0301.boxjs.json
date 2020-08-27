@@ -206,9 +206,9 @@
         {
           "id": "jdJoyHelpFeed",
           "name": "是否给好友喂食",
-          "val": true,
+          "val": false,
           "type": "boolean",
-          "desc": "默认给好友喂食（给好友喂食可得积分，但会消耗自己狗粮）"
+          "desc": "默认不帮好友喂食（给好友喂食可得积分，但会消耗自己狗粮）"
         },
         {
           "id": "joyFeedCount",

@@ -34,7 +34,7 @@ if ($.isNode()) {
 let message = '', subTitle = '', UserName = '';
 
 const jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
-let jdJoyHelpFeed = 'true'//是否给好友喂食，'false'为不给喂食，'true'为给好友喂食，默认是给
+let jdJoyHelpFeed = 'false'//是否给好友喂食，'false'为不给喂食，'true'为给好友喂食，默认不给好友喂食
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 !(async () => {
@@ -112,7 +112,7 @@ async function jdJoySteal() {
               console.log(`好友 ${friendPin} 的汪汪正在食用`)
             }
           } else {
-            console.log('您已设置不为好友喂食，现在跳过喂食')
+            console.log('您已设置不为好友喂食，现在跳过喂食，如需为好友喂食请在BoxJs打开喂食开关或者更改脚本 jdJoyHelpFeed 处')
           }
         } else {
           $.helpFood = '已达上限(已帮喂20个好友获得200积分)'
