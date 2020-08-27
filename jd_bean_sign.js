@@ -37,17 +37,7 @@ if ($.isNode()) {
 
 await fs.accessSync('./result.txt', async (err)=>{
     console.log(err ?  '目录/文件不存在': '文件存在,可以进行读写');
-    if(!err) {
 
-await fs.unlinkSync('./result.txt',function(err) {
-    if(err){
-        console.log(err);
-        return false;
-    }
-    console.log('删除文件成功');
-});
-
-    }
 });
 
       // 执行
