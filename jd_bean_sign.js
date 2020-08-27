@@ -35,10 +35,20 @@ if ($.isNode()) {
       await changeFile();
       console.log('替换变量完毕')
 
-await fs.accessSync('./result.txt', (err)=>{
-    console.log(err ?  '目录/文件不存在': '文件存在,可以进行读写');
+//await fs.accessSync('./result.txt', (err)=>{
+    //console.log(err ?  '目录/文件不存在': '文件存在,可以进行读写');
 
-});
+//});
+
+console.log(fs.existsSync("./result.txt"))
+
+if(fs.existsSync('./result.txt')){ 
+  fs.unlink('./result.txt', function(err){ 
+    if(err) { 
+      console.log(err);
+    } 
+  })
+ }
 
       // 执行
       await exec("node JD_DailyBonus.js >> result.txt");
