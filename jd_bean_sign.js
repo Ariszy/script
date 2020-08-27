@@ -35,7 +35,7 @@ if ($.isNode()) {
       await changeFile();
       console.log('替换变量完毕')
 
-await fs.accessSync('./result.txt', async (err)=>{
+await fs.accessSync('./result.txt', (err)=>{
     console.log(err ?  '目录/文件不存在': '文件存在,可以进行读写');
 
 });
