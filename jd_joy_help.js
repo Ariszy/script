@@ -1,5 +1,5 @@
 /**
-来客有礼宠汪汪强制助力（助力一个好友可以获得30机会，一天上限是3好友，获得积分即90积分，不管助力是否成功，对方都会成为你的好友）
+宠汪汪强制为别人助力（助力一个好友可以获得30机会，一天上限是3好友，获得积分即90积分，不管助力是否成功，对方都会成为你的好友）
 更新地址：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
 更新时间：2020-08-27
 目前提供了282位好友的friendPin供使用。助力成功后，退出小程序重写点击进去。
@@ -15,7 +15,7 @@
 hostname = draw.jdfcloud.com
 surge
 [Script]
-来客有礼宠汪汪强制助力= type=http-request,pattern=(^https:\/\/draw\.jdfcloud\.com\/\/pet\/enterRoom\?reqSource=weapp&invitePin=.*+(&inviteSource=task_invite&shareSource=\w+&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com\/\/pet\/helpFriend\?friendPin),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
+宠汪汪强制为别人助力= type=http-request,pattern=(^https:\/\/draw\.jdfcloud\.com\/\/pet\/enterRoom\?reqSource=weapp&invitePin=.*+(&inviteSource=task_invite&shareSource=\w+&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com\/\/pet\/helpFriend\?friendPin),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
 
 圈x
 [rewrite_local]
@@ -24,7 +24,7 @@ surge
  LOON：
 [Script]
 http-request ^https:\/\/draw\.jdfcloud\.com\/\/pet\/enterRoom\?reqSource=weapp&invitePin=.*+(&inviteSource=task_invite&shareSource=\w+&inviteTimeStamp=\d+&openId=\w+)?|^https:\/\/draw\.jdfcloud\.com\/\/pet\/helpFriend\?friendPin script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
- , requires-body=true, timeout=10, tag=来客有礼宠汪汪强制助力
+ , requires-body=true, timeout=10, tag=宠汪汪强制为别人助力
 
 
 下面提供了282位好友的friendPin，程序随机从里面获取一个
@@ -37,7 +37,7 @@ const friendsArr = ["yhr_19820404","13008094886_p","13966269193_p","jd_4e4d9825e
 function randomFriendPin(m,n) {
   return Math.floor(Math.random()*(m - n) + n);
 }
-let friendPin = friendsArr[randomFriendPin(0, friendsArr.length - 1)]  //强制为对方助力，有几率自动成为好友 (pin形如jd_xxxxxxxxx的几率大，其他的不会，原因未知)
+let friendPin = friendsArr[randomFriendPin(0, friendsArr.length - 1)]  //强制为对方助力,可成为好友关系
 friendPin = encodeURI(friendPin);
 const timestamp = new Date().getTime()
 newUrl = url.replace(/friendPin=.*?$/i, "friendPin=" + friendPin).replace(/invitePin=.*?$/i, "invitePin=" + friendPin).replace(/inviteTimeStamp=.*?$/i, "inviteTimeStamp=" + timestamp + "&")
