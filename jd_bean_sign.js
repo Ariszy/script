@@ -35,13 +35,13 @@ if ($.isNode()) {
       await changeFile();
       console.log('替换变量完毕')
       const path = "./result.txt";
-      // 查看文件result.txt是否存在,如果存在,先删除
-      const fileExists = await fs.existsSync(path);
-      console.log('fileExists', fileExists);
-      if (fileExists) {
-        const unlinkRes = await fs.unlinkSync(path);
-        console.log('unlinkRes', unlinkRes)
-      }
+      // // 查看文件result.txt是否存在,如果存在,先删除
+      // const fileExists = await fs.existsSync(path);
+      // console.log('fileExists', fileExists);
+      // if (fileExists) {
+      //   const unlinkRes = await fs.unlinkSync(path);
+      //   console.log('unlinkRes', unlinkRes)
+      // }
       // 执行
       await exec("node JD_DailyBonus.js >> result.txt");
       console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
@@ -55,6 +55,13 @@ if ($.isNode()) {
         console.log('发送结果完毕')
       } else {
         console.log('您目前没有提供server酱的推送通知SCKEY,现为您跳过发送通知消息功能')
+      }
+      // 查看文件result.txt是否存在,如果存在,先删除
+      const fileExists = await fs.existsSync(path);
+      console.log('fileExists', fileExists);
+      if (fileExists) {
+        const unlinkRes = await fs.unlinkSync(path);
+        console.log('unlinkRes', unlinkRes)
       }
     }
   }
