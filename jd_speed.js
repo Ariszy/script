@@ -1,7 +1,8 @@
 /*
 京东天天加速链接：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js
-更新时间:2020-08-15
+更新时间:2020-08-28
 支持京东双账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 每天4京豆，再小的苍蝇也是肉
 从 https://github.com/Zero-S1/JD_tools/blob/master/JD_speed.py 改写来的
 建议3小时运行一次，打卡时间间隔是6小时
@@ -14,6 +15,8 @@
 // Loon
 // [Script]
 // cron "8 */3 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js,tag=京东天天加速
+// Surge
+//天天加速 = type=cron,cronexp="8 */3 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js
 const $ = new Env('✈️天天加速');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;

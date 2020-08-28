@@ -14,7 +14,7 @@
 [Script]
 cron "11 5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js,tag=京小超领蓝币
 // Surge
-京小超领蓝币 = type=cron,cronexp=11 5 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
+京小超领蓝币 = type=cron,cronexp="11 5 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
  */
 const $ = new Env('京小超领蓝币');
 const notify = $.isNode() ? require('./sendNotify') : '';
