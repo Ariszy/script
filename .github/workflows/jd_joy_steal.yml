@@ -4,8 +4,6 @@
 name: jd_joy_steal
 
 on:
-  push:
-    branches: [ master ]
   schedule:
     - cron: '0,30 16,21,22 * * *'
 
