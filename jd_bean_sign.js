@@ -1,5 +1,5 @@
 /*
-京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js
+京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
 从 github @ruicky改写而来
 version v0.0.1
