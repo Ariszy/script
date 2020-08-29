@@ -36,6 +36,7 @@ if ($.isNode()) {
     if (cookie) {
       UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
+      console.log(`开始京东账号${$.index} ${UserName}京豆签到\n`);
       await changeFile(content);
       console.log('替换变量完毕')
       // 执行
@@ -48,6 +49,7 @@ if ($.isNode()) {
           content = fs.readFileSync(path, "utf8");
         }
         const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
+        console.log(`时间：${beanSignTime}`)
         await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `签到时间-${beanSignTime}\n\n${content}`);
         console.log('发送结果完毕')
       } else {
@@ -56,6 +58,7 @@ if ($.isNode()) {
       //运行完成后，删除下载的文件
       await deleteFile(path);
       await deleteFile(JD_DailyBonusPath);
+      console.log(`京东账号${$.index} ${UserName}京豆签到完成\n`);
     }
   }
 })()
