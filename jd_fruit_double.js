@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-08-25
+更新时间:2020-08-29
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
@@ -226,7 +226,7 @@ async function doDailyTask() {
     executeWaterRains(),//水滴雨
     masterHelpShare(),//助力好友
     getExtraAward(),//领取额外水滴奖励
-    turntableFarm(),//天天抽奖得好礼
+    turntableFarm()//天天抽奖得好礼
   ])
 }
 async function predictionFruit() {
