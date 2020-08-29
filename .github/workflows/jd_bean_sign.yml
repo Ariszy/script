@@ -4,8 +4,6 @@
 name: jd_bean_sign
 
 on:
-  push:
-    branches: [ master ]
   schedule:
     - cron: '0 16 * * *'
 
