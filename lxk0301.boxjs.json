@@ -25,35 +25,70 @@
         },
         {
           "id": "jd_fruit_name",
-          "name": "京东账号昵称",
+          "name": "京东账号一昵称",
           "val": "",
           "type": "text",
           "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         },
         {
           "id": "jd_fruit1",
-          "name": "互助码1",
+          "name": "账号一的互助码1",
           "val": "",
           "type": "text",
           "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_fruit2",
-          "name": "互助码2",
+          "name": "账号一的互助码2",
           "val": "",
           "type": "text",
           "desc": "京东水果互助码."
         },
         {
           "id": "jd_fruit3",
-          "name": "互助码3",
+          "name": "账号一的互助码3",
           "val": "",
           "type": "text",
           "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
         },
         {
           "id": "jd_fruit4",
-          "name": "互助码4",
+          "name": "账号一的互助码4",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_fruit_name",
+          "name": "京东账号二昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd2_fruit1",
+          "name": "账号二的互助码1",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_fruit2",
+          "name": "账号二的互助码2",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码."
+        },
+        {
+          "id": "jd2_fruit3",
+          "name": "账号二的互助码3",
+          "val": "",
+          "type": "text",
+          "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_fruit4",
+          "name": "账号二的互助码4",
           "val": "",
           "type": "text",
           "desc": "京东水果互助码.这是别人的shareCode,你帮别人助力."
