@@ -19,7 +19,7 @@ const $ = new Env('东东农场');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const jdFruitShareCodes = $.isNode() ?  require('./jdFruitShareCodes');
+const jdFruitShareCodes = $.isNode() ?  require('./jdFruitShareCodes') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false;
 if ($.isNode()) {
