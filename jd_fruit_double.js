@@ -691,7 +691,7 @@ async function clockInIn() {
 
 // ========================API调用接口========================
 /**
- * 10次浇水API
+ * 领取10次浇水奖励API
  */
 async function totalWaterTaskForFarm() {
   const functionId = arguments.callee.name.toString();
@@ -713,7 +713,7 @@ async function gotStageAwardForFarm(type) {
 //浇水API
 async function waterGoodForFarm() {
   const functionId = arguments.callee.name.toString();
-  $.waterResult = await request(functionId, {}, 1000);
+  $.waterResult = await request(functionId);
 }
 // 初始化集卡抽奖活动数据API
 async function initForTurntableFarm() {
