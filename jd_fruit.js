@@ -20,7 +20,7 @@ let name = '东东农场';
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 const $ = new Env(name);
 //Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? ['pt_key=AAJfOjUAADAGJEBswZGZhAuuWRPeGWe-hTA9c-dnFQSivsHxwFroMo7RVf-CqR-ZnhlV_3EgM80;pt_pin=zooooo58;'] : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //ios等软件用户直接用NobyDa的jd cookie
 const cookie = jdCookieNode.CookieJD ? jdCookieNode.CookieJD : $.getdata('CookieJD');

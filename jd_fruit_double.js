@@ -19,9 +19,9 @@ const $ = new Env('东东农场');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-
+const jdFruitShareCodes = require('./jdFruitShareCodes');
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [], cookie = '';
+let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false;
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -30,9 +30,47 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
+if ($.isNode()) {
+  Object.keys(jdFruitShareCodes).forEach((item) => {
+    jdFruitShareArr.push(jdFruitShareCodes[item])
+  })
+} else {
+  const boxShareCodeArr = ['jd_fruit1', 'jd_fruit2', 'jd_fruit3', 'jd_fruit4'];
+  const boxShareCodeArr2 = ['jd2_fruit1', 'jd2_fruit2', 'jd2_fruit3', 'jd2_fruit4'];
+  isBox = boxShareCodeArr.some((item) => {
+    const boxShareCode = $.getdata(item);
+    return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
+  });
+  if (isBox) {
+    for (const item of boxShareCodeArr) {
+      if ($.getdata(item)) {
+        // shareCodes.push($.getdata(item));
+        let temp = [];
+        // temp.push($.getdata(item))
+        jdFruitShareArr.push(temp.push($.getdata(item)).join('@'));
+      }
+    }
+    for (const item of boxShareCodeArr2) {
+      if ($.getdata(item)) {
+        let temp = [];
+        // temp.push($.getdata(item))
+        jdFruitShareArr.push(temp.push($.getdata(item)).join('@'));
+      }
+    }
+  }
+}
+console.log('jdFruitShareArr', jdFruitShareArr)
+console.log('jdFruitShareArr账号长度', jdFruitShareArr.length)
+//助力好友分享码(最多4个,否则后面的助力失败),原因:京东农场每人每天只有四次助力机会
+let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
+  '0a74407df5df4fa99672a037eec61f7e',
+  'dbb21614667246fabcfd9685b6f448f3',
+  '6fbd26cc27ac44d6a7fed34092453f77',
+  '61ff5c624949454aa88561f2cd721bf6',
+]
 let message = '', subTitle = '', UserName = '';
 
-const jdNotify = $.getdata('jdFruitNotify');//是否关闭通知，false打开，true通知
+let jdNotify = $.getdata('jdFruitNotify');//是否关闭通知，false打开，true通知
 const JD_API_HOST = 'https://api.m.jd.com/client.action'
 !(async () => {
   if (!cookiesArr[0]) {
