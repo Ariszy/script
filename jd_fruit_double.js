@@ -16,61 +16,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 const $ = new Env('东东农场');
-let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify;
-// const notify = $.isNode() ? require('./sendNotify') : '';
-// //Node.js用户请在jdCookie.js处填写京东ck;
-// const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-// const jdFruitShareCodes = $.isNode() ?  require('./jdFruitShareCodes') : '';
-// //IOS等用户直接用NobyDa的jd cookie
-// let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false;
-// if ($.isNode()) {
-//   Object.keys(jdCookieNode).forEach((item) => {
-//     cookiesArr.push(jdCookieNode[item])
-//   })
-// } else {
-//   cookiesArr.push($.getdata('CookieJD'));
-//   cookiesArr.push($.getdata('CookieJD2'));
-// }
-// console.log(`共${cookiesArr.length}个京东账号`)
-// if ($.isNode()) {
-//   Object.keys(jdFruitShareCodes).forEach((item) => {
-//     if (jdFruitShareCodes[item]) {
-//       jdFruitShareArr.push(jdFruitShareCodes[item])
-//     }
-//   })
-// } else {
-//   const boxShareCodeArr = ['jd_fruit1', 'jd_fruit2', 'jd_fruit3', 'jd_fruit4'];
-//   const boxShareCodeArr2 = ['jd2_fruit1', 'jd2_fruit2', 'jd2_fruit3', 'jd2_fruit4'];
-//   isBox1 = boxShareCodeArr.some((item) => {
-//     const boxShareCode = $.getdata(item);
-//     return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
-//   });
-//   isBox2 = boxShareCodeArr2.some((item) => {
-//     const boxShareCode = $.getdata(item);
-//     return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
-//   });
-//   isBox = isBox1 ? isBox1 : isBox2;
-//   if (isBox1) {
-//     let temp = [];
-//     for (const item of boxShareCodeArr) {
-//       if ($.getdata(item)) {
-//         temp.push($.getdata(item))
-//       }
-//     }
-//     jdFruitShareArr.push(temp.join('@'));
-//   }
-//   if (isBox2) {
-//     let temp = [];
-//     for (const item of boxShareCodeArr2) {
-//       if ($.getdata(item)) {
-//         temp.push($.getdata(item))
-//       }
-//     }
-//     jdFruitShareArr.push(temp.join('@'));
-//   }
-// }
-// console.log(`jdFruitShareArr::${JSON.stringify(jdFruitShareArr)}`)
-// console.log(`jdFruitShareArr账号长度::${jdFruitShareArr.length}`)
+let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes;
 //助力好友分享码(最多4个,否则后面的助力失败),原因:京东农场每人每天只有四次助力机会
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
@@ -101,6 +47,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action'
       message = '';
       subTitle = '';
       option = {};
+      await shareCodesFormat();
       await jdFruit();
     }
   }
@@ -362,16 +309,16 @@ async function doTenWaterAgain() {
     await initForFarm();
     totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
   }
-  if (totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
-    //使用快速浇水卡
-    await userMyCardForFarm('fastCard');
-    console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
-    if ($.userMyCardRes.code === '0') {
-      console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
-    }
-    await initForFarm();
-    totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
-  }
+  // if (totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
+  //   //使用快速浇水卡
+  //   await userMyCardForFarm('fastCard');
+  //   console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
+  //   if ($.userMyCardRes.code === '0') {
+  //     console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
+  //   }
+  //   await initForFarm();
+  //   totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+  // }
   // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于60g,则继续浇水(保留部分水滴是用于完成第二天的浇水10次的任务)
   let overageEnergy = totalEnergy - retainWater;
   if (totalEnergy >= ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy)) {
@@ -499,7 +446,7 @@ async function turntableFarm() {
     }
     //天天抽奖助力
     console.log('开始天天抽奖--好友助力--每人每天只有三次助力机会.')
-    for (let code of shareCodes) {
+    for (let code of newShareCodes) {
       if (code === $.farmInfo.farmUserPro.shareCode) {
         console.log('天天抽奖-不能自己给自己助力\n')
         continue
@@ -596,14 +543,7 @@ async function masterHelpShare() {
   let salveHelpAddWater = 0;
   let remainTimes = 4;//今日剩余助力次数,默认4次（京东农场每人每天4次助力机会）。
   let helpSuccessPeoples = '';//成功助力好友
-  let newShareCodes;
-  console.log(`jdFruitShareArr[$.index - 1]:::${jdFruitShareArr[$.index - 1]}`)
-  if (jdFruitShareArr[$.index - 1]) {
-    newShareCodes = jdFruitShareArr[$.index - 1].split('@');
-  } else {
-    newShareCodes = shareCodes[$.index - 1].split('@');
-  }
-  console.log(`newShareCodes::${JSON.stringify(newShareCodes)}\n`);
+  console.log(`格式化后的助力码::${JSON.stringify(newShareCodes)}\n`);
 
   for (let code of newShareCodes) {
     if (code === $.farmInfo.farmUserPro.shareCode) {
@@ -1054,6 +994,18 @@ function timeFormat(time) {
   }
   return date.getFullYear() + '-' + ((date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1)) + '-' + (date.getDate() >= 10 ? date.getDate() : '0' + date.getDate());
 }
+function shareCodesFormat() {
+  return new Promise(resolve => {
+    console.log(`第${$.index}个京东账号的助力码:::${jdFruitShareArr[$.index - 1]}`)
+    if (jdFruitShareArr[$.index - 1]) {
+      newShareCodes = jdFruitShareArr[$.index - 1].split('@');
+    } else {
+      newShareCodes = shareCodes[$.index - 1].split('@');
+    }
+    console.log(`格式化后第${$.index}个京东账号的助力码${JSON.stringify(newShareCodes)}`)
+    resolve();
+  })
+}
 function requireConfig() {
   return new Promise(resolve => {
     console.log('开始获取配置文件\n')
@@ -1113,7 +1065,7 @@ function requireConfig() {
     resolve()
   })
 }
-function request(function_id, body = {}, timeout = 0){
+function request(function_id, body = {}, timeout = 1000){
   return new Promise(resolve => {
     setTimeout(() => {
       $.get(taskUrl(function_id, body), (err, resp, data) => {
