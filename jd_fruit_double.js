@@ -82,6 +82,7 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
 ]
 let message = '', subTitle = '', option = {}, UserName = '', isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
+const doFriendsWaterLimit = 3;//每天为多少个好友浇水，默认3个
 let jdNotify = $.getdata('jdFruitNotify');//是否关闭通知，false打开，true通知
 let jdServerNotify = true;//是否每次运行脚本后，都发送server酱微信通知提醒,默认是【true:发送，false:不发送】
 const JD_API_HOST = 'https://api.m.jd.com/client.action'
@@ -138,6 +139,7 @@ async function jdFruit() {
     await doTenWater();//浇水十次
     await getFirstWaterAward();//领取首次浇水奖励
     await getTenWaterAward();//领取10浇水奖励
+    await getWaterFriendGotAward();//领取为3好友浇水奖励
     await doTenWaterAgain();//再次浇水
     await predictionFruit();//预测水果成熟时间
     await showMsg();
@@ -231,6 +233,14 @@ async function doDailyTask() {
     }
   } else {
     console.log('当前不在定时领水时间断或者已经领过\n')
+  }
+  //给好友浇水
+  if (!$.farmTask.waterFriendTaskInit.f) {
+    if ($.farmTask.waterFriendTaskInit.waterFriendCountKey < 3) {
+      await doFriendsWater();
+    }
+  } else {
+    console.log('给3个好友浇水任务已完成\n')
   }
   // await Promise.all([
   //   clockInIn(),//打卡领水
@@ -339,9 +349,32 @@ async function getTenWaterAward() {
 async function doTenWaterAgain() {
   console.log('再次浇水\n');
   await initForFarm();
+  let totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+  console.log(`剩余水滴${totalEnergy}g\n`);
+  await myCardInfoForFarm();
+  console.log(`背包已有道具:快速浇水卡${$.myCardInfoRes.fastCard}个,翻倍卡${$.myCardInfoRes.doubleCard}个,水滴换京豆卡${$.myCardInfoRes.beanCard}个\n`)
+  if (totalEnergy > 100 && $.myCardInfoRes.doubleCard > 0) {
+    //使用翻倍水滴卡
+    for (let i = 0; i < new Array($.myCardInfoRes.doubleCard).fill('').length; i++) {
+      await userMyCardForFarm('doubleCard');
+      console.log(`使用翻倍水滴卡结果:${JSON.stringify($.userMyCardRes)}`);
+    }
+    await initForFarm();
+    totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+  }
+  if (totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
+    //使用快速浇水卡
+    await userMyCardForFarm('fastCard');
+    console.log(`使用快速浇水卡结果:${JSON.stringify($.userMyCardRes)}`);
+    if ($.userMyCardRes.code === '0') {
+      console.log(`已使用快速浇水卡浇水${$.userMyCardRes.waterEnergy}g`);
+    }
+    await initForFarm();
+    totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+  }
   // 所有的浇水(10次浇水)任务，获取水滴任务完成后，如果剩余水滴大于等于60g,则继续浇水(保留部分水滴是用于完成第二天的浇水10次的任务)
-  let overageEnergy = $.farmInfo.farmUserPro.totalEnergy - retainWater;
-  if ($.farmInfo.farmUserPro.totalEnergy >= ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy)) {
+  let overageEnergy = totalEnergy - retainWater;
+  if (totalEnergy >= ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy)) {
     //如果现有的水滴，大于水果可兑换所需的对滴(也就是把水滴浇完，水果就能兑换了)
     isFruitFinished = false;
     for (let i = 0; i < ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10; i++) {
@@ -370,7 +403,7 @@ async function doTenWaterAgain() {
       }
     }
   } else if (overageEnergy >= 10) {
-    console.log("目前剩余水滴：【" + $.farmInfo.farmUserPro.totalEnergy + "】g，可继续浇水");
+    console.log("目前剩余水滴：【" + totalEnergy + "】g，可继续浇水");
     isFruitFinished = false;
     for (let i = 0; i < parseInt(overageEnergy / 10); i++) {
       await waterGoodForFarm();
@@ -398,7 +431,7 @@ async function doTenWaterAgain() {
       }
     }
   } else {
-    console.log("目前剩余水滴：【" + $.farmInfo.farmUserPro.totalEnergy + "】g,不再继续浇水,保留部分水滴用于完成第二天【十次浇水得水滴】任务")
+    console.log("目前剩余水滴：【" + totalEnergy + "】g,不再继续浇水,保留部分水滴用于完成第二天【十次浇水得水滴】任务")
   }
 }
 //领取阶段性水滴奖励
@@ -709,7 +742,86 @@ async function clockInIn() {
   console.log('开始打卡领水活动（签到，关注，领券）结束\n');
 }
 
-
+//给好友浇水
+async function doFriendsWater() {
+ await friendListInitForFarm();
+ console.log(`今日已邀请好友${$.friendList.inviteFriendCount}个 / 每日邀请上限10个`);
+ if ($.friendList.inviteFriendCount > 0) {
+   if ($.friendList.inviteFriendCount > $.friendList.inviteFriendGotAwardCount) {
+     console.log('开始领取邀请好友的奖励');
+     await awardInviteFriendForFarm();
+     console.log(`领取邀请好友的奖励结果：：${JSON.stringify($.awardInviteFriendRes)}`)
+   }
+ } else {
+   console.log('今日未邀请过好友')
+ }
+ console.log('开始给好友浇水...');
+ await taskInitForFarm();
+ const { waterFriendCountKey } = $.farmTask.waterFriendTaskInit;
+ console.log(`今日已给${waterFriendCountKey}个好友浇水`);
+ if (waterFriendCountKey < doFriendsWaterLimit) {
+   let needWaterFriends = [];
+   if ($.friendList.friends && $.friendList.friends.length > 0) {
+     $.friendList.friends.map((item, index) => {
+       if (item.friendState === 1) {
+         if (needWaterFriends.length < (doFriendsWaterLimit - waterFriendCountKey)) {
+           needWaterFriends.push(item.shareCode);
+         }
+       }
+     });
+     console.log(`需要浇水的好友列表shareCodes:${JSON.stringify(needWaterFriends)}`);
+     let waterFriendsCount = 0, cardInfoStr = '';
+     for (let index = 0; index < needWaterFriends.length; index ++) {
+       await waterFriendForFarm(needWaterFriends[index]);
+       console.log(`为第${index+1}个好友浇水结果:${JSON.stringify($.waterFriendForFarmRes)}\n`)
+       if ($.waterFriendForFarmRes.code === '0') {
+         waterFriendsCount ++;
+         if ($.waterFriendForFarmRes.cardInfo) {
+           console.log('为好友浇水获得道具了');
+           if ($.waterFriendForFarmRes.cardInfo.type === 'beanCard') {
+             console.log(`获取道具卡:${$.waterFriendForFarmRes.cardInfo.rule}`);
+             cardInfoStr += `水滴换豆卡,`;
+           } else if ($.waterFriendForFarmRes.cardInfo.type === 'fastCard') {
+             console.log(`获取道具卡:${$.waterFriendForFarmRes.cardInfo.rule}`);
+             cardInfoStr += `快速浇水卡,`;
+           } else if ($.waterFriendForFarmRes.cardInfo.type === 'doubleCard') {
+             console.log(`获取道具卡:${$.waterFriendForFarmRes.cardInfo.rule}`);
+             cardInfoStr += `水滴翻倍卡,`;
+           }
+         }
+       } else if ($.waterFriendForFarmRes.code === '11') {
+         console.log('水滴不够,跳出浇水')
+       }
+     }
+     message += `【好友浇水】已给${waterFriendsCount}个好友浇水,消耗${waterFriendsCount * 10}g水\n`;
+     if (cardInfoStr && cardInfoStr.length > 0) {
+       message += `【好友浇水奖励】${cardInfoStr.substr(0, cardInfoStr.length - 1)}\n`;
+     }
+   } else {
+     console.log('您的好友列表暂无好友,快去邀请您的好友吧!')
+   }
+ } else {
+    console.log(`今日已为好友浇水量已达您到设置数量:${doFriendsWaterLimit}个`)
+ }
+}
+//领取给3个好友浇水后的奖励水滴
+async function getWaterFriendGotAward() {
+  await taskInitForFarm();
+  if ($.farmTask.waterFriendTaskInit.waterFriendCountKey >= 3) {
+    if (!$.farmTask.waterFriendTaskInit.waterFriendGotAward) {
+      await waterFriendGotAwardForFarm();
+      console.log(`领取给3个好友浇水后的奖励水滴::${JSON.stringify($.waterFriendGotAwardRes)}`)
+      if ($.waterFriendGotAwardRes.code === '0') {
+        message += `【给3好友浇水】奖励${$.waterFriendGotAwardRes.addWater}g水滴\n`;
+      }
+    } else {
+      console.log('给好友浇水的40g奖励已领取\n');
+      message += `【给3好友浇水】奖励40g水滴已领取\n`;
+    }
+  } else {
+    console.log('暂未给三个好友浇水\n');
+  }
+}
 // ========================API调用接口========================
 /**
  * 领取10次浇水奖励API
@@ -722,6 +834,21 @@ async function totalWaterTaskForFarm() {
 async function firstWaterTaskForFarm() {
   const functionId = arguments.callee.name.toString();
   $.firstWaterReward = await request(functionId);
+}
+//领取给3个好友浇水后的奖励水滴API
+async function waterFriendGotAwardForFarm() {
+  const functionId = arguments.callee.name.toString();
+  $.waterFriendGotAwardRes = await request(functionId, {"version": 4, "channel": 1});
+}
+// 查询背包道具卡API
+async function myCardInfoForFarm() {
+  const functionId = arguments.callee.name.toString();
+  $.myCardInfoRes = await request(functionId, {"version": 4, "channel": 1});
+}
+//使用道具卡API
+async function userMyCardForFarm(cardType) {
+  const functionId = arguments.callee.name.toString();
+  $.userMyCardRes = await request(functionId, {"cardType": cardType});
 }
 /**
  * 领取浇水过程中的阶段性奖励
@@ -894,8 +1021,17 @@ async function taskInitForFarm() {
 }
 //获取好友列表API
 async function friendListInitForFarm() {
-  const aa = await request('friendListInitForFarm');
-  console.log('aa', aa);
+  $.friendList = await request('friendListInitForFarm', {"version": 4, "channel": 1});
+  // console.log('aa', aa);
+}
+// 领取邀请好友的奖励API
+async function awardInviteFriendForFarm() {
+  $.awardInviteFriendRes = await request('awardInviteFriendForFarm');
+}
+//为好友浇水API
+async function waterFriendForFarm(shareCode) {
+  const body = {"shareCode": shareCode, "version": 4, "channel": 1}
+  $.waterFriendForFarmRes = await request('waterFriendForFarm', body);
 }
 async function showMsg() {
   if (!jdNotify || jdNotify === 'false') {
