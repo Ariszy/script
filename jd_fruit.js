@@ -1020,7 +1020,7 @@ async function showMsg() {
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
     if (jdServerNotify) {
       if ($.isNode() && notify.SCKEY) {
-        await notify.sendNotify(`${$.name}`, `${subTitle}\n\n${notifyMessage}`);
+        await notify.sendNotify(`${$.name}-账号${$.index}-${UserName}`, `${subTitle}\n\n${notifyMessage}`);
       }
     }
   }
@@ -1042,7 +1042,8 @@ function shareCodesFormat() {
       newShareCodes = jdFruitShareArr[$.index - 1].split('@');
     } else {
       console.log(`由于您未提供shareCode,将采纳本脚本自带的助力码\n`)
-      newShareCodes = shareCodes[$.index - 1].split('@');
+      const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
+      newShareCodes = shareCodes[tempIndex].split('@');
     }
     console.log(`格式化后第${$.index}个京东账号的助力码${JSON.stringify(newShareCodes)}`)
     resolve();
