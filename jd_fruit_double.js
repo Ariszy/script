@@ -762,6 +762,12 @@ async function getWaterFriendGotAward() {
     console.log('暂未给三个好友浇水\n');
   }
 }
+//接收成为对方好友的邀请
+// async function receiveFriendInvite() {
+//   for (let item of newShareCodes) {
+//
+//   }
+// }
 // ========================API调用接口========================
 /**
  * 领取10次浇水奖励API
@@ -1065,7 +1071,7 @@ function requireConfig() {
     resolve()
   })
 }
-function request(function_id, body = {}, timeout = 1000){
+function request(function_id, body = {}, timeout = 500){
   return new Promise(resolve => {
     setTimeout(() => {
       $.get(taskUrl(function_id, body), (err, resp, data) => {
