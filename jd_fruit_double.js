@@ -10,7 +10,7 @@ jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d978574
 [Script]
 cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js,tag=东东农场
 // Surge
-// 宠汪汪偷好友积分与狗粮 = type=cron,cronexp="5 6-18/6 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js
+// 东东农场 = type=cron,cronexp="5 6-18/6 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js
 互助码shareCode请先手动运行脚本查看打印可看到
 一天只能帮助4个人。多出的助力码无效
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
@@ -196,6 +196,7 @@ async function doDailyTask() {
   //   getExtraAward(),//领取额外水滴奖励
   //   turntableFarm()//天天抽奖得好礼
   // ])
+  await getAwardInviteFriend();
   await clockInIn();//打卡领水
   await executeWaterRains();//水滴雨
   await masterHelpShare();//助力好友
@@ -299,7 +300,8 @@ async function doTenWaterAgain() {
   let totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
   console.log(`剩余水滴${totalEnergy}g\n`);
   await myCardInfoForFarm();
-  console.log(`背包已有道具:快速浇水卡${$.myCardInfoRes.fastCard}个,翻倍卡${$.myCardInfoRes.doubleCard}个,水滴换京豆卡${$.myCardInfoRes.beanCard}个\n`)
+  const { fastCard, doubleCard, beanCard  } = $.myCardInfoRes;
+  console.log(`背包已有道具:\n快速浇水卡:${fastCard === -1 ? '未解锁': fastCard}\n水滴翻倍卡:${doubleCard === -1 ? '未解锁': doubleCard}\n水滴换京豆卡:${beanCard === -1 ? '未解锁' : beanCard }\n`)
   if (totalEnergy > 100 && $.myCardInfoRes.doubleCard > 0) {
     //使用翻倍水滴卡
     for (let i = 0; i < new Array($.myCardInfoRes.doubleCard).fill('').length; i++) {
@@ -681,20 +683,24 @@ async function clockInIn() {
   }
   console.log('开始打卡领水活动（签到，关注，领券）结束\n');
 }
-
+//
+async function getAwardInviteFriend() {
+  await friendListInitForFarm();
+  await receiveFriendInvite();
+  console.log(`\n今日已邀请好友${$.friendList.inviteFriendCount}个 / 每日邀请上限${$.friendList.inviteFriendMax}个`);
+  if ($.friendList.inviteFriendCount > 0) {
+    if ($.friendList.inviteFriendCount > $.friendList.inviteFriendGotAwardCount) {
+      console.log('开始领取邀请好友的奖励');
+      await awardInviteFriendForFarm();
+      console.log(`领取邀请好友的奖励结果：：${JSON.stringify($.awardInviteFriendRes)}`);
+    }
+  } else {
+    console.log('今日未邀请过好友')
+  }
+}
 //给好友浇水
 async function doFriendsWater() {
  await friendListInitForFarm();
- console.log(`今日已邀请好友${$.friendList.inviteFriendCount}个 / 每日邀请上限10个`);
- if ($.friendList.inviteFriendCount > 0) {
-   if ($.friendList.inviteFriendCount > $.friendList.inviteFriendGotAwardCount) {
-     console.log('开始领取邀请好友的奖励');
-     await awardInviteFriendForFarm();
-     console.log(`领取邀请好友的奖励结果：：${JSON.stringify($.awardInviteFriendRes)}`)
-   }
- } else {
-   console.log('今日未邀请过好友')
- }
  console.log('开始给好友浇水...');
  await taskInitForFarm();
  const { waterFriendCountKey } = $.farmTask.waterFriendTaskInit;
@@ -763,11 +769,29 @@ async function getWaterFriendGotAward() {
   }
 }
 //接收成为对方好友的邀请
-// async function receiveFriendInvite() {
-//   for (let item of newShareCodes) {
-//
-//   }
-// }
+async function receiveFriendInvite() {
+  for (let code of newShareCodes) {
+    if (code === $.farmInfo.farmUserPro.shareCode) {
+      console.log('自己不能邀请自己成为好友噢\n')
+      continue
+    }
+    await inviteFriend(code);
+    console.log(`接收邀请成为好友结果:${JSON.stringify($.inviteFriendRes.helpResult)}`)
+    if ($.inviteFriendRes.helpResult.code === '0') {
+      console.log(`您已成为${$.inviteFriendRes.helpResult.masterUserInfo.nickName}的好友`)
+    } else if ($.inviteFriendRes.helpResult.code === '17') {
+      console.log(`对方已是您的好友`)
+    }
+  }
+  // console.log(`开始接受6fbd26cc27ac44d6a7fed34092453f77的邀请\n`)
+  // await inviteFriend('6fbd26cc27ac44d6a7fed34092453f77');
+  // console.log(`接收邀请成为好友结果:${JSON.stringify($.inviteFriendRes.helpResult)}`)
+  // if ($.inviteFriendRes.helpResult.code === '0') {
+  //   console.log(`您已成为${$.inviteFriendRes.helpResult.masterUserInfo.nickName}的好友`)
+  // } else if ($.inviteFriendRes.helpResult.code === '17') {
+  //   console.log(`对方已是您的好友`)
+  // }
+}
 // ========================API调用接口========================
 /**
  * 领取10次浇水奖励API
@@ -861,6 +885,16 @@ async function masterGotFinishedTaskForFarm() {
 async function masterHelpTaskInitForFarm() {
   const functionId = arguments.callee.name.toString();
   $.masterHelpResult = await request(functionId);
+}
+//接受对方邀请,成为对方好友的API
+async function inviteFriend() {
+  $.inviteFriendRes = await request(`initForFarm`, {
+    imageUrl: "",
+    nickName: "",
+    shareCode: arguments[0] + '-inviteFriend',
+    version: 4,
+    channel: 2
+  });
 }
 // 助力好友API
 async function masterHelp() {
@@ -1071,7 +1105,7 @@ function requireConfig() {
     resolve()
   })
 }
-function request(function_id, body = {}, timeout = 500){
+function request(function_id, body = {}, timeout = 1000){
   return new Promise(resolve => {
     setTimeout(() => {
       $.get(taskUrl(function_id, body), (err, resp, data) => {
