@@ -1040,6 +1040,7 @@ function shareCodesFormat() {
     if (jdFruitShareArr[$.index - 1]) {
       newShareCodes = jdFruitShareArr[$.index - 1].split('@');
     } else {
+      console.log(`由于您未提供shareCode,将采纳本脚本自带的助力码\n`)
       newShareCodes = shareCodes[$.index - 1].split('@');
     }
     console.log(`格式化后第${$.index}个京东账号的助力码${JSON.stringify(newShareCodes)}`)
@@ -1062,7 +1063,7 @@ function requireConfig() {
       cookiesArr.push($.getdata('CookieJD'));
       cookiesArr.push($.getdata('CookieJD2'));
     }
-    console.log(`共${cookiesArr.length}个京东账号`)
+    console.log(`共${cookiesArr.length}个京东账号\n`)
     if ($.isNode()) {
       Object.keys(jdFruitShareCodes).forEach((item) => {
         if (jdFruitShareCodes[item]) {
