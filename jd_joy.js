@@ -6,18 +6,18 @@ IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 feedCount:自定义 每次喂养数量; 等级只和喂养次数有关，与数量无关
 推荐每次投喂10个，积累狗粮，然后去聚宝盆赌每小时的幸运奖，据观察，投入3000-6000中奖概率大，超过7000基本上注定亏本，即使是第一名
 Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
-更新时间:2020-08-25
+更新时间:2020-08-31
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 // quantumultx
 // [task_local]
 // #京东宠汪汪
-// 15 1,2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// 15 1,9,14,21 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
 // Loon
 // [Script]
-// cron "15 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
+// cron "15 1,9,14,21 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
 // Surge
-// 京东宠汪汪 = type=cron,cronexp="15 1,2 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js
+// 京东宠汪汪 = type=cron,cronexp="15 1,9,14,21 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js
 const $ = new Env('宠汪汪');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -35,7 +35,9 @@ if ($.isNode()) {
 }
 let message = '', subTitle = '', UserName = '';
 let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [10,20,40,80]
-
+//是否参加宠汪汪双人赛跑（据目前观察，参加双人赛跑不消耗狗粮,如需参加其他多人赛跑，请关闭）
+// 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
+const joyRunFlag = $.getdata('joyRunFlag') || 'true';
 let jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
@@ -53,6 +55,7 @@ const weAppUrl = 'https://draw.jdfcloud.com//pet';
       message = '';
       subTitle = '';
       await jdJoy();
+      // await joinTwoPeopleRun();
     }
   }
 })()
@@ -71,6 +74,7 @@ async function jdJoy() {
       appPetTask()
     ])
     await enterRoom();
+    await joinTwoPeopleRun()//参加双人赛跑
     await showMsg();
   } else {
     if ($.getPetTaskConfigRes.errorCode === 'B0001') {
@@ -86,6 +90,58 @@ async function jdJoy() {
     } else {
       message += `${$.getPetTaskConfigRes.errorMessage}`;
     }
+  }
+}
+//参加双人赛跑
+async function joinTwoPeopleRun() {
+  if (joyRunFlag && joyRunFlag === 'true') {
+    console.log(`\n===========以下是双人赛跑信息========\n`)
+    await getPetRace();
+    if ($.petRaceResult) {
+      let { petRaceResult, raceUsers, pin } = $.petRaceResult.data;
+      console.log(`赛跑状态：${petRaceResult}\n`);
+      if (petRaceResult === 'not_participate') {
+        console.log('暂未参赛，现在为您参加双人赛跑');
+        await runMatch(2);
+        if ($.runMatchResult.success) {
+          console.log(`双人赛跑参加成功\n`);
+          petRaceResult = $.runMatchResult.data.petRaceResult;
+          console.log(`双人赛跑助力请自己手动去邀请好友，脚本不带赛跑助力功能\n`);
+        }
+      }
+      if (petRaceResult === 'unbegin') {
+        console.log('比赛还未开始，请九点再来');
+      }
+      if (petRaceResult === 'time_over') {
+        console.log('今日参赛的比赛已经结束，请明天九点再来');
+      }
+      if (petRaceResult === 'unreceive') {
+        console.log('今日参赛的比赛已经结束，现在领取奖励');
+        await receiveJoyRunAward();
+        console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
+      }
+      if (petRaceResult === 'participate') {
+        console.log(`您当前里程：${raceUsers[0].distance}KM\n`);
+        message += `您当前里程：${raceUsers[0].distance}km\n`;
+        console.log(`对手当前里程：${raceUsers[1].distance}KM\n`);
+        message += `对手当前里程：${raceUsers[1].distance}km\n`;
+        console.log('今日已参赛，下面显示应援团信息\n');
+        await getBackupInfo();
+        if ($.getBackupInfoResult.success) {
+          const { currentNickName, totalMembers, totalDistance, backupList } = $.getBackupInfoResult.data;
+          console.log(`${currentNickName}的应援团信息如下\n团员：${totalMembers}个\n团员助力的里程数：${totalDistance}\n`);
+          if (backupList && backupList.length > 0) {
+            for (let item of backupList) {
+              console.log(`${item.nickName}为您助力${item.distance}km\n`);
+            }
+          } else {
+            console.log(`暂无好友为您助力赛跑，如需助力，请手动去邀请好友助力\n`);
+          }
+        }
+      }
+    }
+  } else {
+    console.log(`您设置的是不参加双人赛跑`)
   }
 }
 //日常任务
@@ -320,7 +376,7 @@ function enterRoom() {
           // console.log('JSON.parse(data)', JSON.parse(data))
           $.roomData = JSON.parse(data);
           subTitle = `【用户名】${$.roomData.data.pin}`
-          message = `现有积分: ${$.roomData.data.petCoin}\n现有狗粮: ${$.roomData.data.petFood}\n喂养次数: ${$.roomData.data.feedCount}\n宠物等级: ${$.roomData.data.petLevel}`
+          message = `现有积分: ${$.roomData.data.petCoin}\n现有狗粮: ${$.roomData.data.petFood}\n喂养次数: ${$.roomData.data.feedCount}\n宠物等级: ${$.roomData.data.petLevel}\n`
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -415,6 +471,100 @@ function getPetTaskConfig() {
         } else {
           // console.log('JSON.parse(data)', JSON.parse(data))
           $.getPetTaskConfigRes = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//查询赛跑信息API
+function getPetRace() {
+  return new Promise(resolve => {
+    const url = `${JD_API_HOST}/combat/detail/v2?help=false`;
+    const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('查询赛跑信息API',(data))
+          // $.appGetPetTaskConfigRes = JSON.parse(data);
+          $.petRaceResult = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//参加赛跑API
+function runMatch(teamLevel, timeout = 5000) {
+  console.log(`正在参赛中，请稍等${timeout / 1000}秒，以防多个账号匹配到统一赛场\n`)
+  return new Promise(async resolve => {
+    await $.wait(timeout);
+    const url = `${JD_API_HOST}/combat/match?teamLevel=${teamLevel}`;
+    const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('参加赛跑API', JSON.parse(data))
+          // $.appGetPetTaskConfigRes = JSON.parse(data);
+          $.runMatchResult = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//查询应援团信息API
+function getBackupInfo() {
+  return new Promise(resolve => {
+    const url = `${JD_API_HOST}/combat/getBackupInfo`;
+    const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('查询应援团信息API',(data))
+          // $.appGetPetTaskConfigRes = JSON.parse(data);
+          $.getBackupInfoResult = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+//领取赛跑奖励API
+function receiveJoyRunAward() {
+  return new Promise(resolve => {
+    const url = `${JD_API_HOST}/combat/receive`;
+    const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('查询应援团信息API',(data))
+          // $.appGetPetTaskConfigRes = JSON.parse(data);
+          $.receiveJoyRunAwardRes = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp);
