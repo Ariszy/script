@@ -31,7 +31,7 @@ let message = '', subTitle = '', option = {}, UserName = '', isFruitFinished = f
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 const doFriendsWaterLimit = 3;//每天为多少个好友浇水，默认3个
 let jdNotify = $.getdata('jdFruitNotify');//是否关闭通知，false打开，true通知
-let jdServerNotify = true;//是否每次运行脚本后，都发送server酱微信通知提醒,默认是【true:发送，false:不发送】
+let jdServerNotify = true;//是否每次运行脚本后，都发送server酱微信通知提醒,默认是true【true:发送，false:不发送】
 const JD_API_HOST = 'https://api.m.jd.com/client.action'
 !(async () => {
   await requireConfig();
@@ -296,7 +296,7 @@ async function getTenWaterAward() {
 }
 //再次浇水
 async function doTenWaterAgain() {
-  console.log('再次浇水\n');
+  console.log('开始检查剩余水滴能否再次浇水再次浇水\n');
   await initForFarm();
   let totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
   console.log(`剩余水滴${totalEnergy}g\n`);
@@ -716,6 +716,7 @@ async function doFriendsWater() {
           }
         }
       });
+      //TODO ,发现bug,github action运行发现有些账号第一次没有给3个好友浇水
       console.log(`需要浇水的好友列表shareCodes:${JSON.stringify(needWaterFriends)}`);
       let waterFriendsCount = 0, cardInfoStr = '';
       for (let index = 0; index < needWaterFriends.length; index ++) {
@@ -1020,7 +1021,7 @@ async function showMsg() {
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
     if (jdServerNotify) {
       if ($.isNode() && notify.SCKEY) {
-        await notify.sendNotify(`${$.name}-账号${$.index}-${UserName}`, `${subTitle}\n\n${notifyMessage}`);
+        await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n\n${notifyMessage}`);
       }
     }
   }

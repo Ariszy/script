@@ -56,6 +56,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
 
 function feedPets() {
   return new Promise(resolve => {
+    console.log(`您设置的喂食数量:${FEED_NUM}\n`);
     const options = {
       url: `${JD_API_HOST}/pet/feed?feedCount=${FEED_NUM}`,
       headers: {
