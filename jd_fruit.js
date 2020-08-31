@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-08-30
+更新时间:2020-08-31
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -1022,6 +1022,9 @@ async function showMsg() {
     if (jdServerNotify) {
       if ($.isNode() && notify.SCKEY) {
         await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n\n${notifyMessage}`);
+      }
+      if ($.isNode()) {
+        await notify.BarkNotify(`${$.name}`, `${subTitle}\n${message}`);
       }
     }
   }
