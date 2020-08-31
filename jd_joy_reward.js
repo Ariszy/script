@@ -78,12 +78,14 @@ async function joyReward() {
         giftName = item.giftName;
       }
     }
+    console.log(`当前京豆库存:${leftStock}`)
     // 兼容之前BoxJs兑换设置的数据
     if (joyRewardName && (joyRewardName === '-1' || joyRewardName === '1' || joyRewardName === '20' || joyRewardName === '50' || joyRewardName === '100' || joyRewardName === '500' || joyRewardName === '1000')) {
-      if (leftStock) {
-        if (!saleInfoId) return
-        //开始兑换
-        if (data.coin >= salePrice) {
+      //开始兑换
+      if (data.coin >= salePrice) {
+        if (leftStock) {
+          if (!saleInfoId) return
+          console.log(`当前账户积分:${data.coin}\n当前京豆库存:${leftStock}\n满足兑换条件,开始为您兑换京豆\n`);
           const exchangeRes = await exchange(saleInfoId, 'pet');
           if (exchangeRes.success) {
             if (exchangeRes.errorCode === 'buy_success') {
@@ -98,11 +100,11 @@ async function joyReward() {
             }
           }
         } else {
-          console.log(`兑换失败，原因：您目前只有${data.coin}积分，已不足兑换${giftName}所需的${salePrice}积分`)
-          //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
+          console.log('兑换失败，原因：京豆库存不足，已抢完，请下一场再兑换')
         }
       } else {
-        console.log('兑换失败，原因：京豆库存不足，已抢完，请下一场再兑换')
+        console.log(`兑换失败，原因：您目前只有${data.coin}积分，已不足兑换${giftName}所需的${salePrice}积分\n`)
+        //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
       }
     } else {
       console.log('您设置了不兑换京豆,如需兑换京豆，请去BoxJs重新设置或修改第20行代码')
