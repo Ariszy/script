@@ -38,8 +38,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
       message = '';
       subTitle = '';
-      FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;
-      await feedPets();//喂食
+      await feedPets(FEED_NUM);//喂食
       await ThreeMeals();//三餐
       if (!jdNotify || jdNotify === 'false') {
         $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
@@ -54,11 +53,12 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
       $.done();
     })
 
-function feedPets() {
+function feedPets(feedNum) {
   return new Promise(resolve => {
-    console.log(`您设置的喂食数量:${FEED_NUM}\n`);
+    console.log(`您设置的喂食数量:${FEED_NUM}g\n`);
+    console.log(`实际的喂食数量:${feedNum}g\n`);
     const options = {
-      url: `${JD_API_HOST}/pet/feed?feedCount=${FEED_NUM}`,
+      url: `${JD_API_HOST}/pet/feed?feedCount=${feedNum}`,
       headers: {
         'Cookie': cookie,
         'reqSource': 'h5',
@@ -77,24 +77,24 @@ function feedPets() {
         if ($.data.success) {
           if ($.data.errorCode === 'feed_ok') {
             console.log('喂食成功')
-            message += `【喂食成功】${FEED_NUM}g\n`;
+            message += `【喂食成功】${feedNum}g\n`;
           } else if ($.data.errorCode === 'time_error') {
             console.log('喂食失败：正在食用')
             message += `【喂食失败】您的汪汪正在食用\n`;
           } else if ($.data.errorCode === 'food_insufficient') {
-            console.log(`当前喂食${FEED_NUM}g狗粮不够\n`)
-            if ((FEED_NUM) === 80) {
-              FEED_NUM = 40;
-            } else if ((FEED_NUM) === 40) {
-              FEED_NUM = 20;
-            } else if ((FEED_NUM) === 20) {
-              FEED_NUM = 10;
-            } else if ((FEED_NUM) === 10) {
-              FEED_NUM = 0;
+            console.log(`当前喂食${feedNum}g狗粮不够, 现为您降低一档次喂食\n`)
+            if ((feedNum) === 80) {
+              feedNum = 40;
+            } else if ((feedNum) === 40) {
+              feedNum = 20;
+            } else if ((feedNum) === 20) {
+              feedNum = 10;
+            } else if ((feedNum) === 10) {
+              feedNum = 0;
             }
             // 如果喂食设置的数量失败, 就降低一个档次喂食.
-            if ((FEED_NUM) !== 0) {
-              await feedPets();
+            if ((feedNum) !== 0) {
+              await feedPets(feedNum);
             } else {
               console.log('您的狗粮已不足10g')
               message += `【喂食失败】您的狗粮已不足10g\n`;
