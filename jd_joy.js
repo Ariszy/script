@@ -121,10 +121,15 @@ async function joinTwoPeopleRun() {
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
       }
       if (petRaceResult === 'participate') {
-        console.log(`${raceUsers[0].nickName}当前里程：${raceUsers[0].distance}KM\n`);
-        message += `${raceUsers[0].nickName}当前里程：${raceUsers[0].distance}km\n`;
-        console.log(`${raceUsers[1].nickName}当前里程：${raceUsers[1].distance}KM\n`);
-        message += `${raceUsers[1].nickName}当前里程：${raceUsers[1].distance}km\n`;
+        for (let index =0; index < raceUsers.length; index++) {
+          if (raceUsers[index].myself) {
+            console.log(`您当前里程：${raceUsers[index].distance}KM\n`);
+            message += `您当前里程：${raceUsers[index].distance}km\n`;
+          } else {
+            console.log(`对手当前里程：${raceUsers[index].distance}KM\n`);
+            message += `对手当前里程：${raceUsers[index].distance}km\n`;
+          }
+        }
         console.log('今日已参赛，下面显示应援团信息\n');
         await getBackupInfo();
         if ($.getBackupInfoResult.success) {
