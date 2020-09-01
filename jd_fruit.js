@@ -433,18 +433,22 @@ async function turntableFarm() {
       console.log('4小时候免费赠送的抽奖机会已领取')
     }
     if ($.initForTurntableFarmRes.turntableBrowserAds && $.initForTurntableFarmRes.turntableBrowserAds.length > 0) {
-      console.log('开始浏览天天抽奖的逛会场任务')
-      if (!$.initForTurntableFarmRes.turntableBrowserAds[0].status) {
-        await browserForTurntableFarm($.initForTurntableFarmRes.turntableBrowserAds[0].adId);
-        if ($.browserForTurntableFarmRes.code === '0' && $.browserForTurntableFarmRes.status) {
-          await browserForTurntableFarm2($.initForTurntableFarmRes.turntableBrowserAds[0].adId);
-          if ($.browserForTurntableFarm2Res.code === '0') {
-            await initForTurntableFarm();
-            remainLotteryTimes = $.initForTurntableFarmRes.remainLotteryTimes;
+      for (let index = 0; index < $.initForTurntableFarmRes.turntableBrowserAds.length; index++) {
+        if (!$.initForTurntableFarmRes.turntableBrowserAds[index].status) {
+          console.log(`开始浏览天天抽奖的第${index + 1}个逛会场任务`)
+          await browserForTurntableFarm(1, $.initForTurntableFarmRes.turntableBrowserAds[index].adId);
+          if ($.browserForTurntableFarmRes.code === '0' && $.browserForTurntableFarmRes.status) {
+            console.log(`第${index + 1}个逛会场任务完成，开始领取水滴奖励\n`)
+            await browserForTurntableFarm(2, $.initForTurntableFarmRes.turntableBrowserAds[index].adId);
+            if ($.browserForTurntableFarmRes.code === '0') {
+              console.log(`第${index + 1}个逛会场任务领取水滴奖励完成\n`)
+              await initForTurntableFarm();
+              remainLotteryTimes = $.initForTurntableFarmRes.remainLotteryTimes;
+            }
           }
+        } else {
+          console.log(`浏览天天抽奖的第${index + 1}个逛会场任务已完成`)
         }
-      } else {
-        console.log('天天抽奖浏览任务已经做完')
       }
     }
     //天天抽奖助力
@@ -850,17 +854,18 @@ async function timingAwardForTurntableFarm() {
   $.timingAwardRes = await request(arguments.callee.name.toString(), {version: 4, channel: 1});
 }
 
-async function browserForTurntableFarm(type) {
+async function browserForTurntableFarm(type, adId) {
   if (type === 1) {
     console.log('浏览爆品会场');
   }
   if (type === 2) {
-    console.log('领取浏览爆品会场奖励');
+    console.log('天天抽奖浏览任务领取水滴');
   }
-  const body = {"type":1,"adId": type,"version":4,"channel":1};
+  const body = {"type": type,"adId": adId,"version":4,"channel":1};
   $.browserForTurntableFarmRes = await request(arguments.callee.name.toString(), body);
   // 浏览爆品会场8秒
 }
+//天天抽奖浏览任务领取水滴API
 async function browserForTurntableFarm2(type) {
   const body = {"type":2,"adId": type,"version":4,"channel":1};
   $.browserForTurntableFarm2Res = await request('browserForTurntableFarm', body);
