@@ -98,14 +98,19 @@ async function joinTwoPeopleRun() {
     console.log(`\n===========以下是双人赛跑信息========\n`)
     await getPetRace();
     if ($.petRaceResult) {
-      let { petRaceResult, raceUsers, pin } = $.petRaceResult.data;
+      let petRaceResult = $.petRaceResult.data.petRaceResult;
+      let raceUsers = $.petRaceResult.data.raceUsers;
       console.log(`赛跑状态：${petRaceResult}\n`);
       if (petRaceResult === 'not_participate') {
         console.log('暂未参赛，现在为您参加双人赛跑');
         await runMatch(2);
         if ($.runMatchResult.success) {
           console.log(`双人赛跑参加成功\n`);
-          petRaceResult = $.runMatchResult.data.petRaceResult;
+          message += `双人赛跑：成功参加\n`;
+          await getPetRace();
+          petRaceResult = $.petRaceResult.data.petRaceResult;
+          raceUsers = $.petRaceResult.data.raceUsers;
+          // console.log(`参赛后的状态：${petRaceResult}`)
           console.log(`双人赛跑助力请自己手动去邀请好友，脚本不带赛跑助力功能\n`);
         }
       }
@@ -121,13 +126,15 @@ async function joinTwoPeopleRun() {
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
       }
       if (petRaceResult === 'participate') {
-        for (let index =0; index < raceUsers.length; index++) {
-          if (raceUsers[index].myself) {
-            console.log(`您当前里程：${raceUsers[index].distance}KM\n`);
-            message += `您当前里程：${raceUsers[index].distance}km\n`;
-          } else {
-            console.log(`对手当前里程：${raceUsers[index].distance}KM\n`);
-            message += `对手当前里程：${raceUsers[index].distance}km\n`;
+        if(raceUsers) {
+          for (let index =0; index < raceUsers.length; index++) {
+            if (raceUsers[index].myself) {
+              console.log(`您当前里程：${raceUsers[index].distance}KM\n`);
+              message += `您当前里程：${raceUsers[index].distance}km\n`;
+            } else {
+              console.log(`对手当前里程：${raceUsers[index].distance}KM\n`);
+              message += `对手当前里程：${raceUsers[index].distance}km\n`;
+            }
           }
         }
         console.log('今日已参赛，下面显示应援团信息\n');
