@@ -87,7 +87,7 @@ async function jdFruit() {
     await doTenWater();//浇水十次
     await getFirstWaterAward();//领取首次浇水奖励
     await getTenWaterAward();//领取10浇水奖励
-    await getWaterFriendGotAward();//领取为3好友浇水奖励
+    await getWaterFriendGotAward();//领取为2好友浇水奖励
     await doTenWaterAgain();//再次浇水
     await predictionFruit();//预测水果成熟时间
     await showMsg();
@@ -184,11 +184,11 @@ async function doDailyTask() {
   }
   //给好友浇水
   if (!$.farmTask.waterFriendTaskInit.f) {
-    if ($.farmTask.waterFriendTaskInit.waterFriendCountKey < 3) {
+    if ($.farmTask.waterFriendTaskInit.waterFriendCountKey < $.farmTask.waterFriendTaskInit.waterFriendMax) {
       await doFriendsWater();
     }
   } else {
-    console.log('给3个好友浇水任务已完成\n')
+    console.log(`给${$.farmTask.waterFriendTaskInit.waterFriendMax}个好友浇水任务已完成\n`)
   }
   // await Promise.all([
   //   clockInIn(),//打卡领水
@@ -704,14 +704,14 @@ async function doFriendsWater() {
   await friendListInitForFarm();
   console.log('开始给好友浇水...');
   await taskInitForFarm();
-  const { waterFriendCountKey } = $.farmTask.waterFriendTaskInit;
+  const { waterFriendCountKey, waterFriendMax } = $.farmTask.waterFriendTaskInit;
   console.log(`今日已给${waterFriendCountKey}个好友浇水`);
-  if (waterFriendCountKey < doFriendsWaterLimit) {
+  if (waterFriendCountKey < waterFriendMax) {
     let needWaterFriends = [];
     if ($.friendList.friends && $.friendList.friends.length > 0) {
       $.friendList.friends.map((item, index) => {
         if (item.friendState === 1) {
-          if (needWaterFriends.length < (doFriendsWaterLimit - waterFriendCountKey)) {
+          if (needWaterFriends.length < (waterFriendMax - waterFriendCountKey)) {
             needWaterFriends.push(item.shareCode);
           }
         }
@@ -749,25 +749,26 @@ async function doFriendsWater() {
       console.log('您的好友列表暂无好友,快去邀请您的好友吧!')
     }
   } else {
-    console.log(`今日已为好友浇水量已达您到设置数量:${doFriendsWaterLimit}个`)
+    console.log(`今日已为好友浇水量已达${waterFriendMax}个`)
   }
 }
 //领取给3个好友浇水后的奖励水滴
 async function getWaterFriendGotAward() {
   await taskInitForFarm();
-  if ($.farmTask.waterFriendTaskInit.waterFriendCountKey >= 3) {
-    if (!$.farmTask.waterFriendTaskInit.waterFriendGotAward) {
+  const { waterFriendCountKey, waterFriendMax, waterFriendSendWater, waterFriendGotAward } = $.farmTask.waterFriendTaskInit
+  if (waterFriendCountKey >= waterFriendMax) {
+    if (!waterFriendGotAward) {
       await waterFriendGotAwardForFarm();
-      console.log(`领取给3个好友浇水后的奖励水滴::${JSON.stringify($.waterFriendGotAwardRes)}`)
+      console.log(`领取给${waterFriendMax}个好友浇水后的奖励水滴::${JSON.stringify($.waterFriendGotAwardRes)}`)
       if ($.waterFriendGotAwardRes.code === '0') {
-        message += `【给3好友浇水】奖励${$.waterFriendGotAwardRes.addWater}g水滴\n`;
+        message += `【给${waterFriendMax}好友浇水】奖励${$.waterFriendGotAwardRes.addWater}g水滴\n`;
       }
     } else {
-      console.log('给好友浇水的40g奖励已领取\n');
-      message += `【给3好友浇水】奖励40g水滴已领取\n`;
+      console.log(`给好友浇水的${waterFriendSendWater}g水滴奖励已领取\n`);
+      message += `【给${waterFriendMax}好友浇水】奖励${waterFriendSendWater}g水滴已领取\n`;
     }
   } else {
-    console.log('暂未给三个好友浇水\n');
+    console.log(`暂未给${waterFriendMax}个好友浇水\n`);
   }
 }
 //接收成为对方好友的邀请
@@ -1020,7 +1021,7 @@ async function showMsg() {
     $.msg($.name, subTitle, message, option);
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
     if (jdServerNotify) {
-      if ($.isNode() && notify.SCKEY) {
+      if ($.isNode()) {
         await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n\n${notifyMessage}`);
       }
       if ($.isNode()) {
