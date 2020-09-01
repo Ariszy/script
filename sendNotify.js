@@ -45,7 +45,7 @@ function BarkNotify(text, desp) {
       $.get(options, (err, resp, data) => {
         try {
           if (err) {
-            console.log('发送通知调用API失败！！')
+            console.log('发送Bark通知调用API失败！！')
           } else {
             data = JSON.parse(data);
             if (data.code === 200) {

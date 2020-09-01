@@ -40,25 +40,28 @@ if ($.isNode()) {
       await changeFile(content);
       console.log('替换变量完毕')
       // 执行
-      await exec("node JD_DailyBonus.js >> result.txt");
-      console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
-      //发送通知
-      if ($.isNode() && notify.SCKEY) {
-        let content = "";
-        if (fs.existsSync(path)) {
-          content = fs.readFileSync(path, "utf8");
+      try {
+        await exec("node JD_DailyBonus.js >> result.txt");
+        console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
+        //发送通知
+        if ($.isNode()) {
+          let content = "";
+          if (fs.existsSync(path)) {
+            content = fs.readFileSync(path, "utf8");
+          }
+          //由于在github action上面执行，故执行时间是UTC(国际标准时间)，现转换成北京时间
+          const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
+          console.log(`时间：${beanSignTime}`)
+          await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `签到时间-${beanSignTime}\n\n${content}`);
         }
-        const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
-        console.log(`时间：${beanSignTime}`)
-        await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `签到时间-${beanSignTime}\n\n${content}`);
-        console.log('发送结果完毕')
-      } else {
-        console.log('您目前没有提供server酱的推送通知SCKEY,现为您跳过发送通知消息功能')
+        //运行完成后，删除下载的文件
+        console.log('运行完成后，删除下载的文件\n')
+        await deleteFile(path);
+        await deleteFile(JD_DailyBonusPath);
+        console.log(`京东账号${$.index} ${UserName}京豆签到完成\n`);
+      } catch (e) {
+        console.log("京东签到脚本执行异常:" + e);
       }
-      //运行完成后，删除下载的文件
-      await deleteFile(path);
-      await deleteFile(JD_DailyBonusPath);
-      console.log(`京东账号${$.index} ${UserName}京豆签到完成\n`);
     }
   }
 })()
@@ -77,10 +80,10 @@ async function changeFile (content) {
 async function deleteFile(path) {
   // 查看文件result.txt是否存在,如果存在,先删除
   const fileExists = await fs.existsSync(path);
-  console.log('fileExists', fileExists);
+  // console.log('fileExists', fileExists);
   if (fileExists) {
     const unlinkRes = await fs.unlinkSync(path);
-    console.log('unlinkRes', unlinkRes)
+    // console.log('unlinkRes', unlinkRes)
   }
 }
 function timeFormat(time) {
