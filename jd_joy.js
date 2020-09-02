@@ -386,7 +386,11 @@ function enterRoom() {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
           // console.log('JSON.parse(data)', JSON.parse(data))
+         
           $.roomData = JSON.parse(data);
+
+          console.log(`n现有狗粮: ${$.roomData.data.petFood}\n`)
+
           subTitle = `【用户名】${$.roomData.data.pin}`
           message = `现有积分: ${$.roomData.data.petCoin}\n现有狗粮: ${$.roomData.data.petFood}\n喂养次数: ${$.roomData.data.feedCount}\n宠物等级: ${$.roomData.data.petLevel}\n`
         }
