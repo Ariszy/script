@@ -176,6 +176,10 @@ async function stealFriendCoinFun() {
     for (let friends of $.allFriends) {
       const { friendPin } = friends;
       await stealFriendCoin(friendPin);//领好友积分
+      if ($.stealFriendCoin * 1 === 100) {
+        console.log(`偷好友积分已达上限${$.stealFriendCoin}个，现跳出循环`)
+        break
+      }
     }
   } else {
     console.log('偷好友积分已达上限(已获得100积分)')
