@@ -1124,7 +1124,8 @@ function request(function_id, body = {}, timeout = 1000){
       $.get(taskUrl(function_id, body), (err, resp, data) => {
         try {
           if (err) {
-            console.log('\n东东农场: API查询请求失败 ‼️‼️')
+            // console.log('\n东东农场: API查询请求失败 ‼️‼️')
+            throw new Error(err);
           } else {
             data = JSON.parse(data);
           }
