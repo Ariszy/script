@@ -1,6 +1,6 @@
 /*
 京东摇钱树 ：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js
-更新时间:2020-08-24
+更新时间:2020-09-04
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
@@ -63,7 +63,7 @@ async function jd_moneyTree() {
   await harvest();
   await sell();
   await myWealth();
-
+  await stealFriendFruit()
   await msgControl();
 
   console.log(`运行脚本次数和设置的次数是否相等::${($.getdata($.treeMsgTime) * 1) === Notice}`);
@@ -443,14 +443,93 @@ function msgControl() {
     resolve();
   })
 }
-
-async function request(function_id, body = {}) {
+async function stealFriendFruit() {
+  await friendRank();
+  if ($.friendRankList && $.friendRankList.length > 0) {
+    $.amount = 0;
+    for (let item of $.friendRankList) {
+      if (!item.self && item.steal) {
+        await friendTreeRoom(item.encryPin);
+        const stealFruitRes = await stealFruit(item.encryPin, $.friendTree.stoleInfo);
+        if (stealFruitRes.resultCode === 0 && stealFruitRes.resultData.code === '200') {
+          $.amount += stealFruitRes.resultData.data.amount;
+        }
+      }
+    }
+    message += `【偷取好友金果】共${$.amount}个`;
+  } else {
+    console.log(`您暂无好友，故跳过`);
+  }
+}
+//获取好友列表API
+async function friendRank() {
   await $.wait(1000); //歇口气儿, 不然会报操作频繁
+  const params = {
+    "source": 2,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
   return new Promise((resolve, reject) => {
-    $.post(taskurl(function_id,body), (err, resp, data) => {
+    $.post(taskurl('friendRank', params), (err, resp, data) => {
       try {
         if (err) {
-          console.log("\n摇钱树京东API请求失败 ‼️‼️")
+          console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          $.logErr(err);
+        } else {
+          data = JSON.parse(data);
+          $.friendRankList = data.resultData.data;
+        }
+      } catch (eor) {
+        $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+// 进入好友房间API
+async function friendTreeRoom(friendPin) {
+  await $.wait(1000); //歇口气儿, 不然会报操作频繁
+  const params = {
+    "source": 2,
+    "friendPin": friendPin,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
+  return new Promise((resolve, reject) => {
+    $.post(taskurl('friendTree', params), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          $.logErr(err);
+        } else {
+          data = JSON.parse(data);
+          $.friendTree = data.resultData.data;
+        }
+      } catch (eor) {
+        $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
+//偷好友金果API
+async function stealFruit(friendPin, stoleId) {
+  await $.wait(1000); //歇口气儿, 不然会报操作频繁
+  const params = {
+    "source": 2,
+    "friendPin": friendPin,
+    "stoleId": stoleId,
+    "riskDeviceParam":{"eid":"","dt":"","ma":"","im":"","os":"","osv":"","ip":"","apid":"","ia":"","uu":"","cv":"","nt":"","at":"1","fp":"","token":""}
+  }
+  params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
+  return new Promise((resolve, reject) => {
+    $.post(taskurl('stealFruit', params), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          $.logErr(err);
         } else {
           data = JSON.parse(data);
         }
@@ -459,18 +538,25 @@ async function request(function_id, body = {}) {
       } finally {
         resolve(data)
       }
-      // if (err) {
-      //   console.log("=== request error -s--");
-      //   console.log("=== request error -e--");
-      // } else {
-      //   try {
-      //     data = JSON.parse(data);
-      //   } catch (e) {
-      //     console.log(e)
-      //   } finally {
-      //     resolve(data)
-      //   }
-      // }
+    })
+  })
+}
+async function request(function_id, body = {}) {
+  await $.wait(1000); //歇口气儿, 不然会报操作频繁
+  return new Promise((resolve, reject) => {
+    $.post(taskurl(function_id,body), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          $.logErr(err);
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (eor) {
+        $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
+      } finally {
+        resolve(data)
+      }
     })
   })
 }
@@ -478,7 +564,7 @@ async function request(function_id, body = {}) {
 function taskurl(function_id, body) {
   return {
     url: JD_API_HOST + '/' + function_id + '?_=' + new Date().getTime()*1000,
-    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' || function_id === 'getSignAward' || function_id === 'sell' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
+    body: `reqData=${function_id === 'harvest' || function_id === 'login' || function_id === 'signIndex' || function_id === 'signOne' || function_id === 'setUserLinkStatus' || function_id === 'dayWork' || function_id === 'getSignAward' || function_id === 'sell' || function_id === 'friendRank' || function_id === 'friendTree' || function_id === 'stealFruit' ? encodeURIComponent(JSON.stringify(body)) : JSON.stringify(body)}`,
     headers: {
       'Accept' : `application/json`,
       'Origin' : `https://uua.jr.jd.com`,
