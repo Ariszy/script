@@ -446,17 +446,25 @@ function msgControl() {
 async function stealFriendFruit() {
   await friendRank();
   if ($.friendRankList && $.friendRankList.length > 0) {
-    $.amount = 0;
-    for (let item of $.friendRankList) {
-      if (!item.self && item.steal) {
-        await friendTreeRoom(item.encryPin);
-        const stealFruitRes = await stealFruit(item.encryPin, $.friendTree.stoleInfo);
-        if (stealFruitRes.resultCode === 0 && stealFruitRes.resultData.code === '200') {
-          $.amount += stealFruitRes.resultData.data.amount;
+    const canSteal = $.friendRankList.some((item) => {
+      const boxShareCode = item.steal
+      return (boxShareCode === true);
+    });
+    if (canSteal) {
+      $.amount = 0;
+      for (let item of $.friendRankList) {
+        if (!item.self && item.steal) {
+          await friendTreeRoom(item.encryPin);
+          const stealFruitRes = await stealFruit(item.encryPin, $.friendTree.stoleInfo);
+          if (stealFruitRes.resultCode === 0 && stealFruitRes.resultData.code === '200') {
+            $.amount += stealFruitRes.resultData.data.amount;
+          }
         }
       }
+      message += `【偷取好友金果】共${$.amount}个\n`;
+    } else {
+      console.log(`今日已偷过好友的金果了，暂无好友可偷，请明天再来\n`)
     }
-    message += `【偷取好友金果】共${$.amount}个`;
   } else {
     console.log(`您暂无好友，故跳过`);
   }
