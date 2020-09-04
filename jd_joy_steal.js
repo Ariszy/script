@@ -146,23 +146,15 @@ async function stealFriendsFood() {
       //可偷狗粮
       //偷好友狗粮
       console.log(`发现好友【${friendPin}】可偷狗粮\n`)
-      const enterFriendRoomRes = await enterFriendRoom(friendPin);
-      //TODO 看看能否可根据投食结果优化代码
-      // if (enterFriendRoomRes.data.stealFood && enterFriendRoomRes.data.stealFood > 0) {
+      await enterFriendRoom(friendPin);
       await doubleRandomFood(friendPin);
       const getRandomFoodRes = await getRandomFood(friendPin);
       console.log(`偷好友狗粮结果：${JSON.stringify(getRandomFoodRes)}`)
       if (getRandomFoodRes.success) {
-          if (getRandomFoodRes.errorCode === 'steal_ok') {
-            $.stealFood += getRandomFoodRes.data;
-          }
-          // else if (getRandomFoodRes.errorCode === 'chance_full') {
-          //   $.stealFood = '已达上限';
-          // } else if (getRandomFoodRes.errorCode === 'cannot_steal') {
-          //   $.stealFood = '失败,好友已无多余狗粮';
-          // }
+        if (getRandomFoodRes.errorCode === 'steal_ok') {
+          $.stealFood += getRandomFoodRes.data;
         }
-      // }
+      }
     } else if (stealStatus === 'chance_full') {
       console.log('偷好友狗粮已达上限，跳出循环');
       break;
@@ -272,6 +264,7 @@ async function stealFriendCoin(friendPin) {
 }
 //进入好友房间
 function enterFriendRoom(friendPin) {
+  console.log(`\nfriendPin${friendPin}\n`);
   return new Promise(resolve => {
     $.get(taskUrl('enterFriendRoom', (friendPin)), (err, resp, data) => {
       try {
