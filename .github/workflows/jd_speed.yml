@@ -6,6 +6,8 @@ name: jd_speed
 on:
   schedule:
     - cron: '33 */3 * * *'
+  watch:
+        types: started
 
 jobs:
   build:
