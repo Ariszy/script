@@ -6,6 +6,8 @@ name: jd_bean_sign
 on:
   schedule:
     - cron: '0 16 * * *'
+  watch:
+        types: started
 
 jobs:
   build:
