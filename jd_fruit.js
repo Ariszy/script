@@ -29,7 +29,6 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
 ]
 let message = '', subTitle = '', option = {}, UserName = '', isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
-const doFriendsWaterLimit = 3;//每天为多少个好友浇水，默认3个
 let jdNotify = $.getdata('jdFruitNotify');//是否关闭通知，false打开，true通知
 let jdServerNotify = true;//是否每次运行脚本后，都发送server酱微信通知提醒,默认是true【true:发送，false:不发送】
 const JD_API_HOST = 'https://api.m.jd.com/client.action'
@@ -1103,7 +1102,9 @@ function requireConfig() {
     //IOS等用户直接用NobyDa的jd cookie
     if ($.isNode()) {
       Object.keys(jdCookieNode).forEach((item) => {
-        cookiesArr.push(jdCookieNode[item])
+        if (jdCookieNode[item]) {
+          cookiesArr.push(jdCookieNode[item])
+        }
       })
     } else {
       cookiesArr.push($.getdata('CookieJD'));

@@ -116,7 +116,13 @@
         "jd_pet2",
         "jd_pet3",
         "jd_pet4",
-        "jd_pet5"
+        "jd_pet5",
+        "jd2_pet_name",
+        "jd2_pet1",
+        "jd2_pet2",
+        "jd2_pet3",
+        "jd2_pet4",
+        "jd2_pet5"
       ],
       "settings": [
         {
@@ -164,6 +170,48 @@
         {
           "id": "jd_pet5",
           "name": "互助码5",
+          "val": "",
+          "type": "text",
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_pet_name",
+          "name": "京东账号2昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号2昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd2_pet1",
+          "name": "账号二互助码1",
+          "val": "",
+          "type": "text",
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_pet2",
+          "name": "账号二互助码2",
+          "val": "",
+          "type": "text",
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_pet3",
+          "name": "账号二互助码3",
+          "val": "",
+          "type": "text",
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_pet4",
+          "name": "账号二互助码4",
+          "val": "",
+          "type": "text",
+          "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
+        },
+        {
+          "id": "jd2_pet5",
+          "name": "账号二互助码5",
           "val": "",
           "type": "text",
           "desc": "东东萌宠互助码.这是别人的shareCode,你帮别人助力."
