@@ -5,7 +5,7 @@
 2、可能有两位数误差,影响不大
 3、聚宝盆最下方显示上轮前六名的投入狗粮，收入积分，以及纯收益（即：收入积分 - 投入狗粮）
 [MITM]
-hostname = jdjoy.jd.com
+hostname = jdjoy.jd.com,draw.jdfcloud.com
 
 surge
 [Script]
