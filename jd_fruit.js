@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-09-04
+更新时间:2020-09-05
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -73,6 +73,7 @@ async function jdFruit() {
       if ($.isNode() && notify.SCKEY) {
         await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${UserName}\n\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
+      return
     } else if ($.farmInfo.treeState === 1){
       console.log(`\n${$.farmInfo.farmUserPro.name}种植中...\n`)
     } else if ($.farmInfo.treeState === 0) {
@@ -82,6 +83,7 @@ async function jdFruit() {
       if ($.isNode() && notify.SCKEY) {
         await notify.sendNotify(`${$.name}请重新种植水果`, `京东账号${$.index} ${UserName}\n\n上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n\n请去京东APP或微信小程序选购并种植新的水果`);
       }
+      return
     }
     await doDailyTask();
     await doTenWater();//浇水十次
