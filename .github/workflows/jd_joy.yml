@@ -6,6 +6,8 @@ name: jd_joy
 on:
   schedule:
     - cron: '0 4-22/6 * * *'
+  watch:
+       types: started
 
 jobs:
   build:
