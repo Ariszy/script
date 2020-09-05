@@ -6,6 +6,8 @@ name: jd_blueCoin
 on:
   schedule:
     - cron: '10 17 * * *'
+  watch:
+        types: started
 
 jobs:
   build:
