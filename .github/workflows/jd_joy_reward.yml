@@ -6,6 +6,8 @@ name: jd_joy_reward
 on:
   schedule:
     - cron: '0 */1 * * *'
+  watch:
+        types: started
 
 jobs:
   build:
