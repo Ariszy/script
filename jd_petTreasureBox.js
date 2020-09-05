@@ -35,15 +35,15 @@ for (var i in lastHourWinInfos) {
     body["data"]["lastHourWinInfos"][i]["petCoin"] = `${lastHourWinInfos[i]["food"]} [${lastHourWinInfos[i]["petCoin"]}] (${f(lastHourWinInfos[i]["petCoin"] - lastHourWinInfos[i]["food"])}) `
 }
 
-body["data"]["lastHourWinInfos"].push({
+body["data"]["lastHourWinInfos"].unshift({
     'pin': "",
     'nickName': '',
     'investHour':   lastHourWinInfos[0]['investHour'],
     'stage': '2',
     'food': 0,
-    'rank': 7,
+    'rank': 0,
     'foodDif': "",
-    'petCoin': '投入 [收入积分] (纯收益)',
+    'petCoin': '投入 [收入] (纯收入)',
     'userTag': "",
     'win': true
 })
