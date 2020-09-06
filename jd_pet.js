@@ -16,8 +16,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 一天只能帮助5个人。多出的助力码无效
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
-const name = '东东萌宠';
-const $ = new Env(name);
+const $ = new Env('东东萌宠');
 let cookiesArr = [], cookie = '', jdPetShareArr = [], isBox = false, notify, newShareCodes;
 //助力好友分享码(最多5个,否则后面的助力失败),原因:京东农场每人每天只有四次助力机会
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
@@ -80,7 +79,7 @@ async function jdPet() {
   if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
     $.petInfo = initPetTownRes.result;
     if ($.petInfo.userStatus === 0) {
-      $.msg(name, '【提示】此账号萌宠活动未开始，请手动去京东APP开启活动\n入口：我的->游戏与互动->查看更多', '', { "open-url": "openapp.jdmoble://" });
+      $.msg($.name, '【提示】此账号萌宠活动未开始，请手动去京东APP开启活动\n入口：我的->游戏与互动->查看更多', '', { "open-url": "openapp.jdmoble://" });
       return
     }
     goodsUrl = $.petInfo.goodsInfo && $.petInfo.goodsInfo.goodsUrl;
