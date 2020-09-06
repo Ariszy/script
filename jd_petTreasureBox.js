@@ -32,7 +32,7 @@ for (var i in lastHourWinInfos) {
     sum += lastHourWinInfos[i]["petCoin"]
 }
 for (var i in lastHourWinInfos) {
-    body["data"]["lastHourWinInfos"][i]["petCoin"] = `${lastHourWinInfos[i]["food"]} [${lastHourWinInfos[i]["petCoin"]}] (${f(lastHourWinInfos[i]["petCoin"] - lastHourWinInfos[i]["food"])}) `
+    body["data"]["lastHourWinInfos"][i]["petCoin"] = `{${lastHourWinInfos[i]["food"]}} [${lastHourWinInfos[i]["petCoin"]}] (${f(lastHourWinInfos[i]["petCoin"] - lastHourWinInfos[i]["food"])}) `
 }
 
 body["data"]["lastHourWinInfos"].unshift({
@@ -43,7 +43,7 @@ body["data"]["lastHourWinInfos"].unshift({
     'food': 0,
     'rank': 0,
     'foodDif': "",
-    'petCoin': '投 [收] (纯收入)',
+    'petCoin': '{投} [收] (纯收入)',
     'userTag': "",
     'win': true
 })
