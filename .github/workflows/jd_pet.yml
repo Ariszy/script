@@ -6,6 +6,8 @@ name: jd_pet
 on:
   schedule:
     - cron: '35 23,4,10 * * *'
+  watch:
+    types: [started]
 jobs:
   build:
 
