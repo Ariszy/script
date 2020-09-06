@@ -1,7 +1,20 @@
 const $ = new Env();
-const SCKEY = '' || process.env.PUSH_KEY;//此处填你申请的SCKEY.注：github action用户SCKEY填写到Settings-Secrets里面(Name输入PUSH_KEY)
-const BARK_PUSH = '' || process.env.BARK_PUSH;//此处填你BarkAPP的token(api.day.app/后面的内容就是此token).注：github action用户SCKEY填写到Settings-Secrets里面（Name输入BARK_PUSH）
+//此处填你申请的SCKEY.注：github action用户SCKEY填写到Settings-Secrets里面(Name输入PUSH_KEY)
+let SCKEY = '';
 
+//此处填你BarkAPP的信息(IP/设备码，例如：https://api.day.app/XXXXXXXX).注：github action用户SCKEY填写到Settings-Secrets里面（Name输入BARK_PUSH）
+let BARK_PUSH = '';
+
+if (process.env.PUSH_KEY) {
+  SCKEY = process.env.PUSH_KEY;
+}
+if (process.env.BARK_PUSH) {
+  if(process.env.BARK_PUSH.indexOf('https') > -1 || process.env.BARK_PUSH.indexOf('http') > -1) {
+    BARK_PUSH = process.env.BARK_PUSH
+  } else {
+    BARK_PUSH = `https://api.day.app/${process.env.BARK_PUSH}`
+  }
+}
 function sendNotify(text, desp) {
   return  new Promise(resolve => {
     if (SCKEY) {
@@ -40,7 +53,7 @@ function BarkNotify(text, desp) {
   return  new Promise(resolve => {
     if (BARK_PUSH) {
       const options = {
-        url: `https://api.day.app/${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}`,
+        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}`,
       }
       $.get(options, (err, resp, data) => {
         try {
