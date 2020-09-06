@@ -31,8 +31,8 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
-const goodPageSize = $.getdata('jdUnsubscribePageSize') || 10;// 运行一次取消多少个已关注的商品。数字0表示不取关任何商品
-const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 10;// 运行一次取消多少个已关注的店铺。数字0表示不取关任何店铺
+const goodPageSize = $.getdata('jdUnsubscribePageSize') || 0;// 运行一次取消多少个已关注的商品。数字0表示不取关任何商品
+const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 50;// 运行一次取消多少个已关注的店铺。数字0表示不取关任何店铺
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 const stop = $.getdata('jdUnsubscribeStopGoods') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
 const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称

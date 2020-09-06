@@ -6,6 +6,8 @@ name: jd_joy_steal
 on:
   schedule:
     - cron: '0,30 16,21,22 * * *'
+  watch:
+        types: started
 
 jobs:
   build:

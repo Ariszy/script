@@ -6,6 +6,8 @@ name: jd_superMarket
 on:
   schedule:
     - cron: '15 */4 * * *'
+  watch:
+        types: started
 
 jobs:
   build:
