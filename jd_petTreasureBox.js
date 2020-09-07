@@ -43,7 +43,7 @@ body["data"]["lastHourWinInfos"].unshift({
     'food': 0,
     'rank': 0,
     'foodDif': "",
-    'petCoin': '{投} [收] (纯收入)',
+    'petCoin': '{投} [收入] (纯收入)',
     'userTag': "",
     'win': true
 })
