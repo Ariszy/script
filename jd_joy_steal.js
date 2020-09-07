@@ -267,12 +267,15 @@ async function stealFriendCoin(friendPin) {
 }
 //进入好友房间
 function enterFriendRoom(friendPin) {
-  console.log(`\nfriendPin${friendPin}\n`);
-  return new Promise(resolve => {
+  console.log(`\nfriendPin:: ${friendPin}\n`);
+  return new Promise(async resolve => {
+    await $.wait(900);
     $.get(taskUrl('enterFriendRoom', (friendPin)), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+          console.log(`\n${JSON.stringify(err)}`)
+          console.log(`\n${err}\n`)
           throw new Error(err);
         } else {
           // console.log('进入好友房间', JSON.parse(data))
