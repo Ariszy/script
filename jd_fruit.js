@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-09-05
+更新时间:2020-09-08
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -261,7 +261,7 @@ async function doTenWater() {
     }
     if (isFruitFinished) {
       option['open-url'] = "openApp.jdMobile://";
-      $.msg($.name, `【提醒⏰】${$.farmTask.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
+      $.msg($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       $.done();
       if ($.isNode()) {
         await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${UserName}\n\n${$.farmInfo.farmUserPro.name}已可领取`);
@@ -411,7 +411,7 @@ function gotStageAward() {
       await gotStageAwardForFarm('1');
       console.log(`浇水阶段奖励1领取结果 ${JSON.stringify($.gotStageAwardForFarmRes)}`);
       if ($.gotStageAwardForFarmRes.code === '0') {
-        message += `【果树发芽了】奖励${$.gotStageAwardForFarmRes.addEnergy}`
+        message += `【果树发芽了】奖励${$.gotStageAwardForFarmRes.addEnergy}\n`
       }
     } else if ($.waterResult.waterStatus === 1) {
       console.log('果树开花了,奖励40g水滴');
@@ -598,6 +598,8 @@ async function masterHelpShare() {
         console.log(`您当前助力次数已耗尽，跳出助力`);
         break
       }
+    } else {
+      console.log(`助力失败::${JSON.stringify($.helpResult)}`);
     }
   }
   let helpSuccessPeoplesKey = timeFormat() + $.farmInfo.farmUserPro.shareCode;
