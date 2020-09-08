@@ -7,7 +7,7 @@
 // quantumultx
 // [task_local]
 // #京东摇钱树
-// 3 */2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/moneyTree.png, enabled=true
+// 3 */2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js, tag=京东摇钱树, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdyqs.png, enabled=true
 // Loon
 // [Script]
 // cron "3 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js,tag=京东摇钱树

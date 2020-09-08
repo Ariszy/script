@@ -6,7 +6,7 @@
 互助码shareCode请先手动运行脚本查看打印可看到
 // quantumultx
 [task_local]
-1 7-21/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdzd.png, enabled=true
+1 7-21/2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
 // Loon
 [Script]
 cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js,tag=京东种豆得豆

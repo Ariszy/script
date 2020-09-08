@@ -6,7 +6,7 @@
 // quantumultx
 [task_local]
 #东东萌宠
-5 6-18/6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdmc.png, enabled=true
+5 6-18/6 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js, tag=东东萌宠, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdmc.png, enabled=true
 // Loon
 [Script]
 cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js,tag=东东萌宠

@@ -12,7 +12,7 @@ Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
 // quantumultx
 // [task_local]
 // #京东宠汪汪
-// 15 */2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/znz1992/Gallery/master/jdww.png, enabled=true
+// 15 */2 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js, tag=京东宠汪汪, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 // Loon
 // [Script]
 // cron "15 */2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js,tag=京东宠汪汪
