@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-08-29
+更新时间：2020-09-09
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -42,16 +42,26 @@ if ($.isNode()) {
       // 执行
       try {
         await exec("node JD_DailyBonus.js >> result.txt");
+        // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
         console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
         //发送通知
         if ($.isNode()) {
           let content = "";
+          let BarkContent = '';
           if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
+            const barkContentStart = content.indexOf('【签到概览】')
+            const barkContentEnd = content.indexOf("【左滑 '查看' 以显示签到详情】");
+            if (barkContentStart > -1 && barkContentEnd > -1) {
+              BarkContent = content.substring(barkContentStart, barkContentEnd);
+            }
           }
           //由于在github action上面执行，故执行时间是UTC(国际标准时间)，现转换成北京时间
           const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
           console.log(`时间：${beanSignTime}`)
+          if (BarkContent) {
+            await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】：${beanSignTime}\n${BarkContent}`);
+          }
           await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `签到时间-${beanSignTime}\n\n${content}`);
         }
         //运行完成后，删除下载的文件
