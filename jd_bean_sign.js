@@ -51,7 +51,8 @@ if ($.isNode()) {
           if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
             const barkContentStart = content.indexOf('【签到概览】')
-            const barkContentEnd = content.indexOf("【左滑 '查看' 以显示签到详情】");
+            // const barkContentEnd = content.indexOf("【左滑 '查看' 以显示签到详情】");
+            const barkContentEnd = content.length;
             if (barkContentStart > -1 && barkContentEnd > -1) {
               BarkContent = content.substring(barkContentStart, barkContentEnd);
             }
