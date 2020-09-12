@@ -45,6 +45,7 @@ async function jdShop() {
   if (taskData.code === '0') {
     if (!taskData.data.taskList) {
       console.log(`${taskData.data.taskErrorTips}\n`);
+      $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n${taskData.data.taskErrorTips}`);
     } else {
       const { taskList } = taskData.data;
       for (let item of taskList) {
@@ -54,6 +55,7 @@ async function jdShop() {
           await doTask(item.taskId);
         }
       }
+      $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n领成功领取4京豆`);
     }
   }
 }
