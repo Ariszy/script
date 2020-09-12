@@ -495,7 +495,7 @@ function requireConfig() {
 async function request(function_id, body = {}) {
   await $.wait(3000); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
-    $.get(taskurl(function_id, body), (err, resp, data) => {
+    $.get(taskUrl(function_id, body), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n东东萌宠: API查询请求失败 ‼️‼️');
@@ -511,7 +511,7 @@ async function request(function_id, body = {}) {
     })
   })
 }
-function taskurl(function_id, body = {}) {
+function taskUrl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}?functionId=${function_id}&appid=wh5&loginWQBiz=pet-town&body=${escape(JSON.stringify(body))}`,
     headers: {

@@ -1041,6 +1041,7 @@ async function initForFarm() {
       try {
         if (err) {
           console.log('\n东东农场: API查询请求失败 ‼️‼️');
+          console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
           $.farmInfo = JSON.parse(data)
@@ -1180,6 +1181,7 @@ function request(function_id, body = {}, timeout = 1000){
         try {
           if (err) {
             console.log('\n东东农场: API查询请求失败 ‼️‼️')
+            console.log(JSON.stringify(err));
             console.log(`function_id:${function_id}`)
             $.logErr(err);
             // if ($.isNode()) {
