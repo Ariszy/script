@@ -355,7 +355,7 @@ async function doHelp() {
       console.log('跳过自己的plantUuid')
       continue
     }
-    console.log(`开始助力好友: ${plantUuid}`);
+    console.log(`\n开始助力好友: ${plantUuid}`);
     await helpShare(plantUuid);
     if ($.helpResult.code === '0') {
       console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
