@@ -232,7 +232,11 @@
         "jd_plant_bean_name",
         "jd_plantBean1",
         "jd_plantBean2",
-        "jd_plantBean3"
+        "jd_plantBean3",
+        "jd2_plant_bean_name",
+        "jd2_plantBean1",
+        "jd2_plantBean2",
+        "jd2_plantBean3"
       ],
       "settings": [
         {
@@ -244,34 +248,62 @@
         },
         {
           "id": "jd_plant_bean_name",
-          "name": "京东账号昵称",
+          "name": "京东账号一昵称",
           "val": "",
           "type": "text",
           "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
         },
         {
           "id": "jd_plantBean1",
-          "name": "互助码1",
+          "name": "京东账号一互助码1",
           "val": "",
           "type": "text",
           "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         },
         {
           "id": "jd_plantBean2",
-          "name": "互助码2",
+          "name": "京东账号一互助码2",
           "val": "",
           "type": "text",
           "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         },
         {
           "id": "jd_plantBean3",
-          "name": "互助码3",
+          "name": "京东账号一互助码3",
+          "val": "",
+          "type": "text",
+          "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
+        },
+        {
+          "id": "jd2_plant_bean_name",
+          "name": "京东账号二昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号二昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd2_plantBean1",
+          "name": "京东账号二互助码1",
+          "val": "",
+          "type": "text",
+          "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
+        },
+        {
+          "id": "jd2_plantBean2",
+          "name": "京东账号二互助码2",
+          "val": "",
+          "type": "text",
+          "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
+        },
+        {
+          "id": "jd2_plantBean3",
+          "name": "京东账号二互助码3",
           "val": "",
           "type": "text",
           "desc": "种豆得豆互助码.这是别人的助力码,你帮别人助力."
         }
       ],
-      "author": "@uniqueque",
+      "author": "@lxk0301",
       "repo": "https://github.com/lxk0301/scripts",
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_plantBean.js",
       "icons": [
@@ -331,7 +363,7 @@
           ]
         }
       ],
-      "author": "@uniqueque",
+      "author": "@lxk0301",
       "repo": "https://github.com/lxk0301/scripts",
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy.js",
       "icons": [
