@@ -246,7 +246,7 @@ async function doTask() {
           const shopRes = await requestGet('shopNutrientsTask', body);
           console.log(`shopRes结果:${JSON.stringify(shopRes)}`);
           if (shopRes.code === '0') {
-            if (shopRes.data.nutrState === '1') {
+            if (shopRes.data && shopRes.data.nutrState && shopRes.data.nutrState === '1') {
               unFinishedShopNum --;
             }
           }
@@ -332,7 +332,7 @@ async function doTask() {
           const channelRes = await requestGet('plantChannelNutrientsTask', body);
           console.log(`channelRes结果:${JSON.stringify(channelRes)}`);
           if (channelRes.code === '0') {
-            if (channelRes.data.nutrState === '1') {
+            if (channelRes.data && channelRes.data.nutrState && channelRes.data.nutrState === '1') {
               unFinishedChannelNum --;
             }
           }
