@@ -5,7 +5,7 @@ name: jd_plantBean
 
 on:
   schedule:
-    - cron: '1 13-23/1 * * *'
+    - cron: '0 23,0-13/1 * * *'
   watch:
     types: started
 
