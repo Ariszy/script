@@ -65,7 +65,7 @@ async function jdShop() {
       let beanCount = 0;
       for (let item of taskList) {
         if (item.taskStatus === 3) {
-          console.log(`${item.shopName}已拿到京豆`)
+          console.log(`${item.shopName}已拿到2京豆`)
         } else {
           console.log(`taskId::${item.taskId}`)
           const doTaskRes = await doTask(item.taskId);

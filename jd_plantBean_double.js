@@ -1,7 +1,7 @@
 /*
-种豆多账号测试,可能有bug
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_plantBean.js
-更新时间:2020-09-12
+更新时间:2020-09-13
+已支持IOS京东双账号,云端N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 会自动关注任务中的店铺跟商品
 互助码shareCode请先手动运行脚本查看打印可看到
@@ -81,11 +81,11 @@ async function jdPlantBean() {
     await receiveNutrients();//定时领取营养液
     await doHelp();//助力
     await doTask();//做日常任务
-    await showTaskProcess();
     await doEgg();
     await stealFriendWater();
     await doCultureBean();
     await doGetReward();
+    await showTaskProcess();
     await showMsg();
   } else {
     if ($.plantBeanIndexResult.code === '3') {
@@ -146,7 +146,7 @@ async function doCultureBean() {
       //收取营养液
       console.log(`开始收取营养液`)
       for (let bubbleInfo of plantBeanRound.bubbleInfos) {
-        console.log(`收取营养液${bubbleInfo.name}`)
+        console.log(`收取-${bubbleInfo.name}-的营养液`)
         await cultureBean(plantBeanRound.roundId, bubbleInfo.nutrientsType)
         console.log(`收取营养液结果:${JSON.stringify($.cultureBeanRes)}`)
       }
@@ -182,6 +182,7 @@ async function doEgg() {
   if ($.plantEggLotteryRes.code === '0') {
     if ($.plantEggLotteryRes.data.restLotteryNum > 0) {
       const eggL = new Array($.plantEggLotteryRes.data.restLotteryNum).fill('');
+      console.log(`目前共有${eggL.length}次扭蛋的机会`)
       for (let i = 0; i < eggL.length; i++) {
         console.log(`开始第${i + 1}次扭蛋`);
         await plantEggDoLottery();
@@ -203,6 +204,7 @@ async function doTask() {
       }
       if (item.dailyTimes === 1 && item.taskType !== 8) {
         console.log(`\n开始做 ${item.taskName}任务`);
+        // $.receiveNutrientsTaskRes = await receiveNutrientsTask(item.taskType);
         await receiveNutrientsTask(item.taskType);
         console.log(`做 ${item.taskName}任务结果:${JSON.stringify($.receiveNutrientsTaskRes)}\n`);
       }
@@ -215,8 +217,6 @@ async function doTask() {
         }
         await shopTaskList();
         const { data } = $.shopTaskListRes;
-        // console.log('goodShopList', data.goodShopList);
-        // console.log('moreShopList', data.moreShopList);
         let goodShopListARR = [], moreShopListARR = [], shopList = [];
         const { goodShopList, moreShopList } = data;
         for (let i of goodShopList) {
@@ -245,7 +245,7 @@ async function doTask() {
             }
           }
           if (unFinishedShopNum <= 0) {
-            console.log(`${item.taskName}任务已做完`)
+            console.log(`${item.taskName}任务已做完\n`)
             break;
           }
         }
@@ -258,7 +258,7 @@ async function doTask() {
           continue
         }
         await productTaskList();
-        console.log('productTaskList', $.productTaskList);
+        // console.log('productTaskList', $.productTaskList);
         const { data } = $.productTaskList;
         let productListARR = [], productList = [];
         const { productInfoList } = data;
@@ -281,12 +281,14 @@ async function doTask() {
           }
           const productRes = await requestGet('productNutrientsTask', body);
           if (productRes.code === '0') {
-            if (productRes.data.nutrState === '1') {
+            // console.log('nutrState', productRes)
+            //这里添加多重判断,有时候会出现活动太火爆的问题,导致nutrState没有
+            if (productRes.data && productRes.data.nutrState && productRes.data.nutrState === '1') {
               unFinishedProductNum --;
             }
           }
           if (unFinishedProductNum <= 0) {
-            console.log(`${item.taskName}任务已做完`)
+            console.log(`${item.taskName}任务已做完\n`)
             break;
           }
         }
@@ -329,7 +331,7 @@ async function doTask() {
             }
           }
           if (unFinishedChannelNum <= 0) {
-            console.log(`${item.taskName}任务已做完`)
+            console.log(`${item.taskName}任务已做完\n`)
             break;
           }
         }
@@ -337,8 +339,10 @@ async function doTask() {
     }
   }
 }
-async function showTaskProcess() {
-  return new Promise(resolve => {
+function showTaskProcess() {
+  return new Promise(async resolve => {
+    await plantBeanIndex();
+    $.taskList = $.plantBeanIndexResult.data.taskList;
     if ($.taskList && $.taskList.length > 0) {
       console.log("     任务   进度");
       for (let item of $.taskList) {
@@ -352,16 +356,25 @@ async function showTaskProcess() {
 async function doHelp() {
   for (let plantUuid of newShareCodes) {
     if (plantUuid === $.myPlantUuid) {
-      console.log('跳过自己的plantUuid')
+      console.log(`\n跳过自己的plantUuid\n`)
       continue
     }
     console.log(`\n开始助力好友: ${plantUuid}`);
     await helpShare(plantUuid);
     if ($.helpResult.code === '0') {
-      console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
-      if ($.helpResult.data.helpShareRes && $.helpResult.data.helpShareRes.state === '2') {
-        console.log('今日助力机会已耗尽，跳出助力');
-        break;
+      // console.log(`助力好友结果: ${JSON.stringify($.helpResult.data.helpShareRes)}`);
+      if ($.helpResult.data.helpShareRes) {
+        if ($.helpResult.data.helpShareRes.state === '1') {
+          console.log(`助力好友${plantUuid}成功`)
+          console.log(`${$.helpResult.data.helpShareRes.promptText}\n`);
+        } else if ($.helpResult.data.helpShareRes.state === '2') {
+          console.log('您今日助力的机会已耗尽，已不能再帮助好友助力了\n');
+          break;
+        } else if ($.helpResult.data.helpShareRes.state === '3') {
+          console.log('该好友今日已满20人助力,明天再来为Ta助力吧\n')
+        } else if ($.helpResult.data.helpShareRes.state === '4') {
+          console.log(`${$.helpResult.data.helpShareRes.promptText}\n`)
+        }
       }
     } else {
       console.log(`助力好友失败: ${JSON.stringify($.helpResult)}`);
@@ -402,7 +415,7 @@ async function stealFriendList() {
 //②执行偷好友营养液的动作
 async function collectUserNutr(paradiseUuid) {
   console.log('开始偷好友');
-  console.log(paradiseUuid);
+  // console.log(paradiseUuid);
   let functionId = arguments.callee.name.toString();
   const body = {
     "paradiseUuid": paradiseUuid,
@@ -412,7 +425,7 @@ async function collectUserNutr(paradiseUuid) {
 }
 async function receiveNutrients() {
   $.receiveNutrientsRes = await request('receiveNutrients', {"roundId": currentRoundId, "monitor_refer": "plant_receiveNutrients"})
-  console.log(`定时领取营养液结果:${JSON.stringify($.receiveNutrientsRes)}`)
+  // console.log(`定时领取营养液结果:${JSON.stringify($.receiveNutrientsRes)}`)
 }
 async function plantEggDoLottery() {
   $.plantEggDoLotteryResult = await requestGet('plantEggDoLottery');
@@ -428,7 +441,7 @@ async function productTaskList() {
 async function plantChannelTaskList() {
   let functionId = arguments.callee.name.toString();
   $.plantChannelTaskList = await requestGet(functionId);
-  console.log('$.plantChannelTaskList', $.plantChannelTaskList)
+  // console.log('$.plantChannelTaskList', $.plantChannelTaskList)
 }
 async function shopTaskList() {
   let functionId = arguments.callee.name.toString();
@@ -439,43 +452,9 @@ async function receiveNutrientsTask(awardType) {
   const functionId = arguments.callee.name.toString();
   const body = {
     "monitor_refer": "receiveNutrientsTask",
-    "awardType": `"${awardType}"`,
+    "awardType": `${awardType}`,
   }
-  // TODO
-  // requestGet(`https://api.m.jd.com/client.action?functionId=receiveNutrientsTask&body=%7B%22awardType%22%3A%22${awardType}%22%2C%22monitor_source%22%3A%22plant_m_plant_index%22%2C%22monitor_refer%22%3A%22plant_receiveNutrientsTask%22%2C%22version%22%3A%228.4.0.0%22%7D&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`)
   $.receiveNutrientsTaskRes = await requestGet(functionId, body);
-  console.log('------', $.receiveNutrientsTaskRes)
-  // return new Promise(async resolve => {
-  //   await $.wait(1000);
-  //   const option = {
-  //     url: `https://api.m.jd.com/client.action?functionId=receiveNutrientsTask&body=%7B%22awardType%22%3A%22${awardType}%22%2C%22monitor_source%22%3A%22plant_m_plant_index%22%2C%22monitor_refer%22%3A%22plant_receiveNutrientsTask%22%2C%22version%22%3A%228.4.0.0%22%7D&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
-  //     headers: {
-  //       'Cookie': cookie,
-  //       'Host': 'api.m.jd.com',
-  //       'Accept': '*/*',
-  //       'Connection': 'keep-alive',
-  //       'User-Agent': 'JD4iPhone/167283 (iPhone;iOS 13.6.1;Scale/3.00)',
-  //       'Accept-Language': 'zh-Hans-CN;q=1,en-CN;q=0.9',
-  //       'Accept-Encoding': 'gzip, deflate, br',
-  //       'Content-Type': "application/x-www-form-urlencoded"
-  //     }
-  //   };
-  //   $.get(option, (err, resp, data) => {
-  //     try {
-  //       if (err) {
-  //         console.log('\n种豆得豆: API查询请求失败 ‼️‼️')
-  //         $.logErr(err);
-  //       } else {
-  //         data = JSON.parse(data);
-  //         console.log('data', data);
-  //       }
-  //     } catch (e) {
-  //       $.logErr(e, resp);
-  //     } finally {
-  //       resolve(data);
-  //     }
-  //   })
-  // })
 }
 //助力好友的api
 async function helpShare(plantUuid) {
@@ -571,9 +550,9 @@ function requestGet(function_id, body = {}) {
     body["version"] = "9.0.0.1";
   }
   body["monitor_source"] = "plant_app_plant_index";
-  // body["monitor_refer"] = "";
+  body["monitor_refer"] = "";
   return new Promise(async resolve => {
-    await $.wait(1000);
+    await $.wait(2000);
     const option = {
       url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld`,
       headers: {
@@ -624,12 +603,10 @@ function request(function_id, body = {}){
   })
 }
 function taskUrl(function_id, body) {
-  // console.log(`${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`)
   body["version"] = "9.0.0.1";
   body["monitor_source"] = "plant_app_plant_index";
   body["monitor_refer"] = "";
   return {
-    // url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&clientVersion=&networkType=&osVersion=&uuid=`,
     url: JD_API_HOST,
     body: `functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=ld&client=apple&area=5_274_49707_49973&build=167283&clientVersion=9.1.0`,
     headers: {
