@@ -201,6 +201,12 @@ async function doTask() {
       if (item.isFinished === 1) {
         console.log(`${item.taskName} 任务已完成\n`);
         continue;
+      } else {
+        if (item.taskType === 8) {
+          console.log(`\n【${item.taskName}】任务未完成,需自行手动去京东APP完成，${item.desc}营养液\n`)
+        } else {
+          console.log(`\n【${item.taskName}】任务未完成,${item.desc}营养液\n`)
+        }
       }
       if (item.dailyTimes === 1 && item.taskType !== 8) {
         console.log(`\n开始做 ${item.taskName}任务`);
