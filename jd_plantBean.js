@@ -380,6 +380,8 @@ async function doHelp() {
           console.log('该好友今日已满20人助力,明天再来为Ta助力吧\n')
         } else if ($.helpResult.data.helpShareRes.state === '4') {
           console.log(`${$.helpResult.data.helpShareRes.promptText}\n`)
+        } else {
+          console.log(`助力其他情况：${JSON.stringify($.helpResult.data.helpShareRes)}`);
         }
       }
     } else {

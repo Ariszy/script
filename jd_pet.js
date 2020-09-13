@@ -249,6 +249,8 @@ async function slaveHelp() {
       } else if (response.result.helpStatus === 2) {
         //该好友已满5人助力，无需您再次助力
         console.log(`该好友${response.result.masterNickName}已满5人助力，无需您再次助力`);
+      } else {
+        console.log(`助力其他情况：${JSON.stringify(response)}`);
       }
     } else {
       console.log(`助理好友结果: ${response.message}`);
@@ -288,7 +290,11 @@ async function signInit() {
   console.log('准备每日签到');
   const response = await request("getSignReward");
   console.log(`每日签到结果: ${JSON.stringify(response)}`);
-  message += `【每日签到成功】奖励${response.result.signReward}g狗粮\n`;
+  if (response.code === '0' && response.resultCode === '0') {
+    message += `【每日签到成功】奖励${response.result.signReward}g狗粮\n`;
+  } else {
+    message += `【每日签到】${response.message}\n`;
+  }
 }
 
 // 三餐签到, 每天三段签到时间
