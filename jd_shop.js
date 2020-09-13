@@ -1,3 +1,18 @@
+/**
+ 进店领豆(京东APP首页-领京豆-进店领豆),每天可拿四京豆
+ 更新时间:2020-09-08
+ 已支持IOS双京东账号,Node.js支持N个京东账号
+ 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+ // quantumultx
+ [task_local]
+ #进店领豆
+ 10 0 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_shop.js, tag=进店领豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_shop.png, enabled=true
+ //Loon
+ [Script]
+ cron "10 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_shop.js,tag=进店领豆
+ //Surge
+ 进店领豆 = type=cron,cronexp="10 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_shop.js
+* */
 const $ = new Env('进店领豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -30,7 +45,6 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       message = '';
       subTitle = '';
       await jdShop();
-      // await joinTwoPeopleRun();
     }
   }
 })()
@@ -48,22 +62,28 @@ async function jdShop() {
       $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n${taskData.data.taskErrorTips}`);
     } else {
       const { taskList } = taskData.data;
+      let beanCount = 0;
       for (let item of taskList) {
-        if (item.taskStatus == 3) {
-          console.log(`${item.taskId}已拿到京豆`)
+        if (item.taskStatus === 3) {
+          console.log(`${item.shopName}已拿到京豆`)
         } else {
-          await doTask(item.taskId);
+          console.log(`taskId::${item.taskId}`)
+          const doTaskRes = await doTask(item.taskId);
+          if (doTaskRes.code === '0') {
+            beanCount = + 2;
+          }
         }
       }
-      $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n领成功领取4京豆`);
+      if (beanCount > 0) {
+        $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n成功领取${beanCount}京豆`);
+      }
     }
   }
 }
 function doTask(taskId) {
+  console.log(`doTask-taskId::${taskId}`)
   return new Promise(resolve => {
-    const body = {
-      'taskId': taskId
-    }
+    const body = { taskId };
     const options = {
       url: `${JD_API_HOST}`,
       body: `functionId=takeTask&body=${escape(JSON.stringify(body))}&appid=ld`,
@@ -80,7 +100,7 @@ function doTask(taskId) {
           console.log('\n进店领豆: API查询请求失败 ‼️‼️')
           $.logErr(err);
         } else {
-          console.log(data)
+          // console.log(data)
           data = JSON.parse(data);
         }
       } catch (e) {
@@ -109,7 +129,7 @@ function getTask(body = {}) {
          console.log('\n进店领豆: API查询请求失败 ‼️‼️')
          $.logErr(err);
        } else {
-         console.log(data)
+         // console.log(data)
          data = JSON.parse(data);
        }
      } catch (e) {
