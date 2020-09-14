@@ -62,7 +62,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
 function showMsg() {
   $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
+    $.msg($.name, subTitle, `【京东账号${$.index}】${UserName}\n` + message);
   }
 }
 function feedPets(feedNum) {
