@@ -31,3 +31,5 @@ jobs:
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           PLANT_BEAN_SHARECODES: ${{ secrets.PLANT_BEAN_SHARECODES }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_USER_ID: ${{ secrets.TG_USER_ID }}

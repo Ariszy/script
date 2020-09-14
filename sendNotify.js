@@ -57,7 +57,7 @@ function sendNotify(text, desp) {
     } else if (TG_BOT_TOKEN && TG_USER_ID) {
       const options = {
         url: `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,
-        body: `chat_id=${TG_USER_ID}&text=${text}`,
+        body: `chat_id=${TG_USER_ID}&text=${text}\n\n${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
