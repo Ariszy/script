@@ -9,6 +9,9 @@ let CookieJDs = [
 // 判断github action里面是否有京东ck
 if (process.env.JD_COOKIE && process.env.JD_COOKIE.split('&') && process.env.JD_COOKIE.split('&').length > 0) {
   CookieJDs = process.env.JD_COOKIE.split('&');
+  console.log(`\n==================脚本执行来自 github action=====================\n`)
+  console.log(`==================脚本执行-国际标准时间：${new Date().toLocaleString()}=====================\n`)
+  console.log(`==================脚本执行-北京时间：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=====================\n`)
 }
 for (let i = 0; i < CookieJDs.length; i++) {
   const index = (i + 1 === 1) ? '' : (i + 1);
