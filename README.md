@@ -13,10 +13,11 @@
 9.  京小超([jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js))
 10. 京小超领蓝币(兑换京豆)([jd_blueCoin.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js))
 11. 宠汪汪偷好友狗粮与积分([jd_joy_steal.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js))
+12. 进店领豆([jd_shop.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_shop.js))
 
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), JSBox, Node.js**
 
-**目前可多账号的脚本：东东水果，东东萌宠，宠汪汪，天天加速，摇钱树，取关京东店铺和商品，京小超，京小超领蓝币，宠汪汪偷好友狗粮与积分**
+**目前可多账号的脚本：东东水果，东东萌宠，种豆得豆，宠汪汪，天天加速，摇钱树，取关京东店铺和商品，京小超，京小超领蓝币，宠汪汪偷好友狗粮与积分，进店领豆**
 
 ## 食用方法
 
