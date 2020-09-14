@@ -69,7 +69,7 @@ async function jd_moneyTree() {
   console.log(`运行脚本次数和设置的次数是否相等::${($.getdata($.treeMsgTime) * 1) === Notice}`);
   console.log(`box订阅静默运行-是否打开::${jdNotify || jdNotify === 'true'}`);
   console.log(`是否弹窗通知::${(($.getdata($.treeMsgTime) * 1) === Notice) && (!jdNotify || jdNotify === 'false')}`);
-
+  $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
     if (($.getdata($.treeMsgTime) * 1) === Notice) {
       $.msg($.name, subTitle, message);

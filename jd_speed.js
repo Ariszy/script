@@ -50,11 +50,7 @@ const JD_API_HOST = 'https://api.m.jd.com/'
       message = '';
       subTitle = '';
       await jDSpeedUp();
-      if ($.isLogin) {
-        if (!jdNotify || jdNotify === 'false') {
-          $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
-        }
-      }
+      await showMsg();
     }
   }
 })()
@@ -64,7 +60,14 @@ const JD_API_HOST = 'https://api.m.jd.com/'
     .finally(() => {
       $.done();
     })
-
+function showMsg() {
+  if ($.isLogin) {
+    $.log(`\n${message}\n`);
+    if (!jdNotify || jdNotify === 'false') {
+      $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
+    }
+  }
+}
 function jDSpeedUp(sourceId, doubleKey) {
   return new Promise((resolve) => {
     let body = {"source": "game"};

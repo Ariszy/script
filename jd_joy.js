@@ -594,6 +594,7 @@ function receiveJoyRunAward() {
   })
 }
 function showMsg() {
+  $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle, message);
   }

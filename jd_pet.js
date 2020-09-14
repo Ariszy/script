@@ -409,6 +409,7 @@ async function feedReachInit() {
   console.log('投食任务结束...\n');
 }
 async function showMsg() {
+  $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle, message, option);
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');

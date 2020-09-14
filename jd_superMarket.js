@@ -64,6 +64,10 @@ async function jdSuperMarket(DoubleKey) {
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
   await smtgHome();
+  await showMsg();
+}
+function showMsg() {
+  $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle ,`【京东账号${$.index}】${UserName}\n${message}`);
   }

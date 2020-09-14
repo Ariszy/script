@@ -70,11 +70,14 @@ async function jdUnsubscribe(doubleKey) {
     getFollowShops(),
     getFollowGoods()
   ])
+  await showMsg();
+}
+function showMsg() {
+  $.log(`\n【京东账号${$.index}】${UserName}\\n【已取消关注店铺】${$.unsubscribeShopsCount}个\\n【已取消关注商品】${$.unsubscribeGoodsCount}个\\n【还剩关注店铺】${$.shopsTotalNum}个\\n【还剩关注商品】${$.goodsTotalNum}个\\n`);
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
 }
-
 function unsubscribeGoods(doubleKey) {
   return new Promise(async (resolve) => {
     let followGoods = await getFollowGoods();
