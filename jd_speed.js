@@ -64,7 +64,7 @@ function showMsg() {
   if ($.isLogin) {
     $.log(`\n${message}\n`);
     if (!jdNotify || jdNotify === 'false') {
-      $.msg($.name, subTitle, `【京东账号${i + 1}】${UserName}\n` + message);
+      $.msg($.name, subTitle, `【京东账号${$.index}】${UserName}\n` + message);
     }
   }
 }
