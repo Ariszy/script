@@ -1,6 +1,6 @@
 /**
  进店领豆(京东APP首页-领京豆-进店领豆),每天可拿四京豆
- 更新时间:2020-09-08
+ 更新时间:2020-09-14
  已支持IOS双京东账号,Node.js支持N个京东账号
  脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
  // quantumultx
@@ -65,25 +65,46 @@ async function jdShop() {
       let beanCount = 0;
       for (let item of taskList) {
         if (item.taskStatus === 3) {
-          console.log(`${item.shopName}已拿到2京豆`)
+          console.log(`${item.shopName} 已拿到2京豆\n`)
         } else {
           console.log(`taskId::${item.taskId}`)
           const doTaskRes = await doTask(item.taskId);
           if (doTaskRes.code === '0') {
-            beanCount = + 2;
+            beanCount += 2;
           }
         }
       }
+      console.log(`beanCount::${beanCount}`);
       if (beanCount > 0) {
         $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n成功领取${beanCount}京豆`);
+        if ($.isNode()) {
+          await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n\n成功领取${beanCount}京豆`);
+        }
+        if ($.isNode()) {
+          await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
+        }
       }
+    }
+  } else if (taskData.code === '3') {
+    //cookie过期
+    $.msg($.name, '【提示】京东cookie已失效,请重新登录获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    if ($.index === 1) {
+      $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+    } else if ($.index === 2){
+      $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+    }
+    if ($.isNode()) {
+      await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
+    }
+    if ($.isNode()) {
+      await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
     }
   }
 }
 function doTask(taskId) {
   console.log(`doTask-taskId::${taskId}`)
   return new Promise(resolve => {
-    const body = { taskId };
+    const body = { 'taskId': `${taskId}` };
     const options = {
       url: `${JD_API_HOST}`,
       body: `functionId=takeTask&body=${escape(JSON.stringify(body))}&appid=ld`,
