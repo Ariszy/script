@@ -119,7 +119,7 @@ async function doGetReward() {
     if ($.getReward.code === '0') {
       console.log('京豆领取成功');
       message += `【上期兑换京豆】${$.getReward.data.awardBean}个\n`;
-      $.msg(name, subTitle, message);
+      $.msg($.name, subTitle, message);
       if ($.isNode()) {
         const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
         await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n\n${notifyMessage}`);
