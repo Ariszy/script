@@ -5,7 +5,7 @@ name: jd_joy_reward
 
 on:
   schedule:
-    - cron: '0 */1 * * *'
+    - cron: '0 0,4,8,16 * * *'
   watch:
     types: started
 
