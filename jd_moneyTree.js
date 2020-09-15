@@ -129,11 +129,11 @@ function user_info() {
                 $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
               }
               if ($.isNode()) {
-                await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
+                await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
               }
-              if ($.isNode()) {
-                await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-              }
+              // if ($.isNode()) {
+              //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+              // }
             }
           }
         }

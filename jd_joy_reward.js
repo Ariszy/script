@@ -92,11 +92,11 @@ async function joyReward() {
               console.log(`兑换${giftName}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
               $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
               if ($.isNode()) {
-                await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n\n【兑换${giftName}】成功\n\n【宠物等级】${data.level}\n\n【消耗积分】${salePrice}分\n\n【当前剩余】${data.coin - salePrice}积分\n\n`);
+                await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
               }
-              if ($.isNode()) {
-                await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
-              }
+              // if ($.isNode()) {
+              //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
+              // }
             } else if (exchangeRes.errorCode === 'buy_limit') {
               console.log('兑换失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~')
               //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)

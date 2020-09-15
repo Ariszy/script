@@ -159,11 +159,11 @@ function ThreeMeals() {
             }
             console.log(`${data.errorMessage}`)
             if ($.isNode()) {
-              await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
+              await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
             }
-            if ($.isNode()) {
-              await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-            }
+            // if ($.isNode()) {
+            //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+            // }
           }
         }
       } catch (e) {

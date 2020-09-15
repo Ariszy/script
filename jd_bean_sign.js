@@ -61,9 +61,9 @@ if ($.isNode()) {
           const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
           console.log(`时间：${beanSignTime}`)
           if (BarkContent) {
-            await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
-            BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
-            await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】:  ${beanSignTime}\n\n${BarkContent}`);
+            // await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
+            // BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
+            await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】:  ${beanSignTime}\n${BarkContent}`);
           }
         }
         //运行完成后，删除下载的文件

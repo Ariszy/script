@@ -97,11 +97,11 @@ async function jdPlantBean() {
         $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
       }
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
+        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
       }
-      if ($.isNode()) {
-        await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-      }
+      // if ($.isNode()) {
+      //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+      // }
     } else {
       console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
     }
@@ -122,11 +122,11 @@ async function doGetReward() {
       $.msg($.name, subTitle, message);
       if ($.isNode()) {
         const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
-        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n\n${notifyMessage}`);
+        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${notifyMessage}`);
       }
-      if ($.isNode()) {
-        await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${message}`);
-      }
+      // if ($.isNode()) {
+      //   await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${message}`);
+      // }
     }
   } else if (awardState === '6') {
     //京豆已领取

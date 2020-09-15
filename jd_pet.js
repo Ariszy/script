@@ -89,11 +89,11 @@ async function jdPet() {
       option['open-url'] = "openApp.jdMobile://";
       $.msg($.name, `【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取`, '请去京东APP或微信小程序查看', option);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}奖品已可领取`, `京东账号${$.index} ${UserName}\n\n${$.petInfo.goodsInfo.goodsName}已可领取`);
+        await notify.sendNotify(`${$.name}奖品已可领取`, `京东账号${$.index} ${UserName}\n${$.petInfo.goodsInfo.goodsName}已可领取`);
       }
-      if ($.isNode()) {
-        await notify.BarkNotify(`【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取`, `请去京东APP或微信小程序查看`);
-      }
+      // if ($.isNode()) {
+      //   await notify.BarkNotify(`【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取`, `请去京东APP或微信小程序查看`);
+      // }
       return
     }
     console.log(`\n【您的互助码shareCode】 ${$.petInfo.shareCode}\n`);
@@ -121,11 +121,11 @@ async function jdPet() {
         $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
       }
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
+        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
       }
-      if ($.isNode()) {
-        await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-      }
+      // if ($.isNode()) {
+      //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+      // }
     } else {
       console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
     }
@@ -415,11 +415,11 @@ async function showMsg() {
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
     if (jdServerNotify) {
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n\n${notifyMessage}`);
+        await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n${message}`);
       }
-      if ($.isNode()) {
-        await notify.BarkNotify(`${$.name}`, `${subTitle}\n${message}`);
-      }
+      // if ($.isNode()) {
+      //   await notify.BarkNotify(`${$.name}`, `${subTitle}\n${message}`);
+      // }
     }
   }
 }
