@@ -6,9 +6,9 @@ let SCKEY = '';
 let BARK_PUSH = '';
 
 //此处填你telegram bot 的Token，例如：1077xxx4424:AAFjv0FcqxxxxxxgEMGfi22B4yh15R5uw
-let TG_BOT_TOKEN = '';
+let TG_BOT_TOKEN = '567873999:AAGNON4Fqoanj7HoCLLKcRqmfMXE_OB-0UE';
 //此处填你接收通知消息的telegram用户的id，例如：129xxx206
-let TG_USER_ID = '';
+let TG_USER_ID = '256213709';
 
 if (process.env.PUSH_KEY) {
   SCKEY = process.env.PUSH_KEY;
@@ -65,7 +65,7 @@ function sendNotify(text, desp) {
       $.post(options, (err, resp, data) => {
         try {
           if (err) {
-            console.log('发送通知消息失败！！')
+            console.log('telegram发送通知消息失败！！')
           } else {
             data = JSON.parse(data);
             if (data.ok) {
