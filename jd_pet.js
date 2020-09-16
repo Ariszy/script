@@ -410,7 +410,12 @@ async function feedReachInit() {
 }
 async function showMsg() {
   $.log(`\n${message}\n`);
-  jdNotify = `${notify.petNotifyControl}` === 'false' && `${jdNotify}` === 'false' && $.getdata('jdPetNotify') === 'false';
+  if ($.isNode()) {
+    jdNotify = `${notify.petNotifyControl}` === 'false' && `${jdNotify}` === 'false';
+  } else {
+    jdNotify = `${jdNotify}` === 'false' && $.getdata('jdPetNotify') === 'false';
+  }
+  // jdNotify = `${notify.petNotifyControl}` === 'false' && `${jdNotify}` === 'false' && $.getdata('jdPetNotify') === 'false';
   if (jdNotify) {
     $.msg($.name, subTitle, message, option);
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
