@@ -1079,13 +1079,16 @@ async function waterFriendForFarm(shareCode) {
 }
 async function showMsg() {
   $.log(`\n${message}\n`);
+  let ctrTemp;
   if ($.isNode()) {
-    jdNotify = `${notify.fruitNotifyControl}` === 'false' && `${jdNotify}` === 'false'
+    ctrTemp = `${notify.fruitNotifyControl}` === 'false' && `${jdNotify}` === 'false'
+  } else if ($.getdata('jdFruitNotify')) {
+    ctrTemp = $.getdata('jdFruitNotify') === 'false';
   } else {
-    jdNotify = `${jdNotify}` === 'false' && $.getdata('jdFruitNotify') === 'false';
+    ctrTemp = `${jdNotify}` === 'false';
   }
   // jdNotify = `${notify.fruitNotifyControl}` === 'false' && `${jdNotify}` === 'false' && $.getdata('jdFruitNotify') === 'false';
-  if (jdNotify) {
+  if (ctrTemp) {
     $.msg($.name, subTitle, message, option);
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
     if (jdServerNotify) {
