@@ -5,7 +5,7 @@ name: jd_joy
 
 on:
   schedule:
-    - cron: '0 4-22/6 * * *'
+    - cron: '0 0,1,4,10,15,16 * * *'
   watch:
     types: started
 
