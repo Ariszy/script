@@ -104,13 +104,13 @@ async function invite(invite_pins) {
         console.log(`您的邀请助力机会已耗尽\n`)
         break;
       } else if (helpStatus=== 'cannot_help') {
-        console.log(`已给该好友助力过了\n`)
+        console.log(`已给该好友 ${item} 助力过或者此friendPin是你自己\n`)
         continue;
       } else if (helpStatus=== 'invite_full') {
-        console.log(`该好友已经满3人给他助力了\n`)
+        console.log(`该好友 ${item} 已经满3人给他助力了\n`)
         continue;
       } else if (helpStatus=== 'can_help') {
-        console.log(`开始给好友助力\n`)
+        console.log(`开始给好友 ${item} 助力\n`)
         const LKYL_DATA = await helpInviteFriend(item);
         if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
           console.log('来客有礼宠汪汪token失效');
@@ -213,6 +213,7 @@ async function run(run_pins) {
       console.log('您的赛跑助力机会已耗尽');
       break;
     } else if (petRaceResult === 'can_help') {
+      console.log(`开始赛跑助力好友 ${item}`)
       await combatHelp(item);
     }
   }
