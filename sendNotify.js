@@ -6,6 +6,9 @@ let SCKEY = '';
 //此处填你BarkAPP的信息(IP/设备码，例如：https://api.day.app/XXXXXXXX)
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入BARK_PUSH）
 let BARK_PUSH = '';
+//BARK app推送铃声,铃声列表去APP查看复制填写
+//注：此处设置github action用户填写到Settings-Secrets里面（Name输入BARK_SOUND , Value输入app提供的铃声名称，例如:birdsong）
+let BARK_SOUND = '';
 
 //此处填你telegram bot 的Token，例如：1077xxx4424:AAFjv0FcqxxxxxxgEMGfi22B4yh15R5uw
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_BOT_TOKEN)
@@ -31,6 +34,9 @@ if (process.env.BARK_PUSH) {
     BARK_PUSH = process.env.BARK_PUSH
   } else {
     BARK_PUSH = `https://api.day.app/${process.env.BARK_PUSH}`
+  }
+  if (process.env.BARK_SOUND) {
+    BARK_SOUND = process.env.BARK_SOUND
   }
 }
 if (process.env.TG_BOT_TOKEN) {
@@ -94,7 +100,7 @@ function BarkNotify(text, desp) {
   return  new Promise(resolve => {
     if (BARK_PUSH) {
       const options = {
-        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}`,
+        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}`,
       }
       $.get(options, (err, resp, data) => {
         try {

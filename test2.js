@@ -12,10 +12,11 @@ const $ = new Env('京东宠汪汪test');
 let cookie = process.env.JD_COOKIE;
 // const cookie2 = jdCookieNode.CookieJD2 ? jdCookieNode.CookieJD2 : $.getdata('CookieJD2');
 !(async () => {
-  if (!cookie) {
-    $.msg('【京东账号一】', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-  }
-  await jdUnsubscribe();
+  // if (!cookie) {
+  //   $.msg('【京东账号一】', '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+  // }
+  // await jdUnsubscribe();
+  await receivePetTreasureBoxReward();
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -24,21 +25,24 @@ let cookie = process.env.JD_COOKIE;
       $.done();
     })
 function jdUnsubscribe() {
-  const body = JSON.stringify({"taskType":"ViewVideo","reqSource":"weapp"});
   return new Promise(resolve => {
     const option =  {
-      url: `https://draw.jdfcloud.com//pet/scan`,
-      body: body,
+      url: `https://api.m.jd.com/client.action?functionId=initForFarm`,
+      body: `body=${escape({"version":4})}&appid=wh5&clientVersion=9.1.0`,
       headers: {
-        'Cookie': cookie,
-        "Host": "draw.jdfcloud.com",
-        "Connection": "keep-alive",
-        "Content-Length": "44",
-        "Content-Type": "application/json",
-        "reqSource": "weapp",
-        "Accept-Encoding": "gzip,compress,br,deflate",
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.14(0x17000e2b) NetType/4G Language/zh_CN",
-        "Referer": "https://servicewechat.com/wxccb5c536b0ecd1bf/617/page-frame.html"
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "zh-CN,zh;q=0.9",
+        "cache-control": "no-cache",
+        "cookie": "pt_key=AAJfKpaxAEBdRN4DgKrh9lhxAp2lqzyZY2hipLPYCe-mISz4Nyq14IoNCVBXhUEhEuPVJ9D0KkfDjqln4heol2dt6cdt7efp;pt_pin=%E8%A2%AB%E6%8A%98%E5%8F%A0%E7%9A%84%E8%AE%B0%E5%BF%8633;",
+        "origin": "https://home.m.jd.com",
+        "pragma": "no-cache",
+        "referer": "https://home.m.jd.com/myJd/newhome.action",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-site",
+        "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1",
+        "Content-Type": "application/x-www-form-urlencoded"
       }
     };
     $.post(option, (err, resp, data) => {
@@ -47,14 +51,51 @@ function jdUnsubscribe() {
         if (err) {
           console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
         } else {
-          console.log('--data--', data);
-          console.log(`--data--${JSON.stringify(data)}`);
+          // console.log('--data--', data);
+          // console.log(`--data--${JSON.stringify(data)}`);
           data = JSON.parse(data);
+          console.log('--data--', data);
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
         resolve(data);
+      }
+    })
+  })
+}
+//领取聚宝盆积分API
+function receivePetTreasureBoxReward() {
+  return new Promise(resolve => {
+    const options = {
+      url: `https://jdjoy.jd.com/pet/receivePetTreasureBoxReward?type=hour`,
+      headers: {
+        "Accept": "*/*",
+        "Cookie": `pt_key=AAJfM3LVADDm6sKvImWEGiLbVEOzQPT1X73ZFH2CaSGl0byvAkdqPQAZ7LHvvHZUbaZfwCwvJWo;pt_pin=jd_704a2e5e28a66;`,
+        "Content-Type": "application/json",
+        "Referer": "https://jdjoy.jd.com/pet/index",
+        "Host": "jdjoy.jd.com",
+        "User-Agent": "jdapp;iPhone;9.1.0;13.5.1;1449975c49aad55bdeea32b71707a3729ed650fb;network/4g;ADID/1C353379-6987-438A-92AD-C93A5F986DB4;supportApplePay/1;hasUPPay/1;pushNoticeIsOpen/0;model/iPhone8,1;addressid/138571211;hasOCPay/0;appBuild/167348;supportBestPay/0;jdSupportDarkMode/0;pv/1042.4;apprpd/MyJD_GameMain;ref/MyJdGameEnterPageController;psq/3;ads/;psn/1449975c49aad55bdeea32b71707a3729ed650fb|1709;jdv/0|kong|t_1001777500_|jingfen|f88dd5fd72814b40b85b3438f7ebe256|1598494505889|1598494511;adk/;app_device/IOS;pap/JA2015_311210|9.1.0|IOS 13.5.1;Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+        "reqSource": "h5",
+        "Accept-Language": "zh-cn",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.get(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          // console.log('JSON.parse(data)', JSON.parse(data))
+          data = JSON.parse(data);
+          if (data.success) {
+            console.log('积分领取成功')
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve();
       }
     })
   })
