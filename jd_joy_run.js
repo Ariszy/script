@@ -59,8 +59,8 @@ async function main() {
   const invite_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
   const run_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
   // $.LKYLToken = '34099ab699acc383195f0063156ff60e' || $.getdata('jdJoyRun');
-  $.LKYLToken = '553b82bd28b4e32e6d02b64de1ec2920' || $.getdata('jdJoyRun');
-  //console.log($.getdata('jdJoyRun'))
+  $.LKYLToken = $.getdata('jdJoyRun');
+  console.log($.getdata('jdJoyRun'))
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
