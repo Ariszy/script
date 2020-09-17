@@ -50,7 +50,11 @@ function getToken() {
   const body = JSON.parse($response.body);
   const token = body.data.token;
   $.log(`${$.name}token\n${token}\n`)
-  $.msg($.name, '宠汪汪token获取成功', token);
+  if ($.getdata('jdJoyRun')) {
+    $.msg($.name, 'token更新成功', token);
+  } else {
+    $.msg($.name, 'token获取成功', token);
+  }
   $.setdata(token, 'jdJoyRun');
   // $done({});
   $.done({ body: JSON.stringify(body) })
@@ -95,6 +99,7 @@ async function invite(invite_pins) {
     const data = await enterRoom(item);
     if (!data.success && data.errorCode === 'B0001') {
       console.log('京东Cookie失效');
+      $.msg($.name, `【提示】京东cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
       $.jdLogin = false;
       break
     } else {
@@ -115,6 +120,7 @@ async function invite(invite_pins) {
         if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
           console.log('来客有礼宠汪汪token失效');
           $.setdata('', 'jdJoyRun');
+          $.msg($.name, '【提示】来客有礼token失效，请重新获取', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token")
           $.LKYLLogin = false;
           break
         } else {
