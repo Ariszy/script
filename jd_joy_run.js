@@ -132,7 +132,7 @@ async function main() {
 async function invite(invite_pins) {
   console.log(`账号${$.index} [${UserName}] 给下面名单的人进行邀请助力\n${(invite_pins)}\n`);
   for (let item of invite_pins) {
-    console.log(`\n邀请助力 friendPin ${item}`)
+    console.log(`\n开始给好友 [${item}] 进行邀请助力`)
     const data = await enterRoom(item);
     if (!data.success && data.errorCode === 'B0001') {
       console.log('京东Cookie失效');
@@ -223,7 +223,7 @@ function helpInviteFriend(friendPin) {
 async function run(run_pins) {
   console.log(`账号${$.index} [${UserName}] 给下面名单的人进行赛跑助力\n${(invite_pins)}\n`);
   for (let item of run_pins) {
-    console.log(`\n赛跑助力 friendPin ${item}`)
+    console.log(`\n开始给好友 [${item}] 进行赛跑助力`)
     const combatDetailRes = await combatDetail(item);
     const { petRaceResult } = combatDetailRes.data;
     console.log(`petRaceResult ${petRaceResult}`);
