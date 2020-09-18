@@ -33,7 +33,7 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 const invite_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58'];
 //给下面好友赛跑助力
 const run_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
-// $.LKYLToken = '2dad894e371af5a8350da7917a1cf3d4' || $.getdata('jdJoyRun');
+// $.LKYLToken = 'da326fe0489ff05a6b3d44ace313a837' || $.getdata('jdJoyRun');
 $.LKYLToken = $.getdata('jdJoyRun');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -109,7 +109,7 @@ function getToken() {
   $.done({ body: JSON.stringify(body) })
 }
 async function main() {
-  console.log(`打印token ${$.getdata('jdJoyRun')}`)
+  console.log(`打印token \n${$.getdata('jdJoyRun')}\n`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
@@ -128,10 +128,10 @@ async function main() {
       subTitle = '';
       $.jdLogin = true;
       $.LKYLLogin = true;
-      console.log(`=================【开始邀请助力】====================`)
+      console.log(`=============【开始邀请助力】===============`)
       await invite(invite_pins);
       if ($.jdLogin && $.LKYLLogin) {
-        console.log(`=================【开始助力好友赛跑】====================`)
+        console.log(`===========【开始助力好友赛跑】===========`)
         await run(run_pins);
       }
     }
@@ -240,7 +240,16 @@ async function run(run_pins) {
       break;
     } else if (petRaceResult === 'can_help') {
       console.log(`开始赛跑助力好友 ${item}`)
-      await combatHelp(item);
+      const LKYL_DATA = await combatHelp(item);
+      if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
+        console.log('来客有礼宠汪汪token失效');
+        $.setdata('', 'jdJoyRun');
+        $.msg($.name, '【提示】来客有礼token失效，请重新获取', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token")
+        $.LKYLLogin = false;
+        break
+      } else {
+        $.LKYLLogin = true;
+      }
     }
   }
 }
@@ -264,7 +273,7 @@ function combatHelp(friendPin) {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve();
+        resolve(data);
       }
     });
   })
