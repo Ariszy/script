@@ -29,6 +29,7 @@
 const isRequest = typeof $request != "undefined"
 const $ = new Env('来客有礼宠汪汪');
 const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
+//此处填入你需要助力好友的京东用户名
 //给下面好友邀请助力的
 let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 //给下面好友赛跑助力

@@ -428,9 +428,9 @@ function showMsg() {
   message += $.helpFood;
 
   $.log(`\n${message}\n`);
-  if (!jdNotify || jdNotify === 'false') {
+  // if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, '', message);
-  }
+  // }
 }
 
 function taskUrl(functionId, friendPin) {
