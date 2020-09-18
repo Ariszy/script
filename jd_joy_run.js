@@ -30,11 +30,11 @@ const isRequest = typeof $request != "undefined"
 const $ = new Env('来客有礼宠汪汪');
 const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //给下面好友邀请助力的
-const invite_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58'];
+let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 //给下面好友赛跑助力
-const run_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
-// $.LKYLToken = 'da326fe0489ff05a6b3d44ace313a837' || $.getdata('jdJoyRun');
-$.LKYLToken = $.getdata('jdJoyRun');
+let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
+$.LKYLToken = 'da326fe0489ff05a6b3d44ace313a837' || $.getdata('jdJoyRun');
+// $.LKYLToken = $.getdata('jdJoyRun');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -63,34 +63,20 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
   // TODO BoxJs设置互助好友friendPin
-  // const invite_pins_arr = ['jd_joy_invite_pin', 'jd2_joy_invite_pin'];
-  // const run_pins_arr = ['jd_joy_run_pin', 'jd2_joy_run_pin'];
-  // const isBox1 = boxShareCodeArr.some((item) => {
-  //   const boxShareCode = $.getdata(item);
-  //   return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
-  // });
-  // const isBox2 = boxShareCodeArr2.some((item) => {
-  //   const boxShareCode = $.getdata(item);
-  //   return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
-  // });
-  // if (isBox1) {
-  //   let temp = [];
-  //   for (const item of boxShareCodeArr) {
-  //     if ($.getdata(item)) {
-  //       temp.push($.getdata(item))
-  //     }
-  //   }
-  //   jdPetShareArr.push(temp.join('@'));
-  // }
-  // if (isBox2) {
-  //   let temp = [];
-  //   for (const item of boxShareCodeArr2) {
-  //     if ($.getdata(item)) {
-  //       temp.push($.getdata(item))
-  //     }
-  //   }
-  //   jdPetShareArr.push(temp.join('@'));
-  // }
+  if ($.getdata('jd_joy_invite_pin')) {
+    invite_pins = [];
+    invite_pins.push($.getdata('jd_joy_invite_pin'));
+  }
+  if ($.getdata('jd2_joy_invite_pin')) {
+    invite_pins.push($.getdata('jd2_joy_invite_pin'));
+  }
+  if ($.getdata('jd_joy_run_pin')) {
+    run_pins = []
+    run_pins.push($.getdata('jd_joy_run_pin'));
+  }
+  if ($.getdata('jd2_joy_run_pin')) {
+    run_pins.push($.getdata('jd2_joy_run_pin'));
+  }
 }
 
 //获取来客有礼Token
@@ -129,10 +115,14 @@ async function main() {
       $.jdLogin = true;
       $.LKYLLogin = true;
       console.log(`=============【开始邀请助力】===============`)
-      await invite(invite_pins);
+      const inviteIndex = $.index > invite_pins.length ? (invite_pins.length - 1) : ($.index - 1);
+      const new_invite_pins = invite_pins[inviteIndex].split(',');
+      await invite(new_invite_pins);
       if ($.jdLogin && $.LKYLLogin) {
         console.log(`===========【开始助力好友赛跑】===========`)
-        await run(run_pins);
+        const runIndex = $.index > run_pins.length ? (run_pins.length - 1) : ($.index - 1);
+        const new_run_pins = run_pins[runIndex].split(',');
+        await run(new_run_pins);
       }
     }
   }
@@ -140,6 +130,7 @@ async function main() {
 }
 //邀请助力
 async function invite(invite_pins) {
+  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行邀请助力\n${(invite_pins)}\n`);
   for (let item of invite_pins) {
     console.log(`\n邀请助力 friendPin ${item}`)
     const data = await enterRoom(item);
@@ -230,6 +221,7 @@ function helpInviteFriend(friendPin) {
 }
 //赛跑助力
 async function run(run_pins) {
+  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行赛跑助力\n${(invite_pins)}\n`);
   for (let item of run_pins) {
     console.log(`\n赛跑助力 friendPin ${item}`)
     const combatDetailRes = await combatDetail(item);
