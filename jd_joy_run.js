@@ -29,7 +29,12 @@
 const isRequest = typeof $request != "undefined"
 const $ = new Env('来客有礼宠汪汪');
 const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
-
+//给下面好友邀请助力的
+const invite_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58'];
+//给下面好友赛跑助力
+const run_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
+// $.LKYLToken = '2dad894e371af5a8350da7917a1cf3d4' || $.getdata('jdJoyRun');
+$.LKYLToken = $.getdata('jdJoyRun');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -104,17 +109,13 @@ function getToken() {
   $.done({ body: JSON.stringify(body) })
 }
 async function main() {
-  const invite_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
-  const run_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
-  // $.LKYLToken = '2dad894e371af5a8350da7917a1cf3d4' || $.getdata('jdJoyRun');
-  $.LKYLToken = $.getdata('jdJoyRun');
   console.log(`打印token ${$.getdata('jdJoyRun')}`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
   if (!$.LKYLToken) {
-    $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', `来客有礼小程序获取`);
+    $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -127,9 +128,10 @@ async function main() {
       subTitle = '';
       $.jdLogin = true;
       $.LKYLLogin = true;
+      console.log(`=================【开始邀请助力】====================`)
       await invite(invite_pins);
       if ($.jdLogin && $.LKYLLogin) {
-        console.log(`开始助力好友赛跑`)
+        console.log(`=================【开始助力好友赛跑】====================`)
         await run(run_pins);
       }
     }
@@ -156,7 +158,7 @@ async function invite(invite_pins) {
         console.log(`已给该好友 ${item} 助力过或者此friendPin是你自己\n`)
         continue;
       } else if (helpStatus=== 'invite_full') {
-        console.log(`该好友 ${item} 已经满3人给他助力了\n`)
+        console.log(`助力失败，该好友 ${item} 已经满3人给他助力了,无需您再次助力\n`)
         continue;
       } else if (helpStatus=== 'can_help') {
         console.log(`开始给好友 ${item} 助力\n`)
