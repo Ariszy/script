@@ -4,6 +4,7 @@
  token获取途径：
  1、微信搜索'来客有礼'小程序,登陆京东账号，点击底部的'发现'Tab,即可获取Token，脚本运行提示token失效后，继续按此方法获取即可
  2、或者每天去'来客有礼'小程序->宠汪汪里面，领狗粮->签到领京豆 也可获取Token(此方法每天只能获取一次)
+ 更新时间：2020-09-18
  [MITM]
  hostname = draw.jdfcloud.com
  surge
@@ -22,7 +23,6 @@
  LOON：
  [Script]
  cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js,tag=宠汪汪邀请助力与赛跑助力
-
  http-response ^https://draw\.jdfcloud\.com//api/user/addUser\?code=\w+& script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
  , requires-body=true, timeout=10, tag=宠汪汪助力获取Cookie
  **/
@@ -34,6 +34,22 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
+const headers = {
+  'Connection' : 'keep-alive',
+  'Accept-Encoding' : 'gzip, deflate, br',
+  'App-Id' : 'wxccb5c536b0ecd1bf',
+  'Lottery-Access-Signature' : '',
+  'Content-Type' : 'application/json',
+  'reqSource' : 'weapp',
+  'User-Agent' : 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.15(0x17000f2d) NetType/4G Language/zh_CN',
+  'Cookie' : '',
+  'openId' : 'oPcgJ40Ol7BSTczZ2ok0WmfLWoAs',
+  'Host' : 'draw.jdfcloud.com',
+  'Referer' : 'https://servicewechat.com/wxccb5c536b0ecd1bf/633/page-frame.html',
+  'Accept-Language' : 'zh-cn',
+  'Accept' : '*/*',
+  'LKYLToken' : ''
+}
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -41,30 +57,58 @@ if ($.isNode()) {
 } else {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
+  // TODO BoxJs设置互助好友friendPin
+  // const invite_pins_arr = ['jd_joy_invite_pin', 'jd2_joy_invite_pin'];
+  // const run_pins_arr = ['jd_joy_run_pin', 'jd2_joy_run_pin'];
+  // const isBox1 = boxShareCodeArr.some((item) => {
+  //   const boxShareCode = $.getdata(item);
+  //   return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
+  // });
+  // const isBox2 = boxShareCodeArr2.some((item) => {
+  //   const boxShareCode = $.getdata(item);
+  //   return (boxShareCode !== undefined && boxShareCode !== null && boxShareCode !== '');
+  // });
+  // if (isBox1) {
+  //   let temp = [];
+  //   for (const item of boxShareCodeArr) {
+  //     if ($.getdata(item)) {
+  //       temp.push($.getdata(item))
+  //     }
+  //   }
+  //   jdPetShareArr.push(temp.join('@'));
+  // }
+  // if (isBox2) {
+  //   let temp = [];
+  //   for (const item of boxShareCodeArr2) {
+  //     if ($.getdata(item)) {
+  //       temp.push($.getdata(item))
+  //     }
+  //   }
+  //   jdPetShareArr.push(temp.join('@'));
+  // }
 }
 
-
+//获取来客有礼Token
 function getToken() {
   // const url = $request.url;
   // $.log(`${$.name}url\n${url}\n`)
   const body = JSON.parse($response.body);
   const token = body.data.token;
-  $.log(`${$.name}token\n${token}\n`)
+  $.log(`${$.name} token\n${token}\n`)
   if ($.getdata('jdJoyRun')) {
-    $.msg($.name, 'token更新成功', token);
+    $.msg($.name, '更新获取Token: 成功🎉', `\n${token}\n`);
   } else {
-    $.msg($.name, 'token获取成功', token);
+    $.msg($.name, '获取Token: 成功🎉', `\n${token}\n`);
   }
   $.setdata(token, 'jdJoyRun');
-  // $done({});
   $.done({ body: JSON.stringify(body) })
 }
 async function main() {
   const invite_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
   const run_pins = ["jd_6cd93e613b0e5", "被折叠的记忆33", "jd_704a2e5e28a66", "jd_45a6b5953b15b", 'zooooo58']
-  // $.LKYLToken = '34099ab699acc383195f0063156ff60e' || $.getdata('jdJoyRun');
+  // $.LKYLToken = '2dad894e371af5a8350da7917a1cf3d4' || $.getdata('jdJoyRun');
   $.LKYLToken = $.getdata('jdJoyRun');
-  console.log($.getdata('jdJoyRun'))
+  console.log(`打印token ${$.getdata('jdJoyRun')}`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
@@ -133,24 +177,11 @@ async function invite(invite_pins) {
 }
 function enterRoom(invitePin) {
   return new Promise(resolve => {
+    headers.Cookie = cookie;
+    headers.LKYLToken = $.LKYLToken;
     const options = {
       url: `${JD_BASE_API}/enterRoom?reqSource=weapp&invitePin=${encodeURI(invitePin)}`,
-      headers: {
-        'Host': 'draw.jdfcloud.com',
-        'App-Id': 'wxccb5c536b0ecd1bf',
-        'Accept': '*/*',
-        'openId': 'oPcgJ48QtztO1b_aMpI5LcQ0mcbM',
-        'Accept-Language': 'zh-cn',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Lottery-Access-Signature': 'wxccb5c536b0ecd1bf1537237540544h79HlfU',
-        'Content-Type': 'application/json',
-        'reqSource': 'weapp',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.15(0x17000f28) NetType/WIFI Language/zh_CN',
-        'Referer': 'https://servicewechat.com/wxccb5c536b0ecd1bf/624/page-frame.html',
-        'LKYLToken': $.LKYLToken,
-        'Cookie': cookie,
-        'Connection': 'keep-alive',
-      }
+      headers
     }
     $.get(options, (err, resp, data) => {
       try {
@@ -171,24 +202,11 @@ function enterRoom(invitePin) {
 }
 function helpInviteFriend(friendPin) {
   return new Promise((resolve) => {
+    headers.Cookie = cookie;
+    headers.LKYLToken = $.LKYLToken;
     const options = {
       url: `${JD_BASE_API}/helpFriend?friendPin=${encodeURI(friendPin)}`,
-      headers: {
-        'Host': 'draw.jdfcloud.com',
-        'App-Id': 'wxccb5c536b0ecd1bf',
-        'Accept': '*/*',
-        'openId': 'oPcgJ48QtztO1b_aMpI5LcQ0mcbM',
-        'Accept-Language': 'zh-cn',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Lottery-Access-Signature': 'wxccb5c536b0ecd1bf1537237540544h79HlfU',
-        'Content-Type': 'application/json',
-        'reqSource': 'weapp',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.15(0x17000f28) NetType/WIFI Language/zh_CN',
-        'Referer': 'https://servicewechat.com/wxccb5c536b0ecd1bf/624/page-frame.html',
-        'LKYLToken': $.LKYLToken,
-        'Cookie': cookie,
-        'Connection': 'keep-alive',
-      }
+      headers
     }
     $.get(options, (err, resp, data) => {
       try {
@@ -226,24 +244,11 @@ async function run(run_pins) {
 }
 function combatHelp(friendPin) {
   return new Promise(resolve => {
+    headers.Cookie = cookie;
+    headers.LKYLToken = $.LKYLToken;
     const options = {
       url: `${JD_BASE_API}/combat/help?friendPin=${encodeURI(friendPin)}`,
-      headers: {
-        'Host': 'draw.jdfcloud.com',
-        'App-Id': 'wxccb5c536b0ecd1bf',
-        'Accept': '*/*',
-        'openId': 'oPcgJ48QtztO1b_aMpI5LcQ0mcbM',
-        'Accept-Language': 'zh-cn',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Lottery-Access-Signature': 'wxccb5c536b0ecd1bf1537237540544h79HlfU',
-        'Content-Type': 'application/json',
-        'reqSource': 'weapp',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.15(0x17000f28) NetType/WIFI Language/zh_CN',
-        'Referer': 'https://servicewechat.com/wxccb5c536b0ecd1bf/624/page-frame.html',
-        'LKYLToken': $.LKYLToken,
-        'Cookie': cookie,
-        'Connection': 'keep-alive',
-      }
+      headers
     }
     $.get(options, (err, resp, data) => {
       try {
@@ -264,24 +269,11 @@ function combatHelp(friendPin) {
 }
 function combatDetail(invitePin) {
   return new Promise(resolve => {
+    headers.Cookie = cookie;
+    headers.LKYLToken = $.LKYLToken;
     const options = {
       url: `${JD_BASE_API}/combat/detail/v2?help=true&inviterPin=${encodeURI(invitePin)}`,
-      headers: {
-        'Host': 'draw.jdfcloud.com',
-        'App-Id': 'wxccb5c536b0ecd1bf',
-        'Accept': '*/*',
-        'openId': 'oPcgJ48QtztO1b_aMpI5LcQ0mcbM',
-        'Accept-Language': 'zh-cn',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Lottery-Access-Signature': 'wxccb5c536b0ecd1bf1537237540544h79HlfU',
-        'Content-Type': 'application/json',
-        'reqSource': 'weapp',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/7.0.15(0x17000f28) NetType/WIFI Language/zh_CN',
-        'Referer': 'https://servicewechat.com/wxccb5c536b0ecd1bf/624/page-frame.html',
-        'LKYLToken': $.LKYLToken,
-        'Cookie': cookie,
-        'Connection': 'keep-alive',
-      }
+      headers
     }
     $.get(options, (err, resp, data) => {
       try {
