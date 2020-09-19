@@ -13,6 +13,7 @@
  [Script]
  宠汪汪邀请助力与赛跑助力 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
  宠汪汪助力获取Cookie = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+&, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
+ 宠汪汪助力获取Cookie = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\?, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
  圈X
  [task_local]
  # 宠汪汪邀请助力与赛跑助力
@@ -20,10 +21,13 @@
  [rewrite_local]
  # 宠汪汪助力获取Cookie
  ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+& url script-response-body https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
+ ^https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\? url script-request-header https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
  LOON：
  [Script]
  cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力
  http-response ^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/addUser\?code=\w+& script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
+ , requires-body=true, timeout=10, tag=宠汪汪助力获取Cookie
+ http-response ^https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\? script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
  , requires-body=true, timeout=10, tag=宠汪汪助力获取Cookie
  **/
 const isRequest = typeof $request != "undefined"
