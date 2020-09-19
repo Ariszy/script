@@ -34,8 +34,8 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 //给下面好友赛跑助力
 let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
-$.LKYLToken = 'da326fe0489ff05a6b3d44ace313a837' || $.getdata('jdJoyRun');
-// $.LKYLToken = $.getdata('jdJoyRun');
+// $.LKYLToken = 'da326fe0489ff05a6b3d44ace313a837' || $.getdata('jdJoyRun');
+$.LKYLToken = $.getdata('jdJoyRun');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie

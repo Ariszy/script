@@ -403,6 +403,70 @@
       ]
     },
     {
+      "id": "jd_Joy_Run",
+      "name": "宠汪汪邀请助力与赛跑助力",
+      "keys": [
+        "jd_joy_run_name",
+        "jd_joy_invite_pin",
+        "jd_joy_run_pin",
+        "jd2_joy_run_name",
+        "jd2_joy_invite_pin",
+        "jd2_joy_run_pin"
+      ],
+      "desc": "宠汪汪的互助码friendPin是京东用户名,不是昵称(可在京东APP->我的->设置查看)",
+      "settings": [
+        {
+          "id": "jd_joy_run_name",
+          "name": "京东账号一昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd_joy_invite_pin",
+          "name": "账号一邀请助力friendPin名单",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "type": "text",
+          "desc": "多个账号使用英文逗号','隔开,最多3个"
+        },
+        {
+          "id": "jd_joy_run_pin",
+          "name": "账号一赛跑助力friendPin名单",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "type": "text",
+          "desc": "多个账号使用英文逗号','隔开,最多6个"
+        },
+        {
+          "id": "jd2_joy_run_name",
+          "name": "京东账号二昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd2_joy_invite_pin",
+          "name": "账号一邀请助力friendPin名单",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "type": "text",
+          "desc": "多个账号使用英文逗号','隔开,最多3个"
+        },
+        {
+          "id": "jd2_joy_run_pin",
+          "name": "账号二赛跑助力friendPin名单",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "type": "text",
+          "desc": "多个账号使用英文逗号','隔开,最多6个"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
+      ]
+    },
+    {
       "id": "jd_MoneyTree",
       "name": "京东摇钱树",
       "keys": [],

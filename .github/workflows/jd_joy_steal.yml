@@ -5,7 +5,7 @@ name: jd_joy_steal
 
 on:
   schedule:
-    - cron: '0,30 16,21,22 * * *'
+    - cron: '0 16,22 * * *'
   watch:
     types: started
 
