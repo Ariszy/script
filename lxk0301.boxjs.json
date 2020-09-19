@@ -20,6 +20,9 @@
         "jd2_fruit3",
         "jd2_fruit4"
       ],
+      "descs_html": [
+        "<h4 align=\"center\">获取Cookie请查看NobyDa京东签到脚本说明<a href=\"https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js\">脚本注释</a></h4>"
+      ],
       "settings": [
         {
           "id": "jdFruitNotify",
@@ -413,7 +416,7 @@
         "jd2_joy_invite_pin",
         "jd2_joy_run_pin"
       ],
-      "desc": "宠汪汪的互助码friendPin是京东用户名,不是昵称(可在京东APP->我的->设置查看)",
+      "desc": "宠汪汪的互助码friendPin是京东用户名,不是昵称(可在京东APP->我的->设置查看)。互助码之间用英文逗号隔开,下面给出具体示例,使用时可自行清空重新按格式填写你自己的",
       "settings": [
         {
           "id": "jd_joy_run_name",
