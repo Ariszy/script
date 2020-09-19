@@ -1,6 +1,7 @@
 /**
  宠汪汪邀请助力与赛跑助力脚本，感谢github@Zero-S1提供帮助
  token时效很短，每天拿到后，可一次性运行完毕即可。
+ 互助码friendPin是京东用户名，不是昵称（可在京东APP->我的->设置 查看获得）
  token获取途径：
  1、微信搜索'来客有礼'小程序,登陆京东账号，点击底部的'发现'Tab,即可获取Token，脚本运行提示token失效后，继续按此方法获取即可
  2、或者每天去'来客有礼'小程序->宠汪汪里面，领狗粮->签到领京豆 也可获取Token(此方法每天只能获取一次)
@@ -20,7 +21,6 @@
  [rewrite_local]
  # 宠汪汪助力获取Cookie
  ^https://draw\.jdfcloud\.com//api/user/addUser\?code=\w+& url script-response-body https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
-
  LOON：
  [Script]
  cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js,tag=宠汪汪邀请助力与赛跑助力
@@ -35,7 +35,7 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 //给下面好友赛跑助力
 let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
-// $.LKYLToken = 'da326fe0489ff05a6b3d44ace313a837' || $.getdata('jdJoyRun');
+// $.LKYLToken = 'c0de47109bb526ac325e34a569f889fb' || $.getdata('jdJoyRun');
 $.LKYLToken = $.getdata('jdJoyRun');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -64,20 +64,29 @@ if ($.isNode()) {
 } else {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
-  // TODO BoxJs设置互助好友friendPin
   if ($.getdata('jd_joy_invite_pin')) {
     invite_pins = [];
     invite_pins.push($.getdata('jd_joy_invite_pin'));
   }
   if ($.getdata('jd2_joy_invite_pin')) {
-    invite_pins.push($.getdata('jd2_joy_invite_pin'));
+    if (invite_pins.length > 0) {
+      invite_pins.push($.getdata('jd2_joy_invite_pin'))
+    } else {
+      invite_pins = [];
+      invite_pins.push($.getdata('jd2_joy_invite_pin'));
+    }
   }
   if ($.getdata('jd_joy_run_pin')) {
     run_pins = []
     run_pins.push($.getdata('jd_joy_run_pin'));
   }
   if ($.getdata('jd2_joy_run_pin')) {
-    run_pins.push($.getdata('jd2_joy_run_pin'));
+    if (run_pins.length > 0) {
+      run_pins.push($.getdata('jd2_joy_run_pin'))
+    } else {
+      run_pins = [];
+      run_pins.push($.getdata('jd2_joy_run_pin'));
+    }
   }
 }
 
@@ -223,7 +232,7 @@ function helpInviteFriend(friendPin) {
 }
 //赛跑助力
 async function run(run_pins) {
-  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行赛跑助力\n${(invite_pins)}\n`);
+  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行赛跑助力\n${(run_pins)}\n`);
   for (let item of run_pins) {
     console.log(`\n开始给好友 [${item}] 进行赛跑助力`)
     const combatDetailRes = await combatDetail(item);
@@ -263,6 +272,10 @@ function combatHelp(friendPin) {
         } else {
           $.log(`赛跑助力结果${data}`);
           data = JSON.parse(data);
+          // {"errorCode":"help_ok","errorMessage":null,"currentTime":1600479266133,"data":{"rewardNum":5,"helpStatus":"help_ok","newUser":false},"success":true}
+          if (data.errorCode === 'help_ok' && data.data.helpStatus === 'help_ok') {
+            console.log(`助力${friendPin}成功\n获得狗粮${data.data.rewardNum}g\n`);
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
