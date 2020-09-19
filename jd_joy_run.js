@@ -4,7 +4,8 @@
  token获取途径：
  1、微信搜索'来客有礼'小程序,登陆京东账号，点击底部的'发现'Tab,即可获取Token，脚本运行提示token失效后，继续按此方法获取即可
  2、或者每天去'来客有礼'小程序->宠汪汪里面，领狗粮->签到领京豆 也可获取Token(此方法每天只能获取一次)
- 更新时间：2020-09-18
+ 更新时间：2020-09-19
+ 脚本里面有内置提供的friendPin，如果你没有修改脚本或者BoxJs处填写自己的互助码，会默认给脚本内置的助力。
  [MITM]
  hostname = draw.jdfcloud.com
  surge
@@ -23,7 +24,7 @@
  LOON：
  [Script]
  cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js,tag=宠汪汪邀请助力与赛跑助力
- http-response ^https://draw\.jdfcloud\.com//api/user/addUser\?code=\w+& script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_help.js
+ http-response ^https://draw\.jdfcloud\.com//api/user/addUser\?code=\w+& script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_run.js
  , requires-body=true, timeout=10, tag=宠汪汪助力获取Cookie
  **/
 const isRequest = typeof $request != "undefined"
