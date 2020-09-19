@@ -106,18 +106,16 @@ function getToken() {
     } else {
       $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
     }
-    $.setdata(LKYLToken, 'jdJoyRun');
     $.setdata(LKYLToken, 'jdJoyRunToken');
     $.done({ body: JSON.stringify(body) })
   } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\?/)){
-    if (url.method !== 'OPTIONS') {
-      const LKYLToken = url.headers['LKYLToken'];
+    if ($request && $request.method !== 'OPTIONS') {
+      const LKYLToken = $request.headers['LKYLToken'];
       if ($.getdata('jdJoyRun') || $.getdata('jdJoyRunToken')) {
         $.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
       } else {
         $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
       }
-      $.setdata(LKYLToken, 'jdJoyRun');
       $.setdata(LKYLToken, 'jdJoyRunToken');
     }
   }
