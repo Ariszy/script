@@ -409,6 +409,7 @@
       "id": "jd_Joy_Run",
       "name": "宠汪汪邀请助力与赛跑助力",
       "keys": [
+        "jdJoyRunToken",
         "jd_joy_run_name",
         "jd_joy_invite_pin",
         "jd_joy_run_pin",
