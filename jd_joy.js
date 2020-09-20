@@ -128,7 +128,7 @@ async function joinTwoPeopleRun() {
         await receiveJoyRunAward();
         console.log(`领取赛跑奖励结果：${JSON.stringify($.receiveJoyRunAwardRes)}`)
         if ($.receiveJoyRunAwardRes.success) {
-          $.msg($.name, '双人赛跑取得获胜', `太棒了,恭喜您获得300积分奖励`)
+          $.msg($.name, '双人赛跑取得获胜', `【京东账号${$.index}】${UserName}\n太棒了,恭喜您获得300积分奖励`)
         }
       }
       if (petRaceResult === 'participate') {
