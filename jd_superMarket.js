@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-08-17
+更新时间：2020-09-20
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币
 支持京东双账号
 领蓝币请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
@@ -35,6 +35,8 @@ const jdNotify = $.getdata('jdSuperMarketNotify');//用来是否关闭弹窗通�
 const receiveBlueCoinTimes = 20; //运行一次脚本收取多少次小费(蓝币),默认20次,如达到上限,会跳出,不继续浪费时间收取
 let UserName = '', todayDay = 0, message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
+
+const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w"];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -64,12 +66,18 @@ async function jdSuperMarket(DoubleKey) {
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
   await smtgHome();
+  await help();
   await showMsg();
 }
 function showMsg() {
   $.log(`\n${message}\n`);
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle ,`【京东账号${$.index}】${UserName}\n${message}`);
+  }
+}
+async function help() {
+  for (let code of inviteCodes) {
+    await smtgDoAssistPkTask(code);
   }
 }
 async function doDailyTask() {
@@ -301,6 +309,23 @@ function smtgHome() {
           subTitle = shopName;
           message += `【总金币】${totalGold}个\n`;
           message += `【总蓝币】${totalBlue}个\n`;
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+
+function smtgDoAssistPkTask(code) {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_doAssistPkTask', {"inviteCode": code}), (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+        if (data.code === 0 && data.data.success) {
+
         }
       } catch (e) {
         $.logErr(e, resp);
