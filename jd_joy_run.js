@@ -5,7 +5,7 @@
  token获取途径：
  1、微信搜索'来客有礼'小程序,登陆京东账号，点击底部的'发现'Tab,即可获取Token，脚本运行提示token失效后，继续按此方法获取即可
  2、或者每天去'来客有礼'小程序->宠汪汪里面，领狗粮->签到领京豆 也可获取Token(此方法每天只能获取一次)
- 更新时间：2020-09-19
+ 更新时间：2020-09-20
  脚本里面有内置提供的friendPin，如果你没有修改脚本或者BoxJs处填写自己的互助码，会默认给脚本内置的助力。
  [MITM]
  hostname = draw.jdfcloud.com
@@ -118,6 +118,8 @@ function getToken() {
         $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
       }
       $.setdata(LKYLToken, 'jdJoyRunToken');
+      // $.done({ body: JSON.stringify(body) })
+      $.done({ url: url })
     }
   }
 }
@@ -158,8 +160,8 @@ async function main() {
 }
 //邀请助力
 async function invite(invite_pins) {
-  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行邀请助力\n${(invite_pins)}\n`);
-  for (let item of invite_pins) {
+  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行邀请助力\n${invite_pins.map(item => item.trim())}\n`);
+  for (let item of invite_pins.map(item => item.trim())) {
     console.log(`\n开始给好友 [${item}] 进行邀请助力`)
     const data = await enterRoom(item);
     if (!data.success && data.errorCode === 'B0001') {
@@ -250,8 +252,8 @@ function helpInviteFriend(friendPin) {
 }
 //赛跑助力
 async function run(run_pins) {
-  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行赛跑助力\n${(run_pins)}\n`);
-  for (let item of run_pins) {
+  console.log(`账号${$.index} [${UserName}] 给下面名单的人进行赛跑助力\n${(run_pins.map(item => item.trim()))}\n`);
+  for (let item of run_pins.map(item => item.trim())) {
     console.log(`\n开始给好友 [${item}] 进行赛跑助力`)
     const combatDetailRes = await combatDetail(item);
     const { petRaceResult } = combatDetailRes.data;
