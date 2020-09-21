@@ -4,6 +4,7 @@
 name: jd_plantBean
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 23,0-13/1 * * *'
   watch:

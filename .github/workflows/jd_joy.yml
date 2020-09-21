@@ -4,6 +4,7 @@
 name: jd_joy
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0,1,4,10,15,16 * * *'
   watch:

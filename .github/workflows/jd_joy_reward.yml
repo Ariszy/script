@@ -4,6 +4,7 @@
 name: jd_joy_reward
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 0,4,8,16 * * *'
   watch:

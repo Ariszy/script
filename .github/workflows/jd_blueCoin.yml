@@ -4,6 +4,7 @@
 name: jd_blueCoin
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '10 17 * * *'
   watch:
