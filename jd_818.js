@@ -45,7 +45,7 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const activeEndTime = '2020-10-09';
+const activeEndTime = '2020-10-10';
 const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8fa0-31fd975e7736', 'abb63255-51b0-4fa4-b9b8-41ec4a6161d4', '24b1c4fb-f357-43f1-80e9-6e78a861746c', '06b041ea-7e51-40c2-99f3-cf64779c522a', '581707da-e0c9-45e3-8af6-36cd281b3de7'];
 !(async () => {
   if (!cookiesArr[0]) {
@@ -622,9 +622,9 @@ function getListJbean() {
 }
 function showMsg() {
   if (Date.now() > new Date(activeEndTime).getTime()) {
-    $.msg($.name, '活动已结束', `请禁用脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
+    $.msg($.name, '活动已结束', `请禁用或者删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
   } else {
-    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `脚本运行完毕\n已累计获得${$.jbeanCount}个京豆 🐶\n具体详情点击弹窗跳转后即可查看\n查看入口：右上角积分明细->已获得京豆\n有20京豆是往期奖励获得\n需第一天参加活动后，第二天才能拿到`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `已累计获得${$.jbeanCount}个京豆 🐶\n具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
   // $.msg($.name, '', `【京东账号${doubleKey ? '二' : '一'}】${$.UserName}\n脚本运行完毕\n奖品详情查看 右上角积分明细\n已获得京豆\n往期奖励查看:右下角每日积分排行榜`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   // $.msg($.name, '818活动已结束', `请禁用脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
