@@ -61,7 +61,7 @@ const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8f
       message = '';
       subTitle = '';
       await JD818();
-      // await getHelp();
+      // await getListJbean();
     }
   }
 })()
@@ -83,6 +83,7 @@ async function JD818() {
   await listMeeting();//逛会场
   await doHelp();
   await myRank();//领取往期排名奖励
+  await getListJbean();
   await showMsg()
 }
 function listMeeting() {
@@ -584,11 +585,46 @@ function getHelp() {
     })
   })
 }
+
+function getListJbean() {
+  return new Promise(resolve => {
+    const options = {
+      "url": `${JD_API_HOST}task/listJbean?pageNum=1`,
+      "headers": {
+        "Host": "rdcseason.m.jd.com",
+        "Accept": "application/json, text/plain, */*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "jdapp;iPhone;9.1.0;14.0;e35caf0a69be42084e3c97eef56c3af7b0262d01;network/4g;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/1;model/iPhone11,8;addressid/2005183373;hasOCPay/0;appBuild/167348;supportBestPay/0;jdSupportDarkMode/0;pv/255.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/e35caf0a69be42084e3c97eef56c3af7b0262d01|701;jdv/0|kong|t_2010957099_|jingfen|3b5422e836e74037862fea3dcf1a6802|1600647811440|1600647814;adk/;app_device/IOS;pap/JA2015_311210|9.1.0|IOS 14.0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://rdcseason.m.jd.com",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200) {
+            $.jbeanCount = data.data.jbeanCount;
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 function showMsg() {
   if (Date.now() > new Date(activeEndTime).getTime()) {
     $.msg($.name, '活动已结束', `请禁用脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
   } else {
-    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `脚本运行完毕\n奖品详情点击弹窗跳转后即可查看\n查看入口：右上角积分明细->已获得京豆\n有20京豆是往期奖励获得，需第一天参加活动后，第二天才能拿到`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `脚本运行完毕\n已累计获得${$.jbeanCount}个京豆 🐶\n具体详情点击弹窗跳转后即可查看\n查看入口：右上角积分明细->已获得京豆\n有20京豆是往期奖励获得\n需第一天参加活动后，第二天才能拿到`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
   // $.msg($.name, '', `【京东账号${doubleKey ? '二' : '一'}】${$.UserName}\n脚本运行完毕\n奖品详情查看 右上角积分明细\n已获得京豆\n往期奖励查看:右下角每日积分排行榜`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   // $.msg($.name, '818活动已结束', `请禁用脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
