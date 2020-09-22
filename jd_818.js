@@ -57,6 +57,7 @@ const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8f
       message = '';
       subTitle = '';
       await JD818();
+      // await getHelp();
     }
   }
 })()
@@ -67,6 +68,7 @@ const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8f
       $.done();
     })
 async function JD818() {
+  await getHelp();
   await listGoods();//逛新品
   await shopInfo();//逛店铺
   await listMeeting();//逛会场
@@ -482,6 +484,36 @@ function toHelp(code) {
       try {
         console.log(data);
         data = JSON.parse(data);
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function getHelp() {
+  return new Promise(resolve => {
+    const options = {
+      "url": `${JD_API_HOST}task/getHelp?t=${Date.now()}`,
+      "headers": {
+        "Host": "rdcseason.m.jd.com",
+        "Accept": "application/json, text/plain, */*",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "User-Agent": "jdapp;iPhone;9.1.0;14.0;e35caf0a69be42084e3c97eef56c3af7b0262d01;network/4g;supportApplePay/3;hasUPPay/0;pushNoticeIsOpen/1;model/iPhone11,8;addressid/2005183373;hasOCPay/0;appBuild/167348;supportBestPay/0;jdSupportDarkMode/0;pv/255.2;apprpd/Home_Main;ref/JDMainPageViewController;psq/1;ads/;psn/e35caf0a69be42084e3c97eef56c3af7b0262d01|701;jdv/0|kong|t_2010957099_|jingfen|3b5422e836e74037862fea3dcf1a6802|1600647811440|1600647814;adk/;app_device/IOS;pap/JA2015_311210|9.1.0|IOS 14.0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1",
+        "Accept-Language": "zh-cn",
+        "Referer": "https://rdcseason.m.jd.com",
+        "Accept-Encoding": "gzip, deflate, br"
+      }
+    }
+    $.get(options, async (err, resp, data) => {
+      try {
+        console.log('查询获奖列表data', data);
+        data = JSON.parse(data);
+        if (data.code === 200) {
+          $.log(`\n您的助力码shareId\n${data.data.shareId}\n`);
+        }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
