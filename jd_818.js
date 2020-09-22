@@ -46,7 +46,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020-10-10';
-const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8fa0-31fd975e7736', 'abb63255-51b0-4fa4-b9b8-41ec4a6161d4', '24b1c4fb-f357-43f1-80e9-6e78a861746c', '06b041ea-7e51-40c2-99f3-cf64779c522a', '581707da-e0c9-45e3-8af6-36cd281b3de7'];
+const helpCode = ['9d40c4f2-6403-4e4a-b2c2-be0f06aad25a', 'd2807c78-1542-476f-9254-5410f3a288de', '75caf1bb-2c2a-4a9e-a5db-a2b938053761', 'c12d8d30-fe86-4b24-88df-02826dccab4d', '55e93f88-d20c-4abc-82e3-c7ca66bd6131'];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -575,7 +575,7 @@ function getHelp() {
         } else {
           data = JSON.parse(data);
           if (data.code === 200) {
-            console.log(`\n您的助力码shareId\n${data.data.shareId}\n`);
+            console.log(`\n您的助力码shareId(互助码每天都是变化的)\n${data.data.shareId}\n`);
           }
         }
       } catch (e) {
