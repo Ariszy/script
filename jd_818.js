@@ -663,7 +663,7 @@ function showMsg() {
   if (Date.now() > new Date(activeEndTime).getTime()) {
     $.msg($.name, '活动已结束', `请禁用或者删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
   } else {
-    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `获得京豆：${$.jbeanCount}个🐶\n${$.integer ? `当前积分：${$.integer}个\n` : ''}${$.num ? `当前排名：${$.num}\n` : ''}具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `${$.jbeanCount ? `获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.integer ? `当前积分：${$.integer}个\n` : ''}${$.num ? `当前排名：${$.num}\n` : ''}具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
 }
 // prettier-ignore
