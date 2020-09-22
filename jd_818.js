@@ -45,6 +45,7 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
+const activeEndTime = '2020-10-09';
 const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8fa0-31fd975e7736', 'abb63255-51b0-4fa4-b9b8-41ec4a6161d4', '24b1c4fb-f357-43f1-80e9-6e78a861746c', '06b041ea-7e51-40c2-99f3-cf64779c522a', '581707da-e0c9-45e3-8af6-36cd281b3de7'];
 !(async () => {
   if (!cookiesArr[0]) {
@@ -101,22 +102,27 @@ function listMeeting() {
   return new Promise((resolve) => {
     $.get(options, async (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        // console.log('ddd----ddd', data.code)
-        if (data.code === 200 && data.data.meetingList) {
-          let integralNum = 0, jdNum = 0;
-          for (let item of data.data.meetingList) {
-            let res = await browseMeeting(item.id);
-            if (res.code === 200) {
-              let res2 = await getMeetingPrize(item.id);
-              integralNum += res2.data.integralNum * 1;
-              jdNum += res2.data.jdNum * 1;
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          // console.log('ddd----ddd', data.code)
+          if (data.code === 200 && data.data.meetingList) {
+            let integralNum = 0, jdNum = 0;
+            for (let item of data.data.meetingList) {
+              let res = await browseMeeting(item.id);
+              if (res.code === 200) {
+                let res2 = await getMeetingPrize(item.id);
+                integralNum += res2.data.integralNum * 1;
+                jdNum += res2.data.jdNum * 1;
+              }
+              // await browseMeeting('1596206323911');
+              // await getMeetingPrize('1596206323911');
             }
-            // await browseMeeting('1596206323911');
-            // await getMeetingPrize('1596206323911');
-          }
-          console.log(`逛会场--获得积分:${integralNum}`)
-          console.log(`逛会场--获得京豆:${jdNum}`)
+            console.log(`逛会场--获得积分:${integralNum}`)
+            console.log(`逛会场--获得京豆:${jdNum}`)
+        }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -144,20 +150,25 @@ function listGoods() {
     $.get(options, async (err, resp, data) => {
       try {
         // console.log('data1', data);
-        data = JSON.parse(data);
-        if (data.code === 200 && data.data.goodsList) {
-          let integralNum = 0, jdNum = 0;
-          for (let item of data.data.goodsList) {
-            let res = await browseGoods(item.id);
-            if (res.code === 200) {
-              let res2 = await getGoodsPrize(item.id);
-              // console.log('逛新品领取奖励res2', res2);
-              integralNum += res2.data.integralNum * 1;
-              jdNum += res2.data.jdNum * 1;
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200 && data.data.goodsList) {
+            let integralNum = 0, jdNum = 0;
+            for (let item of data.data.goodsList) {
+              let res = await browseGoods(item.id);
+              if (res.code === 200) {
+                let res2 = await getGoodsPrize(item.id);
+                // console.log('逛新品领取奖励res2', res2);
+                integralNum += res2.data.integralNum * 1;
+                jdNum += res2.data.jdNum * 1;
+              }
             }
+            console.log(`逛新品获得积分:${integralNum}`)
+            console.log(`逛新品获得京豆:${jdNum}`)
           }
-          console.log(`逛新品获得积分:${integralNum}`)
-          console.log(`逛新品获得京豆:${jdNum}`)
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -185,25 +196,30 @@ function shopInfo() {
     $.get(options, async (err, resp, data) => {
       try {
         // console.log('data1', data);
-        data = JSON.parse(data);
-        if (data.code === 200 && data.data) {
-          let integralNum = 0, jdNum = 0;
-          for (let item of data.data) {
-            let res = await browseShop(item.shopId);
-            // console.log('res', res)
-            // res = JSON.parse(res);
-            // console.log('res', res.code)
-            if (res.code === 200) {
-              // console.log('---')
-              let res2 = await getShopPrize(item.shopId);
-              // console.log('res2', res2);
-              // res2 = JSON.parse(res2);
-              integralNum += res2.data.integralNum * 1;
-              jdNum += res2.data.jdNum * 1;
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200 && data.data) {
+            let integralNum = 0, jdNum = 0;
+            for (let item of data.data) {
+              let res = await browseShop(item.shopId);
+              // console.log('res', res)
+              // res = JSON.parse(res);
+              // console.log('res', res.code)
+              if (res.code === 200) {
+                // console.log('---')
+                let res2 = await getShopPrize(item.shopId);
+                // console.log('res2', res2);
+                // res2 = JSON.parse(res2);
+                integralNum += res2.data.integralNum * 1;
+                jdNum += res2.data.jdNum * 1;
+              }
             }
+            console.log(`逛店铺获得积分:${integralNum}`)
+            console.log(`逛店铺获得京豆:${jdNum}`)
           }
-          console.log(`逛店铺获得积分:${integralNum}`)
-          console.log(`逛店铺获得京豆:${jdNum}`)
         }
         // console.log('data1', data);
       } catch (e) {
@@ -233,7 +249,12 @@ function browseGoods(id) {
     $.get(options, (err, resp, data) => {
       try {
         // console.log('data1', data);
-        data = JSON.parse(data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
         // console.log('data1', data);
       } catch (e) {
         $.logErr(e, resp);
@@ -262,8 +283,12 @@ function getGoodsPrize(id) {
     $.get(options, (err, resp, data) => {
       try {
         // console.log('data1', data);
-        data = JSON.parse(data);
-        // console.log('data1', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -291,8 +316,12 @@ function browseShop(id) {
     $.post(options2, (err, resp, data) => {
       try {
         // console.log('data1', data);
-        data = JSON.parse(data);
-        // console.log('data1', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -320,8 +349,12 @@ function getShopPrize(id) {
     $.post(options, (err, resp, data) => {
       try {
         // console.log('getShopPrize', data);
-        data = JSON.parse(data);
-        // console.log('data1', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -350,8 +383,12 @@ function browseMeeting(id) {
     $.post(options2, (err, resp, data) => {
       try {
         // console.log('点击浏览会场', data);
-        data = JSON.parse(data);
-        // console.log('点击浏览会场', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -379,8 +416,12 @@ function getMeetingPrize(id) {
     $.post(options, (err, resp, data) => {
       try {
         // console.log('getMeetingPrize', data);
-        data = JSON.parse(data);
-        // console.log('data1', data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -408,16 +449,21 @@ function myRank() {
     $.get(options, async (err, resp, data) => {
       try {
         // console.log('查询获奖列表data', data);
-        data = JSON.parse(data);
-        if (data.code === 200 && data.data.myHis) {
-          for (let item of data.data.myHis){
-            if (item.status === '21') {
-              await $.wait(1000);
-              console.log('开始领奖')
-              let res = await saveJbean(item.id);
-              // console.log('领奖结果', res)
-              if (res.code === 200 && res.data.rsCode === 200) {
-                $.jbeanNum += Number(res.data.jbeanNum);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200 && data.data.myHis) {
+            for (let item of data.data.myHis){
+              if (item.status === '21') {
+                await $.wait(1000);
+                console.log('开始领奖')
+                let res = await saveJbean(item.id);
+                // console.log('领奖结果', res)
+                if (res.code === 200 && res.data.rsCode === 200) {
+                  $.jbeanNum += Number(res.data.jbeanNum);
+                }
               }
             }
           }
@@ -449,7 +495,12 @@ function saveJbean(id) {
     $.post(options, (err, resp, data) => {
       try {
         // console.log('领取京豆结果', data);
-        data = JSON.parse(data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
@@ -485,8 +536,12 @@ function toHelp(code) {
     }
     $.post(options, (err, resp, data) => {
       try {
-        console.log(data);
-        data = JSON.parse(data);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
@@ -512,9 +567,14 @@ function getHelp() {
     }
     $.get(options, async (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        if (data.code === 200) {
-          console.log(`\n您的助力码shareId\n${data.data.shareId}\n`);
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 200) {
+            console.log(`\n您的助力码shareId\n${data.data.shareId}\n`);
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -525,7 +585,7 @@ function getHelp() {
   })
 }
 function showMsg() {
-  if (new Date(new Date().toLocaleDateString()).getTime() > new Date('2020-10-09').getTime()) {
+  if (Date.now() > new Date(activeEndTime).getTime()) {
     $.msg($.name, '活动已结束', `请禁用脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
   } else {
     $.msg($.name, `京东账号${$.index} ${$.UserName}`, `脚本运行完毕\n奖品详情点击弹窗跳转后即可查看\n查看入口：右上角积分明细->已获得京豆\n有20京豆是往期奖励获得，需第一天参加活动后，第二天才能拿到`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
