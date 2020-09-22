@@ -1,6 +1,6 @@
 /*
 京东摇钱树 ：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js
-更新时间:2020-09-04
+更新时间:2020-09-22
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
@@ -93,6 +93,7 @@ function user_info() {
       try {
         if (err) {
           console.log("\n摇钱树京东API请求失败 ‼️‼️")
+          console.log(JSON.stringify(err));
         } else {
           const res = JSON.parse(data);
           if (res && res.resultCode === 0) {
@@ -485,6 +486,7 @@ async function friendRank() {
       try {
         if (err) {
           console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
           data = JSON.parse(data);
@@ -512,6 +514,7 @@ async function friendTreeRoom(friendPin) {
       try {
         if (err) {
           console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
           data = JSON.parse(data);
@@ -540,6 +543,7 @@ async function stealFruit(friendPin, stoleId) {
       try {
         if (err) {
           console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
           data = JSON.parse(data);
