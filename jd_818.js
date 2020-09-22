@@ -9,6 +9,9 @@
 其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
 每天0/6/12/18点逛新品/店铺/会场可获得京豆，京豆先到先得
 往期奖励一般每天都能拿20京豆
+
+注：脚本运行会给我提供的助力码助力，介意者可删掉脚本第45行helpCode里面的东西。留空即可（const helpCode = []）;
+
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -39,7 +42,7 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8fa0-31fd975e7736', 'abb63255-51b0-4fa4-b9b8-41ec4a6161d4', '24b1c4fb-f357-43f1-80e9-6e78a861746c', '06b041ea-7e51-40c2-99f3-cf64779c522a'];
+const helpCode = ['5e9ec59e-3866-4c16-91ad-f5a1d9a7d535', 'd90a46f0-6a63-44a5-8fa0-31fd975e7736', 'abb63255-51b0-4fa4-b9b8-41ec4a6161d4', '24b1c4fb-f357-43f1-80e9-6e78a861746c', '06b041ea-7e51-40c2-99f3-cf64779c522a', '581707da-e0c9-45e3-8af6-36cd281b3de7'];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
