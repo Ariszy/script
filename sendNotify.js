@@ -1,8 +1,10 @@
 const $ = new Env();
+// =======================================微信server酱通知设置区域===========================================
 //此处填你申请的SCKEY.
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入PUSH_KEY)
 let SCKEY = '';
 
+// =======================================Bark App通知设置区域===========================================
 //此处填你BarkAPP的信息(IP/设备码，例如：https://api.day.app/XXXXXXXX)
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入BARK_PUSH）
 let BARK_PUSH = '';
@@ -10,6 +12,8 @@ let BARK_PUSH = '';
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入BARK_SOUND , Value输入app提供的铃声名称，例如:birdsong）
 let BARK_SOUND = '';
 
+
+// =======================================telegram机器人通知设置区域===========================================
 //此处填你telegram bot 的Token，例如：1077xxx4424:AAFjv0FcqxxxxxxgEMGfi22B4yh15R5uw
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_BOT_TOKEN)
 let TG_BOT_TOKEN = '';
