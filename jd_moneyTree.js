@@ -559,6 +559,7 @@ async function request(function_id, body = {}) {
       try {
         if (err) {
           console.log("\n摇钱树京东API请求失败 ‼️‼️");
+          console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
           data = JSON.parse(data);
