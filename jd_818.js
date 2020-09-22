@@ -509,10 +509,9 @@ function getHelp() {
     }
     $.get(options, async (err, resp, data) => {
       try {
-        console.log('查询获奖列表data', data);
         data = JSON.parse(data);
         if (data.code === 200) {
-          $.log(`\n您的助力码shareId\n${data.data.shareId}\n`);
+          console.log(`\n您的助力码shareId\n${data.data.shareId}\n`);
         }
       } catch (e) {
         $.logErr(e, resp)
