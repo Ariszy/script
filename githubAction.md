@@ -36,10 +36,10 @@
 - 下方提供使用到的 **Secrets全集合**
 
     | Name                    |   归属   | 属性   | 说明                                                         |
-    | ----------------------- | :------: | ------ | ------------------------------------------------------------ |
+    | ----------------------- | :----------: | --------- | ------------------------------------------------------------ |
     | `JD_COOKIE`             |   京东   | 必须   | 京东cookie,具体获取参考[Cookie获取教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/read) |
     | `PUSH_KEY`              |   微信推送   | 非必须 | cookie失效推送[server酱的微信通知](http://sc.ftqq.com/3.version) |
-    | `BARK_PUSH`             |   BARK推送   | 非必须 | cookie失效推送BARK这个APP,此token是https://api.day.app/后面的内容 |
+    | `BARK_PUSH`             |   BARK推送   | 非必须 | cookie失效推送BARK这个APP,填写内容是app提供的 IP/设备码，例如：https://api.day.app/XXXXXXXX |
     | `BARK_SOUND`            |   BARK推送   | 非必须 | bark推送声音设置，例如`choo`,具体值请在`bark`-`推送铃声`-`查看所有铃声` |
     | `TG_BOT_TOKEN`          |   telegram推送   | 非必须 | tg推送,填写自己申请[@BotFather](https://t.me/BotFather)的Token,如`10xxx4:AAFcqxxxxgER5uw` , [具体教程](https://github.com/lxk0301/scripts/pull/37#issuecomment-692415594) |
     | `TG_USER_ID`            |   telegram推送   | 非必须 | tg推送,填写[@getuseridbot](https://t.me/getuseridbot)中获取到的纯数字ID, [具体教程](https://github.com/lxk0301/scripts/pull/37#issuecomment-692415594) |
