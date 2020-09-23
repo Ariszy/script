@@ -1,12 +1,10 @@
 ## github action使用教程说明
-
- - 可以参考github@ruicky写的 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)
+ - Fork [此仓库项目](https://github.com/lxk0301/scripts) > 点击右上角fork按钮即可
+ - 然后参考github@ruicky写的特别详细的小白教程[@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)
  
 ### 注意几个地方就行
 
-- **注意fork的是此 [仓库项目](https://github.com/lxk0301/scripts) , 不是@ruicky教程里面的**
-
-- 使用action的时候其中京东的ck,不要放到 jdCookie.js里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
+- 使用action的时候其中京东的ck,不要放到 [jdCookie.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jdCookie.js) 里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
     - 下面给个示例 ``pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;``
     - 京东cookie获取看这里 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md)
 
@@ -30,7 +28,8 @@
 
 - fork过后，acton没有看到运行，是因为.yml文件里面的cron时间未到，如需立马看到效果
 
-  - 手动点击仓库的star按钮即可  
+  - 手动点击仓库的star按钮即可 
+  - [根据此图片示例操作](https://user-images.githubusercontent.com/21308593/93980945-e28ab000-fdb1-11ea-977c-c50705e79ac3.png) 
 
 - 自动同步Fork后的代码(此部分内容由tg@wukongdada和tg@goukey提供) 注：此项目里面提供的配置文件是方案A  
    
@@ -82,11 +81,11 @@
     ```
     
 - 如何查看运行状态
-    - 查看运行状态
-     ![查看运行状态](icon/action1.png)
-    - 查看运行日志
-        ![查看运行状态](icon/action2.png)
+    - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action1.png)
+    
+    - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action2.png)
+    
 ##### 参考文献
 [GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)    
 [GitHub Actions 入门教程](https://p3terx.com/archives/github-actions-started-tutorial.html)
-
+[@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)
