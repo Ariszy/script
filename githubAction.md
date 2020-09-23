@@ -4,7 +4,7 @@
  
 ### 注意几个地方就行
 
-- **注意fork的是此 [仓库项目](https://github.com/lxk0301/scripts) , 不是教程里面的**
+- **注意fork的是此 [仓库项目](https://github.com/lxk0301/scripts) , 不是@ruicky教程里面的**
 
 - 使用action的时候其中京东的ck,不要放到 jdCookie.js里面，这样别人能看到，不安全，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `cookie1&cookie2&cookie3`
 
