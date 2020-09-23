@@ -30,36 +30,19 @@
 
   - 需自行有云服务器，云函数等
 
-  - **腾云云函数使用,我说下面几点:**
-
-    - 先下本仓库脚本,然后本地 npm install 下载好依赖包
-
-    - 其中npm install 的使用,需要本地pc安装node.js可自行搜索安装
-
-    - 腾讯云那边使用的时候,选择上传本地文件夹(因为在线下载的依赖包会有问题)，如下图
-
-        ![Snipaste_2020-08-28_09-31-42.png](icon/Snipaste_2020-08-28_09-31-42.png)
-
-    - 其中index.js文件,需要下面这样子写,其中require里面,你需要的是哪个脚本,就写那个脚本的名称.
-
-        ```
-        'use strict';
-        exports.main_handler = async (event, context, callback) => {
-            require('./jd_speed.js')
-        }
-        ```
-      
-        ![txy.png](icon/txy.png)
+  - 腾云云函数使用 [简要说明](iCloud.md)
         
 ### 方法三：GitHub action，使用教程暂且可看 [这里](githubAction.md)
 
 #### 注：以上三种运行机制都是nodejs，故您需仔细阅读下面几点
 
-    - 1、如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
 
-    - 2、方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
+  - 如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
+
+  - 方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
    
-    - 3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+  - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
+    
 
 ### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
 
