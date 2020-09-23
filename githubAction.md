@@ -12,11 +12,12 @@
 - server酱的推送通知服务, 是可选项, 如果需要 自行申请SCKEY,再填入Secrets里面(Name选项输入 `PUSH_KEY` ,Value选项输入申请的 SCKEY)
 
 
-- cron时间是按国际标准时间来的， 和北京时间不同，里面写16点才表示北京时间0点，具体可参考下面两个链接写cron，还有github action 会有延迟现象，一般会延迟15分钟左右吧。比如设置北京时间16:00运行，action其实要16:15左右才会执行脚本的。
+- cron时间是按国际标准时间来的， 和北京时间不同，里面写16点才表示北京时间0点，具体可参考下面两个链接写cron
 
   -  [参考链接一](https://datetime360.com/cn/utc-beijing-time/) ， [参考链接二](http://www.timebie.com/cn/universalbeijing.php)
 
-
+  - 根据使用经验发现github action 会有延迟现象，一般会延迟15分钟左右吧。比如设置北京时间16:00运行，action其实要16:15左右才会执行脚本的。
+    
 - 上面 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) 获取ck的方法不对。继续参考我readme里面 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/) 获取ck。
 不过这里面获取的ck比较长，可以用下面的脚本，在Chrome浏览器按F12，console里面输入下面脚本按enter回车键，这样子整理出关键的ck已经在你的剪贴板上， 可直接粘贴
 
