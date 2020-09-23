@@ -6,8 +6,9 @@
 
 - **注意fork的是此 [仓库项目](https://github.com/lxk0301/scripts) , 不是@ruicky教程里面的**
 
-- 使用action的时候其中京东的ck,不要放到 jdCookie.js里面，这样别人能看到，不安全，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `cookie1&cookie2&cookie3`
-
+- 使用action的时候其中京东的ck,不要放到 jdCookie.js里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
+    - 下面给个示例 ``pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;``
+    - 京东cookie获取看这里 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md)
 
 - server酱的推送通知服务, 是可选项, 如果需要 自行申请SCKEY,再填入Secrets里面(Name选项输入 `PUSH_KEY` ,Value选项输入申请的 SCKEY)
 
