@@ -69,3 +69,13 @@
     | `FruitShareCodes`       |  东东农场分享码  | 非必须 | 填写规则请看 [jdFruitShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdFruitShareCodes.js) |
     | `PETSHARECODES`         |  东东萌宠分享码  | 非必须 | 填写规则请看 [jdPetShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdPetShareCodes.js) |
     | `PLANT_BEAN_SHARECODES` |  种豆得豆分享码  | 非必须 | 填写规则请看 [jdPlantBeanShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdPlantBeanShareCodes.js) |
+
+- 如何查看运行状态
+    - 查看运行状态
+     ![查看运行状态](icon/action1.png)
+    - 查看运行日志
+        ![查看运行状态](icon/action2.png)
+##### 参考文献
+[GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)    
+[GitHub Actions 入门教程](https://p3terx.com/archives/github-actions-started-tutorial.html)
+

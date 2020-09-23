@@ -68,7 +68,7 @@
  3、box可以支持多账号
  
 
-#### 2个京东账号的Qumutumult X cron设置(5分钟为间隔)
+#### 4个京东账号的Qumutumult X cron设置示例(5分钟为间隔)
 
 ```
 [task_local]
