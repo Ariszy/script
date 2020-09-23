@@ -21,69 +21,60 @@
 
 ## 食用方法
 
-- 方法一：本地安装Node.js，下载本库脚本
+### 方法一：本地安装Node.js，下载本库脚本
 
-缺点：需要手动运行脚本，不能自动定时运行脚本
-
-需自行安装依赖包(`crypto-js` ，`got` ，`http-server` ， `tough-cookie`) 例: `npm install crypto-js http-server tough-cookie got --save`
-
-- 方法二：云服务器，腾讯云函数等等
-
-需自行有云服务器，云函数等
-
-**腾云云函数使用,我说下面几点:**
-
-1先下本仓库脚本,然后本地 npm install 下载好依赖包
-
-`其中npm install 的使用,需要本地pc安装node.js可自行搜索安装`
-
-2腾讯云那边使用的时候,选择上传本地文件夹(因为在线下载的依赖包会有问题)
-
-![Snipaste_2020-08-28_09-31-42.png](icon/Snipaste_2020-08-28_09-31-42.png)
-
-3其中index.js文件,需要下面这样子写,其中require里面,你需要的是哪个脚本,就写那个脚本的名称.
-
-```
-'use strict';
-exports.main_handler = async (event, context, callback) => {
-    require('./jd_speed.js')
-}
-```
-可看看这个图片的设置
-![txy.png](icon/txy.png)
-- 方法三：GitHub action，使用教程暂且可看 [这里](https://github.com/lxk0301/scripts/issues/8)
-
-注：以上三种运行机制都是nodejs，故您需仔细阅读下面几点
+  - 缺点：需要手动运行脚本，不能自动定时运行脚本
 
 
+### 方法二：云服务器，腾讯云函数等等
+
+  - 需自行有云服务器，云函数等
+
+  - **腾云云函数使用,我说下面几点:**
+
+    - 先下本仓库脚本,然后本地 npm install 下载好依赖包
+
+    - 其中npm install 的使用,需要本地pc安装node.js可自行搜索安装
+
+    - 腾讯云那边使用的时候,选择上传本地文件夹(因为在线下载的依赖包会有问题)，如下图
+
+        ![Snipaste_2020-08-28_09-31-42.png](icon/Snipaste_2020-08-28_09-31-42.png)
+
+    - 其中index.js文件,需要下面这样子写,其中require里面,你需要的是哪个脚本,就写那个脚本的名称.
+
+        ```
+        'use strict';
+        exports.main_handler = async (event, context, callback) => {
+            require('./jd_speed.js')
+        }
+        ```
+      
+        ![txy.png](icon/txy.png)
+        
+### 方法三：GitHub action，使用教程暂且可看 [这里](githubAction.md)
+
+#### 注：以上三种运行机制都是nodejs，故您需仔细阅读下面几点
+
+    - 1、如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
+
+    - 2、方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
    
-1、如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
+    - 3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
 
-2、方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
-   
-3、获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/)
-
-- 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
+### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
 
 #### 以下内容只针对iOS用户
 
 #### ios使用多个京东账号，需要使用BoxJs保存多会话进行切换 
   
-##### 【BoxJs简单说明】[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
+##### BoxJs简单说明可看作者[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
 
-使用box可以实现远程订阅助力好友。
+使用box可以实现远程订阅助力好友(需订阅此 [链接](https://raw.githubusercontent.com/lxk0301/scripts/master/lxk0301.boxjs.json))
 
-1、BoxJs使用教程请查看Chavy频道 [Chavy频道链接](https://t.me/chavyscripts);
+- [BoxJs使用教程](https://chavyleung.gitbook.io/boxjs/)
 
-2、BoxJs教程视频 [视频链接](https://youtu.be/eIpBrRxiy0w);
+- [BoxJs教程视频](https://youtu.be/eIpBrRxiy0w)
 
-目前京东活动中以下三个脚本可以使用box功能
-
-【1】京东水果
-
-【2】京东萌宠
-
-【3】京东种豆
 
 【用box订阅的好处】
 
@@ -93,7 +84,6 @@ exports.main_handler = async (event, context, callback) => {
 
  3、box可以支持多账号
  
- [京东活动的box订阅链接](https://raw.githubusercontent.com/lxk0301/scripts/master/lxk0301.boxjs.json)
 
 #### 2个京东账号的Qumutumult X cron设置(5分钟为间隔)
 
