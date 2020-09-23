@@ -30,9 +30,29 @@
 
   - 手动点击仓库的star按钮即可  
 
-- 提供一种自动更新本仓库的办法，具体可看tg@wukongdada这篇教程 [保持自己github的forks自动和上游仓库同步的教程](http://note.youdao.com/noteshare?id=6cd72de428957d593c129749194b4352)
-它可自动PR我仓库最新代码到你自己fork的仓库去
-
+- 自动同步Fork后的代码(此部分内容由tg@wukongdada和tg@goukey提供) 注：此项目里面提供的配置文件是方案A  
+   
+  - 方案A - 强制远程分支覆盖自己的分支
+  
+      1. 参考tg@wukongdada这篇教程 [保持自己github的forks自动和上游仓库同步的教程](https://note.youdao.com/noteshare?id=6cd72de428957d593c129749194b4352) ， 安装[pull插件](https://github.com/apps/pull) 并确认此项目已在pull插件的作用下（参考@twukongdada这篇教程文中1-d）
+      
+      2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
+      
+      3. 确保pull.yml里面是`mergeMethod: hardreset`(默认就是hardreset)。
+      
+      4. ENJOY!上游更改三小时左右就会自动发起同步。
+      
+  - 方案B - 保留自己分支的修改
+    
+    > 上游变动后pull插件会自动发起pr，但如果有冲突需要自行**手动**确认。
+    > 如果上游更新涉及workflow里的文件内容改动，需要自行**手动**确认。
+    
+    1. 参考tg@wukongdada这篇教程 [保持自己github的forks自动和上游仓库同步的教程](https://note.youdao.com/noteshare?id=6cd72de428957d593c129749194b4352) ， 安装[pull插件](https://github.com/apps/pull) 并确认此项目已在pull插件的作用下（参考@twukongdada这篇教程文中1-d）
+    2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
+    3. 将pull.yml里面的`mergeMethod: hardreset`修改为`mergeMethod: merge`保存。
+    4. ENJOY!上游更改三小时左右就会自动发起同步。
+    
+    
 - 下方提供使用到的 **Secrets全集合**
 
     | Name                    |   归属   | 属性   | 说明                                                         |
