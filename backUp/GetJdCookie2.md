@@ -1,5 +1,6 @@
 ## 浏览器插件获取京东cookie教程
- > 此教程由tg用户@wukongdada提供,特此感谢
+ > 此教程内容由tg用户@wukongdada提供,特此感谢
+
  **以下浏览器都行**
 
  - Chrome浏览器
@@ -15,11 +16,11 @@
 3. edge chrome浏览器安装Cookie Editor插件
      - [edge插件商店](edge://extensions/)搜Cookie Editor，或[打开以下网址](https://microsoftedge.microsoft.com/addons/detail/cookie-editor/ajfboaconbpkglpfanbmlfgojgndmhmc?hl=zh-CN) 完成插件安装 
 4. 以下是chrome和edge的相关设置截图，输入的网址是 ``jd.com``
-    ![Chrome浏览器相关设置](../icon/jd5.jpg)
+    ![Chrome浏览器相关设置](../icon/jd5.png)
     
-    ![Edge浏览器相关设置](../icon/jd6.jpg)
+    ![Edge浏览器相关设置](../icon/jd6.png)
 5. 现在点击回到京东触屏版，再点击EditThisCookie/Cookie Editor，再点击搜索，输入key或pin，如下图所示的pt_key，复制pt_key的value值。此插件可以看到cookie的有效期。
-    ![插件显示](../icon/jd7.jpg)
+    ![插件显示](../icon/jd7.png)
 6. 按照以下格式形成自己的jd_cookie
   - `pt_key=复制插件搜索出来的key值;pt_pin=复制插件搜索出来的pin值;` ,后面的英文逗号是必须要的
   - 给一个京东cookie具体示例 `pt_key=jdDC2F833333EFDGTCE5BD4AD1A952D4F4DF84A46052;pt_pin=jd_123456;`
