@@ -3,7 +3,7 @@
 活动时间09.22日-10.09日结束
 活动地址: https://rdcseason.m.jd.com/#/index
 
-更新日期：2020-09-22
+更新日期：2020-09-24
 
 其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
 其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
@@ -67,8 +67,8 @@ const helpCode = [
       console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
       message = '';
       subTitle = '';
-      // await JD818();
-      await getListIntegral();
+      await JD818();
+      // await getListIntegral();
     }
   }
 })()
