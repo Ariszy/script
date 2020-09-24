@@ -1,5 +1,5 @@
 ## github action使用教程说明
- - Fork [此仓库项目](https://github.com/lxk0301/scripts) > 点击右上角fork按钮即可
+ - Fork [此仓库项目](https://github.com/lxk0301/scripts) > 点击右上角fork按钮即可, [再不会可看此图](icon/fork.png)
  - 然后参考github@ruicky写的特别详细的小白教程[@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)
  
 ### 注意几个地方就行
