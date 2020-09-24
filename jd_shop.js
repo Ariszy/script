@@ -77,9 +77,9 @@ async function jdShop() {
       console.log(`beanCount::${beanCount}`);
       if (beanCount > 0) {
         $.msg($.name, '', `京东账号 ${$.index} ${UserName}\n成功领取${beanCount}京豆`);
-        if ($.isNode()) {
-          await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
-        }
+        // if ($.isNode()) {
+        //   await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
+        // }
         // if ($.isNode()) {
         //   await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
         // }

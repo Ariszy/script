@@ -39,7 +39,7 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 //给下面好友赛跑助力
 let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
-// $.LKYLToken = 'c0de47109bb526ac325e34a569f889fb' || $.getdata('jdJoyRunToken');
+// $.LKYLToken = '76fe7794c475c18711e3b47185f114b5' || $.getdata('jdJoyRunToken');
 $.LKYLToken = $.getdata('jdJoyRunToken');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

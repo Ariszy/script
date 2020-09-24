@@ -8,7 +8,7 @@
     - 下面给个示例 ``pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;`` , 注:后面的英文引号`;`不可缺失
     - 京东cookie获取看这里
        - [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md), [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
-       - IOS代理软件用户有使用过BoxJs的,可在BoxJs里面提取京东cookie
+       - IOS代理软件(Surge, Quantumult X, Loon)等用户有使用过BoxJs的,可在BoxJs里面提取京东cookie(打开BoxJs -> 底部中间的 `应用` -> NobyDa脚本订阅 -> 京东(多合一签到) -> 点击会话右上方的三个点点 -> 修改会话 -> 全选复制即可)，再不会看此[图文教程](icon/jd8.png)
 
 - server酱的推送通知服务, 是可选项, 如果需要 自行申请SCKEY,再填入Secrets里面(Name选项输入 `PUSH_KEY` ,Value选项输入申请的 SCKEY)
 
@@ -20,7 +20,12 @@
     
 - 上面 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) 获取ck的方法不对。参考上面两种获取京东cookie的方式才对.
 
-- fork过后，acton没有看到运行，是因为.yml文件里面的cron时间未到，如需立马看到效果
+- 如何查看action运行情况
+    - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action1.png)
+    
+    - [查看运行日志](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action2.png)  
+
+- fork过后，如果没有看到acton运行，是因为.yml文件里面的cron时间未到，如需立马看到效果
 
   - 方法一：手动点击fork后仓库的右上角`star图标按钮`即可，稍后就能看到运行 
   - 方法二：手动点击 Run workflow [根据此图片示例操作](https://user-images.githubusercontent.com/21308593/93980945-e28ab000-fdb1-11ea-977c-c50705e79ac3.png) ，再次点一下`Actions`图标即可看到效果(或者等待10秒左右也可) 
@@ -47,7 +52,6 @@
     3. 将pull.yml里面的`mergeMethod: hardreset`修改为`mergeMethod: merge`保存。
     4. ENJOY!上游更改三小时左右就会自动发起同步。
     
-    
 - 下方提供使用到的 **Secrets全集合**
 
     | Name                    |   归属   | 属性   | 说明                                                         |
@@ -73,11 +77,15 @@
     两个账号各两个互助码的真实示例： 
     0a74407df5df4fa99672a037eec61f7e@dbb21614667246fabcfd9685b6f448f3&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6
     ```
+    ##### 关于脚本推送通知(微信server酱通知，bark通知，telegram机器人通知)
+    - 如果你填写了以上三种的中通知所需secret，那么脚本通知情况如下：
     
-- 如何查看action运行情况
-    - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action1.png)
+          目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js三个脚本每次运行后都通知
+          jd_plantBean.js是每周一收集京豆后通知一次，
+          jd_joy_reward.js是每次兑换到了京豆通知一次，
+          其余的脚本都是不通知，只有在京东cookie失效后，才会推送通知    
     
-    - [查看运行日志](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action2.png)
+
     
 ##### 参考文献
 [GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)    
