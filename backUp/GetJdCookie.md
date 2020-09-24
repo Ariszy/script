@@ -19,7 +19,7 @@
     ![再次点击我的](../icon/jd3.jpg)
 6. 点第一个链接(log.gif)进去，找到cookie，复制出来，新建一个TXT文本临时保存一下，下面需要用到
  ![寻找log.gi](../icon/jd4.jpg)
-7. 第六步复制出来的cookie比较长，我们只需要`pt_pin=xxxx;`和 `pt_key=xxxx;`部分的内容即可。可以用下面的脚本，在Chrome浏览器按F12，console里面输入下面脚本按enter回车键
+7. 第六步复制出来的cookie比较长，我们只需要`pt_pin=xxxx;`和 `pt_key=xxxx;`部分的内容即可(注:英文引号`;`是必要的)。可以用下面的脚本，在Chrome浏览器按F12，console里面输入下面脚本按enter回车键
     ```
     var CV = '单引号里面放第六步拿到的cookie';
     var CookieValue = CV.match(/pt_key=.+?;/) + CV.match(/pt_pin=.+?;/);
