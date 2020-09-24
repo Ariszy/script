@@ -39,8 +39,8 @@ const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 let invite_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
 //给下面好友赛跑助力
 let run_pins = ["jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66,jd_45a6b5953b15b,zooooo58"];
-// $.LKYLToken = 'c0de47109bb526ac325e34a569f889fb' || $.getdata('jdJoyRun');
-$.LKYLToken = $.getdata('jdJoyRun') || $.getdata('jdJoyRunToken');
+// $.LKYLToken = 'c0de47109bb526ac325e34a569f889fb' || $.getdata('jdJoyRunToken');
+$.LKYLToken = $.getdata('jdJoyRunToken');
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -102,7 +102,7 @@ function getToken() {
     const body = JSON.parse($response.body);
     const LKYLToken = body.data.token;
     $.log(`${$.name} token\n${LKYLToken}\n`)
-    if ($.getdata('jdJoyRun') || $.getdata('jdJoyRunToken')) {
+    if ($.getdata('jdJoyRunToken')) {
       $.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
     } else {
       $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
@@ -112,8 +112,8 @@ function getToken() {
   } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\?/)){
     if ($request && $request.method !== 'OPTIONS') {
       const LKYLToken = $request.headers['LKYLToken'];
-      if ($.getdata('jdJoyRun') || $.getdata('jdJoyRunToken')) {
-        $.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
+      if ($.getdata('jdJoyRunToken') && ($.getdata('jdJoyRunToken') === LKYLToken)) {
+        //$.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
       } else {
         $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
       }
@@ -124,7 +124,6 @@ function getToken() {
   }
 }
 async function main() {
-  console.log(`打印token \n${$.getdata('jdJoyRun')}\n`)
   console.log(`打印token \n${$.getdata('jdJoyRunToken')}\n`)
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -186,7 +185,6 @@ async function invite(invite_pins) {
         const LKYL_DATA = await helpInviteFriend(item);
         if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
           console.log('来客有礼宠汪汪token失效');
-          $.setdata('', 'jdJoyRun');
           $.setdata('', 'jdJoyRunToken');
           $.msg($.name, '【提示】来客有礼token失效，请重新获取', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token")
           $.LKYLLogin = false;
@@ -266,7 +264,6 @@ async function run(run_pins) {
       const LKYL_DATA = await combatHelp(item);
       if (LKYL_DATA.errorCode === 'L0001' && !LKYL_DATA.success) {
         console.log('来客有礼宠汪汪token失效');
-        $.setdata('', 'jdJoyRun');
         $.setdata('', 'jdJoyRunToken');
         $.msg($.name, '【提示】来客有礼token失效，请重新获取', "微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token")
         $.LKYLLogin = false;
