@@ -710,7 +710,7 @@ function showMsg() {
   if (Date.now() > new Date(activeEndTime).getTime()) {
     $.msg($.name, '活动已结束', `请禁用或者删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
   } else {
-    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `${$.jbeanCount ? `累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.integer ? `今日获得积分：${$.integer}个\n` : ''}${$.num ? `今日排名：${$.num}\n` : ''}\n今日参数人数：${$.lasNum}个\n具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `${$.jbeanCount ? `累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.integer ? `今日获得积分：${$.integer}个\n` : ''}${$.num ? `今日排名：${$.num}\n` : ''}今日参数人数：${$.lasNum}人\n具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
 }
 // prettier-ignore
