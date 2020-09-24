@@ -455,7 +455,7 @@ function myRank() {
         "Accept-Encoding": "gzip, deflate, br"
       }
     }
-    $.jbeanNum = 0;
+    $.jbeanNum = '';
     $.get(options, async (err, resp, data) => {
       try {
         // console.log('查询获奖列表data', data);
@@ -465,17 +465,33 @@ function myRank() {
         } else {
           data = JSON.parse(data);
           if (data.code === 200 && data.data.myHis) {
-            for (let item of data.data.myHis){
-              if (item.status === '21') {
+            for (let i = 0; i < data.data.myHis.length; i++) {
+              $.date = data.data.myHis[0].date;
+              if (data.data.myHis[i].status === '21') {
                 await $.wait(1000);
                 console.log('开始领奖')
-                let res = await saveJbean(item.id);
+                let res = await saveJbean(data.data.myHis[i].id);
                 // console.log('领奖结果', res)
                 if (res.code === 200 && res.data.rsCode === 200) {
-                  $.jbeanNum += Number(res.data.jbeanNum);
+                  // $.jbeanNum += Number(res.data.jbeanNum);
+                  console.log(`${data.data.myHis[i].date}日奖励领取成功${JSON.stringify(res.data.jbeanNum)}`)
                 }
               }
+              if (i === 0 && data.data.myHis[i].status === '22') {
+                $.jbeanNum = data.data.myHis[i].prize;
+              }
             }
+            // for (let item of data.data.myHis){
+            //   if (item.status === '21') {
+            //     await $.wait(1000);
+            //     console.log('开始领奖')
+            //     let res = await saveJbean(item.id);
+            //     // console.log('领奖结果', res)
+            //     if (res.code === 200 && res.data.rsCode === 200) {
+            //       $.jbeanNum += Number(res.data.jbeanNum);
+            //     }
+            //   }
+            // }
           }
         }
       } catch (e) {
@@ -710,7 +726,7 @@ function showMsg() {
   if (Date.now() > new Date(activeEndTime).getTime()) {
     $.msg($.name, '活动已结束', `请禁用或者删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
   } else {
-    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `${$.jbeanCount ? `累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.integer ? `今日获得积分：${$.integer}个\n` : ''}${$.num ? `今日排名：${$.num}\n` : ''}今日参数人数：${$.lasNum}人\n具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
+    $.msg($.name, `京东账号${$.index} ${$.UserName}`, `${$.jbeanCount ? `${$.integer ? `今日获得积分：${$.integer}个\n` : ''}${$.num ? `今日排名：${$.num}\n` : ''}今日参数人数：${$.lasNum}人\n累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.jbeanNum ? `${$.date}日奖品：${$.jbeanNum}\n` : ''}具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
 }
 // prettier-ignore
