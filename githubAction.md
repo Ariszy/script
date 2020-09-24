@@ -6,7 +6,8 @@
 
 - 使用action的时候其中京东的ck,不要放到 [jdCookie.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jdCookie.js) 里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
     - 下面给个示例 ``pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;``
-    - 京东cookie获取看这里 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md)
+    - 京东cookie获取看这里
+       - [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md), [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
 
 - server酱的推送通知服务, 是可选项, 如果需要 自行申请SCKEY,再填入Secrets里面(Name选项输入 `PUSH_KEY` ,Value选项输入申请的 SCKEY)
 
@@ -17,14 +18,7 @@
 
   - 根据使用经验发现github action 会有延迟现象，一般会延迟15分钟左右吧。比如设置北京时间16:00运行，action其实要16:15左右才会执行脚本的。
     
-- 上面 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) 获取ck的方法不对。继续参考我readme里面 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md) 获取ck。
-不过这里面获取的ck比较长，可以用下面的脚本，在Chrome浏览器按F12，console里面输入下面脚本按enter回车键，这样子整理出关键的ck已经在你的剪贴板上， 可直接粘贴
-
-    ```
-    var CV = '这里单引号里面放 https://shimo.im/docs/CTwhjpG6ydvC3qJJ/ 方法获取的 ck';
-    var CookieValue = CV.match(/pt_key=.+?;/) + CV.match(/pt_pin=.+?;/);
-    copy(CookieValue);
-    ```
+- 上面 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) 获取ck的方法不对。参考上面两种获取京东cookie的方式才对.
 
 - fork过后，acton没有看到运行，是因为.yml文件里面的cron时间未到，如需立马看到效果
 

@@ -41,7 +41,7 @@
 
   - 方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
    
-  - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md)
+  - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
     
 
 ### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
