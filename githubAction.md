@@ -22,8 +22,8 @@
 
 - fork过后，acton没有看到运行，是因为.yml文件里面的cron时间未到，如需立马看到效果
 
-  - 手动点击仓库的star按钮即可 
-  - 手动点击 Run workflow [根据此图片示例操作](https://user-images.githubusercontent.com/21308593/93980945-e28ab000-fdb1-11ea-977c-c50705e79ac3.png) 
+  - 方法一：手动点击fork后仓库的右上角`star图标按钮`即可，稍后就能看到运行 
+  - 方法二：手动点击 Run workflow [根据此图片示例操作](https://user-images.githubusercontent.com/21308593/93980945-e28ab000-fdb1-11ea-977c-c50705e79ac3.png) ，再次点一下`Actions`图标即可看到效果(或者等待10秒左右也可) 
 
 - 自动同步Fork后的代码(此部分内容由tg@wukongdada和tg@goukey提供) 注：此项目里面提供的配置文件是方案A  
    
