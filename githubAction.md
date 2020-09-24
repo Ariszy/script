@@ -74,10 +74,10 @@
     0a74407df5df4fa99672a037eec61f7e@dbb21614667246fabcfd9685b6f448f3&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6
     ```
     
-- 如何查看运行状态
+- 如何查看action运行情况
     - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action1.png)
     
-    - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action2.png)
+    - [查看运行日志](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action2.png)
     
 ##### 参考文献
 [GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)    
