@@ -88,6 +88,8 @@
 
     
 ##### 参考文献
-[GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)    
+[GitHub Actions 手动触发方式进化史](https://p3terx.com/archives/github-actions-manual-trigger.html)
+    
 [GitHub Actions 入门教程](https://p3terx.com/archives/github-actions-started-tutorial.html)
-[@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)
+
+[github@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)

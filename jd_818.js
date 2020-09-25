@@ -47,12 +47,11 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020-10-10';
 const helpCode = [
-  '39fcf727-b63a-4d47-bd51-89f45f49d2e7',
-  'adebe14d-5c11-4f59-878f-10f344570b30',
-  'a08a50a3-2812-426c-b3f6-b089a6d3e9f1',
-  '938a8ba7-ceda-4342-ad34-68757c96bd96',
-  '29bb4e72-9dde-4272-bde6-9e7d7c38434c',
-  '8c96ec1f-bc51-4e57-9a61-a7ebe8435db2'
+  '35f554ac-3a54-45aa-b76d-84fe571924de',
+  '34ec7b53-a8ee-43e6-bc80-c90441300d2f',
+  'aca81f5b-729c-466f-a93e-633ee02c6e4d',
+  '9a1715aa-60fc-4285-bc0f-5ed07a0c22b4',
+  '06c41937-ad00-4152-829d-bc73d8dae39a'
 ];
 !(async () => {
   if (!cookiesArr[0]) {
@@ -68,7 +67,7 @@ const helpCode = [
       message = '';
       subTitle = '';
       await JD818();
-      // await getListIntegral();
+      // await getHelp();
     }
   }
 })()
