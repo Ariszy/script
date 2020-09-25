@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-09-06
+更新时间:2020-09-25
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -84,7 +84,7 @@ async function jdPet() {
       return
     }
     goodsUrl = $.petInfo.goodsInfo && $.petInfo.goodsInfo.goodsUrl;
-    option['media-url'] = goodsUrl;
+    // option['media-url'] = goodsUrl;
     // console.log(`初始化萌宠信息完成: ${JSON.stringify(petInfo)}`);
     if ($.petInfo.petStatus === 5 && $.petInfo.showHongBaoExchangePop) {
       option['open-url'] = "openApp.jdMobile://";

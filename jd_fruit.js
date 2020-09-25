@@ -1,6 +1,6 @@
 /*
 jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
-更新时间:2020-09-08
+更新时间:2020-09-26
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -61,7 +61,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action'
 async function jdFruit() {
   await initForFarm();
   if ($.farmInfo.farmUserPro) {
-    option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
+    // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
     subTitle = `【水果名称】${$.farmInfo.farmUserPro.name}`;
     message = `【京东账号${$.index}】${UserName}\n`;
     console.log(`\n【您的互助码shareCode】 ${$.farmInfo.farmUserPro.shareCode}\n`);
