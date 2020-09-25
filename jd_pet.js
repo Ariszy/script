@@ -39,6 +39,7 @@ let function_map = {
   browseSingleShopInit: browseSingleShopInit, //浏览店铺1
   browseSingleShopInit2: browseSingleShopInit2, //浏览店铺2
   browseSingleShopInit3: browseSingleShopInit3, //浏览店铺3
+  browseSingleShopInit4: browseSingleShopInit4, //浏览店铺4
   browseShopsInit: browseShopsInit, //浏览店铺s, 目前只有一个店铺
   firstFeedInit: firstFeedInit, //首次喂食
   inviteFriendsInit: inviteFriendsInit, //邀请好友, 暂未处理
@@ -351,7 +352,19 @@ async function browseSingleShopInit3() {
     }
   }
 }
-
+async function browseSingleShopInit4() {
+  console.log('准备完成 去逛逛好货会场 - 任务');
+  const body = {"index":3,"version":1,"type":1};
+  const body2 = {"index":3,"version":1,"type":2};
+  const response = await request("getSingleShopReward", body);
+  if (response.code === '0' && response.resultCode === '0') {
+    const response2 = await request("getSingleShopReward", body2);
+    console.log(`②浏览指定店铺结果: ${JSON.stringify(response2)}`);
+    if (response2.code === '0' && response2.resultCode === '0') {
+      message += `【去逛逛好货会场】获取狗粮${response2.result.reward}g\n`;
+    }
+  }
+}
 // 浏览店铺任务, 任务可能为多个? 目前只有一个
 async function browseShopsInit() {
   console.log('开始浏览店铺任务');
