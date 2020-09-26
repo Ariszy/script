@@ -43,8 +43,8 @@ if (process.env.BARK_PUSH) {
     BARK_SOUND = process.env.BARK_SOUND
   }
 } else {
-  if(BARK_PUSH.indexOf('https') === -1 && BARK_PUSH.indexOf('http') === -1) {
-    //兼容BARK自建用户
+  if(BARK_PUSH && BARK_PUSH.indexOf('https') === -1 && BARK_PUSH.indexOf('http') === -1) {
+    //兼容BARK本地用户只填写设备码的情况
     BARK_PUSH = `https://api.day.app/${BARK_PUSH}`
   }
 }
