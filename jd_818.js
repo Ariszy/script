@@ -75,8 +75,8 @@ const helpCode = [
       console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
       message = '';
       subTitle = '';
-      // await JD818();
-      await getHelp();
+      await JD818();
+      // await getHelp();
     }
   }
 })()
