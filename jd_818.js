@@ -45,20 +45,22 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const activeEndTime = '2020-10-10';
+const activeEndTime = '2020-10-10 01:00:00';
 const helpCode = [
-  '35f554ac-3a54-45aa-b76d-84fe571924de',
-  '34ec7b53-a8ee-43e6-bc80-c90441300d2f',
-  'aca81f5b-729c-466f-a93e-633ee02c6e4d',
-  '9a1715aa-60fc-4285-bc0f-5ed07a0c22b4',
-  '06c41937-ad00-4152-829d-bc73d8dae39a',
-  '5fedd1e0-8e27-4dd2-8a9b-2c609639f3eb',
-  '0acecdfc-4047-4896-8a24-f6926259fc86',
-  'c08b46fa-c911-41cf-81d1-8aa575b26c86',
-  '3891f118-40bb-4754-b753-c57e6dcbcd44',
-  '3d442208-d83d-46ff-af28-c14edac1f72f',
-  '817ab5af-f5b9-443e-be47-a6127089e280',
-  '7897f2cd-504d-4757-9908-e790b2e04966',
+  'b53b0b96-a7e9-4fe4-b4ca-5f0a7310707c',
+  '1299add1-2da3-4a47-860f-0811c72064ff',
+  'd2150a94-42b7-440c-aa96-e9f10d636bd4',
+  '7fd0edf1-6ba0-4abd-b595-486e73055e84',
+  '842b8043-b113-4546-bccc-41f8a029a9fd',
+  '31bebc1e-7dd1-4346-a650-fc1c3c08e240',
+  '1907aa50-514e-4aca-a238-fe98120bfad0',
+  'a14c37a0-9ae5-4cf7-9895-78b69b728c8a',
+  'f0114e56-35b1-42fa-9f82-50aa41271ad1',
+  '9290e100-7313-455e-85cd-357124dc27ab',
+  'c8effcdf-1a56-4d54-9c92-d24ece610b70',
+  '66829dac-a769-46d2-aa26-53ca15d157c6',
+  'a4c3d308-a522-4514-88c6-914aea08102b',
+  '150c2e91-1154-48a6-b1e0-421a0a6e638e',
 ];
 !(async () => {
   if (!cookiesArr[0]) {
@@ -73,8 +75,8 @@ const helpCode = [
       console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
       message = '';
       subTitle = '';
-      await JD818();
-      // await getHelp();
+      // await JD818();
+      await getHelp();
     }
   }
 })()
@@ -730,7 +732,8 @@ function getListRank() {
 }
 function showMsg() {
   if (Date.now() > new Date(activeEndTime).getTime()) {
-    $.msg($.name, '活动已结束', `请禁用或者删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
+    $.msg($.name, '活动已结束', `请删除此脚本或者删除.github/workflows/jd_818.yml文件\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts\n`, {"open-url": "https://github.com/lxk0301/scripts"});
+    notify.sendNotify($.name + '活动已结束', `请禁用或者删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\n https://github.com/lxk0301/scripts`)
   } else {
     $.msg($.name, `京东账号${$.index} ${$.UserName}`, `${$.jbeanCount ? `${$.integer ? `今日获得积分：${$.integer}个\n` : ''}${$.num ? `今日排名：${$.num}\n` : ''}今日参数人数：${$.lasNum}人\n累计获得京豆：${$.jbeanCount}个🐶\n` : ''}${$.jbeanCount ? `累计获得积分：${$.integralCount}个\n` : ''}${$.jbeanNum ? `${$.date}日奖品：${$.jbeanNum}\n` : ''}具体详情点击弹窗跳转后即可查看`, {"open-url": "https://rdcseason.m.jd.com/#/hame"});
   }
