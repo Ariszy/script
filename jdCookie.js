@@ -14,6 +14,8 @@ if (process.env.JD_COOKIE && process.env.JD_COOKIE.split('&') && process.env.JD_
   } else if (process.env.JD_COOKIE.indexOf('\n') > -1) {
     console.log(`您的cookie选择的是用换行隔开\n`)
     CookieJDs = process.env.JD_COOKIE.split('\n');
+  } else {
+    CookieJDs = process.env.JD_COOKIE
   }
   console.log(`\n==================脚本执行来自 github action=====================\n`)
   console.log(`==================脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}=====================\n`)
