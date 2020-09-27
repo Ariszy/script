@@ -28,6 +28,7 @@ jobs:
           node jd_pet.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
+          JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           PetShareCodes: ${{ secrets.PETSHARECODES }}
