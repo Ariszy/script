@@ -10,7 +10,7 @@
 - 使用action的时候其中京东的ck,不要放到 [jdCookie.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jdCookie.js) 里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
     - 下面给个示例 ``pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;`` , 注:后面的英文引号`;`不可缺失
     - 京东cookie获取看这里
-       - [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md), [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
+       - [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
        - IOS代理软件(Surge, Quantumult X, Loon)等用户有使用过BoxJs的,可在BoxJs里面提取京东cookie(打开BoxJs -> 底部中间的 `应用` -> NobyDa脚本订阅 -> 京东(多合一签到) -> 点击会话右上方的三个点点 -> 修改会话 -> 全选复制即可)，再不会看此[图文教程](icon/jd8.png)
        - (新增兼容多个京东cookie可以换行)目前多个账号的cookie，可以使用按`Enter`键换行隔开
            ```
@@ -65,7 +65,7 @@
 
     | Name                    |   归属   | 属性   | 说明                                                         |
     | ----------------------- | :----------: | --------- | ------------------------------------------------------------ |
-    | `JD_COOKIE`             |   京东   | 必须   | 京东cookie,具体获取参考[Cookie获取教程](https://shimo.im/docs/CTwhjpG6ydvC3qJJ/read) |
+    | `JD_COOKIE`             |   京东   | 必须   | 京东cookie,具体获取参考[浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md) 或者 [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md) |
     | `JD_DEBUG`             |   脚本打印log   | 非必须   | 运行脚本时，是否显示log,默认显示。改成false表示不显示，注重隐私的人可以在设置secret -> `Name:JD_DEBUG,Value:false` |
     | `PUSH_KEY`              |   微信推送   | 非必须 | cookie失效推送[server酱的微信通知](http://sc.ftqq.com/3.version) |
     | `BARK_PUSH`             |   BARK推送   | 非必须 | cookie失效推送BARK这个APP,填写内容是app提供的 IP/设备码，例如：https://api.day.app/XXXXXXXX |
