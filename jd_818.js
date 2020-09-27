@@ -47,20 +47,23 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020-10-10 01:00:00';
 const helpCode = [
-  'b53b0b96-a7e9-4fe4-b4ca-5f0a7310707c',
-  '1299add1-2da3-4a47-860f-0811c72064ff',
-  'd2150a94-42b7-440c-aa96-e9f10d636bd4',
-  '7fd0edf1-6ba0-4abd-b595-486e73055e84',
-  '842b8043-b113-4546-bccc-41f8a029a9fd',
-  '31bebc1e-7dd1-4346-a650-fc1c3c08e240',
-  '1907aa50-514e-4aca-a238-fe98120bfad0',
-  'a14c37a0-9ae5-4cf7-9895-78b69b728c8a',
-  'f0114e56-35b1-42fa-9f82-50aa41271ad1',
-  '9290e100-7313-455e-85cd-357124dc27ab',
-  'c8effcdf-1a56-4d54-9c92-d24ece610b70',
-  '66829dac-a769-46d2-aa26-53ca15d157c6',
-  'a4c3d308-a522-4514-88c6-914aea08102b',
-  '150c2e91-1154-48a6-b1e0-421a0a6e638e',
+  '1e9ad1de-9ded-48f2-9f0c-9b8e83293d3e',
+  'c2c10c1b-56a7-429d-9d25-094b7b55a1bf',
+  '4cf93a94-db8f-43e3-81e2-a7b6fddd0de8',
+  '21ab1797-15b1-483d-b9ff-00edf4fe4e51',
+  '46d844e2-42d8-4e85-b278-e36185450f01',
+  'c594d379-433e-4eeb-9610-a1fe2e13d206',
+  '90241790-6c6a-478f-a631-3b9f48fcdb74',
+  '50600b37-11f1-40ae-934c-5c75cb69404c',
+  'a5cc69b3-c784-4a62-8cbb-7a6244be302b',
+  '2135cd61-b1a2-4287-8fb9-6f9247e92448',
+  '446fd310-d55f-4eff-9888-4e5c30ba8c2f',
+  'f40d34dd-86ab-435e-ac12-5cb684200b13',
+  '79960954-e290-4a6c-acf2-056fe2e17c0f',
+  '9c419081-06ec-4954-b823-36f7aa57e3e1',
+  'ca4e85f9-2288-4fca-8552-917ea4bea6c2',
+  '4865845a-0567-4a61-8c1e-26da42ae0911',
+  'a1306608-c1b5-40ef-a003-23153fc961fd',
 ];
 !(async () => {
   if (!cookiesArr[0]) {
@@ -77,6 +80,7 @@ const helpCode = [
       subTitle = '';
       await JD818();
       // await getHelp();
+      // await doHelp();
     }
   }
 })()
@@ -545,7 +549,11 @@ function saveJbean(id) {
 }
 async function doHelp() {
   for (let item of helpCode) {
-    await toHelp(item);
+    const helpRes = await toHelp(item);
+    if (helpRes.data.status === 5) {
+      console.log(`助力机会已耗尽，跳出助力`);
+      break;
+    }
   }
 }
 
@@ -574,6 +582,7 @@ function toHelp(code) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
+          console.log(data);
           data = JSON.parse(data);
         }
       } catch (e) {
