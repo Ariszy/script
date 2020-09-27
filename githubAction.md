@@ -9,7 +9,13 @@
     - 京东cookie获取看这里
        - [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md), [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
        - IOS代理软件(Surge, Quantumult X, Loon)等用户有使用过BoxJs的,可在BoxJs里面提取京东cookie(打开BoxJs -> 底部中间的 `应用` -> NobyDa脚本订阅 -> 京东(多合一签到) -> 点击会话右上方的三个点点 -> 修改会话 -> 全选复制即可)，再不会看此[图文教程](icon/jd8.png)
-
+       - (新增兼容多个京东cookie可以换行)目前多个账号的cookie，可以使用按`Enter`键换行隔开
+           ```
+            这里给下三个账号的示例：
+            pt_key=bbbbbbbbbbbbbb;pt_pin=aaaaaaa;
+            pt_key=cccccccc;pt_pin=dddddddd;
+            pt_key=eeeeeeeee;pt_pin=ffffffff;
+           ```
 - server酱的推送通知服务, 是可选项, 如果需要 自行申请SCKEY,再填入Secrets里面(Name选项输入 `PUSH_KEY` ,Value选项输入申请的 SCKEY)
 
 - cron时间是按国际标准时间来的， 和北京时间不同，github action写16点才表示北京时间0点，具体可参考下面两个链接写cron
