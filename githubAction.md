@@ -4,6 +4,9 @@
  
 ### 注意几个地方就行
 
+- 如果actions出现没有定时执行情况，就修改一下`README.md`文件(enter键回车添加一个空格)，再提交(或者随便找个文件修改一下)。之后再观察一下，不出意外应该是会执行定时任务了。
+    - 不知怎么修改README.md文件的看[这个图](icon/action3.png);
+     
 - 使用action的时候其中京东的ck,不要放到 [jdCookie.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jdCookie.js) 里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
     - 下面给个示例 ``pt_key=xxx1;pt_pin=xxx1;&pt_key=xxx2;pt_pin=xxx2;&pt_key=xxx3;pt_pin=xxx3;`` , 注:后面的英文引号`;`不可缺失
     - 京东cookie获取看这里
@@ -85,12 +88,12 @@
     0a74407df5df4fa99672a037eec61f7e@dbb21614667246fabcfd9685b6f448f3&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6
     ```
     ##### 关于脚本推送通知(微信server酱通知，bark通知，telegram机器人通知)
-    - 如果你填写了以上三种的中通知所需secret，那么脚本通知情况如下：
+    - 如果你填写了上面三种推送通知方式中的某一个通知所需secret，那么脚本通知情况如下：
     
-          目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js三个脚本每次运行后都通知
+          目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js三个脚本每次运行后都通知(其中jd_fruit.js,jd_pet.js的通知频率可设置新的secret来控制，具体详情见sendNotify.js文件的说明)
           jd_plantBean.js是每周一收集京豆后通知一次，
           jd_joy_reward.js是每次兑换到了京豆通知一次，
-          其余的脚本都是不通知，只有在京东cookie失效后，才会推送通知    
+          其余的脚本平常运行都是不通知，只有在京东cookie失效后，才会推送通知    
     
 
     
