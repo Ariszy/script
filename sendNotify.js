@@ -21,6 +21,12 @@ let TG_BOT_TOKEN = '';
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_USER_ID)
 let TG_USER_ID = '';
 
+// =======================================钉钉机器人通知设置区域===========================================
+//此处填你钉钉 bot 的webhook，例如：5a544165465465645d0f31dca676e7bd07415asdasd
+//注：此处设置github action用户填写到Settings-Secrets里面(Name输入DD_BOT_TOKEN)
+let DD_BOT_TOKEN = '';
+
+
 //运行农场脚本是否静默运行(即：不推送通知),false打开通知推送，true关闭通知推送
 //注：此处设置github action用户填写到Settings-Secrets里面(Name输入 FRUIT_NOTIFY_CONTROL , Value填写true或者false)
 let fruitNotifyControl = false;//(默认农场脚本推送通知)
@@ -55,6 +61,10 @@ if (process.env.TG_USER_ID) {
   TG_USER_ID = process.env.TG_USER_ID;
 }
 
+if (process.env.DD_BOT_TOKEN) {
+  DD_BOT_TOKEN = process.env.DD_BOT_TOKEN;
+}
+
 if (process.env.FRUIT_NOTIFY_CONTROL) {
   fruitNotifyControl = process.env.FRUIT_NOTIFY_CONTROL;
 }
@@ -62,10 +72,11 @@ if (process.env.PET_NOTIFY_CONTROL) {
   petNotifyControl = process.env.PET_NOTIFY_CONTROL;
 }
 async function sendNotify(text, desp) {
-  //提供三种通知
+  //提供四种通知
   await serverNotify(text, desp);
   await BarkNotify(text, desp);
   await tgBotNotify(text, desp);
+  await ddBotNotify(text, desp);
 }
 
 function serverNotify(text, desp) {
@@ -168,6 +179,45 @@ function tgBotNotify(text, desp) {
       })
     } else {
       console.log('\n您未提供telegram机器人推送所需的TG_BOT_TOKEN和TG_USER_ID，取消telegram推送消息通知\n');
+      resolve()
+    }
+  })
+}
+function ddBotNotify(text, desp) {
+  return  new Promise(resolve => {
+    if (DD_BOT_TOKEN) {
+      const options = {
+        url: `https://oapi.dingtalk.com/robot/send?access_token=${DD_BOT_TOKEN}`,
+        json: {
+          "msgtype": "text", 
+          "text": {
+              "content":` ${text}\n\n${desp}`
+          }
+      },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      $.post(options, (err, resp, data) => {
+        try {
+          if (err) {
+            console.log('\n钉钉发送通知消息失败！！\n')
+          } else {
+            data = JSON.parse(data);
+            if (data.errcode === 0) {
+              console.log('\n钉钉发送通知消息完成。\n')
+            } else {
+              console.log(`\n${data.errmsg}\n`)
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(data);
+        }
+      })
+    } else {
+      console.log('\n您未提供钉钉机器人推送所需的DD_BOT_TOKEN，取消钉钉推送消息通知\n');
       resolve()
     }
   })
