@@ -64,7 +64,7 @@ if ($.isNode()) {
           if (BarkContent) {
             // await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
             // BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
-            await notify.sendNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】:  ${beanSignTime}\n${BarkContent}`);
+            await notify.sendNotify(`账号${$.index} ${UserName}京豆签到`, `【签到时间】:  ${beanSignTime}\n${BarkContent}`);
           }
         }
         //运行完成后，删除下载的文件
