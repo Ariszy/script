@@ -36,3 +36,4 @@ jobs:
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}
           BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
