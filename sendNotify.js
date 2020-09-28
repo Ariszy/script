@@ -262,6 +262,7 @@ module.exports = {
   BARK_PUSH,
   TG_BOT_TOKEN,
   TG_USER_ID,
+  DD_BOT_TOKEN,
   fruitNotifyControl,
   petNotifyControl
 }

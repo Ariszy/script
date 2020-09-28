@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-09-09
+更新时间：2020-09-28
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -42,9 +42,15 @@ if ($.isNode()) {
       console.log('替换变量完毕')
       // 执行
       try {
-        await exec("node JD_DailyBonus.js >> result.txt");
+        if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID)) {
+          await exec("node JD_DailyBonus.js >> result.txt");
+        } else {
+          // 如果没有提供通知推送，则打印日志
+          console.log('没有提供通知推送，则打印脚本执行日志')
+          await exec(`node JD_DailyBonus.js`, { stdio: "inherit" });
+        }
         // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
-        console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
+        // console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
         //发送通知
         if ($.isNode()) {
           let content = "";
@@ -60,7 +66,7 @@ if ($.isNode()) {
           }
           //由于在github action上面执行，故执行时间是UTC(国际标准时间)，现转换成北京时间
           const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
-          console.log(`时间：${beanSignTime}`)
+          console.log(`执行完毕北京时间：${beanSignTime}`)
           if (BarkContent) {
             // await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
             // BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
@@ -81,8 +87,12 @@ if ($.isNode()) {
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 async function downFile () {
-  // const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js'
-  const url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';//pc端测试用
+  let url = '';
+  if (process.env.JD_COOKIE) {
+    url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
+  } else {
+    url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';//pc端测试用
+  }
   await download(url, './')
 }
 
