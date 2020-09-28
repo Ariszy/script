@@ -72,6 +72,7 @@
     | `BARK_SOUND`            |   BARK推送   | 非必须 | bark推送声音设置，例如`choo`,具体值请在`bark`-`推送铃声`-`查看所有铃声` |
     | `TG_BOT_TOKEN`          |   telegram推送   | 非必须 | tg推送,填写自己申请[@BotFather](https://t.me/BotFather)的Token,如`10xxx4:AAFcqxxxxgER5uw` , [具体教程](https://github.com/lxk0301/scripts/pull/37#issuecomment-692415594) |
     | `TG_USER_ID`            |   telegram推送   | 非必须 | tg推送,填写[@getuseridbot](https://t.me/getuseridbot)中获取到的纯数字ID, [具体教程](https://github.com/lxk0301/scripts/pull/37#issuecomment-692415594) |
+    | `DD_BOT_TOKEN`          |   钉钉推送   | 非必须 | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq) |
     | `PET_NOTIFY_CONTROL`    | 推送开关  | 非必须 | 控制京东萌宠是否通知,`false`为通知,`true`不通知              |
     | `FRUIT_NOTIFY_CONTROL`  | 推送开关  | 非必须 | 控制京东农场是否通知,`false`为通知,`true`不通知              |
     | `FruitShareCodes`       |  东东农场互助码  | 非必须 | 填写规则请看 [jdFruitShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdFruitShareCodes.js) |
@@ -88,7 +89,7 @@
     0a74407df5df4fa99672a037eec61f7e@dbb21614667246fabcfd9685b6f448f3&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6&6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6
     ```
     ##### 关于脚本推送通知(微信server酱通知，bark通知，telegram机器人通知)
-    - 如果你填写了上面三种推送通知方式中的某一个通知所需secret，那么脚本通知情况如下：
+    - 如果你填写了上面四种推送通知方式中的某一个通知所需secret，那么脚本通知情况如下：
     
           目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js三个脚本每次运行后都通知(其中jd_fruit.js,jd_pet.js的通知频率可设置新的secret来控制，具体详情见sendNotify.js文件的说明)
           jd_plantBean.js是每周一收集京豆后通知一次，
