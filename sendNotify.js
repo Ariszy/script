@@ -95,6 +95,7 @@ function serverNotify(text, desp) {
         try {
           if (err) {
             console.log('\n发送通知调用API失败！！\n')
+            console.log(err);
           } else {
             data = JSON.parse(data);
             if (data.errno === 0) {
@@ -126,6 +127,7 @@ function BarkNotify(text, desp) {
         try {
           if (err) {
             console.log('\nBark APP发送通知调用API失败！！\n')
+            console.log(err);
           } else {
             data = JSON.parse(data);
             if (data.code === 200) {
@@ -161,6 +163,7 @@ function tgBotNotify(text, desp) {
         try {
           if (err) {
             console.log('\ntelegram发送通知消息失败！！\n')
+            console.log(err);
           } else {
             data = JSON.parse(data);
             if (data.ok) {
@@ -189,11 +192,11 @@ function ddBotNotify(text, desp) {
       const options = {
         url: `https://oapi.dingtalk.com/robot/send?access_token=${DD_BOT_TOKEN}`,
         json: {
-          "msgtype": "text", 
+          "msgtype": "text",
           "text": {
-              "content":` ${text}\n\n${desp}`
+            "content": ` ${text}\n\n${desp}`
           }
-      },
+        },
         headers: {
           'Content-Type': 'application/json'
         }
@@ -202,6 +205,7 @@ function ddBotNotify(text, desp) {
         try {
           if (err) {
             console.log('\n钉钉发送通知消息失败！！\n')
+            console.log(err);
           } else {
             data = JSON.parse(data);
             if (data.errcode === 0) {
