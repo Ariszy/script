@@ -7,7 +7,7 @@
  Surge
  喜马拉雅极速版Cookie = type=http-request,pattern=https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmly_speed_ccokie.js
  Loon:
- https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmly_speed_ccokie.js
+ http-request https:\/\/m\.ximalaya\.com\/speed\/task-center\/account\/coin script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmly_speed_ccokie.js
  , requires-body=true, timeout=10, tag=喜马拉雅极速版Cookie
  QX:
  [rewrite_local]
@@ -26,7 +26,7 @@ function GetCookie() {
   if ($request && $request.method != 'OPTIONS') {
     const cookieVal = $request.headers['Cookie'];
     console.log(`喜马拉雅极速版cookie:\n${cookieVal}\n`);
-    if (cookieVal) sy.setdata(cookieVal, CookieKey);
+    if (cookieVal) $.setdata(cookieVal, CookieKey);
     $.msg($.name, `获取Cookie: 成功🎉`, `请去代理软件的日志里面寻找复制`);
     $.done();
   }
