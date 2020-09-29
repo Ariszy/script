@@ -54,6 +54,7 @@ const helpCode = [
   '07f06ce0-2ef7-40db-b5b5-addd4489eb21',
   '5fa19136-b7dd-434a-90a9-ab62ea97f541',
   'c3a7474a-1e1f-461f-8dbb-5311ab8813f8',
+  '09e89bb2-782e-4698-b79d-885fa845a673',
   '9ad14eb2-57a5-4ef4-8cfe-841d9f2c9aa7',
   '24fd3558-8a56-4b93-9e92-ebda8869e391',
   '6ddac7c0-6730-4aa0-a87a-1af7b282ecf9',
