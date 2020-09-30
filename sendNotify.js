@@ -206,10 +206,11 @@ function ddBotNotify(text, desp) {
     }
     if (DD_BOT_TOKEN && DD_BOT_SECRET) {
       const crypto = require('crypto');
+      const dateNow = Date.now();
       const hmac = crypto.createHmac('sha256', DD_BOT_SECRET);
-      hmac.update(`${Date.now()}\n${DD_BOT_SECRET}`);
+      hmac.update(`${dateNow}\n${DD_BOT_SECRET}`);
       const result = encodeURIComponent(hmac.digest('base64'));
-      options.url = `${options.url}&timestamp=${Date.now()}&sign=${result}`;
+      options.url = `${options.url}&timestamp=${dateNow}&sign=${result}`;
       $.post(options, (err, resp, data) => {
         try {
           if (err) {
