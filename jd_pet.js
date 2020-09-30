@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-09-25
+更新时间:2020-09-30
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -32,19 +32,7 @@ let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭
 let jdServerNotify = true;//是否每次运行脚本后，都发送server酱微信通知提醒,默认是true【true:发送，false:不发送】
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let goodsUrl = '', taskInfoKey = [];
-//按顺序执行, 尽量先执行不消耗狗粮的任务, 避免中途狗粮不够, 而任务还没做完
-let function_map = {
-  signInit: signInit, //每日签到
-  threeMealInit: threeMealInit, //三餐
-  browseSingleShopInit: browseSingleShopInit, //浏览店铺1
-  browseSingleShopInit2: browseSingleShopInit2, //浏览店铺2
-  browseSingleShopInit3: browseSingleShopInit3, //浏览店铺3
-  browseSingleShopInit4: browseSingleShopInit4, //浏览店铺4
-  browseShopsInit: browseShopsInit, //浏览店铺s, 目前只有一个店铺
-  firstFeedInit: firstFeedInit, //首次喂食
-  inviteFriendsInit: inviteFriendsInit, //邀请好友, 暂未处理
-  feedReachInit: feedReachInit, //喂食10次任务  最后执行投食10次任务, 提示剩余狗粮是否够投食10次完成任务, 并询问要不要继续执行
-}
+
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -175,25 +163,50 @@ async function feedPetsAgain() {
 
 
 async function doTask() {
-  $.taskInfo['taskList'].forEach((val) => {
-    taskInfoKey.push(val);
-  })
-  // 任务开始
-  for (let task_name in function_map) {
-    if (taskInfoKey.indexOf(task_name) !== -1) {
-      taskInfoKey.splice(taskInfoKey.indexOf(task_name), 1);
-    }
-    if ($.taskInfo[task_name] && !$.taskInfo[task_name].finished) {
-      console.log('任务' + task_name + '开始');
-      // yield eval(task_name + '()');
-      await function_map[task_name]();
-    } else {
-      console.log('任务' + task_name + '已完成');
+  const { signInit, threeMealInit, firstFeedInit, feedReachInit, inviteFriendsInit, browseShopsInit, taskList } = $.taskInfo;
+  for (let item of taskList) {
+    if ($.taskInfo[item].finished) {
+      console.log(`任务 ${item} 已完成`)
     }
   }
-  for (let item of taskInfoKey) {
-    console.log(`新任务 【${$.taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`);
-    $.msg($.name, subTitle, `新的任务 【${$.taskInfo[item].title}】 功能未开发，请反馈给脚本维护者@lxk0301\n`, {"open-url": "https://t.me/JD_fruit_pet"})
+  //每日签到
+  if (signInit && !signInit.finished) {
+    await signInitFun();
+  }
+  // 首次喂食
+  if (firstFeedInit && !firstFeedInit.finished) {
+    await firstFeedInitFun();
+  }
+  // 三餐
+  if (threeMealInit && !threeMealInit.finished) {
+    if (threeMealInit.timeRange === -1) {
+      console.log(`未到三餐时间`);
+      return
+    }
+    await threeMealInitFun();
+  }
+  if (browseShopsInit && !browseShopsInit.finished) {
+    await browseShopsInitFun();
+  }
+  let browseSingleShopInitList = [];
+  taskList.map((item) => {
+    if (item.indexOf('browseSingleShopInit') > -1) {
+      browseSingleShopInitList.push(item);
+    }
+  });
+  // 去逛逛好货会场
+  for (let item of browseSingleShopInitList) {
+    const browseSingleShopInitTask = $.taskInfo[item];
+    if (browseSingleShopInitTask && !browseSingleShopInitTask.finished) {
+      await browseSingleShopInit(browseSingleShopInitTask);
+    }
+  }
+  if (inviteFriendsInit && !inviteFriendsInit.finished) {
+    await inviteFriendsInitFun();
+  }
+  // 投食10次
+  if (feedReachInit && !feedReachInit.finished) {
+    await feedReachInitFun();
   }
 }
 // 好友助力信息
@@ -287,7 +300,7 @@ async function taskInit() {
   $.taskInit = await request(arguments.callee.name.toString(), {"version":1});
 }
 // 每日签到, 每天一次
-async function signInit() {
+async function signInitFun() {
   console.log('准备每日签到');
   const response = await request("getSignReward");
   console.log(`每日签到结果: ${JSON.stringify(response)}`);
@@ -299,7 +312,7 @@ async function signInit() {
 }
 
 // 三餐签到, 每天三段签到时间
-async function threeMealInit() {
+async function threeMealInitFun() {
   console.log('准备三餐签到');
   const response = await request("getThreeMealReward");
   console.log(`三餐签到结果: ${JSON.stringify(response)}`);
@@ -311,62 +324,23 @@ async function threeMealInit() {
 }
 
 // 浏览指定店铺 任务
-async function browseSingleShopInit() {
-  console.log('准备浏览指定店铺');
-  const body = {"index":0,"version":1,"type":1};
+async function browseSingleShopInit(item) {
+  console.log(`开始做 ${item.title} 任务， ${item.desc}`);
+  const body = {"index": item['index'], "version":1, "type":1};
+  const body2 = {"index": item['index'], "version":1, "type":2};
   const response = await request("getSingleShopReward", body);
-  console.log(`点击进去response::${JSON.stringify(response)}`);
+  // console.log(`点击进去response::${JSON.stringify(response)}`);
   if (response.code === '0' && response.resultCode === '0') {
-    const body2 = {"index":0,"version":1,"type":2};
     const response2 = await request("getSingleShopReward", body2);
-    console.log(`浏览完毕领取奖励:response2::${JSON.stringify(response2)}`);
+    // console.log(`浏览完毕领取奖励:response2::${JSON.stringify(response2)}`);
     if (response2.code === '0' && response2.resultCode === '0') {
       message += `【浏览指定店铺】获取${response2.result.reward}g\n`;
     }
   }
 }
-// 临时新增任务--冰淇淋会场
-async function browseSingleShopInit2() {
-  console.log('准备浏览指定店铺--冰淇淋会场');
-  const body = {"index":1,"version":1,"type":1};
-  const body2 = {"index":1,"version":1,"type":2}
-  const response = await request("getSingleShopReward", body);
-  if (response.code === '0' && response.resultCode === '0') {
-    const response2 = await request("getSingleShopReward", body2);
-    console.log(`②浏览指定店铺结果: ${JSON.stringify(response2)}`);
-    if (response2.code === '0' && response2.resultCode === '0') {
-      message += `【冰淇淋会场】获取狗粮${response2.result.reward}g\n`;
-    }
-  }
-}
-async function browseSingleShopInit3() {
-  console.log('准备完成 去参与星品解锁计划');
-  const body = {"index":2,"version":1,"type":1};
-  const body2 = {"index":2,"version":1,"type":2};
-  const response = await request("getSingleShopReward", body);
-  if (response.code === '0' && response.resultCode === '0') {
-    const response2 = await request("getSingleShopReward", body2);
-    console.log(`②浏览指定店铺结果: ${JSON.stringify(response2)}`);
-    if (response2.code === '0' && response2.resultCode === '0') {
-      message += `【去参与星品解锁计划】获取狗粮${response2.result.reward}g\n`;
-    }
-  }
-}
-async function browseSingleShopInit4() {
-  console.log('准备完成 去逛逛好货会场 - 任务');
-  const body = {"index":3,"version":1,"type":1};
-  const body2 = {"index":3,"version":1,"type":2};
-  const response = await request("getSingleShopReward", body);
-  if (response.code === '0' && response.resultCode === '0') {
-    const response2 = await request("getSingleShopReward", body2);
-    console.log(`②浏览指定店铺结果: ${JSON.stringify(response2)}`);
-    if (response2.code === '0' && response2.resultCode === '0') {
-      message += `【去逛逛好货会场】获取狗粮${response2.result.reward}g\n`;
-    }
-  }
-}
+
 // 浏览店铺任务, 任务可能为多个? 目前只有一个
-async function browseShopsInit() {
+async function browseShopsInitFun() {
   console.log('开始浏览店铺任务');
   let times = 0;
   let resultCode = 0;
@@ -381,12 +355,12 @@ async function browseShopsInit() {
   console.log('浏览店铺任务结束');
 }
 // 首次投食 任务
-function firstFeedInit() {
+function firstFeedInitFun() {
   console.log('首次投食任务合并到10次喂食任务中\n');
 }
 
 // 邀请新用户
-async function inviteFriendsInit() {
+async function inviteFriendsInitFun() {
   console.log('邀请新用户功能未实现');
   if ($.taskInfo.inviteFriendsInit.status == 1 && $.taskInfo.inviteFriendsInit.inviteFriendsNum > 0) {
     // 如果有邀请过新用户,自动领取60gg奖励
@@ -401,7 +375,7 @@ async function inviteFriendsInit() {
 /**
  * 投食10次 任务
  */
-async function feedReachInit() {
+async function feedReachInitFun() {
   console.log('投食任务开始...');
   let finishedTimes = $.taskInfo.feedReachInit.hadFeedAmount / 10; //已经喂养了几次
   let needFeedTimes = 10 - finishedTimes; //还需要几次
@@ -529,6 +503,7 @@ async function request(function_id, body = {}) {
       try {
         if (err) {
           console.log('\n东东萌宠: API查询请求失败 ‼️‼️');
+          console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
           data = JSON.parse(data);
