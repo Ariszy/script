@@ -31,7 +31,7 @@ if ($.isNode()) {
 }
 
 const Notice = $.getdata('jdMoneyTreeNoticeTimes') * 1 || 2;//设置运行多少次才通知。默认运行两次脚本通知，其他设置请在BoxJs进行设置
-let jdNotify = $.getdata('jdMoneyTreeNotify');
+let jdNotify = true;//是否开启静默运行，默认true开启
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0, UserName = '';
 !(async () => {
@@ -68,6 +68,7 @@ async function jd_moneyTree() {
   await msgControl();
 
   console.log(`运行脚本次数和设置的次数是否相等::${($.getdata($.treeMsgTime) * 1) === Notice}`);
+  jdNotify = $.getdata('jdMoneyTreeNotify') ? $.getdata('jdMoneyTreeNotify') : jdNotify;
   console.log(`box订阅静默运行-是否打开::${jdNotify || jdNotify === 'true'}`);
   console.log(`是否弹窗通知::${(($.getdata($.treeMsgTime) * 1) === Notice) && (!jdNotify || jdNotify === 'false')}`);
   $.log(`\n${message}\n`);

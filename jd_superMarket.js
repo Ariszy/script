@@ -32,7 +32,7 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD2'));
 }
 
-const jdNotify = $.getdata('jdSuperMarketNotify');//用来是否关闭弹窗通知，true表示关闭，false表示开启。
+let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 const receiveBlueCoinTimes = 20; //运行一次脚本收取多少次小费(蓝币),默认20次,如达到上限,会跳出,不继续浪费时间收取
 let UserName = '', todayDay = 0, message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
@@ -73,6 +73,7 @@ async function jdSuperMarket(DoubleKey) {
 }
 function showMsg() {
   $.log(`\n${message}\n`);
+  jdNotify = $.getdata('jdSuperMarketNotify') ? $.getdata('jdSuperMarketNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle ,`【京东账号${$.index}】${UserName}\n${message}`);
   }

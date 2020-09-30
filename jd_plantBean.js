@@ -19,7 +19,7 @@ cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 const $ = new Env('京东种豆得豆');
 //Node.js用户请在jdCookie.js处填写京东ck;
 //ios等软件用户直接用NobyDa的jd cookie
-let jdNotify = $.getdata('jdPlantBeanNotify');
+let jdNotify = true;//是否开启静默运行。默认true开启
 let cookiesArr = [], cookie = '', jdPlantBeanShareArr = [], isBox = false, notify, newShareCodes, option, message,subTitle;
 //京东接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
@@ -391,6 +391,7 @@ async function doHelp() {
 }
 function showMsg() {
   $.log(`\n${message}\n`);
+  jdNotify = $.getdata('jdPlantBeanNotify') ? $.getdata('jdPlantBeanNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle, message);
   }

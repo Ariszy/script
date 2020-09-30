@@ -30,7 +30,7 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
-let jdNotify = $.getdata('jdJoyNotify');
+let jdNotify = true;//是否开启静默运行。默认true开启
 let message = '', subTitle = '', UserName = '';
 const JD_API_HOST = 'https://jdjoy.jd.com'
 let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,40,80
@@ -62,6 +62,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
     })
 function showMsg() {
   $.log(`\n${message}\n`);
+  jdNotify = $.getdata('jdJoyNotify') ? $.getdata('jdJoyNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle, `【京东账号${$.index}】${UserName}\n` + message);
   }

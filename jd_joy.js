@@ -39,7 +39,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [10,
 //是否参加宠汪汪双人赛跑（据目前观察，参加双人赛跑不消耗狗粮,如需参加其他多人赛跑，请关闭）
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
 const joyRunFlag = $.getdata('joyRunFlag') || 'true';
-let jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
+let jdNotify = true;//是否开启静默运行，默认true开启
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 !(async () => {
@@ -599,6 +599,7 @@ function receiveJoyRunAward() {
 }
 function showMsg() {
   $.log(`\n${message}\n`);
+  jdNotify = $.getdata('jdJoyNotify') ? $.getdata('jdJoyNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, subTitle, message);
   }

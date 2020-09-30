@@ -245,7 +245,7 @@
         {
           "id": "jdPlantBeanNotify",
           "name": "静默运行",
-          "val": false,
+          "val": true,
           "type": "boolean",
           "desc": "运行种豆脚本时不发出系统通知"
         },
@@ -322,7 +322,7 @@
         {
           "id": "jdJoyNotify",
           "name": "静默运行",
-          "val": false,
+          "val": true,
           "type": "boolean",
           "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
         },
@@ -478,7 +478,7 @@
         {
           "id": "jdMoneyTreeNotify",
           "name": "静默运行",
-          "val": false,
+          "val": true,
           "type": "boolean",
           "desc": "运行京东摇钱树脚本时不发出系统弹窗通知"
         },
@@ -506,7 +506,7 @@
         {
           "id": "jdSpeedNotify",
           "name": "静默运行",
-          "val": false,
+          "val": true,
           "type": "boolean",
           "desc": "运行京东天天加速脚本时不发出系统弹窗通知"
         }
@@ -579,7 +579,7 @@
         {
           "id": "jdSuperMarketNotify",
           "name": "静默运行",
-          "val": false,
+          "val": true,
           "type": "boolean",
           "desc": "运行此脚本时不发出系统弹窗通知"
         },
