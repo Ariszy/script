@@ -42,10 +42,7 @@ e)  进入后，找到Repository access，根据自己的需求，重新选择�
 
 f)  Pull app作者虽然在项目中写道keeps your forks up-to-date with upstream via automated pull requests，但当上游仓库有更改时，自己的仓库会在3个小时内完成与上游的同步，3个小时是Pull app作者说的最长时间。当然也可以通过手动触发同步上游仓库，手动触发方式：`https://pull.git.ci/process/你的GitHub名字/你的仓库名字` （例如：`https://pull.git.ci/process/xxxxx/test` ），手动触发可能会进行人机验证，验证通过后会显示Success。
 
-![git6.jpg](../icon/git6.jpg)
-	
-
-![git7.jpg](../icon/git7.jpg)	
+![../icon/git7.jpg](../icon/git7.jpg)
 
 ### 2、同步其他分支的教程	
 
