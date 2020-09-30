@@ -18,7 +18,7 @@
 
      ![../icon/git3.jpg](../icon/git3.jpg)	
 
-   - d)  后续，如果要调整1.c中的选项，打开https://github.com/apps/pull，点击Configure，输入github密码进入pull的相关设置。	
+   - d)  后续，如果要调整1.c中的选项，打开 [https://github.com/apps/pull](https://github.com/apps/pull) ，点击Configure，输入github密码进入pull的相关设置。	
 
      ![../icon/git4.jpg](../icon/git4.jpg)	
 
@@ -36,7 +36,7 @@
 
    ![../icon/git8.jpg](../icon/git8.jpg)	
 
- - a)  假设你fork了上游仓库后，你fork后的地址为 https://github.com/你的仓库名字/test，首先设置完成第1部分内容，注意在1.c步骤没有设置全部同步的，要回到1.e步，确认是否设置同步了“你的仓库名字/test”，如果没有请添加上。	
+ - a)  假设你fork了上游仓库后，你fork后的地址为 `https://github.com/你的仓库名字/test` ，首先设置完成第1部分内容，注意在1.c步骤没有设置全部同步的，要回到1.e步，确认是否设置同步了 `你的仓库名字/test`，如果没有,请添加上。	
 
     ![../icon/git9.jpg](../icon/git9.jpg)	
 
@@ -67,4 +67,7 @@
 
 ### 高级玩法	
 
--  当然，作者还有其他更好的项目用于同步所有分支，例如使用 GitHub actions 进行同步。请参考原作者的项目 [https://github.com/wei/git-sync](https://github.com/wei/git-sync), [https://github.com/repo-sync/github-sync](https://github.com/repo-sync/github-sync)
+-  当然，作者还有其他更好的项目用于同步所有分支，例如使用 GitHub actions 进行同步。请参考原作者的项目 
+    - [https://github.com/wei/git-sync](https://github.com/wei/git-sync)
+    - [https://github.com/repo-sync/github-sync](https://github.com/repo-sync/github-sync)
+    
