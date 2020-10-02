@@ -46,9 +46,6 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
       UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
-      console.log('time1', new Date().setHours(0, 0, 0, 0))
-      console.log('time2', new Date(new Date().setHours(0, 0, 0, 0)).getTime())
-      console.log('time3', new Date(new Date().toLocaleDateString()).getTime())
       message = '';
       subTitle = '';
       await feedPets(FEED_NUM);//喂食

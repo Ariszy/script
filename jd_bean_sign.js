@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-09-28
+更新时间：2020-10-02
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -97,7 +97,10 @@ async function downFile () {
 }
 
 async function changeFile (content) {
-  const newContent = content.replace(/var Key = ''/, `var Key = '${cookie}'`);
+  let newContent = content.replace(/var Key = ''/, `var Key = '${cookie}'`);
+  if (process.env.JD_COOKIE) {
+    newContent = newContent.replace("const tm = new Date(new Date().setHours(0, 0, 0, 0)).getTime()", `const tm = new Date(new Date().toLocaleDateString()).getTime() - 8 * 60 * 60 * 1000;`);
+  }
   await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
 }
 async function deleteFile(path) {
