@@ -20,7 +20,7 @@ const $ = new Env('京小超领蓝币');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
+let coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -52,6 +52,9 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       $.beanerr = "";
       //console.log($.coincount);
       //先兑换京豆
+      if ($.isNode()) {
+        coinToBeans = process.env.MARKET_COIN_T0_BEANS ? process.env.MARKET_COIN_T0_BEANS * 1 : coinToBeans;
+      }
       if (coinToBeans) {
         await smtg_queryPrize();
       } else {
@@ -107,7 +110,7 @@ function smtg_receiveCoin(timeout = 0) {
         $.data = data;
         if ($.data.data.bizCode !== 0 && $.data.data.bizCode !== 809) {
           $.coinerr = `${$.data.data.bizMsg}`;
-          //console.log(`【京东账号${$.index}】${UserName} 收取蓝币失败：${$.data.data.bizMsg}`)
+          // console.log(`【京东账号${$.index}】${UserName} 收取蓝币失败：${$.data.data.bizMsg}`)
           return
         }
         if  ($.data.data.bizCode === 0) {

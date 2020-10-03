@@ -50,8 +50,6 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //喂食数量默认10g,
       subTitle = '';
       if ($.isNode()) {
         FEED_NUM = process.env.JOY_FEED_COUNT ? process.env.JOY_FEED_COUNT * 1 : FEED_NUM;
-      } else {
-        FEED_NUM = $.getdata('joyFeedCount') ? $.getdata('joyFeedCount') * 1 : FEED_NUM;
       }
       await feedPets(FEED_NUM);//喂食
       await ThreeMeals();//三餐

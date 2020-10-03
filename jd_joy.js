@@ -72,8 +72,6 @@ async function jdJoy() {
   if ($.getPetTaskConfigRes.success) {
     if ($.isNode()) {
       FEED_NUM = process.env.JOY_FEED_COUNT ? process.env.JOY_FEED_COUNT * 1 : FEED_NUM;
-    } else {
-      FEED_NUM = $.getdata('joyFeedCount') ? $.getdata('joyFeedCount') * 1 : FEED_NUM;
     }
     await feedPets(FEED_NUM);//喂食
     await Promise.all([
