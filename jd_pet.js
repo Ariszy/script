@@ -29,7 +29,6 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
 ]
 let message = '', subTitle = '', option = {}, UserName = '';
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
-let jdServerNotify = true;//是否每次运行脚本后，都发送server酱微信通知提醒,默认是true【true:发送，false:不发送】
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let goodsUrl = '', taskInfoKey = [];
 
@@ -148,13 +147,13 @@ async function feedPetsAgain() {
       const response2 = await request('initPetTown');
       $.petInfo = response2.result;
       subTitle = $.petInfo.goodsInfo.goodsName;
-      message += `【与爱宠相识】${$.petInfo.meetDays}天\n`;
-      message += `【剩余狗粮】${$.petInfo.foodAmount}g\n`;
+      // message += `【与爱宠相识】${$.petInfo.meetDays}天\n`;
+      // message += `【剩余狗粮】${$.petInfo.foodAmount}g\n`;
     } else {
-      console.log("目前剩余狗粮：【" + foodAmount + "】g,不再继续投食,保留100g用于完成第二天任务");
+      console.log("目前剩余狗粮：【" + foodAmount + "】g,不再继续投食,保留部分狗粮用于完成第二天任务");
       subTitle = $.petInfo.goodsInfo.goodsName;
-      message += `【与爱宠相识】${$.petInfo.meetDays}天\n`;
-      message += `【剩余狗粮】${$.petInfo.foodAmount}g\n`;
+      // message += `【与爱宠相识】${$.petInfo.meetDays}天\n`;
+      // message += `【剩余狗粮】${$.petInfo.foodAmount}g\n`;
     }
   } else {
     console.log(`初始化萌宠失败:  ${JSON.stringify($.petInfo)}`);
@@ -291,7 +290,7 @@ async function petSport() {
     times++;
   } while (resultCode == 0 && code == 0)
   if (times > 1) {
-    message += '【十次遛狗】已完成\n';
+    // message += '【十次遛狗】已完成\n';
   }
 }
 // 初始化任务, 可查询任务完成情况
@@ -305,9 +304,11 @@ async function signInitFun() {
   const response = await request("getSignReward");
   console.log(`每日签到结果: ${JSON.stringify(response)}`);
   if (response.code === '0' && response.resultCode === '0') {
-    message += `【每日签到成功】奖励${response.result.signReward}g狗粮\n`;
+    console.log(`【每日签到成功】奖励${response.result.signReward}g狗粮\n`);
+    // message += `【每日签到成功】奖励${response.result.signReward}g狗粮\n`;
   } else {
-    message += `【每日签到】${response.message}\n`;
+    console.log(`【每日签到】${response.message}\n`);
+    // message += `【每日签到】${response.message}\n`;
   }
 }
 
@@ -317,9 +318,11 @@ async function threeMealInitFun() {
   const response = await request("getThreeMealReward");
   console.log(`三餐签到结果: ${JSON.stringify(response)}`);
   if (response.code === '0' && response.resultCode === '0') {
-    message += `【定时领狗粮】获得${response.result.threeMealReward}g\n`;
+    console.log(`【定时领狗粮】获得${response.result.threeMealReward}g\n`);
+    // message += `【定时领狗粮】获得${response.result.threeMealReward}g\n`;
   } else {
-    message += `【定时领狗粮】${response.message}\n`;
+    console.log(`【定时领狗粮】${response.message}\n`);
+    // message += `【定时领狗粮】${response.message}\n`;
   }
 }
 
@@ -334,7 +337,8 @@ async function browseSingleShopInit(item) {
     const response2 = await request("getSingleShopReward", body2);
     // console.log(`浏览完毕领取奖励:response2::${JSON.stringify(response2)}`);
     if (response2.code === '0' && response2.resultCode === '0') {
-      message += `【浏览指定店铺】获取${response2.result.reward}g\n`;
+      console.log(`【浏览指定店铺】获取${response2.result.reward}g\n`);
+      // message += `【浏览指定店铺】获取${response2.result.reward}g\n`;
     }
   }
 }
@@ -409,14 +413,12 @@ async function showMsg() {
   if (ctrTemp) {
     $.msg($.name, subTitle, message, option);
     const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
-    if (jdServerNotify) {
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n${message}`);
-      }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}`, `${subTitle}\n${message}`);
-      // }
+    if ($.isNode()) {
+      await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n${message}`);
     }
+    // if ($.isNode()) {
+    //   await notify.BarkNotify(`${$.name}`, `${subTitle}\n${message}`);
+    // }
   }
 }
 function shareCodesFormat() {
