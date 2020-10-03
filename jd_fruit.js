@@ -30,7 +30,8 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
 let message = '', subTitle = '', option = {}, UserName = '', isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
-const JD_API_HOST = 'https://api.m.jd.com/client.action'
+const JD_API_HOST = 'https://api.m.jd.com/client.action';
+const activeEndTime = '2020-10-09';
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -65,15 +66,13 @@ async function jdFruit() {
     message = `【京东账号${$.index}】${UserName}\n`;
     console.log(`\n【您的互助码shareCode】 ${$.farmInfo.farmUserPro.shareCode}\n`);
     console.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
+    await masterHelpShare();//助力好友
     if ($.farmInfo.treeState === 2 || $.farmInfo.treeState === 3) {
       option['open-url'] = "openApp.jdMobile://";
       $.msg($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       if ($.isNode()) {
         await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
-      // }
       return
     } else if ($.farmInfo.treeState === 1){
       console.log(`\n${$.farmInfo.farmUserPro.name}种植中...\n`)
@@ -84,13 +83,12 @@ async function jdFruit() {
       if ($.isNode() && notify.SCKEY) {
         await notify.sendNotify(`${$.name}请重新种植水果`, `京东账号${$.index} ${UserName}\n上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n\n请去京东APP或微信小程序选购并种植新的水果`);
       }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}请重新种植水果`, `京东账号${$.index} ${UserName}\n上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n请去京东APP或微信小程序选购并种植新的水果`);
-      // }
       return
     }
     await doDailyTask();
-    await doTenWater();//浇水十次
+    if (Date.now() > new Date(activeEndTime).getTime()) {
+      await doTenWater();//浇水十次
+    }
     await getFirstWaterAward();//领取首次浇水奖励
     await getTenWaterAward();//领取10浇水奖励
     await getWaterFriendGotAward();//领取为2好友浇水奖励
@@ -215,7 +213,6 @@ async function doDailyTask() {
   await getAwardInviteFriend();
   await clockInIn();//打卡领水
   await executeWaterRains();//水滴雨
-  await masterHelpShare();//助力好友
   await getExtraAward();//领取额外水滴奖励
   await turntableFarm()//天天抽奖得好礼
 }
@@ -332,7 +329,18 @@ async function doTenWaterAgain() {
       console.log(`使用翻倍水滴卡结果:${JSON.stringify($.userMyCardRes)}`);
     }
     await initForFarm();
-    totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
+    totalEnergy = $.farmInfo.farmUserPro.totalEnergy;
+  }
+  if (Date.now() < new Date(activeEndTime).getTime()) {
+    if (totalEnergy > 100 && $.myCardInfoRes.beanCard > 0) {
+      //使用水滴换豆卡
+      await userMyCardForFarm('beanCard');
+      console.log(`使用水滴换豆卡结果:${JSON.stringify($.userMyCardRes)}`);
+      if ($.userMyCardRes.code === '0') {
+        message += `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n`;
+      }
+    }
+    return
   }
   // if (totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
   //   //使用快速浇水卡
