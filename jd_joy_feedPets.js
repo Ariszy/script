@@ -33,7 +33,7 @@ if ($.isNode()) {
 let jdNotify = true;//是否开启静默运行。默认true开启
 let message = '', subTitle = '', UserName = '';
 const JD_API_HOST = 'https://jdjoy.jd.com'
-let FEED_NUM = 10;   //喂食数量默认10g,可选 10,20,40,80 , 其他数字不可.
+let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //喂食数量默认10g,可选 10,20,40,80 , 其他数字不可.
 
 !(async () => {
   if (!cookiesArr[0]) {
