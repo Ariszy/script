@@ -30,7 +30,7 @@ jobs:
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
-          MARKET_COIN_T0_BEANS: ${{ secrets.MARKET_COIN_T0_BEANS }}
+          MARKET_COIN_TO_BEANS: ${{ secrets.MARKET_COIN_TO_BEANS }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
