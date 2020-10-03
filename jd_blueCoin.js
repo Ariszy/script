@@ -53,7 +53,13 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       //console.log($.coincount);
       //先兑换京豆
       if ($.isNode()) {
-        coinToBeans = process.env.MARKET_COIN_T0_BEANS ? process.env.MARKET_COIN_T0_BEANS * 1 : coinToBeans;
+        if (process.env.MARKET_COIN_T0_BEANS) {
+          if ((process.env.MARKET_COIN_T0_BEANS * 1 >= 0 && process.env.MARKET_COIN_T0_BEANS * 1 <=20) || process.env.MARKET_COIN_T0_BEANS * 1 === 1000) {
+            coinToBeans = process.env.MARKET_COIN_T0_BEANS ? process.env.MARKET_COIN_T0_BEANS * 1 : coinToBeans;
+          } else {
+            console.log(`您输入的MARKET_COIN_T0_BEANS为非法数字，请重新填写`);
+          }
+        }
       }
       if (coinToBeans) {
         await smtg_queryPrize();

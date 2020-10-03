@@ -71,7 +71,13 @@ async function jdJoy() {
   await getPetTaskConfig();
   if ($.getPetTaskConfigRes.success) {
     if ($.isNode()) {
-      FEED_NUM = process.env.JOY_FEED_COUNT ? process.env.JOY_FEED_COUNT * 1 : FEED_NUM;
+      if (process.env.JOY_FEED_COUNT) {
+        if ([10, 20, 40, 80].indexOf(process.env.JOY_FEED_COUNT * 1) > -1) {
+          FEED_NUM = process.env.JOY_FEED_COUNT ? process.env.JOY_FEED_COUNT * 1 : FEED_NUM;
+        } else {
+          console.log(`您输入的 JOY_FEED_COUNT 为非法数字，请重新输入`);
+        }
+      }
     }
     await feedPets(FEED_NUM);//喂食
     await Promise.all([
