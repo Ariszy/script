@@ -70,13 +70,13 @@ async function joyReward() {
     console.log(`当前积分 ${data.coin}\n`);
     console.log(`宠物等级 ${data.level}\n`);
     console.log(`京东昵称 ${UserName}\n`);
-    let saleInfoId = '', giftName= '', extInfo = '', leftStock = 0, salePrice = 0;
+    let saleInfoId = '', giftValue = '', extInfo = '', leftStock = 0, salePrice = 0;
     for (let item of giftSaleInfos) {
       if (item.giftType === 'jd_bean') {
         saleInfoId = item.id;
         leftStock = item.leftStock;
         salePrice = item.salePrice;
-        giftName = item.giftName;
+        giftValue = item.giftValue;
       }
     }
     console.log(`当前京豆库存:${leftStock}`)
@@ -90,10 +90,10 @@ async function joyReward() {
           const exchangeRes = await exchange(saleInfoId, 'pet');
           if (exchangeRes.success) {
             if (exchangeRes.errorCode === 'buy_success') {
-              console.log(`兑换${giftName}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
-              $.msg($.name, `兑换${giftName}成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+              console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
+              $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
               if ($.isNode()) {
-                await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
+                await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
               }
               // if ($.isNode()) {
               //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
