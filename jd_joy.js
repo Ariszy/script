@@ -36,7 +36,7 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD2'));
 }
 let message = '', subTitle = '', UserName = '';
-let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //每次喂养数量 [10,20,40,80]
+let FEED_NUM = 10;   //每次喂养数量 [10,20,40,80]
 //是否参加宠汪汪双人赛跑（据目前观察，参加双人赛跑不消耗狗粮,如需参加其他多人赛跑，请关闭）
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
 const joyRunFlag = $.getdata('joyRunFlag') || 'true';
@@ -70,6 +70,11 @@ const weAppUrl = 'https://draw.jdfcloud.com//pet';
 async function jdJoy() {
   await getPetTaskConfig();
   if ($.getPetTaskConfigRes.success) {
+    if ($.isNode()) {
+      FEED_NUM = process.env.JOY_FEED_COUNT ? process.env.JOY_FEED_COUNT * 1 : FEED_NUM;
+    } else {
+      FEED_NUM = $.getdata('joyFeedCount') ? $.getdata('joyFeedCount') * 1 : FEED_NUM;
+    }
     await feedPets(FEED_NUM);//喂食
     await Promise.all([
       petTask(),
