@@ -1,6 +1,6 @@
 /*****
 宠汪汪喂食(如果喂食80g失败，降级一个档次喂食（40g）,依次类推),三餐，建议一小时运行一次
-更新时间：2020-09-30
+更新时间：2020-10-03
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 ****/
@@ -33,7 +33,7 @@ if ($.isNode()) {
 let jdNotify = true;//是否开启静默运行。默认true开启
 let message = '', subTitle = '', UserName = '';
 const JD_API_HOST = 'https://jdjoy.jd.com'
-let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,40,80
+let FEED_NUM = 10;   //喂食数量默认10g,可选 10,20,40,80 , 其他数字不可.
 
 !(async () => {
   if (!cookiesArr[0]) {
@@ -48,6 +48,11 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10   //默认10g,可选 10,20,
       console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
       message = '';
       subTitle = '';
+      if ($.isNode()) {
+        FEED_NUM = process.env.JOY_FEED_COUNT ? process.env.JOY_FEED_COUNT * 1 : FEED_NUM;
+      } else {
+        FEED_NUM = $.getdata('joyFeedCount') ? $.getdata('joyFeedCount') * 1 : FEED_NUM;
+      }
       await feedPets(FEED_NUM);//喂食
       await ThreeMeals();//三餐
       await showMsg();
