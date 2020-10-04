@@ -53,6 +53,31 @@ const helpCode = [
   "ef245fe1-c6ed-4ebb-b4ce-a525f60d9d52",
   "e7cf6fd8-1542-482c-a166-aab24b81ec61",
   "1ee46d04-8ebd-4d69-92f7-72d2865e73c7",
+  'e339e70b-3447-4c1f-b2f1-0a9de4c47e2f',
+  'c89c5278-c4b8-4a50-9504-5b73576e8999',
+  '9f2bb4e4-9e3e-4289-8500-c453a09df89e',
+  'b525bc99-9d74-47b1-9ba2-0b633e83438d',
+  '8b9911d6-c2c3-477e-a57a-f709898a9e59',
+  '584d0c07-acd8-4099-98a3-86a7a45672d9',
+  '7453735b-e33b-4a95-8e98-a17d2149dfda',
+  '402c3df3-c3d8-49c1-8c8a-3292c90bca0f',
+  '07d6976a-9afe-48ca-bee2-b7c3ef061b53',
+  '275b7ef1-cabe-4c5b-a9a7-e59f0c003cfd',
+  '3c6c0188-ec65-4e7c-af51-5a80b17c0dad',
+  '57fb8e67-3a8d-4ce8-878a-4af1f9c6798b',
+  '3c1a239e-0b18-4266-99bb-1ead5c342a4a',
+  '62c7efae-ceed-493c-9699-da353b5b7087',
+  '875b9585-8094-40b7-8ef7-9a201c2f5eb8',
+  'fcea1d70-8e0e-478d-a6d5-6492820aeb2c',
+  '03703e9a-0382-4920-b2f7-88f9ddaec0ae',
+  '4399facf-602a-4198-bedb-4415c8439775',
+  '197cbcc1-4d73-4104-96da-1ed7800c94ad',
+  'a7d626e1-204e-4573-9bd5-10be2f20ff7f',
+  '22ddb294-7456-4eaf-a653-06f3d53b4bdf',
+  'e1465c80-1740-48ca-aa16-bfc3a2980a0e',
+  '9316877d-d9b6-4b46-b06b-3a9d92131ac2',
+  'b16d1a47-cffc-4892-9b6f-cbd0fd5af714'
+]
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
