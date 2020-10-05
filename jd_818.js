@@ -48,13 +48,42 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020-10-10 01:00:00';
 const helpCode = [
-
 "6bd7b1f2-5418-4482-ac02-4a37725dfb27",
 "c62fd21a-0dee-4701-92f2-2a98a5a05b0e",
 "701661bf-2c58-4f75-bc84-330794b28ea4",
 "04e920d4-3737-489a-b515-aa0dfc370a70",
 "7ec76b7c-d28f-43e5-a4e6-45bc7de1fbc7",
-
+'09e12268-d11a-44f9-9aa5-d6707a4fe06f',
+  'aa57acaa-b928-48e1-81db-34552213c3c4',
+  '30ce8ac5-9dc5-4d57-9fe4-9690d69e7322',
+  '5808d51b-4b5e-4a88-84ae-21b3a38fb83d',
+  '502aa3ba-30fa-43e1-981f-f47d81af121d',
+  'd5d0fa2e-2e4c-4a12-9fa0-03f5b0897c20',
+  '61659b16-9c77-4a12-a0a9-d612d9d9121c',
+  'b382fdf1-cf98-4ac1-95a4-2ae8a0dea69e',
+  '9dd2e30f-8f08-414e-9c12-cbe6eda8102f',
+  '432245fd-5440-4e27-bcaf-c55acc27c3b4',
+  '4a926362-f450-4ce5-84cd-71e5948cd826',
+  '0c3095a4-c9ef-4471-854d-4a2a4d63881c',
+  'ca65c6ba-c32c-4161-9d38-238b90652779',
+  'c82239c2-69ee-4ae1-92b8-72134117d3dd',
+  '4178d74c-0b7b-42e7-a7f9-49e776ee904a',
+  '4051781f-788c-488c-a7e6-ff5e51efda4b',
+  'b6ccb5b5-a68c-43ba-893d-3202d267118a',
+  '72680a8f-d4c6-4161-8ac3-837c90de6f8b',
+  '9d99a79d-ab80-4fce-ae84-fcffc20e5c38',
+  '5b9168aa-0821-4054-bb20-3b6660c56712',
+  'eddc367b-0d1b-4807-ba30-564e95c72e92',
+  '83006130-790b-493e-92dc-8e0814ed92fd',
+  'c21e6e64-e6c8-4590-9dfb-5c6636935f79',
+  '9fcca9ab-1740-437f-a0de-fe9a28f4f69c',
+  '79491d79-395d-40a4-9086-de27ce477cde',
+  'd7a6d2f3-4598-4859-a84f-619e965edb2b',
+  'fff120ce-e6a4-4101-a681-75f10c5d3b7c',
+  'd101e622-6f6e-4a4c-a0a0-f86db1434cc7',
+  '736e8669-8a1f-45c4-871e-4e9d29a64ec9',
+  'd222b37c-b503-4bca-be11-0b222af29121',
+  'c9b663f7-86b9-4e63-b791-540e4341f96b'
 ]
 !(async () => {
   if (!cookiesArr[0]) {
