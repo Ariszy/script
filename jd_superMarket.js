@@ -184,19 +184,6 @@ function smtgReceiveCoin(type) {
 function receiveBlueCoin(timeout = 0) {
   return new Promise((resolve) => {
     setTimeout( ()=>{
-      let url = {
-        url : `${JD_API_HOST}&functionId=smtg_receiveCoin&clientVersion=8.0.0&client=m&body=%7B%22type%22:2%7D&t=${Date.now()}`,
-        headers : {
-          'Origin' : `https://jdsupermarket.jd.com`,
-          'Cookie' : cookie,
-          'Connection' : `keep-alive`,
-          'Accept' : `application/json, text/plain, */*`,
-          'Referer' : `https://jdsupermarket.jd.com/game/?tt=1597540727225`,
-          'Host' : `api.m.jd.com`,
-          'Accept-Encoding' : `gzip, deflate, br`,
-          'Accept-Language' : `zh-cn`
-        }
-      }
       $.get(taskUrl('smtg_receiveCoin', { type: 2 }), async (err, resp, data) => {
         try {
           data = JSON.parse(data);
@@ -216,7 +203,7 @@ function receiveBlueCoin(timeout = 0) {
               return
             }
           }
-          await smtg_receiveCoin(3000);
+          await receiveBlueCoin(3000);
         } catch (e) {
           $.logErr(e, resp);
         } finally {
