@@ -1,5 +1,5 @@
 # File: .github/workflows/repo-sync.yml
-
+name: 同步github
 on:
   schedule:
   # Sync repo once every two days
