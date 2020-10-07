@@ -1,0 +1,22 @@
+# File: .github/workflows/repo-sync.yml
+
+on:
+  schedule:
+  # Sync repo once every two days
+  - cron: '1 8 0/2 * *'
+  workflow_dispatch:
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: repo-sync
+      uses: repo-sync/github-sync@v2
+      with:
+        source_repo: "https://github.com/lxk0301/scripts.git"
+        source_branch: "master"
+        destination_branch: "master"
+        github_token: ${{ secrets.PAT }}
