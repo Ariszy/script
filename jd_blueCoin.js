@@ -1,20 +1,20 @@
 /*
 京小超兑换奖品脚本
 感谢@yangtingxiao提供
-更新时间：2020-10-06
+更新时间：2020-10-07
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
 #京小超领蓝币
-11 5 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js, tag=京小超领蓝币, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
+0 0 0 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js, tag=京小超领蓝币, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
 // Loon
 [Script]
-cron "11 5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js,tag=京小超领蓝币
+cron "0 0 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js,tag=京小超领蓝币
 // Surge
-京小超领蓝币 = type=cron,cronexp="11 5 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
+京小超领蓝币 = type=cron,cronexp="0 0 0 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
  */
-const $ = new Env('京小超领蓝币');
+const $ = new Env('京小超兑换奖品');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -48,6 +48,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       $.beanscount = 0;
       $.coinerr = "";
       $.beanerr = "";
+      $.title = '';
       //console.log($.coincount);
       //先兑换京豆
       if ($.isNode()) {
@@ -64,7 +65,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       } else {
         console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans\n')
       }
-      if ($.queryPrizeData.data.bizCode === 300) {
+      if ($.queryPrizeData && $.queryPrizeData.data.bizCode === 300) {
         $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
@@ -163,45 +164,119 @@ function smtg_queryPrize(timeout = 0){
             return
           }
           if (data.data.bizCode === 0) {
+            const { prizeList } = data.data.result;
             if (coinToBeans === 1000) {
-              if (data.data.result.prizeList[1].beanType === 'BeanPackage') {
-                console.log(`查询换${data.data.result.prizeList[1].title}ID成功，ID:${data.data.result.prizeList[1].prizeId}`)
-                console.log(`查询换1000京豆兑换ID成功，ID:${data.data.result.prizeList[1].prizeId}`)
+              if (prizeList[1].beanType === 'BeanPackage') {
+                console.log(`查询换${prizeList[1].title}ID成功，ID:${prizeList[1].prizeId}`)
+                console.log(`查询换1000京豆兑换ID成功，ID:${prizeList[1].prizeId}`)
+                $.title = prizeList[1].title;
               } else {
                 console.log(`查询换1000京豆ID失败`)
                 $.beanerr = `东哥今天不给换`;
                 return ;
               }
-              if (data.data.result.prizeList[1].inStock === 506) {
+              if (prizeList[1].inStock === 506) {
                 $.beanerr = `失败，1000京豆领光了，请明天再来`;
                 return ;
               }
-              if (data.data.result.prizeList[1].targetNum === data.data.result.prizeList[1].finishNum) {
-                $.beanerr = `${data.data.result.prizeList[1].subTitle}`;
+              if (prizeList[1].targetNum === prizeList[1].finishNum) {
+                $.beanerr = `${prizeList[1].subTitle}`;
                 return ;
               }
               //兑换1000京豆
-              await smtg_obtainPrize(data.data.result.prizeList[1].prizeId);
+              await smtg_obtainPrize(prizeList[1].prizeId);
             } else if (coinToBeans > 0 && coinToBeans <= 20) {
-              if (data.data.result.prizeList[0].beanType === 'Bean') {
-                console.log(`查询换${data.data.result.prizeList[0].title}ID成功，ID:${data.data.result.prizeList[0].prizeId}`)
-                console.log(`查询换万能的京豆兑换ID成功，ID:${data.data.result.prizeList[0].prizeId}`)
-              } else
-              {
+              if (prizeList[0].beanType === 'Bean') {
+                console.log(`查询换${prizeList[0].title}ID成功，ID:${prizeList[0].prizeId}`)
+                console.log(`查询换万能的京豆兑换ID成功，ID:${prizeList[0].prizeId}`)
+                $.title = prizeList[0].title;
+              } else {
                 console.log(`查询换万能的京豆ID失败`)
                 $.beanerr = `东哥今天不给换`;
                 return ;
               }
-              if (data.data.result.prizeList[0].inStock === 506) {
+              if (prizeList[0].inStock === 506) {
                 $.beanerr = `失败，万能的京豆领光了，请明天再来`;
                 return ;
               }
-              if (data.data.result.prizeList[0].targetNum === data.data.result.prizeList[0].finishNum) {
-                $.beanerr = `${data.data.result.prizeList[0].subTitle}`;
+              if (prizeList[0].targetNum === prizeList[0].finishNum) {
+                $.beanerr = `${prizeList[0].subTitle}`;
                 return ;
               }
               //兑换万能的京豆(1-20京豆)
-              await smtg_obtainPrize(data.data.result.prizeList[0].prizeId,1000);
+              await smtg_obtainPrize(prizeList[0].prizeId,1000);
+            } else if (coinToBeans === 2801390972) {
+              //兑换 巧白酒精喷雾
+              let prizeId = '', i;
+              for (let index = 0; index < prizeList.length; index ++) {
+                if (prizeList[index].title === '巧白酒精喷雾') {
+                  prizeId = prizeList[index].prizeId;
+                  i = index;
+                  $.title = prizeList[index].title;
+                }
+              }
+              if (prizeId) {
+                if (prizeList[i].inStock === 506) {
+                  $.beanerr = `失败，巧白酒精喷雾领光了，请明天再来`;
+                  return ;
+                }
+                if (prizeList[i].targetNum === prizeList[i].finishNum) {
+                  $.beanerr = `${prizeList[0].subTitle}`;
+                  return ;
+                }
+                await smtg_obtainPrize(prizeId);
+              } else {
+                console.log(`奖品兑换列表[巧白酒精喷雾]已下架`);
+                $.beanerr = `奖品兑换列表[巧白酒精喷雾]已下架`;
+              }
+            } else if (coinToBeans === 2801390982) {
+              //兑换 巧白西柚洗手液
+              let prizeId = '', i;
+              for (let index = 0; index < prizeList.length; index ++) {
+                if (prizeList[index].title === '巧白西柚洗手液') {
+                  prizeId = prizeList[index].prizeId;
+                  i = index;
+                  $.title = prizeList[index].title;
+                }
+              }
+              if (prizeId) {
+                if (prizeList[i].inStock === 506) {
+                  $.beanerr = `失败，巧白西柚洗手液领光了，请明天再来`;
+                  return ;
+                }
+                if (prizeList[i].targetNum === prizeList[i].finishNum) {
+                  $.beanerr = `${prizeList[0].subTitle}`;
+                  return ;
+                }
+                await smtg_obtainPrize(prizeId);
+              } else {
+                console.log(`奖品兑换列表[巧白西柚洗手液]已下架`);
+                $.beanerr = `奖品兑换列表[巧白西柚洗手液]已下架`;
+              }
+            } else if (coinToBeans === 2801390984) {
+              //兑换 雏菊洗衣凝珠
+              let prizeId = '', i;
+              for (let index = 0; index < prizeList.length; index ++) {
+                if (prizeList[index].title === '雏菊洗衣凝珠') {
+                  prizeId = prizeList[index].prizeId;
+                  i = index;
+                  $.title = prizeList[index].title;
+                }
+              }
+              if (prizeId) {
+                if (prizeList[i].inStock === 506) {
+                  $.beanerr = `失败，雏菊洗衣凝珠领光了，请明天再来`;
+                  return ;
+                }
+                if (prizeList[i].targetNum === prizeList[i].finishNum) {
+                  $.beanerr = `${prizeList[0].subTitle}`;
+                  return ;
+                }
+                await smtg_obtainPrize(prizeId);
+              } else {
+                console.log(`奖品兑换列表[雏菊洗衣凝珠]已下架`);
+                $.beanerr = `奖品兑换列表[雏菊洗衣凝珠]已下架`;
+              }
             }
           }
         } catch (e) {
@@ -233,6 +308,7 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
       }
       $.post(url, async (err, resp, data) => {
         try {
+          console.log(`兑换结果:${data}`);
           data = JSON.parse(data);
           $.data = data;
           if ($.data.data.bizCode !== 0) {
@@ -244,10 +320,16 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
             if (coinToBeans === 1000) {
               $.beanscount = 1000;
               return
-            } else {
+            } else if (coinToBeans > 0 && coinToBeans <= 20) {
               $.beanscount ++;
               console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换京豆成功`)
               if ($.data.data.result.exchangeNum === 20 || $.beanscount === coinToBeans || $.data.data.result.blur < 500) return;
+            } else if (coinToBeans === 2801390972) {
+              $.beanscount = 1000;
+            } else if (coinToBeans === 2801390982) {
+              $.beanscount = 1000;
+            } else if (coinToBeans === 2801390982) {
+              $.beanscount = 1000;
             }
           }
           await  smtg_obtainPrize(prizeId,1000);
@@ -263,9 +345,14 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
 
 
 //通知
-function msgShow() {
+async function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
-  $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
+  if ($.beanscount) {
+    $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}`);
+    if ($.isNode()) {
+      await notify.sendNotify($.name, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}`)
+    }
+  }
 }
 
 
