@@ -54,7 +54,7 @@ const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "e
       message = '';
       subTitle = '';
       await jdSuperMarket();
-      // await myProductList();
+      // await upgrade();
     }
   }
 })()
@@ -74,6 +74,10 @@ async function jdSuperMarket() {
   await help();
   await smtgQueryPkTask();
   await businessCircleActivity();//商圈活动
+  await myProductList();//货架
+  await upgrade();//升级货架和商品
+  await manageProduct();
+  await limitTimeProduct();
   await showMsg();
 }
 function showMsg() {
@@ -393,14 +397,178 @@ async function myProductList() {
         if (productListRes.data.bizCode === 0) {
           const { productList } = productListRes.data.result;
           if (productList && productList.length > 0) {
-
+            // 此处限时商品未分配才会出现
+            let limitTimeProduct = [];
+            for (let item of productList) {
+              if (item.productType === 2) {
+                limitTimeProduct.push(item);
+              }
+            }
+            if (limitTimeProduct && limitTimeProduct.length > 0) {
+              //上架限时商品
+              await smtg_ground(limitTimeProduct[0].productId, item.shelfId);
+            } else {
+              await smtg_ground(productList[productList.length - 1].productId, item.shelfId);
+            }
           } else {
-            console.log("无可上架产品")
+            console.log("无可上架产品");
+            await unlockProductByCategory(item.shelfId.split('-')[item.shelfId.split('-').length - 1])
           }
         }
       } else if (item.groundStatus === 2 || item.groundStatus === 3) {
         console.log(`${item.name}有限时商品`)
       }
+    }
+  }
+}
+//根据类型解锁一个商品,货架可上架商品时调用
+async function unlockProductByCategory(category) {
+  const smtgProductListRes = await smtg_productList();
+  if (smtgProductListRes.data.bizCode === 0) {
+    let productListByCategory = [];
+    const { productList } = smtgProductListRes.data.result;
+    for (let item of productList) {
+      if (item['unlockStatus'] === 1 && item['shelfCategory'].toString() === category) {
+        productListByCategory.push(item);
+      }
+    }
+    if (productListByCategory && productListByCategory.length > 0) {
+      console.log(`待解锁的商品数量:${productListByCategory.length}`);
+      await smtg_unlockProduct(productListByCategory[productListByCategory.length - 1]['productId']);
+    } else {
+      console.log("该类型商品暂时无法解锁");
+    }
+  }
+}
+//升级货架和商品
+async function upgrade() {
+  console.log('升级商品')
+  const smtgProductListRes = await smtg_productList();
+  if (smtgProductListRes.data.bizCode === 0) {
+    let productType1 = [], shelfCategory_1 = [], shelfCategory_2 = [], shelfCategory_3 = [];
+    const { productList } = smtgProductListRes.data.result;
+    for (let item of productList) {
+      if (item['productType'] === 1) {
+        productType1.push(item);
+      }
+    }
+    for (let item2 of productType1) {
+      if (item2['shelfCategory'] === 1) {
+        shelfCategory_1.push(item2);
+      }
+      if (item2['shelfCategory'] === 2) {
+        shelfCategory_2.push(item2);
+      }
+      if (item2['shelfCategory'] === 3) {
+        shelfCategory_3.push(item2);
+      }
+      shelfCategory_1 = shelfCategory_1.slice(-3);
+      shelfCategory_2 = shelfCategory_2.slice(-3);
+      shelfCategory_3 = shelfCategory_3.slice(-2);
+    }
+    const shelfCategorys = shelfCategory_1.concat(shelfCategory_2).concat(shelfCategory_3);
+    for (let item of shelfCategorys) {
+      console.log('unlockStatus', item["unlockStatus"], item["name"]);
+      console.log('upgradeStatus', item["upgradeStatus"], item["name"]);
+      if (item['unlockStatus'] === 1) {
+        await smtg_unlockProduct(item['productId']);
+        break;
+      }
+      if (item['upgradeStatus'] === 1) {
+        await smtg_upgradeProduct(item['productId']);
+        break;
+      }
+    }
+  }
+  console.log('升级货架');
+  const shelfListRes = await smtg_shelfList();
+  if (shelfListRes.data.bizCode === 0) {
+    const { shelfList } = shelfListRes.data.result;
+    let shelfList_upgrade = [];
+    for (let item of shelfList) {
+      if (item['upgradeStatus'] === 1) {
+        shelfList_upgrade.push(item);
+      }
+    }
+    console.log(`待升级货架数量${shelfList_upgrade.length}`);
+    if (shelfList_upgrade && shelfList_upgrade.length > 0) {
+      shelfList_upgrade.sort(sortSyData);
+      await smtg_upgradeShelf(shelfList[0].shelfId);
+    }
+  }
+}
+async function manageProduct() {
+  console.log(`安排上货(单价最大商品)`);
+  const shelfListRes = await smtg_shelfList();
+  if (shelfListRes.data.bizCode === 0) {
+    const { shelfList } = shelfListRes.data.result;
+    console.log(`我的货架数量:${shelfList && shelfList.length}`);
+    let shelfListUnlock = [];//可以上架的货架
+    for (let item of shelfList) {
+      if (item['groundStatus'] === 1 || item['groundStatus'] === 2) {
+        shelfListUnlock.push(item);
+      }
+    }
+    for (let item of shelfListUnlock) {
+      const productListRes = await smtg_shelfProductList(item.shelfId);//查询该货架可以上架的商品
+      if (productListRes.data.bizCode === 0) {
+        const { productList } = productListRes.data.result;
+        let productNow = [], productList2 = [];
+        for (let item1 of productList) {
+          if (item1['groundStatus'] === 2) {
+            productNow.push(item1);
+          }
+          if (item1['productType'] === 1) {
+            productList2.push(item1);
+          }
+        }
+        // console.log(`productNow${JSON.stringify(productNow)}`)
+        // console.log(`productList2${JSON.stringify(productList2)}`)
+        if (productList2 && productList2.length > 0) {
+          productList2.sort(sortTotalPriceGold);
+          // console.log(productList2)
+          if (productNow && productNow.length > 0) {
+            if (productList2.slice(-1)[0]['productId'] === productNow[0]['productId']) {
+              console.log(`货架[${item.shelfId}]${productNow[0]['name']}已上架\n`)
+              continue;
+            }
+          }
+          await smtg_ground(productList2.slice(-1)[0]['productId'], item['shelfId'])
+        }
+      }
+    }
+  }
+}
+async function limitTimeProduct() {
+  const smtgProductListRes = await smtg_productList();
+  if (smtgProductListRes.data.bizCode === 0) {
+    const { productList } = smtgProductListRes.data.result;
+    let productList2 = [];
+    for (let item of productList) {
+      if (item['productType'] === 2 && item['groundStatus'] === 1) {
+        //未上架并且限时商品
+        productList2.push(item);
+      }
+    }
+    if (productList2 && productList2.length > 0) {
+      for (let item2 of productList2) {
+        const { shelfCategory } = item2;
+        const shelfListRes = await smtg_shelfList();
+        if (shelfListRes.data.bizCode === 0) {
+          const { shelfList } = shelfListRes.data.result;
+          let shelfList2 = [];
+          for (let item3 of shelfList) {
+            if (item3['shelfCategory'] === shelfCategory && (item3['groundStatus'] === 1 || item3['groundStatus'] === 2)) {
+              shelfList2.push(item3['shelfId']);
+            }
+          }
+          if (shelfList2 && shelfList2.length > 0) {
+            await smtg_ground(item2['productId'], shelfList2.slice(-1));
+          }
+        }
+      }
+    } else {
+      console.log(`限时商品已经上架或暂无限时商品`);
     }
   }
 }
@@ -669,6 +837,39 @@ function smtg_unlockShelf(shelfId) {
       }
     })
   })
+}
+function smtg_ground(productId, shelfId) {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_ground', { productId, shelfId }), (err, resp, data) => {
+      try {
+        console.log(`上架商品结果:${data}`);
+        data = JSON.parse(data);
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function smtg_productList() {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_productList'), (err, resp, data) => {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function sortSyData(a, b) {
+  return a['upgradeCostGold'] - b['upgradeCostGold']
+}
+function sortTotalPriceGold(a, b) {
+  return a['previewTotalPriceGold'] - b['previewTotalPriceGold']
 }
 function taskUrl(function_id, body = {}) {
   return {
