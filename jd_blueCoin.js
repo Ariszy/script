@@ -1,10 +1,8 @@
 /*
-京小超领蓝币(小费)
+京小超兑换奖品脚本
 感谢@yangtingxiao提供
-更新时间：2020-09-20
-运行脚本一次收取今天所有的蓝币(耗时会比较久)
+更新时间：2020-10-06
 支持京东多个账号
-每天收小费(蓝币)上限是1千个
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
 [task_local]
@@ -20,7 +18,7 @@ const $ = new Env('京小超领蓝币');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
+let coinToBeans = $.getdata('coinToBeans') * 1 || 1000; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -66,24 +64,28 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       } else {
         console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans\n')
       }
-      //再收取蓝币
-      await smtg_receiveCoin();
-      if ($.data.data.bizCode === 300)
-      {
+      if ($.queryPrizeData.data.bizCode === 300) {
         $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
         if ($.isNode()) {
           await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
         }
-        // if ($.isNode()) {
-        //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-        // }
-        if ($.index === 1) {
-          $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-        } else if ($.index === 2){
-          $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-        }
         continue;
       }
+      //再收取蓝币
+      // await smtg_receiveCoin();
+      // if ($.data.data.bizCode === 300)
+      // {
+      //   $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+      //   if ($.isNode()) {
+      //     await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+      //   }
+      //   if ($.index === 1) {
+      //     $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+      //   } else if ($.index === 2){
+      //     $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+      //   }
+      //   continue;
+      // }
       await msgShow();
     }
   }
@@ -155,6 +157,7 @@ function smtg_queryPrize(timeout = 0){
       $.post(url, async (err, resp, data) => {
         try {
           data = JSON.parse(data);
+          $.queryPrizeData = data;
           if (data.data.bizCode !== 0) {
             $.beanerr = `${data.data.bizMsg}`;
             return
@@ -261,7 +264,8 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
 
 //通知
 function msgShow() {
-  $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
+  // $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
+  $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
 }
 
 
