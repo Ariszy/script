@@ -347,7 +347,7 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
 //通知
 async function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
-  $.log(`\n${message}\n`);
+  //$.log(`\n${message}\n`);
   if ($.beanscount) {
     $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}`);
     if ($.isNode()) {
