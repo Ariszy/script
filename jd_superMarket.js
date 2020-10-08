@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-10-06
+更新时间：2020-10-08
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 支持京东双账号
 领蓝币请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
@@ -403,7 +403,13 @@ async function myProductList() {
           }
         }
       } else if (item.groundStatus === 2 || item.groundStatus === 3) {
-        console.log(`${item.name}有限时商品`)
+        if (item.productInfo.productType === 2) {
+          console.log(`[${item.name}][限时商品]`)
+        } else if (item.productInfo.productType === 1){
+          console.log(`[${item.name}]`)
+        } else {
+          console.log(`[${item.name}][productType:${item.productInfo.productType}]`)
+        }
       }
     }
   }
