@@ -8,13 +8,17 @@ on:
 
 jobs:
   repo-sync:
+    env:
+      PAT: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      if: env.PAT
       with:
         persist-credentials: false
     - name: repo-sync
       uses: repo-sync/github-sync@v2
+      if: env.PAT
       with:
         source_repo: "https://github.com/lxk0301/scripts.git"
         source_branch: "master"
