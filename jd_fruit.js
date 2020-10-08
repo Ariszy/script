@@ -1,5 +1,5 @@
 /*
-jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
+东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
 更新时间:2020-10-03
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -15,6 +15,7 @@ cron "5 6-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 互助码shareCode请先手动运行脚本查看打印可看到
 一天只能帮助4个人。多出的助力码无效
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
+jd免费水果 搬的https://github.com/liuxiaoyucc/jd-helper/blob/a6f275d9785748014fc6cca821e58427162e9336/fruit/fruit.js
 */
 const $ = new Env('东东农场');
 let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes;
@@ -86,9 +87,7 @@ async function jdFruit() {
       return
     }
     await doDailyTask();
-    if (Date.now() > new Date(activeEndTime).getTime()) {
-      await doTenWater();//浇水十次
-    }
+    await doTenWater();//浇水十次
     await getFirstWaterAward();//领取首次浇水奖励
     await getTenWaterAward();//领取10浇水奖励
     await getWaterFriendGotAward();//领取为2好友浇水奖励
@@ -322,7 +321,7 @@ async function doTenWaterAgain() {
   await myCardInfoForFarm();
   const { fastCard, doubleCard, beanCard  } = $.myCardInfoRes;
   console.log(`背包已有道具:\n快速浇水卡:${fastCard === -1 ? '未解锁': fastCard}\n水滴翻倍卡:${doubleCard === -1 ? '未解锁': doubleCard}\n水滴换京豆卡:${beanCard === -1 ? '未解锁' : beanCard }\n`)
-  if (totalEnergy > 100 && $.myCardInfoRes.doubleCard > 0) {
+  if (totalEnergy >= 100 && $.myCardInfoRes.doubleCard > 0) {
     //使用翻倍水滴卡
     for (let i = 0; i < new Array($.myCardInfoRes.doubleCard).fill('').length; i++) {
       await userMyCardForFarm('doubleCard');
@@ -331,17 +330,17 @@ async function doTenWaterAgain() {
     await initForFarm();
     totalEnergy = $.farmInfo.farmUserPro.totalEnergy;
   }
-  if (Date.now() < new Date(activeEndTime).getTime()) {
-    if (totalEnergy > 100 && $.myCardInfoRes.beanCard > 0) {
-      //使用水滴换豆卡
-      await userMyCardForFarm('beanCard');
-      console.log(`使用水滴换豆卡结果:${JSON.stringify($.userMyCardRes)}`);
-      if ($.userMyCardRes.code === '0') {
-        message += `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n`;
-      }
-    }
-    return
-  }
+  // if (Date.now() < new Date(activeEndTime).getTime()) {
+  //   if (totalEnergy >= 100 && $.myCardInfoRes.beanCard > 0) {
+  //     //使用水滴换豆卡
+  //     await userMyCardForFarm('beanCard');
+  //     console.log(`使用水滴换豆卡结果:${JSON.stringify($.userMyCardRes)}`);
+  //     if ($.userMyCardRes.code === '0') {
+  //       message += `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n`;
+  //     }
+  //   }
+  //   return
+  // }
   // if (totalEnergy > 100 && $.myCardInfoRes.fastCard > 0) {
   //   //使用快速浇水卡
   //   await userMyCardForFarm('fastCard');
