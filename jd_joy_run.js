@@ -101,16 +101,19 @@ function getToken() {
     const LKYLToken = body.data.token;
     $.log(`${$.name} token\n${LKYLToken}\n`)
     if ($.getdata('jdJoyRunToken')) {
-      $.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
+      $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
     } else {
-      $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
+      $.msg($.name, '更新Token: 成功🎉', `\n${LKYLToken}\n`);
     }
     $.setdata(LKYLToken, 'jdJoyRunToken');
     $.done({ body: JSON.stringify(body) })
   } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/\/api\/bean\/square\/silverBean\/task\/get\?/)){
     if ($request && $request.method !== 'OPTIONS') {
       const LKYLToken = $request.headers['LKYLToken'];
-      if ($.getdata('jdJoyRunToken') && ($.getdata('jdJoyRunToken') === LKYLToken)) {
+      if ($.getdata('jdJoyRunToken')) {
+        if ($.getdata('jdJoyRunToken') !== LKYLToken) {
+
+        }
         //$.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
       } else {
         $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
