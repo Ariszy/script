@@ -1,7 +1,7 @@
 /*
 京小超兑换奖品脚本
 感谢@yangtingxiao提供
-更新时间：2020-10-07
+更新时间：2020-10-09
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -18,7 +18,7 @@ const $ = new Env('京小超兑换奖品');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let coinToBeans = $.getdata('coinToBeans') * 1 || 1000; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
+let coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -51,6 +51,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       $.beanerr = "";
       $.title = '';
       //console.log($.coincount);
+      console.log(`\n===========开始【京东账号${$.index}】${UserName}==============\n`);
       //先兑换京豆
       if ($.isNode()) {
         if (process.env.MARKET_COIN_TO_BEANS) {
@@ -347,18 +348,21 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
           }
           if ($.data.data.bizCode === 0) {
             if (coinToBeans === 1000) {
-              $.beanscount = 1000;
+              $.beanscount = $.data.data.result.exchangeNum;
               return
             } else if (coinToBeans > 0 && coinToBeans <= 20) {
               $.beanscount ++;
               console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换京豆成功`)
-              if ($.data.data.result.exchangeNum === 20 || $.beanscount === coinToBeans || $.data.data.result.blur < 500) return;
+              if ($.data.data.result.exchangeNum === 20 || $.beanscount === coinToBeans || $.data.data.result.blue < 500) return;
             } else if (coinToBeans === 2801390972) {
-              $.beanscount = 1000;
+              $.beanscount = $.data.data.result.exchangeNum;
+              return
             } else if (coinToBeans === 2801390982) {
-              $.beanscount = 1000;
+              $.beanscount = $.data.data.result.exchangeNum;
+              return
             } else if (coinToBeans === 2801390982) {
-              $.beanscount = 1000;
+              $.beanscount = $.data.data.result.exchangeNum;
+              return
             }
           }
           await  smtg_obtainPrize(prizeId,1000);
@@ -403,9 +407,9 @@ async function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
   $.log(`\n【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
   if ($.beanscount) {
-    $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}`);
+    $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
     if ($.isNode()) {
-      await notify.sendNotify($.name, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}`)
+      await notify.sendNotify($.name, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`)
     }
   }
 }
