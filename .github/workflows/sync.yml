@@ -12,8 +12,6 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Normal user mirror
@@ -21,5 +19,6 @@ jobs:
         with:
           src: github/lxk0301
           dst: gitee/lxk0301
+          static_list: scripts
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
