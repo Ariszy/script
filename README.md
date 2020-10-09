@@ -14,11 +14,13 @@
 10. 京小超领蓝币(兑换京豆)([jd_blueCoin.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js))
 11. 宠汪汪偷好友狗粮与积分([jd_joy_steal.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_steal.js))
 12. 进店领豆([jd_shop.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_shop.js))
+13. 京东多合一签到([jd_bean_sign.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_sign.js)) 【自用，Node.js专用，核心脚本是JD_DailyBonus.js， IOS软件用户请使用NobyDa的 [JD_DailyBonus.js](https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js) 】
 
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), JSBox, Node.js**
 
 **TODO**
-- [ ] 完善京小超脚本[jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js)
+
+- [x] 完善京小超脚本[jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js)
 
 ## 食用方法
 
@@ -52,7 +54,7 @@
 #### 以下内容只针对iOS用户
 
 #### ios使用多个京东账号，需要使用BoxJs保存多会话进行切换 
-  
+
 ##### BoxJs简单说明可看作者[BoxJs仓库地址](https://github.com/chavyleung/scripts/)
 
 使用box可以实现远程订阅助力好友(需订阅此 [链接](https://raw.githubusercontent.com/lxk0301/scripts/master/lxk0301.boxjs.json))
@@ -69,7 +71,7 @@
  2、所有脚本的cookie都可以备份，方便你迁移到其他支持box的软件。
 
  3、box可以支持多账号
- 
+
 
 #### 4个京东账号的Qumutumult X cron设置示例(5分钟为间隔)
 
