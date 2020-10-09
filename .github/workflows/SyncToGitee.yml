@@ -9,15 +9,15 @@ on:
   push:
     branches: [ master ]
 jobs:
-  mirror_to_gitee:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v1
-      - name: 'Mirror to Gitee'
-        uses: pixta-dev/repository-mirroring-action@v1
+      - name: Mirror the Github organization repos to Gitee.
+        uses: Yikun/gitee-mirror-action@v0.01
         with:
-          target_repo_url:
-            git@gitee.com:lxk0301/scripts.git
-          ssh_private_key:
-            ${{ secrets.GITEE_KEY }}
+          # Gitee对应的秘钥
+          private_key: ${{ secrets.GITEE_KEY }}
+          # 需要同步的Github组织名（源）
+          github_org: lxk0301
+          # 需要同步到的Gitee的组织名（目的）
+          gitee_org: lxk0301
