@@ -19,7 +19,7 @@ jobs:
       - name: Normal user mirror
         uses: Yikun/hub-mirror-action@master
         with:
-          src: github/kunpengcompute
-          dst: gitee/kunpengcompute
+          src: github/lxk0301
+          dst: gitee/lxk0301
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
