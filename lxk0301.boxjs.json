@@ -376,9 +376,16 @@
     },
     {
       "id": "jd_Joy_Reawrd",
-      "name": "宠汪汪积分兑换奖品",
+      "name": "宠汪汪积分兑换京豆",
       "keys": [],
       "settings": [
+        {
+          "id": "jdJoyRewardNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后成功兑换到京豆也不发出系统弹窗通知"
+        },
         {
           "id": "joyRewardName",
           "name": "是否兑换京豆",
