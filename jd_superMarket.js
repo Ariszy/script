@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-10-08
+更新时间：2020-10-09
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 支持京东双账号
 领蓝币请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
@@ -455,10 +455,12 @@ async function upgrade() {
       if (item2['shelfCategory'] === 3) {
         shelfCategory_3.push(item2);
       }
-      shelfCategory_1 = shelfCategory_1.slice(-3);
-      shelfCategory_2 = shelfCategory_2.slice(-3);
-      shelfCategory_3 = shelfCategory_3.slice(-2);
     }
+
+    shelfCategory_1 = shelfCategory_1.slice(-3);
+    shelfCategory_2 = shelfCategory_2.slice(-3);
+    shelfCategory_3 = shelfCategory_3.slice(-2);
+
     const shelfCategorys = shelfCategory_1.concat(shelfCategory_2).concat(shelfCategory_3);
     for (let item of shelfCategorys) {
       console.log('unlockStatus', item["unlockStatus"], item["name"]);
