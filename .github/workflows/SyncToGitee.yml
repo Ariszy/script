@@ -9,12 +9,22 @@ on:
   push:
     branches: [ master ]
 jobs:
-  sync:
+  run:
+    name: Run
     runs-on: ubuntu-latest
     steps:
-      - uses: wearerequired/git-mirror-action@master
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.GITEE_KEY }}
+      - name: Checkout source codes
+        uses: actions/checkout@v1
+      - name: Mirror Github to Gitee
+        uses: ./.
         with:
-          source-repo: "git@gitee.com:lxk0301/scripts.git"
-          destination-repo: "git@gitee.com:lxk0301/scripts.git"
+          src: github/lxk0301
+          dst: gitee/lxk0301
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
+          account_type: org
+          # Only sync Kunpeng
+          black_list: 'crackSmartGit'
+          white_list: 'scripts'
+          force_update: true
+          debug: true
