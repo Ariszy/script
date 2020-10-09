@@ -1,7 +1,13 @@
 name: 'GitHub Actions SyncToGitee'
 
-on: [push, delete]
-
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '33 */3 * * *'
+  watch:
+    types: started
+  push:
+    branches: [ master ]
 jobs:
   mirror_to_gitee:
     runs-on: ubuntu-latest
