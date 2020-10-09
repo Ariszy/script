@@ -5,18 +5,18 @@ name: sync-to-gitee
 
 on:
   workflow_dispatch:
-  watch:
-    types: started
   push:
     branches: [ master ]
 jobs:
   build:
-
+    env:
+      dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Normal user mirror
         uses: Yikun/hub-mirror-action@master
+        if: env.dst_key
         with:
           src: github/lxk0301
           dst: gitee/lxk0301
