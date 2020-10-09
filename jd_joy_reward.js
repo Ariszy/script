@@ -92,12 +92,19 @@ async function joyReward() {
           if (exchangeRes.success) {
             if (exchangeRes.errorCode === 'buy_success') {
               console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
-              jdNotify = $.getdata('jdJoyRewardNotify') ? $.getdata('jdJoyRewardNotify') : jdNotify;
-              if (!jdNotify || jdNotify === 'false') {
-                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+              let ctrTemp;
+              if ($.isNode() && process.env.jdJoyRewardNotify) {
+                ctrTemp = `${process.env.jdJoyRewardNotify}` === 'false';
+              } else if ($.getdata('jdJoyRewardNotify')) {
+                ctrTemp = $.getdata('jdJoyRewardNotify') === 'false';
+              } else {
+                ctrTemp = `${jdNotify}` === 'false';
               }
-              if ($.isNode()) {
-                await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
+              if (ctrTemp) {
+                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+                if ($.isNode()) {
+                  await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
+                }
               }
               // if ($.isNode()) {
               //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
