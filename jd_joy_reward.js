@@ -1,6 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间; 2020-09-28
+更新时间; 2020-10-09
 兑换规则：一个账号一天只能兑换一次京豆。
 1-20级：340积分兑换20京豆, 21-25级：320积分换20京豆
 再往上的等级兑换规则目前不知，欢迎大家提供信息
@@ -118,7 +118,7 @@ async function joyReward() {
           console.log('兑换失败，原因：京豆库存不足，已抢完，请下一场再兑换')
         }
       } else {
-        console.log(`兑换失败，原因：您目前只有${data.coin}积分，已不足兑换${giftName}所需的${salePrice}积分\n`)
+        console.log(`兑换失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
         //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
       }
     } else {
