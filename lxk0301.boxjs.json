@@ -591,6 +591,81 @@
           "desc": "运行此脚本时不发出系统弹窗通知"
         },
         {
+          "id": "jd_supermarket_name",
+          "name": "京东账号一昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd_supermarket1",
+          "name": "京东账号一互助码1",
+          "val": "",
+          "type": "text",
+          "desc": "京小超商圈互助码"
+        },
+        {
+          "id": "jd_supermarket2",
+          "name": "京东账号一互助码2",
+          "val": "",
+          "type": "text",
+          "desc": "京小超商圈互助码"
+        },
+        {
+          "id": "jd_supermarket3",
+          "name": "京东账号一互助码3",
+          "val": "",
+          "type": "text",
+          "desc": "京小超商圈互助码"
+        },
+        {
+          "id": "jd2_supermarket_name",
+          "name": "京东账号二昵称",
+          "val": "",
+          "type": "text",
+          "desc": "京东账号昵称,用于区分自己的京东账号(非必填，建议多个京东账号使用)"
+        },
+        {
+          "id": "jd2_supermarket1",
+          "name": "京东账号二互助码1",
+          "val": "",
+          "type": "text",
+          "desc": "京小超商圈互助码"
+        },
+        {
+          "id": "jd2_supermarket2",
+          "name": "京东账号二互助码2",
+          "val": "",
+          "type": "text",
+          "desc": "京小超商圈互助码"
+        },
+        {
+          "id": "jd2_supermarket3",
+          "name": "京东账号二互助码3",
+          "val": "",
+          "type": "text",
+          "desc": "京小超商圈互助码"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/scripts",
+      "scripts":[
+        {
+          "name" : "京小超",
+          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jxc_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jxc.png"
+      ]
+    },
+    {
+      "id": "jd_SuperMarket_Reawrd",
+      "name": "京小超兑换奖品",
+      "keys": [],
+      "settings": [
+        {
           "id": "coinToBeans",
           "name": "兑换奖品（默认不兑换）",
           "val": "0",
@@ -600,14 +675,6 @@
             {
               "key": "0",
               "label": "不兑换奖品(选择此项将不兑换)"
-            },
-            {
-              "key": "5",
-              "label": "兑换5京豆"
-            },
-            {
-              "key": "10",
-              "label": "兑换10京豆"
             },
             {
               "key": "20",
@@ -634,13 +701,9 @@
       ],
       "author": "@lxk0301",
       "repo": "https://github.com/lxk0301/scripts",
-      "scripts":[
+      "script": [
         {
-          "name" : "做任务收金币",
-          "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js"
-        },
-        {
-          "name" : "收蓝币兑京豆",
+          "name" : "京小超兑换奖品",
           "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js"
         }
       ],
