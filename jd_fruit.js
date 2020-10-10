@@ -1,6 +1,6 @@
 /*
 东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间:2020-10-03
+更新时间:2020-10-10
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -853,7 +853,7 @@ async function duck() {
   for (let i = 0; i < 10; i++) {
     //这里循环十次
     await getFullCollectionReward();
-    if ($.duckRes === '0') {
+    if ($.duckRes.code === '0') {
       if (!$.duckRes.hasLimit) {
         console.log(`小鸭子游戏:${$.duckRes.title}`);
         // if ($.duckRes.type !== 3) {
