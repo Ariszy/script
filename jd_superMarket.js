@@ -348,7 +348,7 @@ async function businessCircleActivity() {
     message += `【对方商圈人数】${otherBusinessCircleVO.memberCount}\n`;
     message += `【我方商圈人气值】${businessCircleVO.hotPoint}\n`;
     message += `【对方商圈人气值】${otherBusinessCircleVO.hotPoint}\n`;
-    if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300 && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000 * 2))) {
+    if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300 && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000 * 1))) {
       //退出该商圈
       console.log(`商圈PK已过两天，对方商圈人气值还大于我方商圈人气值，退出该商圈重新加入`);
       await smtg_quitBusinessCircle();
