@@ -348,21 +348,25 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
           }
           if ($.data.data.bizCode === 0) {
             if (coinToBeans === 1000) {
-              $.beanscount = $.data.data.result.exchangeNum;
-              return
+              $.beanscount ++;
+              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              if ($.beanscount === 1) return;
             } else if (coinToBeans > 0 && coinToBeans <= 20) {
               $.beanscount ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换京豆成功`)
+              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.data.data.result.exchangeNum === 20 || $.beanscount === coinToBeans || $.data.data.result.blue < 500) return;
             } else if (coinToBeans === 2801390972) {
-              $.beanscount = $.data.data.result.exchangeNum;
-              return
+              $.beanscount ++;
+              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              if ($.beanscount === 1) return;
             } else if (coinToBeans === 2801390982) {
-              $.beanscount = $.data.data.result.exchangeNum;
-              return
+              $.beanscount ++;
+              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              if ($.beanscount === 1) return;
             } else if (coinToBeans === 2801390982) {
-              $.beanscount = $.data.data.result.exchangeNum;
-              return
+              $.beanscount ++;
+              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              if ($.beanscount === 1) return;
             }
           }
           await  smtg_obtainPrize(prizeId,1000);
