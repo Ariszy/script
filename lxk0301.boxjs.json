@@ -581,7 +581,16 @@
     {
       "id": "jd_SuperMarket",
       "name": "京小超",
-      "keys": [],
+      "keys": [
+        "jd_supermarket_name",
+        "jd_supermarket1",
+        "jd_supermarket2",
+        "jd_supermarket3",
+        "j2_supermarket_name",
+        "jd2_supermarket1",
+        "jd2_supermarket2",
+        "jd2_supermarket3"
+      ],
       "settings": [
         {
           "id": "jdSuperMarketNotify",
@@ -701,7 +710,7 @@
       ],
       "author": "@lxk0301",
       "repo": "https://github.com/lxk0301/scripts",
-      "script": [
+      "scripts": [
         {
           "name" : "京小超兑换奖品",
           "script" : "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js"
