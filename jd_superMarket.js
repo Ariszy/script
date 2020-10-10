@@ -328,7 +328,7 @@ function smtgHome() {
 async function businessCircleActivity() {
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
   if (businessCirclePKDetailRes.data.bizCode === 0) {
-    const { businessCircleVO, otherBusinessCircleVO, inviteCode } = businessCirclePKDetailRes.data.result;
+    const { businessCircleVO, otherBusinessCircleVO, inviteCode, pkSettleTime } = businessCirclePKDetailRes.data.result;
     console.log(`您的商圈互助码inviteCode\n${inviteCode}\n`);
     const businessCircleIndexRes = await smtg_businessCircleIndex();
     const { result } = businessCircleIndexRes.data;
@@ -337,11 +337,20 @@ async function businessCircleActivity() {
       console.log(`开始领取商圈PK奖励`);
       const getPkPrizeRes = await smtg_getPkPrize();
       console.log(`商圈PK奖励领取结果：${JSON.stringify(getPkPrizeRes)}`)
+      if (getPkPrizeRes.data.bizCode === 0) {
+        const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
+        message += `【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
+      }
     }
     console.log(`我方商圈人气值/对方商圈人气值：${businessCircleVO.hotPoint}/${otherBusinessCircleVO.hotPoint}`);
     console.log(`我方商圈成员数量/对方商圈成员数量：${businessCircleVO.memberCount}/${otherBusinessCircleVO.memberCount}`);
-    if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300) {
+    message += `【我方商圈人数】${businessCircleVO.memberCount}\n`;
+    message += `【对方商圈人数】${otherBusinessCircleVO.memberCount}\n`;
+    message += `【我方商圈人气值】${businessCircleVO.hotPoint}\n`;
+    message += `【对方商圈人气值】${otherBusinessCircleVO.hotPoint}\n`;
+    if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300 && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000 * 2))) {
       //退出该商圈
+      console.log(`商圈PK已过两天，对方商圈人气值还大于我方商圈人气值，退出该商圈重新加入`);
       await smtg_quitBusinessCircle();
     }
   } else {
