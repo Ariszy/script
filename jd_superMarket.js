@@ -558,7 +558,10 @@ async function limitTimeProduct() {
             }
           }
           if (shelfList2 && shelfList2.length > 0) {
-            await smtg_ground(item2['productId'], shelfList2.slice(-1));
+            const groundRes = await smtg_ground(item2['productId'], shelfList2.slice(-1)[0]);
+            if (groundRes.data.bizCode === 0) {
+              console.log(`限时商品上架成功`);
+            }
           }
         }
       }
