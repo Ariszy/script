@@ -80,13 +80,13 @@
     | `JD_JOY_REWARD_NOTIFY`  | 推送开关  | 非必须 | 控制jd_joy_reward.js脚本是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)              |
     | `JOY_FEED_COUNT`        | 宠汪汪喂食数量  | 非必须 | 控制jd_joy_feedPets.js脚本喂食数量  ,可以填的数字10,20,40,80 , 其他数字不可.              |
     | `MARKET_COIN_TO_BEANS`  | 京小超兑换京豆数量  | 非必须 | 控制jd_blueCoin.js兑换京豆数量,可输入值为1到20或者1000的数字，其他数字不可.              |
-    | `FruitShareCodes`       |  东东农场互助码  | 非必须 | 填写规则请看 [jdFruitShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdFruitShareCodes.js) |
-    | `PETSHARECODES`         |  东东萌宠互助码  | 非必须 | 填写规则请看 [jdPetShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdPetShareCodes.js) |
-    | `PLANT_BEAN_SHARECODES` |  种豆得豆互助码  | 非必须 | 填写规则请看 [jdPlantBeanShareCodes.js里面的说明](https://github.com/lxk0301/scripts/blob/master/jdPlantBeanShareCodes.js) |
+    | `FruitShareCodes`       |  东东农场互助码  | 非必须 | 填写规则请看 [jdFruitShareCodes.js](https://github.com/lxk0301/scripts/blob/master/jdFruitShareCodes.js) 里面的说明 |
+    | `PETSHARECODES`         |  东东萌宠互助码  | 非必须 | 填写规则请看 [jdPetShareCodes.js](https://github.com/lxk0301/scripts/blob/master/jdPetShareCodes.js) 里面的说明 |
+    | `PLANT_BEAN_SHARECODES` |  种豆得豆互助码  | 非必须 | 填写规则请看 [jdPlantBeanShareCodes.js](https://github.com/lxk0301/scripts/blob/master/jdPlantBeanShareCodes.js) 里面的说明 |
     
     ##### 互助码的填写规则
     ```
-    同一个京东账号的好友互助码用@符号隔开,不同京东账号互助码用&符号或者换行隔开,下面给一个文字示例和具体互助码示例说明
+    同一个京东账号的好友互助码用@隔开,不同京东账号互助码用&或者换行隔开,下面给一个文字示例和具体互助码示例说明
     两个账号各两个互助码的文字示例：
     京东账号1的shareCode1@京东账号1的shareCode2&京东账号2的shareCode1@京东账号2的shareCode2
     

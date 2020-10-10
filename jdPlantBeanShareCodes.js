@@ -14,10 +14,10 @@ let PlantBeanShareCodes = [
 // 判断github action里面是否有东东萌宠互助码
 if (process.env.PLANT_BEAN_SHARECODES) {
   if (process.env.PLANT_BEAN_SHARECODES.indexOf('&') > -1) {
-    console.log(`您的东东农场互助码选择的是用&隔开\n`)
+    console.log(`您的种豆互助码选择的是用&隔开\n`)
     PlantBeanShareCodes = process.env.PLANT_BEAN_SHARECODES.split('&');
   } else if (process.env.PLANT_BEAN_SHARECODES.indexOf('\n') > -1) {
-    console.log(`您的东东农场互助码选择的是用换行隔开\n`)
+    console.log(`您的种豆互助码选择的是用换行隔开\n`)
     PlantBeanShareCodes = process.env.PLANT_BEAN_SHARECODES.split('\n');
   } else {
     PlantBeanShareCodes = process.env.PLANT_BEAN_SHARECODES.split();

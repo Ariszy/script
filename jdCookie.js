@@ -7,7 +7,7 @@ let CookieJDs = [
   '',//账号二ck,如有更多,依次类推
 ]
 // 判断github action里面是否有京东ck
-if (process.env.JD_COOKIE && process.env.JD_COOKIE.split('&') && process.env.JD_COOKIE.split('&').length > 0) {
+if (process.env.JD_COOKIE) {
   if (process.env.JD_COOKIE.indexOf('&') > -1) {
     console.log(`您的cookie选择的是用&隔开\n`)
     CookieJDs = process.env.JD_COOKIE.split('&');
