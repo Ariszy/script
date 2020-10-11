@@ -463,11 +463,9 @@ async function upgrade() {
         shelfCategory_3.push(item2);
       }
     }
-
     shelfCategory_1 = shelfCategory_1.slice(-3);
     shelfCategory_2 = shelfCategory_2.slice(-3);
     shelfCategory_3 = shelfCategory_3.slice(-2);
-
     const shelfCategorys = shelfCategory_1.concat(shelfCategory_2).concat(shelfCategory_3);
     for (let item of shelfCategorys) {
       console.log('unlockStatus', item["unlockStatus"], item["name"]);
@@ -482,7 +480,7 @@ async function upgrade() {
       }
     }
   }
-  console.log('升级货架');
+  console.log('开始检查能否升级货架');
   const shelfListRes = await smtg_shelfList();
   if (shelfListRes.data.bizCode === 0) {
     const { shelfList } = shelfListRes.data.result;
@@ -492,10 +490,15 @@ async function upgrade() {
         shelfList_upgrade.push(item);
       }
     }
-    console.log(`待升级货架数量${shelfList_upgrade.length}`);
+    console.log(`待升级货架数量${shelfList_upgrade.length}个`);
     if (shelfList_upgrade && shelfList_upgrade.length > 0) {
       shelfList_upgrade.sort(sortSyData);
-      await smtg_upgradeShelf(shelfList[0].shelfId);
+      console.log("待升级货架名         等级     升级所需金币");
+      for (let item of shelfList_upgrade) {
+        console.log(`[${item["name"]}]         ${item["level"]}/${item["maxLevel"]}         ${item["upgradeCostGold"]}`);
+      }
+      console.log(`开始升级${shelfList_upgrade[0].name}，当前等级${shelfList_upgrade[0].level}，所需金币${shelfList_upgrade[0].upgradeCostGold}`)
+      await smtg_upgradeShelf(shelfList_upgrade[0].shelfId);
     }
   }
 }
