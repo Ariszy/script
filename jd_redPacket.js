@@ -197,7 +197,7 @@ function receiveTaskRedpacket(taskType) {
           console.log(`\n${$.name}: API查询请求失败 ‼️‼️`);
           console.log(JSON.stringify(err));
         } else {
-          console.log(data);
+          data = JSON.parse(data);
           if (data.data.success && data.data.biz_code === 0) {
             $.discount += Number(data.data.result.discount);
           }
