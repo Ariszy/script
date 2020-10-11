@@ -303,7 +303,7 @@ function smtgSign() {
           if (data.code === 0 && data.data.success) {
             message += `【第${$.todayDay}日签到】成功，奖励${data.data.result.rewardBlue}蓝币\n`
           } else {
-            message += `【第${$.todayDay}日签到】失败,${data.data.bizMsg}\n`
+            message += `【第${$.todayDay}日签到】${data.data.bizMsg}\n`
           }
         }
       } catch (e) {
