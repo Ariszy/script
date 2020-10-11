@@ -54,7 +54,7 @@ const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "e
       message = '';
       subTitle = '';
       await jdSuperMarket();
-      // await upgrade();
+      // await receiveLimitProductBlueCoin();
     }
   }
 })()
@@ -66,11 +66,23 @@ const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "e
     })
 async function jdSuperMarket() {
   await receiveGoldCoin();//收金币
+  if ($.goldCoinData.data.bizCode === 300) {
+    $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+    if ($.index === 1) {
+      $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+    } else if ($.index === 2){
+      $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+    }
+    if ($.isNode()) {
+      await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+    }
+    return
+  }
   await receiveBlueCoin();//收蓝币（小费）
+  await receiveLimitProductBlueCoin();//收蓝币（小费）
   await smtgSignList();
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
-  await smtgHome();
   await help();
   await smtgQueryPkTask();
   await businessCircleActivity();//商圈活动
@@ -78,6 +90,7 @@ async function jdSuperMarket() {
   await upgrade();//升级货架和商品
   await manageProduct();
   await limitTimeProduct();
+  await smtgHome();
   await showMsg();
 }
 function showMsg() {
@@ -134,35 +147,13 @@ async function doDailyTask() {
 }
 
 async function receiveGoldCoin() {
-  return new Promise(async resolve => {
-    const data = await smtgReceiveCoin(0);
-    // console.log('data-----------', data)
-    if (data.data.bizCode === 0) {
-      console.log(`领取金币成功${data.data.result.receivedGold}`)
-      message += `【领取金币】${data.data.result.receivedGold}个\n`;
-      resolve();
-    } else {
-      console.log(`${data.data.bizMsg}`);
-      if (data.data.bizCode === 300) {
-        $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-        if ($.index === 1) {
-          $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-        } else if ($.index === 2){
-          $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-        }
-        if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-        }
-        // if ($.isNode()) {
-        //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-        // }
-        resolve()
-      } else {
-        message += `【领取金币】失败，${data.data.bizMsg}\n`;
-        resolve();
-      }
-    }
-  })
+  $.goldCoinData = await smtgReceiveCoin(0);
+  if ($.goldCoinData.data.bizCode === 0) {
+    console.log(`领取金币成功${$.goldCoinData.data.result.receivedGold}`)
+    message += `【领取金币】${$.goldCoinData.data.result.receivedGold}个\n`;
+  } else {
+    console.log(`${$.goldCoinData.data.bizMsg}`);
+  }
 }
 function smtgReceiveCoin(type) {
   return new Promise((resolve) => {
@@ -179,6 +170,13 @@ function smtgReceiveCoin(type) {
       }
     })
   })
+}
+async function receiveLimitProductBlueCoin() {
+  const res = await smtgReceiveCoin(1);
+  console.log(`限时商品领蓝币结果：\n[${res.data.bizMsg}]`);
+  if (res.data.bizCode === 0) {
+    message += `【限时商品】获得${res.data.result.receivedBlue}个蓝币\n`;
+  }
 }
 //领蓝币
 function receiveBlueCoin(timeout = 0) {
