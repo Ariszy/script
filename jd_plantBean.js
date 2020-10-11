@@ -377,7 +377,7 @@ async function doHelp() {
           console.log('您今日助力的机会已耗尽，已不能再帮助好友助力了\n');
           break;
         } else if ($.helpResult.data.helpShareRes.state === '3') {
-          console.log('该好友今日已满20人助力,明天再来为Ta助力吧\n')
+          console.log('该好友今日已满9人助力/20瓶营养液,明天再来为Ta助力吧\n')
         } else if ($.helpResult.data.helpShareRes.state === '4') {
           console.log(`${$.helpResult.data.helpShareRes.promptText}\n`)
         } else {
