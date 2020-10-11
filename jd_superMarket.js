@@ -1,11 +1,11 @@
 /*
 京小超
-更新时间：2020-10-09
+更新时间：2020-10-11
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 支持京东双账号
-领蓝币请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
+京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-// quantumultx
+// QuantumultX
 [task_local]
 #京小超
 11 1-23/5 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js, tag=京小超, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jxc.png, enabled=true
@@ -34,7 +34,7 @@ if ($.isNode()) {
 
 let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 
-let UserName = '', todayDay = 0, message = '', subTitle;
+let UserName = '', message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
 const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "eU9YaejjYv4g8T2EwnsVhQ", "aURoM7PtY_Q", "eU9Ya-y2N_5z9DvXwyIV0A", "eU9YaOnjYK4j-GvWmXIWhA"];
@@ -80,11 +80,10 @@ async function jdSuperMarket() {
   }
   await receiveBlueCoin();//收蓝币（小费）
   await receiveLimitProductBlueCoin();//收限时商品的蓝币
-  await smtgSignList();
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
-  await help();
-  await smtgQueryPkTask();
+  await help();//商圈助力
+  await smtgQueryPkTask();//做商品PK任务
   await businessCircleActivity();//商圈活动
   await myProductList();//货架
   await upgrade();//升级货架和商品
@@ -286,9 +285,9 @@ function smtgQueryShopTask() {
     })
   })
 }
-function smtgSign(day) {
+function smtgSign() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_sign'), (err, resp, data) => {
+    $.get(taskUrl('smtg_sign'), async (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
         if (err) {
@@ -297,10 +296,14 @@ function smtgSign(day) {
         } else {
           data = JSON.parse(data);
           // console.log('ddd----ddd', data)
+          const signList = await smtgSignList();
+          if (signList.data.bizCode === 0) {
+            $.todayDay = signList.data.result.todayDay;
+          }
           if (data.code === 0 && data.data.success) {
-            message += `【每日签到】第${todayDay}天签到成功，奖励${data.data.result.rewardBlue}蓝币\n`
+            message += `【第${$.todayDay}日签到】成功，奖励${data.data.result.rewardBlue}蓝币\n`
           } else {
-            message += `【每日签到】${data.data.bizMsg}\n`
+            message += `【第${$.todayDay}日签到】失败,${data.data.bizMsg}\n`
           }
         }
       } catch (e) {
@@ -321,9 +324,6 @@ function smtgSignList() {
           console.log(JSON.stringify(err));
         } else {
           data = JSON.parse(data);
-          if (data.code === 0 && data.data.success) {
-            todayDay = data.data.result.todayDay;
-          }
         }
       } catch (e) {
         $.logErr(e, resp);
