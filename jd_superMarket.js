@@ -37,7 +37,7 @@ let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false�
 let UserName = '', todayDay = 0, message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
-const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "eU9YaejjYv4g8T2EwnsVhQ"];
+const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "eU9YaejjYv4g8T2EwnsVhQ", "aURoM7PtY_Q", "eU9Ya-y2N_5z9DvXwyIV0A", "eU9YaOnjYK4j-GvWmXIWhA"];
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -79,7 +79,7 @@ async function jdSuperMarket() {
     return
   }
   await receiveBlueCoin();//收蓝币（小费）
-  await receiveLimitProductBlueCoin();//收蓝币（小费）
+  await receiveLimitProductBlueCoin();//收限时商品的蓝币
   await smtgSignList();
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
@@ -101,8 +101,10 @@ function showMsg() {
   }
 }
 async function help() {
+  console.log(`开始助力好友`);
   for (let code of inviteCodes) {
-    await smtgDoAssistPkTask(code);
+    const res = await smtgDoAssistPkTask(code);
+    console.log(`助力好友${JSON.stringify(res)}`);
   }
 }
 async function doDailyTask() {
@@ -162,7 +164,12 @@ function smtgReceiveCoin(type) {
     }
     $.get(taskUrl('smtg_receiveCoin', body), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -173,7 +180,7 @@ function smtgReceiveCoin(type) {
 }
 async function receiveLimitProductBlueCoin() {
   const res = await smtgReceiveCoin(1);
-  console.log(`限时商品领蓝币结果：\n[${res.data.bizMsg}]`);
+  console.log(`\n限时商品领蓝币结果：[${res.data.bizMsg}]\n`);
   if (res.data.bizCode === 0) {
     message += `【限时商品】获得${res.data.result.receivedBlue}个蓝币\n`;
   }
@@ -184,24 +191,29 @@ function receiveBlueCoin(timeout = 0) {
     setTimeout( ()=>{
       $.get(taskUrl('smtg_receiveCoin', { type: 2 }), async (err, resp, data) => {
         try {
-          data = JSON.parse(data);
-          $.data = data;
-          if ($.data.data.bizCode !== 0 && $.data.data.bizCode !== 809) {
-            $.coinerr = `${$.data.data.bizMsg}`;
-            message += `【收取小费】${$.data.data.bizMsg}\n`;
-            console.log(`【京东账号${$.index}】${UserName} 收取蓝币失败：${$.data.data.bizMsg}`)
-            return
-          }
-          if  ($.data.data.bizCode === 0) {
-            $.coincount += $.data.data.result.receivedBlue;
-            $.blueCionTimes ++;
-            console.log(`【京东账号${$.index}】${UserName} 第${$.blueCionTimes}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
-            if (!$.data.data.result.isNextReceived) {
-              message += `【收取小费】${$.coincount}个\n`;
+          if (err) {
+            console.log('\n京小超: API查询请求失败 ‼️‼️')
+            console.log(JSON.stringify(err));
+          } else {
+            data = JSON.parse(data);
+            $.data = data;
+            if ($.data.data.bizCode !== 0 && $.data.data.bizCode !== 809) {
+              $.coinerr = `${$.data.data.bizMsg}`;
+              message += `【收取小费】${$.data.data.bizMsg}\n`;
+              console.log(`收取蓝币失败：${$.data.data.bizMsg}`)
               return
             }
+            if  ($.data.data.bizCode === 0) {
+              $.coincount += $.data.data.result.receivedBlue;
+              $.blueCionTimes ++;
+              console.log(`【京东账号${$.index}】${UserName} 第${$.blueCionTimes}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
+              if (!$.data.data.result.isNextReceived) {
+                message += `【收取小费】${$.coincount}个\n`;
+                return
+              }
+            }
+            await receiveBlueCoin(3000);
           }
-          await receiveBlueCoin(3000);
         } catch (e) {
           $.logErr(e, resp);
         } finally {
@@ -221,9 +233,12 @@ function smtgDoShopTask(taskId, itemId) {
     }
     $.get(taskUrl('smtg_doShopTask', body), (err, resp, data) => {
       try {
-        // console.log('ddd----ddd', data)
-        data = JSON.parse(data);
-        // console.log('ddd----ddd', data)
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -239,9 +254,12 @@ function smtgObtainShopTaskPrize(taskId) {
     }
     $.get(taskUrl('smtg_obtainShopTaskPrize', body), (err, resp, data) => {
       try {
-        // console.log('ddd----ddd', data)
-        data = JSON.parse(data);
-        // console.log('ddd----ddd', data)
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -254,9 +272,12 @@ function smtgQueryShopTask() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_queryShopTask'), (err, resp, data) => {
       try {
-        // console.log('ddd----ddd', data)
-        data = JSON.parse(data);
-        // console.log('ddd----ddd', data)
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -270,12 +291,17 @@ function smtgSign(day) {
     $.get(taskUrl('smtg_sign'), (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
-        data = JSON.parse(data);
-        // console.log('ddd----ddd', data)
-        if (data.code === 0 && data.data.success) {
-          message += `【每日签到】第${todayDay}天签到成功，奖励${data.data.result.rewardBlue}蓝币\n`
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
         } else {
-          message += `【每日签到】${data.data.bizMsg}\n`
+          data = JSON.parse(data);
+          // console.log('ddd----ddd', data)
+          if (data.code === 0 && data.data.success) {
+            message += `【每日签到】第${todayDay}天签到成功，奖励${data.data.result.rewardBlue}蓝币\n`
+          } else {
+            message += `【每日签到】${data.data.bizMsg}\n`
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -290,9 +316,14 @@ function smtgSignList() {
     $.get(taskUrl('smtg_signList'), (err, resp, data) => {
       try {
         // console.log('ddd----ddd', data)
-        data = JSON.parse(data);
-        if (data.code === 0 && data.data.success) {
-          todayDay = data.data.result.todayDay;
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 0 && data.data.success) {
+            todayDay = data.data.result.todayDay;
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -306,13 +337,18 @@ function smtgHome() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_home'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        if (data.code === 0 && data.data.success) {
-          const { result } = data.data;
-          const { shopName, totalGold, totalBlue } = result;
-          subTitle = shopName;
-          message += `【总金币】${totalGold}个\n`;
-          message += `【总蓝币】${totalBlue}个\n`;
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 0 && data.data.success) {
+            const { result } = data.data;
+            const { shopName, totalGold, totalBlue } = result;
+            subTitle = shopName;
+            message += `【总金币】${totalGold}个\n`;
+            message += `【总蓝币】${totalBlue}个\n`;
+          }
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -327,7 +363,7 @@ async function businessCircleActivity() {
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
   if (businessCirclePKDetailRes.data.bizCode === 0) {
     const { businessCircleVO, otherBusinessCircleVO, inviteCode, pkSettleTime } = businessCirclePKDetailRes.data.result;
-    console.log(`您的商圈互助码inviteCode\n${inviteCode}\n`);
+    console.log(`\n您的商圈互助码inviteCode\n${inviteCode}\n`);
     const businessCircleIndexRes = await smtg_businessCircleIndex();
     const { result } = businessCircleIndexRes.data;
     const { pkPrizeStatus, pkStatus  } = result;
@@ -480,7 +516,7 @@ async function upgrade() {
       }
     }
   }
-  console.log('开始检查能否升级货架');
+  console.log('\n开始检查能否升级货架');
   const shelfListRes = await smtg_shelfList();
   if (shelfListRes.data.bizCode === 0) {
     const { shelfList } = shelfListRes.data.result;
@@ -497,7 +533,7 @@ async function upgrade() {
       for (let item of shelfList_upgrade) {
         console.log(`[${item["name"]}]         ${item["level"]}/${item["maxLevel"]}         ${item["upgradeCostGold"]}`);
       }
-      console.log(`开始升级${shelfList_upgrade[0].name}，当前等级${shelfList_upgrade[0].level}，所需金币${shelfList_upgrade[0].upgradeCostGold}`)
+      console.log(`开始升级[${shelfList_upgrade[0].name}]货架，当前等级${shelfList_upgrade[0].level}，所需金币${shelfList_upgrade[0].upgradeCostGold}\n`);
       await smtg_upgradeShelf(shelfList_upgrade[0].shelfId);
     }
   }
@@ -587,9 +623,11 @@ function smtgDoAssistPkTask(code) {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_doAssistPkTask', {"inviteCode": code}), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        if (data.code === 0 && data.data.success) {
-
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -604,32 +642,35 @@ function smtgQueryPkTask() {
   return new Promise( (resolve) => {
     $.get(taskUrl('smtg_queryPkTask'), async (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        if (data.code === 0) {
-          if (data.data.bizCode === 0) {
-            const { taskList } = data.data.result;
-            for (let item of taskList) {
-              if (item.taskStatus === 1) {
-                if (item.prizeStatus === 1) {
-                  //任务已做完，但未领取奖励， 现在为您领取奖励
-                  await smtgObtainPkTaskPrize(item.taskId);
-                } else if (item.prizeStatus === 0) {
-                  console.log(`${item.title}已做完`);
-                }
-              } else {
-                console.log(`[${item.title}] 未做完 ${item.finishNum}/${item.targetNum}`)
-                if (item.content) {
-                  const { itemId } = item.content[item.type];
-                  console.log('itemId', itemId)
-                  await smtgDoPkTask(item.taskId, itemId);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+          if (data.code === 0) {
+            if (data.data.bizCode === 0) {
+              const { taskList } = data.data.result;
+              console.log(`\n   任务     状态`)
+              for (let item of taskList) {
+                if (item.taskStatus === 1) {
+                  if (item.prizeStatus === 1) {
+                    //任务已做完，但未领取奖励， 现在为您领取奖励
+                    await smtgObtainPkTaskPrize(item.taskId);
+                  } else if (item.prizeStatus === 0) {
+                    console.log(`[${item.title}] 已做完 ${item.finishNum}/${item.targetNum}`);
+                  }
+                } else {
+                  console.log(`[${item.title}] 未做完 ${item.finishNum}/${item.targetNum}`)
+                  if (item.content) {
+                    const { itemId } = item.content[item.type];
+                    console.log('itemId', itemId)
+                    await smtgDoPkTask(item.taskId, itemId);
+                  }
                 }
               }
-              // if () {
-              //
-              // }
+            } else {
+              console.log(`${data.data.bizMsg}`)
             }
-          } else {
-            console.log(`${data.data.bizMsg}`)
           }
         }
       } catch (e) {
@@ -645,9 +686,11 @@ function smtgObtainPkTaskPrize(taskId) {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_obtainPkTaskPrize', {"taskId": taskId}), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        if (data.code === 0 && data.data.success) {
-
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -661,9 +704,11 @@ function smtgDoPkTask(taskId, itemId) {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_doPkTask', {"taskId": taskId, "itemId": itemId}), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
-        if (data.code === 0 && data.data.success) {
-
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp);
@@ -678,7 +723,12 @@ function smtg_businessCirclePKDetail() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_businessCirclePKDetail'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -691,7 +741,12 @@ function smtg_getBusinessCircleList() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_getBusinessCircleList'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -705,7 +760,12 @@ function smtg_joinBusinessCircle(circleId) {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_joinBusinessCircle', { circleId }), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -718,7 +778,12 @@ function smtg_businessCircleIndex() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_businessCircleIndex'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -732,7 +797,12 @@ function smtg_getPkPrize() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_getPkPrize'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -745,7 +815,12 @@ function smtg_quitBusinessCircle() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_quitBusinessCircle'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -759,7 +834,12 @@ function smtg_shelfList() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_shelfList'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -774,8 +854,13 @@ function smtg_shelfProductList(shelfId) {
     console.log(`开始检查货架[${shelfId}] 可上架产品`)
     $.get(taskUrl('smtg_shelfProductList', { shelfId }), (err, resp, data) => {
       try {
-        console.log(`检查货架[${shelfId}] 可上架产品结果:${data}`)
-        data = JSON.parse(data);
+        // console.log(`检查货架[${shelfId}] 可上架产品结果:${data}`)
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -790,8 +875,13 @@ function smtg_upgradeProduct(productId) {
     console.log(`开始升级商品`)
     $.get(taskUrl('smtg_upgradeProduct', { productId }), (err, resp, data) => {
       try {
-        console.log(`升级商品productId[${productId}]结果:${data}`);
-        data = JSON.parse(data);
+        // console.log(`升级商品productId[${productId}]结果:${data}`);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -806,8 +896,13 @@ function smtg_unlockProduct(productId) {
     console.log(`开始解锁商品`)
     $.get(taskUrl('smtg_unlockProduct', { productId }), (err, resp, data) => {
       try {
-        console.log(`解锁商品productId[${productId}]结果:${data}`);
-        data = JSON.parse(data);
+        // console.log(`解锁商品productId[${productId}]结果:${data}`);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -822,8 +917,13 @@ function smtg_upgradeShelf(shelfId) {
     console.log(`开始升级货架`)
     $.get(taskUrl('smtg_upgradeShelf', { shelfId }), (err, resp, data) => {
       try {
-        console.log(`升级货架shelfId[${shelfId}]结果:${data}`);
-        data = JSON.parse(data);
+        // console.log(`升级货架shelfId[${shelfId}]结果:${data}`);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -838,8 +938,13 @@ function smtg_unlockShelf(shelfId) {
     console.log(`开始解锁货架`)
     $.get(taskUrl('smtg_unlockShelf', { shelfId }), (err, resp, data) => {
       try {
-        console.log(`解锁货架shelfId[${shelfId}]结果:${data}`);
-        data = JSON.parse(data);
+        // console.log(`解锁货架shelfId[${shelfId}]结果:${data}`);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -852,8 +957,13 @@ function smtg_ground(productId, shelfId) {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_ground', { productId, shelfId }), (err, resp, data) => {
       try {
-        console.log(`上架商品结果:${data}`);
-        data = JSON.parse(data);
+        // console.log(`上架商品结果:${data}`);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
@@ -866,7 +976,12 @@ function smtg_productList() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_productList'), (err, resp, data) => {
       try {
-        data = JSON.parse(data);
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {

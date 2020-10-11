@@ -386,7 +386,6 @@ function smtgHome() {
         if (err) {
           console.log('\n京小超兑换奖品: API查询请求失败 ‼️‼️')
           console.log(JSON.stringify(err));
-          $.logErr(err);
         } else {
           data = JSON.parse(data);
           if (data.data.bizCode === 0) {
