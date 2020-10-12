@@ -148,6 +148,7 @@ async function active(taskType) {
     } else {
       console.log(`任务列表为空,手动进入app内检查 是否存在[从京豆首页进领券中心逛30秒]的任务,如存在,请手动完成再运行脚本`)
       $.msg(`${$.name}`, '', '手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本');
+      await notify.sendNotify(`${$.name}异常`, `手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本`)
     }
   } else {
     console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
