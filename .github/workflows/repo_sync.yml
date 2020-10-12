@@ -1,26 +1,40 @@
 # File: .github/workflows/repo-sync.yml
-name: 同步github
+name: 同步lxk0301脚本库
 on:
   schedule:
   # Sync repo once every two days
   - cron: '1 0,15 * * *'
   workflow_dispatch:
-
+  watch:
+    types: started
+  push:
+    branches: [ master ]
 jobs:
   repo-sync:
     env:
       PAT: ${{ secrets.PAT }}
+      dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      if: env.PAT
-      with:
-        persist-credentials: false
-    - name: repo-sync
-      uses: repo-sync/github-sync@v2
-      if: env.PAT
-      with:
-        source_repo: "https://github.com/lxk0301/scripts.git"
-        source_branch: "master"
-        destination_branch: "master"
-        github_token: ${{ secrets.PAT }}
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: sync lxk0301-scripts
+        uses: repo-sync/github-sync@v2
+        if: env.PAT
+        with:
+          source_repo: "https://github.com/lxk0301/scripts.git"
+          source_branch: "master"
+          destination_branch: "lxk0301"
+          github_token: ${{ secrets.PAT }}
+
+      - name: sync github -> gitee
+        uses: Yikun/hub-mirror-action@master
+        if: env.dst_key
+        with:
+          src: github/lxk0301
+          dst: gitee/lxk0301
+          static_list: "scripts"
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
