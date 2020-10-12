@@ -134,15 +134,18 @@ function startTask(taskType) {
 }
 
 async function active(taskType) {
-  let getTaskDetailForColorRes = await getTaskDetailForColor(taskType);
-  // console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
-  const data = getTaskDetailForColorRes.data.result.advertDetails;
-  for (let item of data) {
-    await $.wait(1000);
-    if (item.id && item.status == 0) {
-      let taskReportForColorRes = await taskReportForColor(taskType, item.id);
-      // console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
+  const getTaskDetailForColorRes = await getTaskDetailForColor(taskType);
+  if (getTaskDetailForColorRes && getTaskDetailForColorRes.code === 0) {
+    const { advertDetails } = getTaskDetailForColorRes.data.result;
+    for (let item of advertDetails) {
+      await $.wait(1000);
+      if (item.id && item.status == 0) {
+        let taskReportForColorRes = await taskReportForColor(taskType, item.id);
+        // console.log(`完成任务的动作---${JSON.stringify(taskReportForColorRes)}`)
+      }
     }
+  } else {
+    console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
   }
 }
 
