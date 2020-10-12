@@ -436,14 +436,14 @@
         {
           "id": "jd_joy_invite_pin",
           "name": "账号一邀请助力friendPin名单",
-          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33",
           "type": "text",
           "desc": "多个账号使用英文逗号','隔开,最多3个"
         },
         {
           "id": "jd_joy_run_pin",
           "name": "账号一赛跑助力friendPin名单",
-          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33",
           "type": "text",
           "desc": "多个账号使用英文逗号','隔开,最多6个"
         },
@@ -456,15 +456,15 @@
         },
         {
           "id": "jd2_joy_invite_pin",
-          "name": "账号一邀请助力friendPin名单",
-          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "name": "账号二邀请助力friendPin名单",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33",
           "type": "text",
           "desc": "多个账号使用英文逗号','隔开,最多3个"
         },
         {
           "id": "jd2_joy_run_pin",
           "name": "账号二赛跑助力friendPin名单",
-          "val": "jd_6cd93e613b0e5,被折叠的记忆33,jd_704a2e5e28a66",
+          "val": "jd_6cd93e613b0e5,被折叠的记忆33",
           "type": "text",
           "desc": "多个账号使用英文逗号','隔开,最多6个"
         }

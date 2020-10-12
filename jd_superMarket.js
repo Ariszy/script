@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-10-11
+更新时间：2020-10-12
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 支持京东双账号
 京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
@@ -13,7 +13,7 @@
 [Script]
 cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js,tag=京小超
 // Surge
-京小超 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=120,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js
+京小超 = type=cron,cronexp="11 1-23/5 * * *",wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js
  */
 const $ = new Env('京小超');
 //Node.js用户请在jdCookie.js处填写京东ck;
