@@ -378,10 +378,10 @@ async function businessCircleActivity() {
     }
     console.log(`我方商圈人气值/对方商圈人气值：${businessCircleVO.hotPoint}/${otherBusinessCircleVO.hotPoint}`);
     console.log(`我方商圈成员数量/对方商圈成员数量：${businessCircleVO.memberCount}/${otherBusinessCircleVO.memberCount}`);
-    message += `【我方商圈人数】${businessCircleVO.memberCount}\n`;
-    message += `【对方商圈人数】${otherBusinessCircleVO.memberCount}\n`;
-    message += `【我方商圈人气值】${businessCircleVO.hotPoint}\n`;
-    message += `【对方商圈人气值】${otherBusinessCircleVO.hotPoint}\n`;
+    message += `【我方商圈】${businessCircleVO.memberCount}/${businessCircleVO.hotPoint}\n`;
+    message += `【对方商圈】${otherBusinessCircleVO.memberCount}/${otherBusinessCircleVO.hotPoint}\n`;
+    // message += `【我方商圈人气值】${businessCircleVO.hotPoint}\n`;
+    // message += `【对方商圈人气值】${otherBusinessCircleVO.hotPoint}\n`;
     if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300 && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000 * 1))) {
       //退出该商圈
       console.log(`商圈PK已过两天，对方商圈人气值还大于我方商圈人气值，退出该商圈重新加入`);
@@ -478,7 +478,8 @@ async function unlockProductByCategory(category) {
 }
 //升级货架和商品
 async function upgrade() {
-  console.log('升级商品')
+  console.log(`\n开始检测升级商品,目前没有平稳升级,只取倒数几个商品进行升级`)
+  console.log('普通货架取倒数4个商品,冰柜货架取倒数3个商品,水果货架取倒数2个商品')
   const smtgProductListRes = await smtg_productList();
   if (smtgProductListRes.data.bizCode === 0) {
     let productType1 = [], shelfCategory_1 = [], shelfCategory_2 = [], shelfCategory_3 = [];
@@ -499,13 +500,13 @@ async function upgrade() {
         shelfCategory_3.push(item2);
       }
     }
-    shelfCategory_1 = shelfCategory_1.slice(-3);
+    shelfCategory_1 = shelfCategory_1.slice(-4);
     shelfCategory_2 = shelfCategory_2.slice(-3);
     shelfCategory_3 = shelfCategory_3.slice(-2);
     const shelfCategorys = shelfCategory_1.concat(shelfCategory_2).concat(shelfCategory_3);
+    console.log(`\n  货架      商品    解锁状态    可升级状态`)
     for (let item of shelfCategorys) {
-      console.log('unlockStatus', item["unlockStatus"], item["name"]);
-      console.log('upgradeStatus', item["upgradeStatus"], item["name"]);
+      console.log(`${item['shelfCategory'] === 1 ? '普通货架' : item['shelfCategory'] === 2 ? '冰柜货架' : item['shelfCategory'] === 3 ? '水果货架':'未知货架'}    ${item["name"]}     ${item["unlockStatus"] === 0 ? '未解锁' : '已解锁'}      ${item["upgradeStatus"] === 1 ? '可升级' : item["upgradeStatus"] === 0 ? '不可升级':item["upgradeStatus"]}`)
       if (item['unlockStatus'] === 1) {
         await smtg_unlockProduct(item['productId']);
         break;
