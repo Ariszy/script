@@ -525,10 +525,12 @@ async function upgrade() {
     for (let item of shelfCategorys) {
       console.log(`${item['shelfCategory'] === 1 ? '普通货架' : item['shelfCategory'] === 2 ? '冰柜货架' : item['shelfCategory'] === 3 ? '水果货架':'未知货架'}    ${item["name"]}     ${item["unlockStatus"] === 0 ? '未解锁' : '已解锁'}      ${item["upgradeStatus"] === 1 ? '可升级' : item["upgradeStatus"] === 0 ? '不可升级':item["upgradeStatus"]}`)
       if (item['unlockStatus'] === 1) {
+        console.log(`\n开始解锁商品：${item['name']}`)
         await smtg_unlockProduct(item['productId']);
         break;
       }
       if (item['upgradeStatus'] === 1) {
+        console.log(`\n开始升级商品：${item['name']}`)
         await smtg_upgradeProduct(item['productId']);
         break;
       }
