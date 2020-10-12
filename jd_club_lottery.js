@@ -123,7 +123,7 @@ async function shaking() {
     await $.wait(1000);
     const shakeBeanRes = await shakeBean();
     if (shakeBeanRes.success) {
-      console.log(`剩余摇奖次数：${shakeBeanRes.data.luckyBox.feeTimes}`)
+      console.log(`剩余摇奖次数：${shakeBeanRes.data.luckyBox.freeTimes}`)
       if (shakeBeanRes.data && shakeBeanRes.data.prizeBean) {
         $.prizeBeanCount += shakeBeanRes.data.prizeBean.count;
         $.totalBeanCount = shakeBeanRes.data.luckyBox.totalBeanCount;
