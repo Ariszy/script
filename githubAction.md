@@ -51,7 +51,15 @@
       3. 确保pull.yml里面是`mergeMethod: hardreset`(默认就是`hardreset`)。
       
       4. ENJOY!上游更改三小时左右就会自动发起同步。
-      
+    ```
+    # 方案A可参考这里
+    version: "1"
+    rules:                      # Array of rules
+      - base: master            # Required. Target branch
+        upstream: lxk0301:master    # Required. Must be in the same fork network.
+        mergeMethod: hardreset  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
+        mergeUnstable: true    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
+    ```
   - 方案B - 保留自己仓库已修改过的文件
     
     > 上游变动后pull插件会自动发起pr，但如果有冲突需要自行**手动**确认。
@@ -61,7 +69,15 @@
     2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
     3. 将pull.yml里面的`mergeMethod: hardreset`修改为`mergeMethod: merge`保存。
     4. ENJOY!上游更改三小时左右就会自动发起同步。
-  
+    ```
+    # 方案B可参考这里
+    version: "1"
+    rules:                      # Array of rules
+      - base: master            # Required. Target branch
+        upstream: lxk0301:master    # Required. Must be in the same fork network.
+        mergeMethod: merge  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
+        mergeUnstable: true    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
+    ```
 - 下方提供使用到的 **Secrets全集合**
 
     | Name                    |   归属   | 属性   | 说明                                                         |
