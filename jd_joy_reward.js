@@ -1,6 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间; 2020-10-09
+更新时间; 2020-10-13
 兑换规则：一个账号一天只能兑换一次京豆。
 1-20级：340积分兑换20京豆, 21-25级：320积分换20京豆
 再往上的等级兑换规则目前不知，欢迎大家提供信息
@@ -62,10 +62,10 @@ const JD_API_HOST = 'https://jdjoy.jd.com';
     })
 
 async function joyReward() {
-  const getExchangeRewardsRes = await getExchangeRewards();
-  if (getExchangeRewardsRes.success) {
-    // console.log('success', getExchangeRewardsRes);
-    const data = getExchangeRewardsRes.data;
+  await getExchangeRewards();
+  if ($.getExchangeRewardsRes && $.getExchangeRewardsRes.success) {
+    // console.log('success', $.getExchangeRewardsRes);
+    const data = $.getExchangeRewardsRes.data;
     const levelSaleInfos = data.levelSaleInfos;
     const giftSaleInfos = levelSaleInfos.giftSaleInfos;
     console.log(`当前积分 ${data.coin}\n`);
@@ -88,9 +88,9 @@ async function joyReward() {
         if (leftStock) {
           if (!saleInfoId) return
           console.log(`当前账户积分:${data.coin}\n当前京豆库存:${leftStock}\n满足兑换条件,开始为您兑换京豆\n`);
-          const exchangeRes = await exchange(saleInfoId, 'pet');
-          if (exchangeRes.success) {
-            if (exchangeRes.errorCode === 'buy_success') {
+          await exchange(saleInfoId, 'pet');
+          if ($.exchangeRes && $.exchangeRes.success) {
+            if ($.exchangeRes.errorCode === 'buy_success') {
               console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
               let ctrTemp;
               if ($.isNode() && process.env.jdJoyRewardNotify) {
@@ -101,7 +101,7 @@ async function joyReward() {
                 ctrTemp = `${jdNotify}` === 'false';
               }
               if (ctrTemp) {
-                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分\n`);
+                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}\n`);
                 if ($.isNode()) {
                   await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
                 }
@@ -109,9 +109,11 @@ async function joyReward() {
               // if ($.isNode()) {
               //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
               // }
-            } else if (exchangeRes.errorCode === 'buy_limit') {
+            } else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
               console.log('兑换失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~')
               //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${UserName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
+            } else {
+              console.log(`兑奖异常:${JSON.stringify($.exchangeRes)}`)
             }
           }
         } else {
@@ -124,7 +126,7 @@ async function joyReward() {
     } else {
       console.log('您设置了不兑换京豆,如需兑换京豆，请去BoxJs重新设置或修改第20行代码')
     }
-  } else if (!getExchangeRewardsRes.success && getExchangeRewardsRes.errorCode === 'B0001') {
+  } else if ($.getExchangeRewardsRes && !$.getExchangeRewardsRes.success && $.getExchangeRewardsRes.errorCode === 'B0001') {
     $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, '请点击此处去获取Cookie\n https://bean.m.jd.com/ \n', {"open-url": "https://bean.m.jd.com/"});
     if ($.index === 1) {
       $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
@@ -135,6 +137,8 @@ async function joyReward() {
       await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n\n请重新登录获取cookie`);
     }
     // $.done();
+  } else {
+    console.log(`${$.name}异常,${JSON.stringify($.$.getExchangeRewardsRes)}`)
   }
 }
 function getExchangeRewards() {
@@ -156,22 +160,24 @@ function getExchangeRewards() {
     }
     $.get(option, (err, resp, data) => {
       try {
-        // console.log('data', data)
-        data = JSON.parse(data);
-        // console.log('data', data)
+        if (data) {
+          $.getExchangeRewardsRes = JSON.parse(data);
+        } else {
+          console.log(`${$.name}京豆api返回数据为空，请检查自身原因`)
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
-        resolve(data);
+        resolve();
       }
     });
   })
 }
-function exchange(rewardId, orderSource) {
+function exchange(saleInfoId, orderSource) {
   return new Promise((resolve) => {
     const option = {
       url: `${JD_API_HOST}/gift/exchange`,
-      body: `${JSON.stringify({'saleInfoId':rewardId, 'orderSource': orderSource})}`,
+      body: `${JSON.stringify({ saleInfoId, orderSource })}`,
       headers: {
         "Host": "jdjoy.jd.com",
         "Accept": "*/*",
@@ -190,11 +196,15 @@ function exchange(rewardId, orderSource) {
     $.post(option, (err, resp, data) => {
       try {
         // console.log('exchange', data)
-        data = JSON.parse(data);
+        if (data) {
+          $.exchangeRes = JSON.parse(data);
+        } else {
+          console.log(`${$.name}京豆api返回数据为空，请检查自身原因`)
+        }
       } catch (e) {
         $.logErr(e, resp);
       } finally {
-        resolve(data);
+        resolve();
       }
     });
   })
