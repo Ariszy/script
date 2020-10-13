@@ -1,6 +1,6 @@
 /*
 京东摇钱树 ：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_moneyTree.js
-更新时间:2020-09-30
+更新时间:2020-10-13
 京东摇钱树支持京东双账号
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
@@ -97,47 +97,51 @@ function user_info() {
           console.log("\n摇钱树京东API请求失败 ‼️‼️")
           console.log(JSON.stringify(err));
         } else {
-          const res = JSON.parse(data);
-          if (res && res.resultCode === 0) {
-            $.isLogin = true;
-            console.log('resultCode为0')
-            if (res.resultData.data) {
-              userInfo = res.resultData.data;
-              // userInfo.realName = null;
-              if (userInfo.realName) {
-                console.log(`助力码sharePin为：：${userInfo.sharePin}`);
-                $.treeMsgTime = userInfo.sharePin;
-                if ($.getdata($.treeMsgTime)) {
-                  if ($.getdata($.treeMsgTime) >= Notice) {
+          if (data) {
+            const res = JSON.parse(data);
+            if (res && res.resultCode === 0) {
+              $.isLogin = true;
+              console.log('resultCode为0')
+              if (res.resultData.data) {
+                userInfo = res.resultData.data;
+                // userInfo.realName = null;
+                if (userInfo.realName) {
+                  console.log(`助力码sharePin为：：${userInfo.sharePin}`);
+                  $.treeMsgTime = userInfo.sharePin;
+                  if ($.getdata($.treeMsgTime)) {
+                    if ($.getdata($.treeMsgTime) >= Notice) {
+                      $.setdata('0', $.treeMsgTime);
+                    }
+                  } else {
                     $.setdata('0', $.treeMsgTime);
                   }
+                  subTitle = `【${userInfo.nick}】${userInfo.treeInfo.treeName}`;
+                  // message += `【我的金果数量】${userInfo.treeInfo.fruit}\n`;
+                  // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
+                  // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
                 } else {
-                  $.setdata('0', $.treeMsgTime);
+                  $.msg($.name, `【提示】京东账号${$.index}${UserName}运行失败`, '此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证', {"open-url": "openApp.jdMobile://"});
                 }
-                subTitle = `【${userInfo.nick}】${userInfo.treeInfo.treeName}`;
-                // message += `【我的金果数量】${userInfo.treeInfo.fruit}\n`;
-                // message += `【我的金币数量】${userInfo.treeInfo.coin}\n`;
-                // message += `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n`;
-              } else {
-                $.msg($.name, `【提示】京东账号${$.index}${UserName}运行失败`, '此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证', {"open-url": "openApp.jdMobile://"});
+              }
+            } else {
+              if (res.resultCode === 3) {
+                $.isLogin = false;
+                $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
+                if ($.index === 1) {
+                  $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+                } else if ($.index === 2){
+                  $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+                }
+                if ($.isNode()) {
+                  await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+                }
+                // if ($.isNode()) {
+                //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+                // }
               }
             }
           } else {
-            if (res.resultCode === 3) {
-              $.isLogin = false;
-              $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
-              if ($.index === 1) {
-                $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-              } else if ($.index === 2){
-                $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-              }
-              if ($.isNode()) {
-                await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-              }
-              // if ($.isNode()) {
-              //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-              // }
-            }
+            console.log(`京豆api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -162,7 +166,7 @@ function dayWork() {
     // console.log(`获取任务的信息:${JSON.stringify(response)}\n`)
     let canTask = [];
     taskInfo = [];
-    if (response.resultCode === 0) {
+    if (response && response.resultCode === 0) {
       if (response.resultData.code === '200') {
         response.resultData.data.map((item) => {
           if (item.prizeType === 2) {
@@ -242,7 +246,7 @@ function harvest() {
   }
   return new Promise((rs, rj) => {
     request('harvest', data).then((harvestRes) => {
-      if (harvestRes.resultCode === 0 && harvestRes.resultData.code === '200') {
+      if (harvestRes && harvestRes.resultCode === 0 && harvestRes.resultData.code === '200') {
         console.log('收获金果')
         let data = harvestRes.resultData.data;
         message += `【距离${data.treeInfo.level + 1}级摇钱树还差】${data.treeInfo.progressLeft}\n`;
@@ -296,7 +300,7 @@ function myWealth() {
     }
     params.riskDeviceParam = JSON.stringify(params.riskDeviceParam);//这一步，不可省略，否则提交会报错（和login接口一样）
     request('myWealth', params).then(res=> {
-      if (res.resultCode === 0 && res.resultData.code === '200') {
+      if (res && res.resultCode === 0 && res.resultData.code === '200') {
         console.log(`金币数量和金果：：${JSON.stringify(res)}`);
         message += `【我的金果数量】${res.resultData.data.gaAmount}\n`;
         message += `【我的金币数量】${res.resultData.data.gcAmount}\n`;
@@ -374,7 +378,7 @@ function getSignAward() {
 }
 // 浏览任务
 async function setUserLinkStatus(missionId) {
-  let resultCode = 0, code = 200, index = 0;
+  let index = 0;
   do {
     const params = {
       "missionId": missionId,
@@ -384,8 +388,6 @@ async function setUserLinkStatus(missionId) {
     }
     let response = await request('setUserLinkStatus', params)
     console.log(`missionId为${missionId}：：第${index + 1}次浏览活动完成: ${JSON.stringify(response)}`);
-    resultCode = response.resultCode;
-    code = response.resultData.code;
     // if (resultCode === 0) {
     //   let sportRevardResult = await getSportReward();
     //   console.log(`领取遛狗奖励完成: ${JSON.stringify(sportRevardResult)}`);
@@ -462,7 +464,7 @@ async function stealFriendFruit() {
         if (!item.self && item.steal) {
           await friendTreeRoom(item.encryPin);
           const stealFruitRes = await stealFruit(item.encryPin, $.friendTree.stoleInfo);
-          if (stealFruitRes.resultCode === 0 && stealFruitRes.resultData.code === '200') {
+          if (stealFruitRes && stealFruitRes.resultCode === 0 && stealFruitRes.resultData.code === '200') {
             $.amount += stealFruitRes.resultData.data.amount;
           }
         }
@@ -491,8 +493,12 @@ async function friendRank() {
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
-          data = JSON.parse(data);
-          $.friendRankList = data.resultData.data;
+          if (data) {
+            data = JSON.parse(data);
+            $.friendRankList = data.resultData.data;
+          } else {
+            console.log(`京豆api返回数据为空，请检查自身原因`)
+          }
         }
       } catch (eor) {
         $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
@@ -519,8 +525,12 @@ async function friendTreeRoom(friendPin) {
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
-          data = JSON.parse(data);
-          $.friendTree = data.resultData.data;
+          if (data) {
+            data = JSON.parse(data);
+            $.friendTree = data.resultData.data;
+          } else {
+            console.log(`京豆api返回数据为空，请检查自身原因`)
+          }
         }
       } catch (eor) {
         $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
@@ -548,7 +558,11 @@ async function stealFruit(friendPin, stoleId) {
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
-          data = JSON.parse(data);
+          if (data) {
+            data = JSON.parse(data);
+          } else {
+            console.log(`京豆api返回数据为空，请检查自身原因`)
+          }
         }
       } catch (eor) {
         $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
@@ -568,7 +582,11 @@ async function request(function_id, body = {}) {
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
-          data = JSON.parse(data);
+          if (data) {
+            data = JSON.parse(data);
+          } else {
+            console.log(`京豆api返回数据为空，请检查自身原因`)
+          }
         }
       } catch (eor) {
         $.msg("摇钱树-初始化个人信息" + eor.name + "‼️", JSON.stringify(eor), eor.message)
