@@ -24,7 +24,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京小超领蓝币(小费)】'
+      - name: '运行 【京小超兑换奖品】'
         run: |
           node jd_blueCoin.js
         env:

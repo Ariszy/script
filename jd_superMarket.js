@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-10-12
+更新时间：2020-10-13
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 支持京东双账号
 京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
@@ -346,6 +346,7 @@ function smtgHome() {
           if (data.code === 0 && data.data.success) {
             const { result } = data.data;
             const { shopName, totalGold, totalBlue } = result;
+            $.circleStatus = result.circleStatus;
             subTitle = shopName;
             message += `【总金币】${totalGold}个\n`;
             message += `【总蓝币】${totalBlue}个\n`;
@@ -361,8 +362,9 @@ function smtgHome() {
 }
 // 商圈活动
 async function businessCircleActivity() {
+  console.log(`第二天商圈大战开始的时候,商圈PK蓝币才会自动领领取`)
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
-  if (businessCirclePKDetailRes.data.bizCode === 0) {
+  if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 0) {
     const { businessCircleVO, otherBusinessCircleVO, inviteCode, pkSettleTime } = businessCirclePKDetailRes.data.result;
     console.log(`\n您的商圈互助码inviteCode\n${inviteCode}\n`);
     const businessCircleIndexRes = await smtg_businessCircleIndex();
@@ -395,6 +397,15 @@ async function businessCircleActivity() {
       //退出该商圈
       console.log(`商圈PK已过两天，对方商圈人气值还大于我方商圈人气值，退出该商圈重新加入`);
       await smtg_quitBusinessCircle();
+    }
+  } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 222) {
+    console.log(`${businessCirclePKDetailRes.data.bizMsg}`);
+    console.log(`开始领取商圈PK奖励`);
+    const getPkPrizeRes = await smtg_getPkPrize();
+    console.log(`商圈PK奖励领取结果：${JSON.stringify(getPkPrizeRes)}`)
+    if (getPkPrizeRes && getPkPrizeRes.data.bizCode === 0) {
+      const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
+      message += `【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
     }
   } else {
     console.log(`访问商圈详情失败：${JSON.stringify(businessCirclePKDetailRes)}`);
