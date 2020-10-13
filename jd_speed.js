@@ -1,6 +1,6 @@
 /*
 京东天天加速链接：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_speed.js
-更新时间:2020-09-30
+更新时间:2020-10-13
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 每天4京豆，再小的苍蝇也是肉
@@ -95,66 +95,70 @@ function jDSpeedUp(sourceId, doubleKey) {
         if (err) {
           console.log('京东天天-加速: 签到接口请求失败 ‼️‼️');
         } else {
-          let res = JSON.parse(data);
-          if (!sourceId) {
-            console.log(`\n天天加速任务进行中`);
-          } else {
-            console.log("\n" + "天天加速-开始本次任务 ");
-          }
-          if (res.info.isLogin === 0) {
-            $.isLogin = false;
-            console.log("\n天天加速-Cookie失效")
-            $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
-            if ($.index === 1) {
-              $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-            } else if ($.index === 2){
-              $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+          if (data) {
+            let res = JSON.parse(data);
+            if (!sourceId) {
+              console.log(`\n天天加速任务进行中`);
+            } else {
+              console.log("\n" + "天天加速-开始本次任务 ");
             }
-            if ($.isNode()) {
-              await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-            }
-            // if ($.isNode()) {
-            //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-            // }
-            // $.done();
-          } else if (res.info.isLogin === 1) {
-            $.isLogin = true;
-            subTitle = `【奖励】${res.data.beans_num}京豆`;
-            if (res.data.task_status === 0) {
-              const taskID = res.data.source_id;
-              await jDSpeedUp(taskID);
-            } else if (res.data.task_status === 1) {
-              const EndTime = res.data.end_time ? res.data.end_time : ""
-              console.log("\n天天加速进行中-结束时间: \n" + EndTime);
-              const space = await spaceEventList()
-              const HandleEvent = await spaceEventHandleEvent(space)
-              const step1 = await energyPropList();//检查燃料
-              const step2 = await receiveEnergyProp(step1);//领取可用的燃料
-              const step3 = await energyPropUsaleList(step2)
-              const step4 = await useEnergy(step3)
-              if (step4) {
+            if (res.info.isLogin === 0) {
+              $.isLogin = false;
+              console.log("\n天天加速-Cookie失效")
+              $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+              if ($.index === 1) {
+                $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
+              } else if ($.index === 2){
+                $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
+              }
+              if ($.isNode()) {
+                await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+              }
+              // if ($.isNode()) {
+              //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+              // }
+              // $.done();
+            } else if (res.info.isLogin === 1) {
+              $.isLogin = true;
+              subTitle = `【奖励】${res.data.beans_num}京豆`;
+              if (res.data.task_status === 0) {
+                const taskID = res.data.source_id;
+                await jDSpeedUp(taskID);
+              } else if (res.data.task_status === 1) {
+                const EndTime = res.data.end_time ? res.data.end_time : ""
+                console.log("\n天天加速进行中-结束时间: \n" + EndTime);
+                const space = await spaceEventList()
+                const HandleEvent = await spaceEventHandleEvent(space)
+                const step1 = await energyPropList();//检查燃料
+                const step2 = await receiveEnergyProp(step1);//领取可用的燃料
+                const step3 = await energyPropUsaleList(step2)
+                const step4 = await useEnergy(step3)
+                if (step4) {
+                  await jDSpeedUp(null);
+                } else {
+                  message += `【空间站】 ${res.data.destination}\n`;
+                  message += `【结束时间】 ${res.data.end_time}\n`;
+                  message += `【进度】 ${((res.data['done_distance'] / res.data.distance) * 100).toFixed(2)}%\n`;
+                }
+              } else if (res.data.task_status === 2) {
+                if (data.match(/\"beans_num\":\d+/)) {
+                  //message += "【上轮奖励】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶";
+                  if (!jdNotify || jdNotify === 'false') {
+                    $.msg($.name, '', `【京东账号${$.index}】${UserName}\n` + "【上轮太空旅行】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶");
+                  }
+                } else {
+                  console.log("京东天天-加速: 成功, 明细: 无京豆 🐶")
+                }
+                console.log("\n天天加速-领取上次奖励成功")
                 await jDSpeedUp(null);
               } else {
-                message += `【空间站】 ${res.data.destination}\n`;
-                message += `【结束时间】 ${res.data.end_time}\n`;
-                message += `【进度】 ${((res.data['done_distance'] / res.data.distance) * 100).toFixed(2)}%\n`;
+                console.log("\n" + "天天加速-判断状态码失败")
               }
-            } else if (res.data.task_status === 2) {
-              if (data.match(/\"beans_num\":\d+/)) {
-                //message += "【上轮奖励】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶";
-                if (!jdNotify || jdNotify === 'false') {
-                  $.msg($.name, '', `【京东账号${$.index}】${UserName}\n` + "【上轮太空旅行】成功领取" + data.match(/\"beans_num\":(\d+)/)[1] + "京豆 🐶");
-                }
-              } else {
-                console.log("京东天天-加速: 成功, 明细: 无京豆 🐶")
-              }
-              console.log("\n天天加速-领取上次奖励成功")
-              await jDSpeedUp(null);
             } else {
-              console.log("\n" + "天天加速-判断状态码失败")
+              console.log("\n" + "天天加速-判断状态失败")
             }
           } else {
-            console.log("\n" + "天天加速-判断状态失败")
+            console.log(`京豆api返回数据为空，请检查自身原因`)
           }
         }
       } catch (e) {
@@ -183,27 +187,31 @@ function spaceEventList() {
         if (err) {
           console.log("\n京东天天-加速: 查询太空特殊事件请求失败 ‼️‼️")
         } else {
-          const cc = JSON.parse(data);
-          if (cc.message === "success" && cc.data.length > 0) {
-            for (let item of cc.data) {
-              if (item.status === 1) {
-                for (let j of item.options) {
-                  if (j.type === 1) {
-                    spaceEvents.push({
-                      "id": item.id,
-                      "value": j.value
-                    })
+          if (data) {
+            const cc = JSON.parse(data);
+            if (cc.message === "success" && cc.data.length > 0) {
+              for (let item of cc.data) {
+                if (item.status === 1) {
+                  for (let j of item.options) {
+                    if (j.type === 1) {
+                      spaceEvents.push({
+                        "id": item.id,
+                        "value": j.value
+                      })
+                    }
                   }
                 }
               }
-            }
-            if (spaceEvents && spaceEvents.length > 0) {
-              console.log("\n天天加速-查询到" + spaceEvents.length + "个太空特殊事件")
+              if (spaceEvents && spaceEvents.length > 0) {
+                console.log("\n天天加速-查询到" + spaceEvents.length + "个太空特殊事件")
+              } else {
+                console.log("\n天天加速-暂无太空特殊事件")
+              }
             } else {
-              console.log("\n天天加速-暂无太空特殊事件")
+              console.log("\n天天加速-查询无太空特殊事件")
             }
           } else {
-            console.log("\n天天加速-查询无太空特殊事件")
+            console.log(`京豆api返回数据为空，请检查自身原因`)
           }
         }
       } catch (e) {
@@ -239,13 +247,17 @@ function spaceEventHandleEvent(spaceEventList) {
             if (err) {
               console.log("\n京东天天-加速: 处理太空特殊事件请求失败 ‼️‼️")
             } else {
-              const cc = JSON.parse(data);
-              // console.log(`处理特殊事件的结果：：${JSON.stringify(cc)}`);
-              console.log("\n天天加速-尝试处理第" + spaceEventCount + "个太空特殊事件")
-              if (cc.message === "success" && cc.success) {
-                spaceNumTask += 1;
+              if (data) {
+                const cc = JSON.parse(data);
+                // console.log(`处理特殊事件的结果：：${JSON.stringify(cc)}`);
+                console.log("\n天天加速-尝试处理第" + spaceEventCount + "个太空特殊事件")
+                if (cc.message === "success" && cc.success) {
+                  spaceNumTask += 1;
+                } else {
+                  console.log("\n天天加速-处理太空特殊事件失败")
+                }
               } else {
-                console.log("\n天天加速-处理太空特殊事件失败")
+                console.log(`京豆api返回数据为空，请检查自身原因`)
               }
             }
           } catch (e) {
@@ -282,21 +294,25 @@ function energyPropList() {
         if (err) {
           console.log("\n京东天天-加速: 查询道具请求失败 ‼️‼️")
         } else {
-          const cc = JSON.parse(data)
-          if (cc.message === "success" && cc.data.length > 0) {
-            for (let i = 0; i < cc.data.length; i++) {
-              if (cc.data[i].thaw_time === 0) {
-                TaskID += cc.data[i].id + ",";
+          if (data) {
+            const cc = JSON.parse(data)
+            if (cc.message === "success" && cc.data.length > 0) {
+              for (let i = 0; i < cc.data.length; i++) {
+                if (cc.data[i].thaw_time === 0) {
+                  TaskID += cc.data[i].id + ",";
+                }
               }
-            }
-            if (TaskID.length > 0) {
-              TaskID = TaskID.substr(0, TaskID.length - 1).split(",")
-              console.log("\n天天加速-查询到" + TaskID.length + "个可用燃料")
+              if (TaskID.length > 0) {
+                TaskID = TaskID.substr(0, TaskID.length - 1).split(",")
+                console.log("\n天天加速-查询到" + TaskID.length + "个可用燃料")
+              } else {
+                console.log("\n天天加速-检查燃料-暂无可用燃料")
+              }
             } else {
-              console.log("\n天天加速-检查燃料-暂无可用燃料")
+              console.log("\n天天加速-查询无燃料")
             }
           } else {
-            console.log("\n天天加速-查询无燃料")
+            console.log(`京豆api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -333,10 +349,14 @@ function receiveEnergyProp(CID) {
             if (error) {
               console.log("\n天天加速-领取道具请求失败 ‼️‼️")
             } else {
-              const cc = JSON.parse(data)
-              console.log("\n天天加速-尝试领取第" + count + "个可用燃料")
-              if (cc.message === 'success') {
-                NumTask += 1
+              if (data) {
+                const cc = JSON.parse(data)
+                console.log("\n天天加速-尝试领取第" + count + "个可用燃料")
+                if (cc.message === 'success') {
+                  NumTask += 1
+                }
+              } else {
+                console.log(`京豆api返回数据为空，请检查自身原因`)
               }
             }
           } catch (eor) {
@@ -373,21 +393,25 @@ function energyPropUsaleList(EID) {
         if (error) {
           console.log("\n天天加速-查询道具ID请求失败 ‼️‼️")
         } else {
-          const cc = JSON.parse(data);
-          if (cc.data.length > 0) {
-            for (let i = 0; i < cc.data.length; i++) {
-              if (cc.data[i].id) {
-                TaskCID += cc.data[i].id + ",";
+          if (data) {
+            const cc = JSON.parse(data);
+            if (cc.data.length > 0) {
+              for (let i = 0; i < cc.data.length; i++) {
+                if (cc.data[i].id) {
+                  TaskCID += cc.data[i].id + ",";
+                }
               }
-            }
-            if (TaskCID.length > 0) {
-              TaskCID = TaskCID.substr(0, TaskCID.length - 1).split(",")
-              console.log("\n天天加速-查询成功" + TaskCID.length + "个燃料ID")
+              if (TaskCID.length > 0) {
+                TaskCID = TaskCID.substr(0, TaskCID.length - 1).split(",")
+                console.log("\n天天加速-查询成功" + TaskCID.length + "个燃料ID")
+              } else {
+                console.log("\n天天加速-暂无有效燃料ID")
+              }
             } else {
-              console.log("\n天天加速-暂无有效燃料ID")
+              console.log("\n天天加速-查询无燃料ID")
             }
           } else {
-            console.log("\n天天加速-查询无燃料ID")
+            console.log(`京豆api返回数据为空，请检查自身原因`)
           }
         }
       } catch (eor) {
@@ -429,10 +453,14 @@ function useEnergy(PropID) {
             if (error) {
               console.log("\n天天加速-使用燃料请求失败 ‼️‼️")
             } else {
-              const cc = JSON.parse(data);
-              console.log("\n天天加速-尝试使用第" + PropCount + "个燃料")
-              if (cc.message === 'success' && cc.success === true) {
-                PropNumTask += 1
+              if (data) {
+                const cc = JSON.parse(data);
+                console.log("\n天天加速-尝试使用第" + PropCount + "个燃料")
+                if (cc.message === 'success' && cc.success === true) {
+                  PropNumTask += 1
+                }
+              } else {
+                console.log(`京豆api返回数据为空，请检查自身原因`)
               }
             }
           } catch (eor) {
