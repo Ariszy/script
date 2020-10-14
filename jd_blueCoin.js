@@ -19,7 +19,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
-
+let jdNotify = false;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
@@ -412,7 +412,15 @@ function smtgHome() {
 async function msgShow() {
   // $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
   $.log(`\n【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
-  if ($.beanscount) {
+  let ctrTemp;
+  if ($.isNode() && process.env.jdSuperMarketRewardNotify) {
+    ctrTemp = `${process.env.jdSuperMarketRewardNotify}` === 'false';
+  } else if ($.getdata('jdSuperMarketRewardNotify')) {
+    ctrTemp = $.getdata('jdSuperMarketRewardNotify') === 'false';
+  } else {
+    ctrTemp = `${jdNotify}` === 'false';
+  }
+  if ($.beanscount && ctrTemp) {
     $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
     if ($.isNode()) {
       await notify.sendNotify($.name, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`)

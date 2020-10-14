@@ -689,6 +689,13 @@
       "keys": [],
       "settings": [
         {
+          "id": "jdSuperMarketRewardNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "开启后成功兑换到奖品不发出系统弹窗通知"
+        },
+        {
           "id": "coinToBeans",
           "name": "兑换奖品（默认不兑换）",
           "val": "0",
