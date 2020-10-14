@@ -1,7 +1,7 @@
 /*
 京小超兑换奖品脚本
 感谢@yangtingxiao提供
-更新时间：2020-10-09
+更新时间：2020-10-14
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -356,20 +356,23 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
               console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.data.data.result.exchangeNum === 20 || $.beanscount === coinToBeans || $.data.data.result.blue < 500) return;
             } else if (coinToBeans === 2801390972) {
+              //兑换巧白酒精喷雾
               $.beanscount ++;
               console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
             } else if (coinToBeans === 2801390982) {
+              //兑换巧白西柚洗手液
               $.beanscount ++;
               console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
-            } else if (coinToBeans === 2801390982) {
+            } else if (coinToBeans === 2801390984) {
+              //兑换雏菊洗衣凝珠
               $.beanscount ++;
               console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
             }
           }
-          await  smtg_obtainPrize(prizeId,1000);
+          await  smtg_obtainPrize(prizeId,3000);
         } catch (e) {
           $.logErr(e, resp);
         } finally {
