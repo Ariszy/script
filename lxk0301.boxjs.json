@@ -328,14 +328,21 @@
         },
         {
           "id": "jdJoyHelpFeed",
-          "name": "是否给好友喂食",
+          "name": "是否给好友喂食(默认不帮好友喂食)",
           "val": false,
           "type": "boolean",
-          "desc": "默认不帮好友喂食（给好友喂食可得积分，但会消耗自己狗粮）"
+          "desc": "给好友喂食可得积分，但会消耗自己狗粮"
+        },
+        {
+          "id": "jdJoyStealCoin",
+          "name": "是否偷好友积分与狗粮(默认是)",
+          "val": true,
+          "type": "boolean",
+          "desc": "偷好友积分与狗粮"
         },
         {
           "id": "joyRunFlag",
-          "name": "参加双人赛跑(默认参加)",
+          "name": "是否参加双人赛跑(默认参加)",
           "val": true,
           "type": "boolean",
           "desc": "开启脚本将会为您自动参加双人赛跑"
