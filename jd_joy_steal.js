@@ -170,22 +170,24 @@ async function helpFriendsFeed() {
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
         // console.log(`\nhelpFriendsFeed---好友【${friendPin}】--偷食状态：${stealStatus}`);
-        console.log(`helpFriendsFeed---好友【${friendPin}】--喂食状态：${status}\n`);
+        console.log(`\nhelpFriendsFeed---好友【${friendPin}】--喂食状态：${status}`);
         if (status === 'not_feed') {
           const helpFeedRes = await helpFeed(friendPin);
+          // console.log(`帮忙喂食结果--${JSON.stringify(helpFeedRes)}`)
           if (helpFeedRes && helpFeedRes.errorCode === 'help_ok' && helpFeedRes.success) {
+            console.log(`帮好友[${friendPin}]喂食10g狗粮成功,你获得10积分\n`);
             $.helpFood += 10;
           } else if (helpFeedRes && helpFeedRes.errorCode === 'chance_full') {
-            console.log('喂食已达上限,不再喂食')
+            console.log('喂食已达上限,不再喂食\n')
             break
           } else if (helpFeedRes && helpFeedRes.errorCode === 'food_insufficient') {
-            console.log('帮好友喂食失败，您的狗粮不足10g')
+            console.log('帮好友喂食失败，您的狗粮不足10g\n')
             break
           } else {
             console.log(JSON.stringify(helpFeedRes))
           }
         } else if (status === 'time_error') {
-          console.log(`好友 ${friendPin} 的汪汪正在食用`)
+          console.log(`帮好友喂食失败,好友[${friendPin}]的汪汪正在食用\n`)
         }
       }
     } else {
@@ -256,7 +258,6 @@ async function stealFriendCoin(friendPin) {
 function enterFriendRoom(friendPin) {
   console.log(`\nfriendPin:: ${friendPin}\n`);
   return new Promise(async resolve => {
-    await $.wait(900);
     $.get(taskUrl('enterFriendRoom', (friendPin)), (err, resp, data) => {
       try {
         if (err) {
@@ -315,7 +316,6 @@ function helpFeed(friendPin) {
           throw new Error(err);
         } else {
           if (data) {
-            console.log(`帮忙喂食结果--${data}`)
             data = JSON.parse(data);
           } else {
             console.log(`京豆api返回数据为空，请检查自身原因`)
