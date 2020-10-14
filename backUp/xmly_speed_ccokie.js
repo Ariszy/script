@@ -25,7 +25,7 @@ if (isRequest) {
 function GetCookie() {
   if ($request && $request.method != 'OPTIONS') {
     const cookieVal = $request.headers['Cookie'];
-    console.log(`喜马拉雅极速版cookie:\n${cookieVal}\n`);
+    console.log(`喜马拉雅极速版cookie\n\n${cookieVal}\n\n`);
     if (cookieVal) $.setdata(cookieVal, CookieKey);
     $.msg($.name, `获取Cookie: 成功🎉`, `请去代理软件的日志里面寻找复制`);
     $.done();
