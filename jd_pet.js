@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-10-12
+更新时间:2020-10-14
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -403,8 +403,8 @@ async function feedReachInitFun() {
 async function showMsg() {
   $.log(`\n${message}\n`);
   let ctrTemp;
-  if ($.isNode()) {
-    ctrTemp = `${notify.petNotifyControl}` === 'false' && `${jdNotify}` === 'false'
+  if ($.isNode() && process.env.PET_NOTIFY_CONTROL) {
+    ctrTemp = `${process.env.PET_NOTIFY_CONTROL}` === 'false';
   } else if ($.getdata('jdPetNotify')) {
     ctrTemp = $.getdata('jdPetNotify') === 'false';
   } else {

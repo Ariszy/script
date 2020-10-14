@@ -365,7 +365,7 @@ function smtgHome() {
 }
 // 商圈活动
 async function businessCircleActivity() {
-  console.log(`第二天商圈大战开始的时候,商圈PK蓝币才会自动领领取`)
+  console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
   if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 0) {
     const { businessCircleVO, otherBusinessCircleVO, inviteCode, pkSettleTime } = businessCirclePKDetailRes.data.result;
@@ -410,18 +410,17 @@ async function businessCircleActivity() {
       const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
       message += `【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
     }
+  } if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 206) {
+    console.log(`您暂未加入商圈,现在给您随机加入一个商圈`);
+    const BusinessCircleList = await smtg_getBusinessCircleList();
+    if (BusinessCircleList.data.bizCode === 0) {
+      const { businessCircleVOList } = BusinessCircleList.data.result;
+      const { circleId } = businessCircleVOList[randomFriendPin(0, businessCircleVOList.length -1)];
+      const joinBusinessCircleRes = await smtg_joinBusinessCircle(circleId);
+      console.log(`参加商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
+    }
   } else {
     console.log(`访问商圈详情失败：${JSON.stringify(businessCirclePKDetailRes)}`);
-    if (businessCirclePKDetailRes.data.bizCode === 206) {
-      console.log(`您暂未加入商圈`);
-      const BusinessCircleList = await smtg_getBusinessCircleList();
-      if (BusinessCircleList.data.bizCode === 0) {
-        const { businessCircleVOList } = BusinessCircleList.data.result;
-        const { circleId } = businessCircleVOList[randomFriendPin(0, businessCircleVOList.length -1)];
-        const joinBusinessCircleRes = await smtg_joinBusinessCircle(circleId);
-        console.log(`参加商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
-      }
-    }
   }
 }
 //我的货架

@@ -1,6 +1,6 @@
 /*
 东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间:2020-10-12
+更新时间:2020-10-14
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -81,7 +81,7 @@ async function jdFruit() {
       //已下单购买, 但未开始种植新的水果
       option['open-url'] = "openApp.jdMobile://";
       $.msg($.name, `【提醒⏰】请重新种植水果`, `上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n请去京东APP或微信小程序选购并种植新的水果\n`, option);
-      if ($.isNode() && notify.SCKEY) {
+      if ($.isNode()) {
         await notify.sendNotify(`${$.name}请重新种植水果`, `京东账号${$.index} ${UserName}\n上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n\n请去京东APP或微信小程序选购并种植新的水果`);
       }
       return
@@ -1155,8 +1155,8 @@ async function waterFriendForFarm(shareCode) {
 async function showMsg() {
   $.log(`\n${message}\n`);
   let ctrTemp;
-  if ($.isNode()) {
-    ctrTemp = `${notify.fruitNotifyControl}` === 'false' && `${jdNotify}` === 'false'
+  if ($.isNode() && process.env.FRUIT_NOTIFY_CONTROL) {
+    ctrTemp = `${process.env.FRUIT_NOTIFY_CONTROL}` === 'false';
   } else if ($.getdata('jdFruitNotify')) {
     ctrTemp = $.getdata('jdFruitNotify') === 'false';
   } else {
