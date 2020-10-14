@@ -26,7 +26,7 @@ jobs:
         with:
           source_repo: "https://github.com/lxk0301/scripts.git"
           source_branch: "master"
-          destination_branch: "lxk0301"
+          destination_branch: "master"
           github_token: ${{ secrets.PAT }}
 
       - name: sync github -> gitee
