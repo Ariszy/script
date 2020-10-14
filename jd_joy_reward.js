@@ -101,9 +101,9 @@ async function joyReward() {
                 ctrTemp = `${jdNotify}` === 'false';
               }
               if (ctrTemp) {
-                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}\n`);
+                $.msg($.name, `兑换${giftValue}京豆成功`, `【京东账号${$.index}】${UserName}\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}`);
                 if ($.isNode()) {
-                  await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
+                  await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【兑换${giftValue}京豆】成功\n【宠物等级】${data.level}\n【积分详情】消耗积分 ${salePrice}, 剩余积分 ${data.coin - salePrice}`);
                 }
               }
               // if ($.isNode()) {

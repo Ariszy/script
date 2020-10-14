@@ -3,7 +3,7 @@ jd宠汪汪偷好友积分与狗粮,及给好友喂食
 偷好友积分上限是20个好友(即获得100积分)，帮好友喂食上限是20个好友(即获得200积分)，偷好友狗粮上限也是20个好友(最多获得120g狗粮)
 IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
-更新时间:2020-08-27
+更新时间:2020-10-14
 如果开启了给好友喂食功能，建议先凌晨0点运行jd_joy.js脚本获取狗粮后，再运行此脚本(jd_joy_steal.js)可偷好友积分，6点运行可偷好友狗粮
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
@@ -35,7 +35,7 @@ if ($.isNode()) {
 let message = '', subTitle = '', UserName = '';
 
 const jdNotify = $.getdata('jdJoyNotify');//是否关闭通知，false打开，true通知
-let jdJoyHelpFeed = 'false'//是否给好友喂食，'false'为不给喂食，'true'为给好友喂食，默认不给好友喂食
+let jdJoyHelpFeed = false;//是否给好友喂食，false为不给喂食，true为给好友喂食，默认不给好友喂食
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 !(async () => {
@@ -157,9 +157,16 @@ async function stealFriendCoinFun() {
 async function helpFriendsFeed() {
   if ($.help_feed !== 200) {
     //可给好友喂食
-    jdJoyHelpFeed = $.getdata('jdJoyHelpFeed') ? $.getdata('jdJoyHelpFeed') : jdJoyHelpFeed
-    if (jdJoyHelpFeed && jdJoyHelpFeed === 'true') {
-      console.log(`开始给好友喂食`);
+    let ctrTemp;
+    if ($.isNode() && process.env.jdJoyHelpFeed) {
+      ctrTemp = `${process.env.jdJoyHelpFeed}` === 'true';
+    } else if ($.getdata('jdJoyHelpFeed')) {
+      ctrTemp = $.getdata('jdJoyHelpFeed') === 'true';
+    } else {
+      ctrTemp = `${jdJoyHelpFeed}` === 'true';
+    }
+    if (ctrTemp) {
+      console.log(`\n开始给好友喂食`);
       for (let friends of $.allFriends) {
         const { friendPin, status, stealStatus } = friends;
         // console.log(`\nhelpFriendsFeed---好友【${friendPin}】--偷食状态：${stealStatus}`);

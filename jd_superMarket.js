@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-10-13
+更新时间：2020-10-14
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 支持京东双账号
 京小超兑换奖品请使用此脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_blueCoin.js
@@ -101,7 +101,7 @@ function showMsg() {
   }
 }
 async function help() {
-  console.log(`开始助力好友`);
+  console.log(`\n开始助力好友`);
   for (let code of inviteCodes) {
     const res = await smtgDoAssistPkTask(code);
     console.log(`助力好友${JSON.stringify(res)}`);
@@ -111,7 +111,9 @@ async function doDailyTask() {
   const smtgQueryShopTaskRes = await smtgQueryShopTask();
   if (smtgQueryShopTaskRes.code === 0 && smtgQueryShopTaskRes.data.success) {
     const taskList = smtgQueryShopTaskRes.data.result.taskList;
+    console.log(`\n日常赚钱任务       完成状态`)
     for (let item of taskList) {
+      console.log(` ${item['title'].length < 4 ? item['title']+`\xa0` : item['title']}         ${item['finishNum'] === item['targetNum'] ? '已完成':'未完成'} ${item['finishNum']}/${item['targetNum']}`)
       //领奖
       if (item.taskStatus === 1 && item.prizeStatus === 1) {
         const res = await smtgObtainShopTaskPrize(item.taskId);
@@ -532,9 +534,9 @@ async function upgrade() {
     shelfCategory_2 = shelfCategory_2.slice(-3);
     shelfCategory_3 = shelfCategory_3.slice(-2);
     const shelfCategorys = shelfCategory_1.concat(shelfCategory_2).concat(shelfCategory_3);
-    console.log(`\n  货架      商品    解锁状态    可升级状态`)
+    console.log(`\n  货架      商品      解锁状态    可升级状态`)
     for (let item of shelfCategorys) {
-      console.log(`${item['shelfCategory'] === 1 ? '普通货架' : item['shelfCategory'] === 2 ? '冰柜货架' : item['shelfCategory'] === 3 ? '水果货架':'未知货架'}    ${item["name"]}     ${item["unlockStatus"] === 0 ? '未解锁' : '已解锁'}      ${item["upgradeStatus"] === 1 ? '可升级' : item["upgradeStatus"] === 0 ? '不可升级':item["upgradeStatus"]}`)
+      console.log(`${item['shelfCategory'] === 1 ? '普通货架' : item['shelfCategory'] === 2 ? '冰柜货架' : item['shelfCategory'] === 3 ? '水果货架':'未知货架'}    ${item["name"].length<3?item["name"]+`\xa0`:item["name"]}     ${item["unlockStatus"] === 0 ? '未解锁' : '已解锁'}      ${item["upgradeStatus"] === 1 ? '可升级' : item["upgradeStatus"] === 0 ? '不可升级':item["upgradeStatus"]}`)
       if (item['unlockStatus'] === 1) {
         console.log(`\n开始解锁商品：${item['name']}`)
         await smtg_unlockProduct(item['productId']);
@@ -681,7 +683,7 @@ function smtgQueryPkTask() {
           if (data.code === 0) {
             if (data.data.bizCode === 0) {
               const { taskList } = data.data.result;
-              console.log(`\n   任务     状态`)
+              console.log(`\n 商圈任务     状态`)
               for (let item of taskList) {
                 if (item.taskStatus === 1) {
                   if (item.prizeStatus === 1) {
