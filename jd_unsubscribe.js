@@ -1,6 +1,6 @@
 /*
 脚本：取关京东店铺和商品
-更新时间：2020-08-15
+更新时间：2020-10-15
 因种豆得豆和宠汪汪以及NobyDa大佬的京东签到脚本会关注店铺和商品，故此脚本用来取消已关注的店铺和商品
 默认每运行一次脚本取消关注10个商品，10个店铺。可结合boxjs自定义取消多少个（目前测试通过最大数量是一次性取消300个商品无异常，大于300请自行测试，建议尽量不要一次性全部取消以免出现问题）。
 建议此脚本运行时间在 种豆得豆和宠汪汪脚本运行之后 再执行
@@ -32,8 +32,8 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
-const goodPageSize = $.getdata('jdUnsubscribePageSize') || 0;// 运行一次取消多少个已关注的商品。数字0表示不取关任何商品
-const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 50;// 运行一次取消多少个已关注的店铺。数字0表示不取关任何店铺
+const goodPageSize = $.getdata('jdUnsubscribePageSize') || 20;// 运行一次取消多少个已关注的商品。数字0表示不取关任何商品
+const shopPageSize = $.getdata('jdUnsubscribeShopPageSize') || 20;// 运行一次取消多少个已关注的店铺。数字0表示不取关任何店铺
 const jdNotify = $.getdata('jdUnsubscribeNotify');
 const stop = $.getdata('jdUnsubscribeStopGoods') || '';//遇到此商品不再进行取关，此处内容需去商品详情页（自营处）长按拷贝商品信息
 const stopShop = $.getdata('jdUnsubscribeStopShop') || '';//遇到此店铺不再进行取关，此处内容请尽量从头开始输入店铺名称
@@ -74,12 +74,12 @@ async function jdUnsubscribe(doubleKey) {
   await showMsg();
 }
 function showMsg() {
-  $.log(`\n【京东账号${$.index}】${UserName}\\n【已取消关注店铺】${$.unsubscribeShopsCount}个\\n【已取消关注商品】${$.unsubscribeGoodsCount}个\\n【还剩关注店铺】${$.shopsTotalNum}个\\n【还剩关注商品】${$.goodsTotalNum}个\\n`);
+  $.log(`\n【京东账号${$.index}】${UserName}\n【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   if (!jdNotify || jdNotify === 'false') {
     $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【已取消关注店铺】${$.unsubscribeShopsCount}个\n【已取消关注商品】${$.unsubscribeGoodsCount}个\n【还剩关注店铺】${$.shopsTotalNum}个\n【还剩关注商品】${$.goodsTotalNum}个\n`);
   }
 }
-function unsubscribeGoods(doubleKey) {
+function unsubscribeGoods() {
   return new Promise(async (resolve) => {
     let followGoods = await getFollowGoods();
     if (followGoods.iRet === '0') {
@@ -110,6 +110,7 @@ function unsubscribeGoods(doubleKey) {
           resolve(count)
         }
       } else {
+        console.log(`\n您设置的是不取关商品\n`);
         resolve(count);
       }
     } else if (followGoods.iRet === '9999') {
@@ -214,6 +215,7 @@ function unsubscribeShops() {
           resolve(count)
         }
       } else {
+        console.log(`\n您设置的是不取关店铺\n`);
         resolve(count)
       }
     }
