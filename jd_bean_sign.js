@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-10-02
+更新时间：2020-10-15
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -98,8 +98,11 @@ async function downFile () {
 
 async function changeFile (content) {
   let newContent = content.replace(/var Key = ''/, `var Key = '${cookie}'`);
-  if (process.env.JD_COOKIE) {
-    newContent = newContent.replace("const tm = new Date(new Date().setHours(0, 0, 0, 0)).getTime()", `const tm = new Date(new Date().toLocaleDateString()).getTime() - 8 * 60 * 60 * 1000;`);
+  const zone = new Date().getTimezoneOffset();
+  if (zone === 0) {
+    newContent = newContent.replace(/tm\s=.*/, `tm = zone == -480 ? new Date().setHours(0, 0, 0, 0) : new Date(new Date().toLocaleDateString()).getTime() - 28800000;`);
+  } else {
+    console.log(`非UTC+8时区, 签到结果未知.`)
   }
   await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
 }
