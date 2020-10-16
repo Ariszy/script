@@ -1,6 +1,6 @@
 ## github action使用教程说明
  - Fork [此仓库项目](https://github.com/lxk0301/scripts) > 点击右上角fork按钮即可, [再不会可看此图](icon/fork.png)
- - 然后参考github@ruicky写的特别详细的小白教程[@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/)
+ - 然后参考github@ruicky写的特别详细的小白教程[@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) (**注：此 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) 里面获取ck的方法不对。参考下面两种获取京东cookie的方式才对.**)
 
 ### 注意几个地方就行
 
@@ -28,8 +28,6 @@
 
   - 根据使用经验发现github action 会有延迟现象，一般会延迟15分钟左右吧。比如action设置`北京时间16:00`运行，action其实要`16:15左右`才会执行脚本的。
   
-- 上面 [@ruicky教程](https://ruicky.me/2020/06/05/jd-sign/) 获取ck的方法不对。参考上面两种获取京东cookie的方式才对.
-
 - 如何查看action运行情况
     - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action1.png)
     
