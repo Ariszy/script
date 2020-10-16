@@ -31,6 +31,7 @@ jobs:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT }}
+          joyRunFlag: ${{ secrets.JOY_RUN_FLAG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           BARK_SOUND: ${{ secrets.BARK_SOUND }}

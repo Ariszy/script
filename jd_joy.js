@@ -39,7 +39,7 @@ let message = '', subTitle = '', UserName = '';
 let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //每次喂养数量 [10,20,40,80]
 //是否参加宠汪汪双人赛跑（据目前观察，参加双人赛跑不消耗狗粮,如需参加其他多人赛跑，请关闭）
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
-const joyRunFlag = $.getdata('joyRunFlag') || 'true';
+let joyRunFlag = true;
 let jdNotify = true;//是否开启静默运行，默认true开启
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
@@ -108,7 +108,11 @@ async function jdJoy() {
 }
 //参加双人赛跑
 async function joinTwoPeopleRun() {
-  if (joyRunFlag && joyRunFlag === 'true') {
+  joyRunFlag = $.getdata('joyRunFlag') ? $.getdata('joyRunFlag') : joyRunFlag;
+  if ($.isNode() && process.env.joyRunFlag) {
+    joyRunFlag = process.env.joyRunFlag;
+  }
+  if (`${joyRunFlag}` === 'true') {
     console.log(`\n===========以下是双人赛跑信息========\n`)
     await getPetRace();
     if ($.petRaceResult) {
