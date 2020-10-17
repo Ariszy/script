@@ -18,9 +18,6 @@ cron "11 1-23/5 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scr
  */
 const $ = new Env('京小超');
 //Node.js用户请在jdCookie.js处填写京东ck;
-// const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-// const notify = $.isNode() ? require('./sendNotify') : '';
-
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', jdSuperMarketShareArr = [], notify, newShareCodes;
 
@@ -31,7 +28,6 @@ let drawLotteryFlag = true;//是否用金币去抽奖，true表示开启，false
 let UserName = '', message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
-const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", "eU9Yar_mb_9z92_WmXNG0w", "eU9YaejjYv4g8T2EwnsVhQ", "aURoM7PtY_Q", "eU9Ya-y2N_5z9DvXwyIV0A", "eU9YaOnjYK4j-GvWmXIWhA"];
 //助力好友分享码
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
@@ -267,11 +263,13 @@ function smtgSign() {
 
 // 商圈活动
 async function businessCircleActivity() {
-  console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
+  // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
+  const businessCircleIndexRes = await smtg_businessCircleIndex();
+  const myCircleId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1602947898742';
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
   if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 0) {
     const { businessCircleVO, otherBusinessCircleVO, inviteCode, pkSettleTime } = businessCirclePKDetailRes.data.result;
-    console.log(`\n您的商圈互助码inviteCode\n${inviteCode}\n`);
+    console.log(`\n您的商圈inviteCode互助码：\n\n${inviteCode}\n\n`);
     const businessCircleIndexRes = await smtg_businessCircleIndex();
     const { result } = businessCircleIndexRes.data;
     const { pkPrizeStatus, pkStatus  } = result;
@@ -298,9 +296,15 @@ async function businessCircleActivity() {
       console.log(`\n小于对方300热力值自动更换商圈队伍: 您设置的是禁止自动更换商圈队伍\n`);
       return
     }
-    if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300 && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000 * 1))) {
+    if (otherBusinessCircleVO.hotPoint - businessCircleVO.hotPoint > 300 && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000))) {
       //退出该商圈
-      console.log(`商圈PK已过两天，对方商圈人气值还大于我方商圈人气值，退出该商圈重新加入`);
+      if (inviteCode === '-4msulYas0O2JsRhE-2TA5XZmBQ') return;
+      console.log(`商圈PK已过1天，对方商圈人气值还大于我方商圈人气值300，退出该商圈重新加入`);
+      await smtg_quitBusinessCircle();
+    } else if (otherBusinessCircleVO.hotPoint > businessCircleVO.hotPoint && (Date.now() > (pkSettleTime - 24 * 60 * 60 * 1000 * 2))) {
+      //退出该商圈
+      if (inviteCode === '-4msulYas0O2JsRhE-2TA5XZmBQ') return;
+      console.log(`商圈PK已过2天，对方商圈人气值还大于我方商圈人气值，退出该商圈重新加入`);
       await smtg_quitBusinessCircle();
     }
   } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 222) {
@@ -311,15 +315,21 @@ async function businessCircleActivity() {
     if (getPkPrizeRes && getPkPrizeRes.data.bizCode === 0) {
       const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
       message += `【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
+      await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
     }
   } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 206) {
-    console.log(`您暂未加入商圈,现在给您随机加入一个商圈`);
-    const BusinessCircleList = await smtg_getBusinessCircleList();
-    if (BusinessCircleList.data.bizCode === 0) {
-      const { businessCircleVOList } = BusinessCircleList.data.result;
-      const { circleId } = businessCircleVOList[randomFriendPin(0, businessCircleVOList.length -1)];
-      const joinBusinessCircleRes = await smtg_joinBusinessCircle(circleId);
-      console.log(`参加商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
+    console.log(`您暂未加入商圈,现在给您加入lxk0301的商圈`);
+    const joinBusinessCircleRes = await smtg_joinBusinessCircle(myCircleId);
+    console.log(`参加商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
+    if (joinBusinessCircleRes.data.bizCode !== 0) {
+      console.log(`您加入lxk0301的商圈失败，现在给您随机加入一个商圈`);
+      const BusinessCircleList = await smtg_getBusinessCircleList();
+      if (BusinessCircleList.data.bizCode === 0) {
+        const { businessCircleVOList } = BusinessCircleList.data.result;
+        const { circleId } = businessCircleVOList[randomFriendPin(0, businessCircleVOList.length -1)];
+        const joinBusinessCircleRes = await smtg_joinBusinessCircle(circleId);
+        console.log(`随机加入商圈结果：${JSON.stringify(joinBusinessCircleRes)}`)
+      }
     }
   } else {
     console.log(`访问商圈详情失败：${JSON.stringify(businessCirclePKDetailRes)}`);
