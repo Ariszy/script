@@ -264,7 +264,6 @@ function smtgSign() {
 // 商圈活动
 async function businessCircleActivity() {
   // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
-  const businessCircleIndexRes = await smtg_businessCircleIndex();
   const myCircleId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1602947898742';
   const businessCirclePKDetailRes = await smtg_businessCirclePKDetail();
   if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 0) {
