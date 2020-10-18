@@ -241,7 +241,9 @@ async function doTenWater() {
   if ($.isNode() && process.env.jdFruitBeanCard) {
     joyRunFlag = process.env.jdFruitBeanCard;
   }
-  if (`${jdFruitBeanCard}` === 'true') return
+  await myCardInfoForFarm();
+
+  if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match(`限时翻倍`)) return
   if ($.farmTask.totalWaterTaskInit.totalWaterTaskTimes < $.farmTask.totalWaterTaskInit.totalWaterTaskLimit) {
     let waterCount = 0;
     isFruitFinished = false;
@@ -339,7 +341,7 @@ async function doTenWaterAgain() {
   if ($.isNode() && process.env.jdFruitBeanCard) {
     joyRunFlag = process.env.jdFruitBeanCard;
   }
-  if (`${jdFruitBeanCard}` === 'true') {
+  if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match('限时翻倍')) {
     console.log(`\n您设置的是水滴换豆功能,现在为您换豆`);
     if (totalEnergy >= 100 && $.myCardInfoRes.beanCard > 0) {
       //使用水滴换豆卡

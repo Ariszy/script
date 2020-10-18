@@ -98,12 +98,12 @@ async function downFile () {
 
 async function changeFile (content) {
   let newContent = content.replace(/var Key = ''/, `var Key = '${cookie}'`);
-  const zone = new Date().getTimezoneOffset();
-  if (zone === 0) {
-    newContent = newContent.replace(/tm\s=.*/, `tm = zone == -480 ? new Date().setHours(0, 0, 0, 0) : new Date(new Date().toLocaleDateString()).getTime() - 28800000;`);
-  } else {
-    console.log(`非UTC+8时区, 签到结果未知.`)
-  }
+  // const zone = new Date().getTimezoneOffset();
+  // if (zone === 0) {
+  //   newContent = newContent.replace(/tm\s=.*/, `tm = zone == -480 ? new Date().setHours(0, 0, 0, 0) : new Date(new Date().toLocaleDateString()).getTime() - 28800000;`);
+  // } else {
+  //   console.log(`非UTC+8时区, 签到结果未知.`)
+  // }
   await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
 }
 async function deleteFile(path) {
