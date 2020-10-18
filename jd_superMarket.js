@@ -1,6 +1,6 @@
 /*
 京小超
-更新时间：2020-10-17
+更新时间：2020-10-18
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_superMarket.py
 支持京东双账号
@@ -313,8 +313,10 @@ async function businessCircleActivity() {
     console.log(`商圈PK奖励领取结果：${JSON.stringify(getPkPrizeRes)}`)
     if (getPkPrizeRes && getPkPrizeRes.data.bizCode === 0) {
       const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
-      message += `【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
-      await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+      $.msg($.name, `【京东账号${$.index}】 ${UserName}\\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+      if ($.isNode()) {
+        await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+      }
     }
   } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 206) {
     console.log(`您暂未加入商圈,现在给您加入lxk0301的商圈`);
@@ -1115,7 +1117,7 @@ function shareCodesFormat() {
     if (jdSuperMarketShareArr[$.index - 1]) {
       newShareCodes = jdSuperMarketShareArr[$.index - 1].split('@');
     } else {
-      console.log(`由于您未提供shareCode,将采纳本脚本自带的助力码\n`)
+      console.log(`由于您未提供与京京东账号相对应的shareCode,下面助力将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
@@ -1125,7 +1127,7 @@ function shareCodesFormat() {
 }
 function requireConfig() {
   return new Promise(resolve => {
-    console.log('\n开始京小超配置文件\n')
+    console.log('\n开始获取京小超配置文件\n')
     notify = $.isNode() ? require('./sendNotify') : '';
     //Node.js用户请在jdCookie.js处填写京东ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';

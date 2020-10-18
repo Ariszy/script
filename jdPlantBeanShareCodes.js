@@ -22,6 +22,8 @@ if (process.env.PLANT_BEAN_SHARECODES) {
   } else {
     PlantBeanShareCodes = process.env.PLANT_BEAN_SHARECODES.split();
   }
+} else {
+  console.log(`由于您secret里面未提供助力码，故此处运行将会给脚本内置的码进行助力，请知晓！`)
 }
 for (let i = 0; i < PlantBeanShareCodes.length; i++) {
   const index = (i + 1 === 1) ? '' : (i + 1);
