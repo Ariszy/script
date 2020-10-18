@@ -277,6 +277,7 @@ function requireConfig() {
   return new Promise(resolve => {
     if ($.isNode() && process.env.UN_SUBSCRIBES) {
       $.UN_SUBSCRIBES = process.env.UN_SUBSCRIBES.split('\n');
+      console.log(`您secret设置的取关参数:\n${JSON.stringify($.UN_SUBSCRIBES)}`)
       goodPageSize = $.UN_SUBSCRIBES[0] || goodPageSize;
       shopPageSize = $.UN_SUBSCRIBES[1] || shopPageSize;
       stopGoods = $.UN_SUBSCRIBES[2] || stopGoods;
