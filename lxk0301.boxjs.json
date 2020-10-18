@@ -32,6 +32,13 @@
           "desc": "运行东东农场脚本时不发出系统通知"
         },
         {
+          "id": "jdFruitBeanCard",
+          "name": "使用水滴换豆卡",
+          "val": false,
+          "type": "boolean",
+          "desc": "使用水滴换豆卡(如果出现限时活动是100g水换20豆,此时比浇水划算,推荐换豆)"
+        },
+        {
           "id": "jd_fruit_name",
           "name": "京东账号一昵称",
           "val": "",
