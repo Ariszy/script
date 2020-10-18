@@ -339,7 +339,7 @@ async function doTenWaterAgain() {
   }
   jdFruitBeanCard = $.getdata('jdFruitBeanCard') ? $.getdata('jdFruitBeanCard') : jdFruitBeanCard;
   if ($.isNode() && process.env.jdFruitBeanCard) {
-    joyRunFlag = process.env.jdFruitBeanCard;
+    jdFruitBeanCard = process.env.jdFruitBeanCard;
   }
   if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match('限时翻倍')) {
     console.log(`\n您设置的是水滴换豆功能,现在为您换豆`);
