@@ -35,7 +35,6 @@
 
   - 缺点：需要手动运行脚本，不能自动定时运行脚本
 
-
 ### 方法二：云服务器，腾讯云函数等等
 
   - 需自行有云服务器，云函数等
@@ -45,8 +44,12 @@
 ### 方法三：GitHub action(推荐，iOS/安卓用户都可用)
 
  - 使用教程暂且可看 [这里](githubAction.md)
+ 
+### 方法四：Docker (NAS或VPS用户)
 
-#### 注：以上三种运行机制都是nodejs，故您需仔细阅读下面几点
+ - 可以精确控制任务运行时间，教程请见[EvineDeng/jd-base](https://github.com/EvineDeng/jd-base)
+
+#### 注：以上四种运行机制都是nodejs，故您需仔细阅读下面几点
 
 
   - 如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
@@ -54,9 +57,10 @@
   - 方法三京东cookie不要！不要！不要！填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
    
   - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
-    
 
-### 方法四：iOS系统的代理软件（QuantumultX, Surge, Loon）
+  - 方法四的Cookie填写请见方法四中的链接。
+
+### 方法五：iOS系统的代理软件（QuantumultX, Surge, Loon）
 
 #### 以下内容只针对iOS用户
 
