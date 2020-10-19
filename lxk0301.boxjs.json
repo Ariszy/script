@@ -628,6 +628,13 @@
           "desc": "小于对方300热力值自动更换商圈队伍"
         },
         {
+          "id": "jdSuperMarketLottery",
+          "name": "抽奖(招财进宝)",
+          "val": true,
+          "type": "boolean",
+          "desc": "运行脚本消耗金币进行抽奖，默认抽奖"
+        },
+        {
           "id": "jd_supermarket_name",
           "name": "京东账号一昵称",
           "val": "",

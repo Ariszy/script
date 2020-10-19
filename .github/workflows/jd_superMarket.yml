@@ -40,3 +40,4 @@ jobs:
           jdSuperMarketUpgrade: ${{ secrets.SUPERMARKET_UPGRADE }}
           jdBusinessCircleJump: ${{ secrets.BUSINESS_CIRCLE_JUMP }}
           SuperMarketShareCodes: ${{ secrets.SUPERMARKET_SHARECODES }}
+          jdSuperMarketLottery: ${{ secrets.SUPERMARKET_LOTTERY }}
