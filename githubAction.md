@@ -107,7 +107,7 @@
     | `SUPERMARKET_SHARECODES`|  京小超商圈互助码  | 非必须 | 填写规则请看 [jdSuperMarketShareCodes.js](https://github.com/lxk0301/scripts/blob/master/jdSuperMarketShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
     
     ##### 互助码的填写规则
-    ###### 互助码获取：运行相应脚本后，在日志里面可以找到，(如何查看action运行情况)[#如何查看action运行情况]
+    > 互助码如何获取：运行相应脚本后，在日志里面可以找到。(如何查看日志上面有写，详见 如何查看action运行情况)
     ```
     同一个京东账号的好友互助码用@隔开,不同京东账号互助码用&或者换行隔开,下面给一个文字示例和具体互助码示例说明
     两个账号各两个互助码的文字示例：
