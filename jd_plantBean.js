@@ -1,6 +1,6 @@
 /*
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_plantBean.js
-更新时间:2020-10-12
+更新时间:2020-10-19
 已支持IOS京东双账号,云端N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 会自动关注任务中的店铺跟商品
@@ -121,7 +121,6 @@ async function doGetReward() {
       message += `【上期兑换京豆】${$.getReward.data.awardBean}个\n`;
       $.msg($.name, subTitle, message);
       if ($.isNode()) {
-        const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
         await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${notifyMessage}`);
       }
       // if ($.isNode()) {
@@ -512,8 +511,8 @@ function requireConfig() {
       })
       if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
     } else {
-      cookiesArr.push($.getdata('CookieJD'));
-      cookiesArr.push($.getdata('CookieJD2'));
+      if ($.getdata('CookieJD')) cookiesArr.push($.getdata('CookieJD'));
+      if ($.getdata('CookieJD2')) cookiesArr.push($.getdata('CookieJD2'));
     }
     console.log(`共${cookiesArr.length}个京东账号\n`)
     if ($.isNode()) {

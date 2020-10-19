@@ -4,8 +4,8 @@
 
 ### 注意几个地方就行
 
-- 如果actions出现没有定时执行情况，就修改一下`README.md`文件(enter键回车添加一个空格)，再提交(或者随便找个文件修改一下)。之后再观察一下，不出意外应该是会执行定时任务了。
-    
+- **fork后必须修改一下文件，才能执行定时任务**
+    - 比如修改一下`README.md`文件(enter键回车添加一个空格)，再提交   
     - 不知怎么修改README.md文件的看[这个图](icon/action3.png);
     
 - 使用action的时候其中京东的ck,不要放到 [jdCookie.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jdCookie.js) 里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可
@@ -107,6 +107,7 @@
     | `SUPERMARKET_SHARECODES`|  京小超商圈互助码  | 非必须 | 填写规则请看 [jdSuperMarketShareCodes.js](https://github.com/lxk0301/scripts/blob/master/jdSuperMarketShareCodes.js) 或见下方[互助码的填写规则](#互助码的填写规则) |
     
     ##### 互助码的填写规则
+    > 互助码运行脚本后，在日志里面可以找到，(如何查看action运行情况)[#如何查看action运行情况]
     ```
     同一个京东账号的好友互助码用@隔开,不同京东账号互助码用&或者换行隔开,下面给一个文字示例和具体互助码示例说明
     两个账号各两个互助码的文字示例：
