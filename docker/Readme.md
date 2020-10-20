@@ -10,17 +10,22 @@ sudo chmod +x /usr/local/bin/docker-compose
 需要新建的目录文件结构参考如下:
 ```
 jd_scripts
+├── logs
+│   ├── XXXX.log
+│   └── XXXX.log
 ├── my_crontab_list.sh
 └── docker-compose.yml
 ```
+- `jd_scripts/logs`建一个空文件夹就行
 - `jd_scripts/docker-compose.yml` 参考内容如下：
 ```yaml
 jd_scripts:
   image: akyakya/jd_scripts
   container_name: jd_scripts
   restart: always
-  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面两个的注释 ，通过 `volumes`挂载进去。
-  # volumes:
+  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面的注释 ，通过 `volumes`挂载进去。
+  volumes:
+    - ./logs:/scripts/logs
   #   - ./my_crontab_list.sh:/scriptes/docker/my_crontab_list.sh
   tty: true
   environment:
@@ -50,6 +55,8 @@ jd_scripts:
     - MARKET_COIN_TO_BEANS=""
     #是否开启debug模式打印日志
     - JD_DEBUG=""
+    #该字段必须配置是否使用了自定义定时任务列表,使用了需要把这个名字改成my_crontab_list.sh
+    - CRONTAB_LIST_FILE=crontab_list.sh
   command:
     - /bin/sh
     - -c
@@ -84,3 +91,8 @@ jd_scripts:
  `docker-compose stop` 停止容器；  
  `docker-compose restart` 重启容器；  
  `docker-compose down` 停止并删除容器；  
+ 
+- 如果是群晖用户的话，直接调整`jd_scripts.syno.json`里面对应相关配置的值，然后导入即可
+![image](./info.png)
+![image](./dir.png)
+![image](./import.png)
