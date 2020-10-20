@@ -11,7 +11,8 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@master
 
@@ -27,6 +28,7 @@ jobs:
 
       - name: 构建并推送到Github Packages
         uses: docker/build-push-action@v1
+        if: env.GITHUB_TOKEN
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}

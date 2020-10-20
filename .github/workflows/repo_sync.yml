@@ -2,13 +2,10 @@
 name: sync-lxk0301-scripts
 on:
   schedule:
-  # Sync repo once every two days
-  - cron: '1 0,15 * * *'
+    - cron: '1 0,15 * * *'
   workflow_dispatch:
   watch:
     types: started
-  push:
-    branches: [ master ]
 jobs:
   repo-sync:
     env:
