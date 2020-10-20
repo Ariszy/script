@@ -33,6 +33,8 @@ jd_scripts:
     - MARKET_COIN_TO_BEANS=""
     #是否开启debug模式打印日志
     - JD_DEBUG=""
+    #是否使用了自定义定时任务,这个名字改成my_crontab_list.sh
+    - CRONTAB_LIST_FILE=crontab_list.sh
   command:
     - /bin/sh
     - -c
