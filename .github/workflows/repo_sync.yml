@@ -1,18 +1,15 @@
 # File: .github/workflows/repo-sync.yml
-name: 同步lxk0301脚本库
+name: sync-lxk0301-scripts
 on:
   schedule:
-  # Sync repo once every two days
-  - cron: '1 0,15 * * *'
+    - cron: '1 0,15 * * *'
   workflow_dispatch:
   watch:
     types: started
-  push:
-    branches: [ master ]
 jobs:
   repo-sync:
     env:
-      PAT: ${{ secrets.PAT }}
+      PAT: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11
       dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
     runs-on: ubuntu-latest
     steps:
@@ -28,7 +25,7 @@ jobs:
           source_branch: "master"
           destination_branch: "master"
           github_token: ${{ secrets.PAT }}
-
+      # 我自己同步到gitee使用，其他人可忽略
       - name: sync github -> gitee
         uses: Yikun/hub-mirror-action@master
         if: env.dst_key
