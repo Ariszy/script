@@ -1,4 +1,4 @@
-name: 构建ssmgr Docker镜像
+name: 构建JD Scripts镜像
 
 on:
   workflow_dispatch:
@@ -32,5 +32,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: docker/Dockerfile
           registry: docker.pkg.github.com
-          repository: lxk0301/scripts/jd_scripts
+          repository: iouAkira/scripts/jd_scripts
           tag_with_ref: true
