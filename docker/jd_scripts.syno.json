@@ -14,59 +14,31 @@
       },
       {
          "key" : "JD_COOKIE",
-         "value" : "pt_key=AAJfjaNrADAS8ygfgIsOC7PwKbJUYPvQNWp_gC0F4Cqa7J3FzMx8KpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=luwei900915;"
-      },
-      {
-         "key" : "PUSH_KEY",
-         "value" : "\"\""
-      },
-      {
-         "key" : "BARK_PUSH",
-         "value" : "\"\""
+         "value" : "pt_key=AAJfjaNrADASxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxx5;"
       },
       {
          "key" : "TG_BOT_TOKEN",
-         "value" : "1301893280:AAEkNHuu-7xIqERbwHUC718hWP10zNf91WQ"
+         "value" : "13xxxxxx80:AAEkNxxxxxxzNf91WQ"
       },
       {
          "key" : "TG_USER_ID",
-         "value" : "129702206"
-      },
-      {
-         "key" : "DD_BOT_TOKEN",
-         "value" : "\"\""
-      },
-      {
-         "key" : "DD_BOT_SECRET",
-         "value" : "\"\""
+         "value" : "12xxxx206"
       },
       {
          "key" : "PLANT_BEAN_SHARECODES",
-         "value" : "tz5osqqvgvsn7gp4wdawri6vse@q7uuivum76gpqkeb5yu6luxzsq@jrhsxpm2wdxyrlw3mzzgsuswya"
+         "value" : ""
       },
       {
          "key" : "FruitShareCodes",
-         "value" : "7b6a724115984e968ec962bf333c0d3b@2dd95d908e3b4dd48f0d502ed9d1178e@44dc19c3a13049e1942bd4e2275e5cb9@e4e2830220794e1d93f1983f9034bce0"
+         "value" : ""
       },
       {
          "key" : "PetShareCodes",
-         "value" : "MTAxODc2NTEzMDAwMDAwMDAyMjY2NTI4MQ==@MTAxODc2NTEzMTAwMDAwMDAyNzM2MjI2NQ==@MTAxODcxOTI2NTAwMDAwMDAyODc3NTUwNw==@MTAxODc2NTEzMzAwMDAwMDAyODYzNjc4MQ==@MTAxODc2NTEzNDAwMDAwMDAxOTk3ODI1OQ=="
-      },
-      {
-         "key" : "JOY_FEED_COUNT",
-         "value" : "\"\""
+         "value" : ""
       },
       {
          "key" : "SuperMarketShareCodes",
-         "value" : "eU9YM57xGbxZphS9uStu@aRkxZe23ZP8"
-      },
-      {
-         "key" : "MARKET_COIN_TO_BEANS",
-         "value" : "\"\""
-      },
-      {
-         "key" : "JD_DEBUG",
-         "value" : "\"\""
+         "value" : ""
       },
       {
          "key" : "CRONTAB_LIST_FILE",
