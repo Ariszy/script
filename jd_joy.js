@@ -7,7 +7,7 @@ IOS用户支持京东双账号,NodeJs用户支持N个京东账号
 feedCount:自定义 每次喂养数量; 等级只和喂养次数有关，与数量无关
 推荐每次投喂10个，积累狗粮，然后去聚宝盆赌每小时的幸运奖，据观察，投入3000-6000中奖概率大，超过7000基本上注定亏本，即使是第一名
 Combine from Zero-S1/JD_tools(https://github.com/Zero-S1/JD_tools)
-更新时间:2020-09-20
+更新时间:2020-10-20
 注：如果使用Node.js, 需自行安装'crypto-js,got,http-server,tough-cookie'模块. 例: npm install crypto-js http-server tough-cookie got --save
 */
 // quantumultx
@@ -84,6 +84,7 @@ async function jdJoy() {
       petTask(),
       appPetTask()
     ])
+    await deskGoodsTask();//限时货柜
     await enterRoom();
     await joinTwoPeopleRun()//参加双人赛跑
     await showMsg();
@@ -105,6 +106,24 @@ async function jdJoy() {
       message += `${$.getPetTaskConfigRes.errorMessage}`;
     }
   }
+}
+//逛商品得100积分奖励任务
+async function deskGoodsTask() {
+ const deskGoodsRes = await getDeskGoodDetails();
+ if (deskGoodsRes && deskGoodsRes.success) {
+   if (deskGoodsRes.data && deskGoodsRes.data.deskGoods) {
+     const { deskGoods, taskChance, followCount = 0 } = deskGoodsRes.data;
+     console.log(`浏览货柜商品 ${followCount ? followCount : 0}/${taskChance}`);
+     if (taskChance === followCount) return
+     for (let item of deskGoods) {
+       if (!item['status'] && item['sku']) {
+         await followScan(item['sku'])
+       }
+     }
+   } else {
+     console.log(`限时商品货架已下架`);
+   }
+ }
 }
 //参加双人赛跑
 async function joinTwoPeopleRun() {
@@ -306,6 +325,51 @@ async function appPetTask() {
     }
   }
 }
+function getDeskGoodDetails() {
+  return new Promise(resolve => {
+    const url = `${JD_API_HOST}/getDeskGoodDetails`;
+    const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
+    $.get(taskUrl(url, host, reqSource), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function followScan(sku) {
+  return new Promise(resolve => {
+    const url = `${JD_API_HOST}/scan`;
+    const host = `jdjoy.jd.com`;
+    const reqSource = 'h5';
+    const body = {
+      "taskType": "ScanDeskGood",
+      "reqSource": "h5",
+      sku
+    }
+    $.post(taskPostUrl(url, JSON.stringify(body), reqSource, host, 'application/json'), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京东宠汪汪: API查询请求失败 ‼️‼️')
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
 //小程序逛会场，浏览频道，关注商品API
 function scanMarket(type, body, cType = 'application/json') {
   return new Promise(resolve => {
@@ -410,7 +474,7 @@ function enterRoom() {
          
           $.roomData = JSON.parse(data);
 
-          console.log(`n现有狗粮: ${$.roomData.data.petFood}\n`)
+          console.log(`现有狗粮: ${$.roomData.data.petFood}\n`)
 
           subTitle = `【用户名】${$.roomData.data.pin}`
           message = `现有积分: ${$.roomData.data.petCoin}\n现有狗粮: ${$.roomData.data.petFood}\n喂养次数: ${$.roomData.data.feedCount}\n宠物等级: ${$.roomData.data.petLevel}\n`
