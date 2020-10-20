@@ -24,6 +24,10 @@ jobs:
       #     dockerfile: docker/Dockerfile
       #     repository: akyakya/jd_scripts
       #     tag_with_ref: true
+      - id: repo_name
+        uses: ASzc/change-string-case-action@v1
+        with:
+          string: ${{ github.repository }}
 
       - name: 构建并推送到Github Packages
         uses: docker/build-push-action@v1
@@ -32,5 +36,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: docker/Dockerfile
           registry: docker.pkg.github.com
-          repository: ${{ github.repository }}/jd_scripts
+          repository: ${{ steps.repo_name.outputs.lowercase }}/jd_scripts
           tag_with_ref: true
