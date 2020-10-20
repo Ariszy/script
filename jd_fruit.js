@@ -1,6 +1,6 @@
 /*
 东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间:2020-10-18
+更新时间:2020-10-20
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -239,12 +239,16 @@ async function predictionFruit() {
 async function doTenWater() {
   jdFruitBeanCard = $.getdata('jdFruitBeanCard') ? $.getdata('jdFruitBeanCard') : jdFruitBeanCard;
   if ($.isNode() && process.env.jdFruitBeanCard) {
-    joyRunFlag = process.env.jdFruitBeanCard;
+    jdFruitBeanCard = process.env.jdFruitBeanCard;
   }
   await myCardInfoForFarm();
 
-  if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match(`限时翻倍`)) return
+  if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match(`限时翻倍`)) {
+    console.log(`您设置的是使用水滴换豆卡，跳过10次浇水任务`)
+    return
+  }
   if ($.farmTask.totalWaterTaskInit.totalWaterTaskTimes < $.farmTask.totalWaterTaskInit.totalWaterTaskLimit) {
+    console.log(`\n准备浇水十次`);
     let waterCount = 0;
     isFruitFinished = false;
     for (; waterCount < $.farmTask.totalWaterTaskInit.totalWaterTaskLimit - $.farmTask.totalWaterTaskInit.totalWaterTaskTimes; waterCount++) {
