@@ -1,6 +1,6 @@
 /**
  * 星推官-简单粗略版
- * 能做完所有的任务，包括自动抽奖
+ * 能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
  *一共13个活动，耗时比较久，surge请加大延迟时间
  */
 const $ = new Env('星推官');
@@ -35,7 +35,20 @@ const starID = [
   'aokesilingengxin',
   'haixinchengguo',
 ];
-const shareID = [''];
+const shareID = [
+  'e646c144-28a7-4b1b-8145-5b0dbff107ec',
+  'b3fcb734-cbdd-4436-9f92-b13b445fc253',
+  'e2d63b19-19d6-4a20-b2af-74b828e703d0',
+  'a7a3b9b7-2872-4244-a627-3b82c271dee7',
+  'f7b521e7-5306-4908-ba8a-df2d221bdd9d',
+  'd17ec374-70d4-49d5-8673-7093e61f904c',
+  '915b9567-dc88-4389-8be9-ecc25588353a',
+  '7abdc8f4-d8f4-497f-8daa-cdab01cf645c',
+  '50ecc8de-1ee5-4420-bbb8-1136d86d80db',
+  'fd0770e1-5007-45c1-8d69-402e02ff9a52',
+  'cb9e9a59-a86b-4a0d-a308-4503fe5baaa4',
+  '93b3afeb-a18c-437c-b5ca-fbd9f389671d',
+];
 const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
 !(async () => {
   if (!cookiesArr[0]) {
@@ -48,17 +61,15 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
-      message = '';
-      subTitle = '';
       // $.activeId = 'aokesilingengxin';
       // await JD_XTG();
       // await JD_XTG();
-      console.log(`一共${starID.length}${$.name}任务`)
-      for (let id of starID) {
-        $.activeId = id;
+      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓，PC测试耗时：600秒`)
+      for (let index = 0; index < starID.length; index ++) {
+        $.activeId = starID[index];
         await JD_XTG();
         await JD_XTG();
-        // await doHelp();
+        await doSupport(shareID[index]);
       }
       await showMsg();
     }
@@ -71,13 +82,13 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       $.done();
     })
 function showMsg() {
-  $.msg($.name, '', `京东账号${$.index}】${$.UserName}任务已做完`)
+  $.msg($.name, '', `京东账号${$.index} ${$.UserName}任务已做完`)
 }
 async function JD_XTG() {
   await getHomePage();
   if ($.homeData.code === 200) {
     const { shopList, venueList, productList, shareId } = $.homeData.data[0];
-    console.log(`\n助力码：${shareId}\n`)
+    console.log(`\n活动${$.j + 1} 助力码\n：${shareId}\n`);
     for (let item of shopList) {
       if (item['shopStatus'] !== 3) {
         await doTask('shop', item['shopId'], 0)
@@ -140,15 +151,11 @@ function doTask(type, id, status) {
     })
   })
 }
-async function doHelp() {
-  for (let item of shareID) {
-    await doSupport(item);
-  }
-}
+
 function doSupport(shareId) {
   return new Promise(async resolve => {
     const options = {
-      "url": `${JD_API_HOST}/getDayPrizeStatus`,
+      "url": `${JD_API_HOST}/doSupport`,
       "body": `starId=${$.activeId}&shareId=${shareId}`,
       "headers": {
         "Accept": "application/json,text/plain, */*",
