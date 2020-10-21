@@ -53,6 +53,12 @@ const helpCode = [
   "e03b07f3-a1db-4ef9-a23a-6c73b4134184",
   "ea78026e-67cf-4f33-93c3-acec0f7b3ca0",
   "6f7e9cf9-2888-472b-9c9e-cccb203f8358",
+  "269977fc-0353-40b7-a30a-45186d1abb74",
+  "58605be3-9326-49b3-a6b7-48bd036397fb",
+  "e42e2767-aa56-466b-9917-7ec80c87c65d",
+  "19cc9ed4-f12c-4b8f-b5c3-7dda29b38610",
+  "03d6f682-5064-44d6-9be4-e474163b2655",
+  "16233aee-527f-4698-a705-47d019b4be51",
 ]
 !(async () => {
   if (!cookiesArr[0]) {
