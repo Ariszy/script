@@ -34,6 +34,10 @@ const starID = [
   'jiuyangdenglun',
   'aokesilingengxin',
   'haixinchengguo',
+  'fangtai',
+  'lgyangzishan',
+  'laobansongweilong',
+  'haiermaoxiaotong',
 ];
 const shareID = [
   'e646c144-28a7-4b1b-8145-5b0dbff107ec',
@@ -48,6 +52,10 @@ const shareID = [
   'fd0770e1-5007-45c1-8d69-402e02ff9a52',
   'cb9e9a59-a86b-4a0d-a308-4503fe5baaa4',
   '93b3afeb-a18c-437c-b5ca-fbd9f389671d',
+  '8778793c-e9ad-4339-a709-723ae3ebde8e',
+  '921c376e-8cc5-4236-8242-ff8bb1b88a95',
+  '8b3ce203-4b10-4c36-a87d-da8c82efe362',
+  'c8e1feb3-6ab1-4410-8444-1de8bd22e041',
 ];
 const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
 !(async () => {
@@ -63,10 +71,11 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
       // $.activeId = 'aokesilingengxin';
       // await JD_XTG();
-      // await JD_XTG();
+      // // await JD_XTG();
       console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓，PC测试耗时：600秒`)
       for (let index = 0; index < starID.length; index ++) {
         $.activeId = starID[index];
+        $.j = index;
         await JD_XTG();
         await JD_XTG();
         await doSupport(shareID[index]);
@@ -88,7 +97,7 @@ async function JD_XTG() {
   await getHomePage();
   if ($.homeData.code === 200) {
     const { shopList, venueList, productList, shareId } = $.homeData.data[0];
-    console.log(`\n活动${$.j + 1} 助力码\n：${shareId}\n`);
+    console.log(`\n活动${$.j + 1} 助力码\n${shareId}\n`);
     for (let item of shopList) {
       if (item['shopStatus'] !== 3) {
         await doTask('shop', item['shopId'], 0)
