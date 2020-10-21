@@ -6,7 +6,7 @@ name: jd_818
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16,22,4,10 * * *'
+    - cron: '0 4,10,16,22 * * *'
   watch:
     types: started
 
@@ -24,10 +24,16 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【818脚本】'
+      - name: '运行 【手机狂欢城脚本】'
         run: |
           node jd_818.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
-        
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          BARK_PUSH: ${{ secrets.BARK_PUSH }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}

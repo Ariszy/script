@@ -1,19 +1,17 @@
 /*
-京东手机狂欢城活动，每日可获得20+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
-活动时间09.22日-10.09日结束
+京东手机狂欢城活动，每日可获得30+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
+活动时间10.21日-11.12日结束，活动23天，保底最少可以拿到690京豆
 活动地址: https://rdcseason.m.jd.com/#/index
 
-更新日期：2020-09-24
+更新日期：2020-10-21
 
-其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
-其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
-其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
-其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
-其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！
+其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！！！！
+
+
 每天0/6/12/18点逛新品/店铺/会场可获得京豆，京豆先到先得
 往期奖励一般每天都能拿20京豆
 
-注：脚本运行会给我提供的助力码助力，介意者可删掉脚本第45行helpCode里面的东西。留空即可（const helpCode = []）;
+注：脚本运行会给我提供的助力码助力，介意者可删掉脚本第48行helpCode里面的东西。留空即可（const helpCode = []）;
 
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -46,51 +44,13 @@ if ($.isNode()) {
 }
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
-const activeEndTime = '2020/10/10 01:00:00';
+const activeEndTime = '2020/11/13 01:00:00';
 const helpCode = [
-  "c2e10377-dd90-4f77-8524-8c6e607b9d9d",
-  "c224861c-ecaa-443c-8168-5f63822b8a2b",
-  "4e61c3f7-b4e4-4791-9fe5-6f56d647bda6",
-  "252c16e8-0236-4a66-a356-8941c766dd1d",
-  "2f4e717f-65c9-4808-a1fb-71f2303f27eb",
-  "721bc358-be02-4d87-8c65-e44dc9a53922",
-  "0216eeaf-cecc-4783-bb49-bc1acc910095",
-  "20380e0b-4a7a-48eb-b4ab-16cf388e28ec",
-  "93ba28c1-fe5e-4a46-9e11-d5dd902fb459",
-  "c6cf76ba-d8c4-478f-b55f-ad4282f80c90",
-  "a51e80f3-1ab3-42c4-bb09-b8a04512e83b",
-  "263287de-0cb2-4d85-b965-2f79b995a6c3",
-  "db08490a-6338-4834-ad4b-18567db04cba",
-  "0b88ae31-b10f-4f8b-8178-02f4d6ea8ba7",
-  "191b17e6-f444-49cd-9ac6-4c92f2a2f243",
-  "3b78671f-cb42-4720-b5cf-3fa2a16275ad",
-  "3adac461-8eb5-42cc-8396-f89cada281a2",
-  "b1490eda-b865-4019-9df0-7b34ce59738b",
-  "344c76ec-0d9d-4b7c-b9de-e9f146ba0752",
-  "fe7c9b3c-2653-4c39-b9c3-09bab8c508fb",
-  "cc63c7dc-85fe-450a-b968-f3c5937b325b",
-  "77b183d8-b6c0-4224-8055-b562f35d943f",
-  "6e69e572-e4e8-4a48-82de-ffaa710f5a88",
-  "cbf09ab7-8630-43ca-895d-14ff2633c164",
-  "e39f4fdb-0c29-42b0-9426-a437da08114c",
-  "880083f4-208f-41e5-8358-968d2be3f5b1",
-  "50269eae-a152-4d32-a921-6efd506820da",
-  "5242fd1e-4ead-4e4d-9605-357ef2468b2f",
-  "2d504cca-dd71-4f05-ae5d-5f8e29ed3c6e",
-  "592dd67b-8b1f-4663-b68f-8b5bed27129b",
-  "1fb8e41f-e262-41a9-a1ac-9418f13b5115",
-  "da265244-0cca-4c0b-8717-cd58b63b4eab",
-  "888814a2-898a-4a33-bf98-00076102738a",
-  "19b42663-0c12-4227-bff3-9a210f9c4f8d",
-  "db627673-2297-4b37-b09f-86d2e0403985",
-  "6a9442ee-44d0-42fb-a1b5-6989cd09fcc3",
-  "bea654f2-eee0-4a4a-80fa-b4afb0c74d9f",
-  "cf1de46d-94be-4f24-822a-baa90875fb5d",
-  "55ebb8c4-9559-4810-ae59-d5ccca469776",
-  "25672c9c-e39b-49ff-9e46-bb9a228c40b9",
-  "9a119276-5770-4deb-a337-cc3ffd05bc8b",
-  "649ee5d9-8b00-4e9c-9d54-eae3e94285ef",
-  "0245d16f-7d76-4f26-be5b-963ef58c51a1",
+  "26bde7aa-8ea9-42af-adfa-a0da07b4f2fe",
+  "45b6f04f-0139-41c2-946a-928ca19f568d",
+  "43a25874-6fc0-44ed-a89e-8272b4def197",
+  "6b519ebf-7097-4c87-a50f-3d8839eeebef",
+  "e03b07f3-a1db-4ef9-a23a-6c73b4134184",
 ]
 !(async () => {
   if (!cookiesArr[0]) {
@@ -123,7 +83,7 @@ async function JD818() {
   await shopInfo();//逛店铺
   await listMeeting();//逛会场
   await $.wait(1000);
-  //再次允许一次，避免出现遗漏的问题
+  //再次运行一次，避免出现遗漏的问题
   await listGoods();//逛新品
   await shopInfo();//逛店铺
   await listMeeting();//逛会场
@@ -609,7 +569,7 @@ function toHelp(code) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(data);
+          console.log(`助力结果:${data}`);
           data = JSON.parse(data);
         }
       } catch (e) {
