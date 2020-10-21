@@ -51,6 +51,8 @@ const helpCode = [
   "43a25874-6fc0-44ed-a89e-8272b4def197",
   "6b519ebf-7097-4c87-a50f-3d8839eeebef",
   "e03b07f3-a1db-4ef9-a23a-6c73b4134184",
+  "ea78026e-67cf-4f33-93c3-acec0f7b3ca0",
+  "6f7e9cf9-2888-472b-9c9e-cccb203f8358",
 ]
 !(async () => {
   if (!cookiesArr[0]) {
