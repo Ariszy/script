@@ -317,7 +317,7 @@ async function businessCircleActivity() {
     console.log(`商圈PK奖励领取结果：${JSON.stringify(getPkPrizeRes)}`)
     if (getPkPrizeRes && getPkPrizeRes.data.bizCode === 0) {
       const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
-      $.msg($.name, `【京东账号${$.index}】 ${UserName}\\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+      $.msg($.name, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
       if ($.isNode()) {
         await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
       }
