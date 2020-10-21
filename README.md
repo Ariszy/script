@@ -21,6 +21,7 @@
 17.  摇京豆([jd_club_lottery.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_club_lottery.js))
 18.  全名开红包([jd_redPacket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js))
 19.  京东多合一签到([jd_bean_sign.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_sign.js)) 【自用，Node.js专用，核心脚本是JD_DailyBonus.js， IOS软件用户请使用NobyDa的 [JD_DailyBonus.js](https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js) 】
+20.  以及其他一部分在特定时间可用的薅羊毛工具，如 手机狂欢城、星推官等。
 
 **脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), JSBox, Node.js**
 
@@ -31,25 +32,25 @@
 
 ## 食用方法
 
-### 方法一：本地安装Node.js，下载本库脚本(不推荐)
+### 方法一：本地安装Node.js，下载本库脚本
 
-  - 缺点：需要手动运行脚本，不能自动定时运行脚本
+  - 教程请见：[EvineDeng/jd-base](https://github.com/EvineDeng/jd-base)
 
-### 方法二：云服务器，腾讯云函数等等
+### 方法二：云服务器、腾讯云函数等等
 
   - 需自行有云服务器，云函数等
 
   - 腾云云函数使用 [简要说明](iCloud.md)
         
-### 方法三：GitHub action(推荐，iOS/安卓用户都可用)
+### 方法三：GitHub Action（推荐）
 
  - 使用教程暂且可看 [这里](githubAction.md)
  
-### 方法四：Docker (NAS或VPS用户)
+### 方法四：Docker（NAS或VPS用户）
 
- - 可以精确控制任务运行时间，教程请见[EvineDeng/jd-base](https://github.com/EvineDeng/jd-base)
+ - 可以精确控制任务运行时间，有两种办法：[docker办法一](https://github.com/lxk0301/scripts/tree/master/docker)、[docker办法二（和本地安装Node.js有点类似）](https://github.com/EvineDeng/jd-base)
 
-#### 注：以上四种运行机制都是nodejs，故您需仔细阅读下面几点
+#### 注：以上四种运行机制都是Node.js，故您需仔细阅读下面几点
 
 
   - 如果使用方法一与方法二，需自行提供京东cookie填写到 [jdCookie.js](https://github.com/lxk0301/scripts/blob/master/jdCookie.js) 里面
@@ -58,7 +59,7 @@
    
   - 获取京东cookie教程可参考 [浏览器获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie.md) , [插件获取京东cookie教程](https://github.com/lxk0301/scripts/blob/master/backUp/GetJdCookie2.md)
 
-  - 方法四的Cookie填写请见方法四中的链接。
+  - 方法四Docker安装Cookie请见各自的说明。
 
 ### 方法五：iOS系统的代理软件（QuantumultX, Surge, Loon）
 
