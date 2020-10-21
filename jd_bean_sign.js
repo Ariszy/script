@@ -88,10 +88,10 @@ if ($.isNode()) {
     .finally(() => $.done())
 async function downFile () {
   let url = '';
-  if (process.env.JD_COOKIE) {
-    url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
-  } else {
+  if (process.env.CDN_JD_DAILYBONUS) {
     url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';//pc端测试用
+  } else {
+    url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
   }
   await download(url, './')
 }
