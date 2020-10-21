@@ -1,8 +1,15 @@
+/*
+ * @Author: lxk0301 
+ * @Date: 2020-10-21 17:04:04 
+ * @Last Modified by:   lxk0301 
+ * @Last Modified time: 2020-10-21 17:04:04 
+ */
 /**
- * 星推官-简单粗略版，出现任务做完没领取的情况，就再运行一次脚本
- * 能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
- *一共17个活动，耗时比较久，surge请加大延迟时间
- * 支持京东双账号
+ 星推官脚本
+ 出现任务做完没领取的情况，就再运行一次脚本
+ 能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
+ 一共17个活动，耗时比较久，surge请加大延迟时间
+ 支持京东双账号
  脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
  // quantumultx
  [task_local]
