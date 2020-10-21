@@ -1,7 +1,18 @@
 /**
- * 星推官-简单粗略版
+ * 星推官-简单粗略版，出现任务做完没领取的情况，就再运行一次脚本
  * 能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
- *一共13个活动，耗时比较久，surge请加大延迟时间
+ *一共17个活动，耗时比较久，surge请加大延迟时间
+ * 支持京东双账号
+ 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+ // quantumultx
+ [task_local]
+ #京东星推官
+ 2 0 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js, tag=京东星推官, enabled=true
+ // Loon
+ [Script]
+ cron "2 0 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js,tag=京东星推官
+ // Surge
+ 京东星推官 = type=cron,cronexp=2 0 * * *,wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
  */
 const $ = new Env('星推官');
 
@@ -72,13 +83,19 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       // $.activeId = 'aokesilingengxin';
       // await JD_XTG();
       // // await JD_XTG();
-      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓，PC测试耗时：600秒`)
+      console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓，PC测试耗时：100秒`)
       for (let index = 0; index < starID.length; index ++) {
         $.activeId = starID[index];
         $.j = index;
         await JD_XTG();
-        await JD_XTG();
         await doSupport(shareID[index]);
+      }
+      console.log(`\n延迟10秒后，再去领取\n`)
+      await $.wait(10000);
+      for (let index = 0; index < starID.length; index ++) {
+        $.activeId = starID[index];
+        $.j = index;
+        await JD_XTG();
       }
       await showMsg();
     }
@@ -97,22 +114,37 @@ async function JD_XTG() {
   await getHomePage();
   if ($.homeData.code === 200) {
     const { shopList, venueList, productList, shareId } = $.homeData.data[0];
-    console.log(`\n活动${$.j + 1} 助力码\n${shareId}\n`);
+    console.log(`\n活动${$.j + 1}-[${starID[$.j]}] 助力码\n${shareId}\n`);
     for (let item of shopList) {
-      if (item['shopStatus'] !== 3) {
+      console.log(`\n任务一：关注${item['shopName']}`)
+      if (item['shopStatus'] === 0) {
         await doTask('shop', item['shopId'], 0)
+      }
+      if (item['shopStatus'] === 1) {
+        await doTask('shop', item['shopId'], 1)
+      }
+      if (item['shopStatus'] === 2) {
+        await doTask('shop', item['shopId'], 2)
+      }
+      if (item['shopStatus'] === 4) {
+        await doTask('shop', item['shopId'], 4)
       }
     }
     for (let item1 of venueList) {
-      console.log(`任务1：：：venue,venueStatus${item1['venueStatus']}`)
-      if (item1['venueStatus'] === 1 || item1['venueStatus'] === 2) {
+      console.log(`\n任务二：逛逛${item1['venueName']}`)
+      if (item1['venueStatus'] === 1) {
         await doTask('venue', item1['venueId'], 1);
+      }
+      if (item1['venueStatus'] === 2) {
         await doTask('venue', item1['venueId'], 2);
       }
     }
     for (let item2 of productList) {
-      if (item2['productStatus'] === 1 || item2['productStatus'] === 2) {
+      console.log(`\n任务三：逛逛${item2['productName']}`)
+      if (item2['productStatus'] === 1) {
         await doTask('product', item2['productId'], 1);
+      }
+      if (item2['productStatus'] === 2) {
         await doTask('product', item2['productId'], 2);
       }
     }
@@ -155,7 +187,7 @@ function doTask(type, id, status) {
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve();
       }
     })
   })
