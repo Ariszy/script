@@ -89,7 +89,7 @@ if ($.isNode()) {
 async function downFile () {
   let url = '';
   if (process.env.CDN_JD_DAILYBONUS) {
-    url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';//pc端测试用
+    url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
   } else {
     url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
   }
