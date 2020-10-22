@@ -13,6 +13,10 @@
          "value" : "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       },
       {
+         "key" : "CDN_JD_DAILYBONUS",
+         "value" : "true"
+      },
+      {
          "key" : "JD_COOKIE",
          "value" : "pt_key=AAJfjaNrADASxxxxxxxKpfDaZ2pSBOYTxtPqLK8U1Q;pt_pin=lxxxxx5;"
       },
