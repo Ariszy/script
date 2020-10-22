@@ -33,14 +33,18 @@
     
     - [查看运行日志](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action2.png)  
 
+- 如何禁用单个或者多个脚本(action)
+  
+   操作步骤[看此图](./icon/disable-action.jpg) 
+
 - fork过后，如果没有看到action运行，是因为`/.github/workflows/`路径里面的`.yml`后缀文件里面的cron时间未到，如需立马看到效果
 
   - 方法：在自己仓库，手动点击仓库的右上角`star图标按钮`即可，稍后就能看到运行 
   - 注：之后如果想单独运行某一个脚本(此处的前提条件是执行过上面的方法)，手动点击 Run workflow [根据此图片示例操作](https://user-images.githubusercontent.com/21308593/93980945-e28ab000-fdb1-11ea-977c-c50705e79ac3.png) ，再次点一下`Actions`图标即可看到效果(或者等待10秒左右也可) 
 
-- 自动同步Fork后的代码(此部分内容由tg@wukongdada和tg@goukey提供) 注：此项目里面提供的配置文件是方案A  
+- 自动同步Fork后的代码(此部分内容由tg@wukongdada和tg@goukey提供) 注：**此项目里面提供的配置文件是方案A**  
   
-  - 方案A - 强制远程分支覆盖自己的分支
+  - 方案A - 强制远程分支覆盖自己的分支(**新手推荐使用**)
   
       1. 参考tg@wukongdada这篇教程 [保持自己github的forks自动和上游仓库同步的教程](https://github.com/lxk0301/scripts/blob/master/backUp/gitSync.md) ， 安装[pull插件](https://github.com/apps/pull) 并确认此项目已在pull插件的作用下（参考@twukongdada这篇教程文中1-d）
       
@@ -58,7 +62,7 @@
         mergeMethod: hardreset  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
         mergeUnstable: true    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
     ```
-  - 方案B - 保留自己仓库已修改过的文件
+  - 方案B - 保留自己仓库已修改过的文件(**需修改脚本或者提PR的使用**)
     
     > 上游变动后pull插件会自动发起pr，但如果有冲突需要自行**手动**确认。
     > 如果上游更新涉及workflow里的文件内容改动，需要自行**手动**确认。
@@ -76,6 +80,12 @@
         mergeMethod: merge  # Optional, one of [none, merge, squash, rebase, hardreset], Default: none.
         mergeUnstable: true    # Optional, merge pull request even when the mergeable_state is not clean. Default: false
     ```
+  - 方案C - 利用github-action定时cron更新同步(**新手推荐使用**)
+  
+    > 效果和方案A一样（即：强制更新覆盖）
+                                      
+    新建secret，`Name`为`PAT`，填写的`Value`值需要去申请Personal access tokens，申请教程[看此处](https://www.jianshu.com/p/bb82b3ad1d11) 记得勾选`repo`权限就行
+    
 - 下方提供使用到的 **Secrets全集合**
 
     | Name                    |   归属   | 属性   | 说明                                                         |

@@ -2,13 +2,17 @@
  * @Author: lxk0301 
  * @Date: 2020-10-12 18:12:38 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-12 20:37:24
+ * @Last Modified time: 2020-10-22 20:37:24
+*/
+/*
  京东全民开红包（京东app->主页->领券->抢红包(在底部)）
  已完成功能：
  ①浏览活动
  ②关注频道
  ③领取红包
+ 未实现功能：
  领3张券功能,邀请好友未实现
+
  支持京东双账号
  脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
  QuantumultX
@@ -152,7 +156,7 @@ async function active(taskType) {
     } else {
       console.log(`任务列表为空,手动进入app内检查 是否存在[从京豆首页进领券中心逛30秒]的任务,如存在,请手动完成再运行脚本`)
       $.msg(`${$.name}`, '', '手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本');
-      await notify.sendNotify(`${$.name}异常`, `手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本`)
+      if ($.isNode()) await notify.sendNotify(`${$.name}异常`, `手动进入app内检查\n是否存在[从京豆首页进领券中心逛30秒]的任务\n如存在,请手动完成再运行脚本`)
     }
   } else {
     console.log(`---具体任务详情---${JSON.stringify(getTaskDetailForColorRes)}`);
