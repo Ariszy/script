@@ -115,7 +115,7 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       $.done();
     })
 function showMsg() {
-  $.msg($.name, '', `京东账号${$.index} ${$.UserName}任务已做完`)
+  $.msg($.name, '', `京东账号${$.index}${$.UserName}\n星推官任务已做完\n活动链接https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html`, `{"open-url": "https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html"}`)
 }
 async function JD_XTG() {
   await getHomePage();
