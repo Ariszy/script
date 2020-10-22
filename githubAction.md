@@ -5,7 +5,7 @@
 ### 注意几个地方就行
 
 - **fork后必须修改一下文件，才能执行定时任务**
-    - 比如修改一下`README.md`文件(enter键回车添加一个空格)，再提交   
+    - 比如修改一下`README.md`文件(enter键回车)，再提交   
     - 不知怎么修改README.md文件的看[这个图](icon/action3.png);
     
 - 使用action的时候其中京东的ck,不要放到 [jdCookie.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jdCookie.js) 里面，要放到Secrets里面, 添加 JD_COOKIE的时候。 多账号的cookie， 使用`&`隔开，比如 `账号一cookie&账号二cookie&账号三cookie`，再多账号就依次类推即可

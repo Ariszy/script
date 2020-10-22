@@ -192,6 +192,7 @@ function smtg_queryPrize(timeout = 0){
                 await smtg_obtainPrize(prizeList[1].prizeId);
               } else {
                 console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
+                $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
               }
             } else if (coinToBeans > 0 && coinToBeans <= 20) {
               if (prizeList[0].beanType === 'Bean') {
@@ -217,6 +218,7 @@ function smtg_queryPrize(timeout = 0){
                 await smtg_obtainPrize(prizeList[0].prizeId,1000);
               } else {
                 console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
+                $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
               }
             } else if (coinToBeans === 2801390972) {
               //兑换 巧白酒精喷雾
@@ -243,6 +245,7 @@ function smtg_queryPrize(timeout = 0){
                   await smtg_obtainPrize(prizeId);
                 } else {
                   console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
+                  $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
                 }
               } else {
                 console.log(`奖品兑换列表[${awardPrizeList[0]}]已下架`);
@@ -273,6 +276,7 @@ function smtg_queryPrize(timeout = 0){
                   await smtg_obtainPrize(prizeId);
                 } else {
                   console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
+                  $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
                 }
               } else {
                 console.log(`奖品兑换列表[${awardPrizeList[1]}]已下架`);
@@ -303,6 +307,7 @@ function smtg_queryPrize(timeout = 0){
                   await smtg_obtainPrize(prizeId);
                 } else {
                   console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
+                  $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
                 }
               } else {
                 console.log(`奖品兑换列表[${awardPrizeList[2]}]已下架`);
@@ -421,6 +426,7 @@ async function msgShow() {
   } else {
     ctrTemp = `${jdNotify}` === 'false';
   }
+  //默认只在兑换奖品成功后弹窗提醒。情况情况加，只打印日志，不弹窗
   if ($.beanscount && ctrTemp) {
     $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
     if ($.isNode()) {
