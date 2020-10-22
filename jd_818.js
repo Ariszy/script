@@ -46,25 +46,44 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020/11/13 01:00:00';
 const helpCode = [
-  "26bde7aa-8ea9-42af-adfa-a0da07b4f2fe",
-  "45b6f04f-0139-41c2-946a-928ca19f568d",
-  "43a25874-6fc0-44ed-a89e-8272b4def197",
-  "6b519ebf-7097-4c87-a50f-3d8839eeebef",
-  "e03b07f3-a1db-4ef9-a23a-6c73b4134184",
-  "ea78026e-67cf-4f33-93c3-acec0f7b3ca0",
-  "6f7e9cf9-2888-472b-9c9e-cccb203f8358",
-  "269977fc-0353-40b7-a30a-45186d1abb74",
-  "58605be3-9326-49b3-a6b7-48bd036397fb",
-  "e42e2767-aa56-466b-9917-7ec80c87c65d",
-  "19cc9ed4-f12c-4b8f-b5c3-7dda29b38610",
-  "03d6f682-5064-44d6-9be4-e474163b2655",
-  "16233aee-527f-4698-a705-47d019b4be51",
+  '7241127f-3d25-4f91-84c8-cef41df9d6e0',
+  'bd6daf67-05b4-47b6-aac1-1eebe310ba03',
+  '02080bd6-8020-47fb-97e9-450f65125e49',
+  'c4d4c53a-b98d-4f4e-b4da-c6f2fdb98bee',
+  '90c554b5-d3de-4d44-ac2b-54f2084232f1',
+  '0cdb8d10-c078-4e45-b07a-79ab2198307c',
+  "424f2a0b-36c3-4294-b43f-a8ca412d59af",
+  "583be381-73e1-42fb-bc71-df8ed0a5af66",
+  "88c3b9d3-8ce4-4964-9db5-7e568c69f56a",
+  "0d8b611e-aa9b-4b02-9ee3-d7eba49ad395",
+  "3a0913a7-dcea-499a-afa7-f2f5e918f554",
+  "2ee164a6-e07e-4de0-9db6-95bb4d09e93a",
+  "2f53b734-165e-4c24-8d5c-5dda69e90e68",
+  "a92a9fdd-3a77-433c-a432-16f1ad3de8d1",
+  "618ca3c1-de34-4741-9f26-49150d893760",
+  "e079cd0f-3384-4ff7-a30f-7ecd5ba74284",
+  "4b10f1e6-67c8-4e39-b40d-4c7e2435292c",
+  "dcdfbe04-923e-4407-9798-b8b09407364d",
+  "447797f5-992a-4ed4-850e-d09453eed9e2",
+  "fd8bc651-dc0f-4010-8723-1003e5de7952",
+  "57c59c2f-ccf3-46d8-8530-2c4a92c015a7",
+  "024f3929-e4b9-4c22-8384-8a960f8969a6",
+  "859cae17-b406-467b-942f-090c6ee8e177",
+  "f7f1097e-55c5-41d7-9f7a-c8c395e27173",
+  "cd4a08c8-a6e0-4a06-bc76-0a88556b7ba0",
+  "419ebe4d-877d-413e-920e-781dd6e10fc6",
+  "9d98abd5-1b28-4a0d-b90c-35efa4ed5371",
+  "a378db72-9c76-4db7-bfd6-7fab26687342",
+  "8b80bf24-02c3-4645-b359-f6b799a14f85",
+  "ee713f9a-36ee-4b6a-9055-f9b497902e3f",
+  "e6c915ff-837f-4f75-9fe6-536b874ff07b",
 ]
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
+  $.temp = [];
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -78,6 +97,7 @@ const helpCode = [
       // await doHelp();
     }
   }
+  console.log($.temp)
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -612,6 +632,7 @@ function getHelp() {
           data = JSON.parse(data);
           if (data.code === 200) {
             console.log(`\n您的助力码shareId(互助码每天都是变化的)\n${data.data.shareId}\n`);
+            $.temp.push(data.data.shareId);
           }
         }
       } catch (e) {

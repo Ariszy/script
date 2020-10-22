@@ -1,11 +1,14 @@
 /*
  * @Author: lxk0301 
  * @Date: 2020-10-21 17:04:04 
- * @Last Modified by:   lxk0301 
- * @Last Modified time: 2020-10-21 17:04:04 
+ * @Last Modified by: lxk0301
+ * @Last Modified time: 2020-10-22 09:35:04
  */
 /**
- 星推官脚本
+ 星推官脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
+ 星推官活动地址：https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html
+ 活动时间：2020年10月21日 00:00:00-2020年11月12日 23:59:59
+ 京豆先到先得！！！！！！！！！！！
  出现任务做完没领取的情况，就再运行一次脚本
  能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
  一共17个活动，耗时比较久，surge请加大延迟时间
@@ -87,9 +90,6 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
-      // $.activeId = 'aokesilingengxin';
-      // await JD_XTG();
-      // // await JD_XTG();
       console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓，PC测试耗时：100秒`)
       for (let index = 0; index < starID.length; index ++) {
         $.activeId = starID[index];
@@ -97,7 +97,7 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
         await JD_XTG();
         await doSupport(shareID[index]);
       }
-      console.log(`\n延迟10秒后，再去领取\n`)
+      console.log(`\n延迟10秒后，再去领取奖励\n`)
       await $.wait(10000);
       for (let index = 0; index < starID.length; index ++) {
         $.activeId = starID[index];
@@ -121,21 +121,28 @@ async function JD_XTG() {
   await getHomePage();
   if ($.homeData.code === 200) {
     const { shopList, venueList, productList, shareId } = $.homeData.data[0];
-    console.log(`\n活动${$.j + 1}-[${starID[$.j]}] 助力码\n${shareId}\n`);
+    console.log(`\n===========活动${$.j + 1}-[${starID[$.j]}] 助力码==========\n${shareId}\n`);
     for (let item of shopList) {
       console.log(`\n任务一：关注${item['shopName']}`)
-      if (item['shopStatus'] === 0) {
-        await doTask('shop', item['shopId'], 0)
-      }
-      if (item['shopStatus'] === 1) {
-        await doTask('shop', item['shopId'], 1)
-      }
-      if (item['shopStatus'] === 2) {
-        await doTask('shop', item['shopId'], 2)
-      }
       if (item['shopStatus'] === 4) {
-        await doTask('shop', item['shopId'], 4)
+        console.log(`入会任务，假入会`);
+        await doTask('shop', item['shopId'], 0)
+        continue
       }
+      if (item['shopStatus'] === 3) {
+        console.log(`此任务已做完，跳过`);
+        continue
+      }
+      console.log(`shopStatus:::${item['shopStatus']}`)
+      if (item['shopStatus'] !== 3 && item['shopStatus'] !== 4) {
+        await doTask('shop', item['shopId'], item['shopStatus'])
+      }
+      // if (item['shopStatus'] === 2) {
+      //   await doTask('shop', item['shopId'], 2)
+      // }
+      // if (item['shopStatus'] === 4) {
+      //   await doTask('shop', item['shopId'], 4)
+      // }
     }
     for (let item1 of venueList) {
       console.log(`\n任务二：逛逛${item1['venueName']}`)
