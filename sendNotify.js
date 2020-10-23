@@ -72,6 +72,7 @@ if (process.env.IGOT_PUSH_KEY) {
 
 async function sendNotify(text, desp) {
   //提供五种通知
+  console.log(text, desp)
   await serverNotify(text, desp);
   await BarkNotify(text, desp);
   await tgBotNotify(text, desp);
