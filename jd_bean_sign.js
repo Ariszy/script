@@ -42,7 +42,7 @@ if ($.isNode()) {
       console.log('替换变量完毕')
       // 执行
       try {
-        if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID)) {
+        if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID) || notify.IGOT_PUSH_KEY) {
           await exec("node JD_DailyBonus.js >> result.txt");
         } else {
           // 如果没有提供通知推送，则打印日志
