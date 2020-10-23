@@ -92,8 +92,8 @@ jd_scripts:
  `docker-compose restart` 重启容器；  
  `docker-compose down` 停止并删除容器；  
  
-- 如果是群晖用户，不需要docker-compose.yml，只需建好logs目录，调整`jd_scripts.syno.json`里面对应的配置值，然后导入新建容器。
-若要自定义my_crontab_list.sh，再添个my_crontab_list.sh文件，参考`jd_scripts.my_crontab_list.syno.json`配置。
+- 如果是群晖用户，不需要docker-compose.yml，只需建个logs目录，调整`jd_scripts.syno.json`里面对应的配置值，然后导入json配置新建容器。
+若要自定义my_crontab_list.sh，再添个my_crontab_list.sh文件，配置参考`jd_scripts.my_crontab_list.syno.json`。
 ![image](./info.png)
 ![image](./dir.png)
 ![image](./import.png)
