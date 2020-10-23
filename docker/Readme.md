@@ -92,7 +92,7 @@ jd_scripts:
  `docker-compose restart` 重启容器；  
  `docker-compose down` 停止并删除容器；  
  
-- 如果是群晖用户的话，直接调整`jd_scripts.syno.json`里面对应相关配置的值，然后导入即可
+- 如果是群晖用户的话，直接调整`jd_scripts.syno.json`里面对应相关配置的值，然后导入即可。若使用自定义crontab_list.sh，参考`jd_scripts.with_my_crontab_list.syno.json`。
 ![image](./info.png)
 ![image](./dir.png)
 ![image](./import.png)
