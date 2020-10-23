@@ -46,7 +46,7 @@
 
 
 
-#### 如何查看action运行情况
+#### 如何查看Action运行情况
 
    - [查看运行状态](https://raw.githubusercontent.com/lxk0301/scripts/master/icon/action1.png)
     
@@ -54,13 +54,13 @@
 
 
 
-#### 如何禁用单个或者多个脚本(action)
+#### 如何禁用单个或者多个脚本(Action)
 
    - 操作步骤[看此图](./icon/disable-action.jpg) 
 
 
 
-#### fork后action未运行
+#### Fork后Action未运行
 
   > 是因为`/.github/workflows/`路径里面的`.yml`后缀文件里面的cron时间未到，如需立马看到效果
 

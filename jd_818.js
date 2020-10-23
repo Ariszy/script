@@ -45,39 +45,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020/11/13 01:00:00';
-const helpCode = [
-  '7241127f-3d25-4f91-84c8-cef41df9d6e0',
-  'bd6daf67-05b4-47b6-aac1-1eebe310ba03',
-  '02080bd6-8020-47fb-97e9-450f65125e49',
-  'c4d4c53a-b98d-4f4e-b4da-c6f2fdb98bee',
-  '90c554b5-d3de-4d44-ac2b-54f2084232f1',
-  '0cdb8d10-c078-4e45-b07a-79ab2198307c',
-  "424f2a0b-36c3-4294-b43f-a8ca412d59af",
-  "583be381-73e1-42fb-bc71-df8ed0a5af66",
-  "88c3b9d3-8ce4-4964-9db5-7e568c69f56a",
-  "0d8b611e-aa9b-4b02-9ee3-d7eba49ad395",
-  "3a0913a7-dcea-499a-afa7-f2f5e918f554",
-  "2ee164a6-e07e-4de0-9db6-95bb4d09e93a",
-  "2f53b734-165e-4c24-8d5c-5dda69e90e68",
-  "a92a9fdd-3a77-433c-a432-16f1ad3de8d1",
-  "618ca3c1-de34-4741-9f26-49150d893760",
-  "e079cd0f-3384-4ff7-a30f-7ecd5ba74284",
-  "4b10f1e6-67c8-4e39-b40d-4c7e2435292c",
-  "dcdfbe04-923e-4407-9798-b8b09407364d",
-  "447797f5-992a-4ed4-850e-d09453eed9e2",
-  "fd8bc651-dc0f-4010-8723-1003e5de7952",
-  "57c59c2f-ccf3-46d8-8530-2c4a92c015a7",
-  "024f3929-e4b9-4c22-8384-8a960f8969a6",
-  "859cae17-b406-467b-942f-090c6ee8e177",
-  "f7f1097e-55c5-41d7-9f7a-c8c395e27173",
-  "cd4a08c8-a6e0-4a06-bc76-0a88556b7ba0",
-  "419ebe4d-877d-413e-920e-781dd6e10fc6",
-  "9d98abd5-1b28-4a0d-b90c-35efa4ed5371",
-  "a378db72-9c76-4db7-bfd6-7fab26687342",
-  "8b80bf24-02c3-4645-b359-f6b799a14f85",
-  "ee713f9a-36ee-4b6a-9055-f9b497902e3f",
-  "e6c915ff-837f-4f75-9fe6-536b874ff07b",
-]
+const helpCode = ["0f5232fe-c15f-41bc-9c12-012fbb1b4ec5","131cb822-0602-4de6-84d1-5eb025b4522b","55b880fe-968d-4d3c-9ad6-901f022db114","3964a720-45b1-47fe-bd71-5ed59c5f1ef7","ab142b66-b35b-4a07-90d3-4afd8b20da55","2e9bf385-5970-47c4-b46a-fdeff39f3971","b6dc6d17-466a-4a9e-8e20-7741993355af","5eb00d42-2737-48ef-ad20-397dcef6947d","245ec67d-0bd6-4ba2-95e2-eeb02290a0f8","f19ff7f7-0ad4-45d5-8c0b-ae75aead3546","5d57f9ac-5f6a-4ebd-88de-8d83feb5028d","9ba9260a-b75d-4d62-8cf9-e7f5a5e11f2d","8e66f648-e1b4-4a82-863d-9ee03f86dd54","99641b5e-6ab4-4e45-ba71-5230e1ecd18c","e5dec4f9-4aa6-4fe7-b561-12376f5e92f1","1bc4d5dd-1861-4633-8a65-8f060b634472","e4ec2df5-36b1-4f57-b2e7-7c6bf7dd03e5","822d762c-606a-4825-b7b7-275e017f36fd","2dcb416a-7ef3-49c6-bd7a-52e373087b92","1f2ebccb-ca94-4061-9c3d-b2ec5a0bf4ee","e1d159cf-733e-42ef-9316-a19949f7755f","9df83fce-18d1-411a-9205-ca0714c11aa3","b4c77297-ddcb-4c42-89f7-ab7df3cbf308","59ef1465-f389-470e-b90e-6e5eaccdd420","ef8e31e6-f89c-4a96-ab20-a442ae82ea96","492e45b8-5043-42b8-a1ae-567d49b98f91","5242c383-ffbb-46a7-b268-eab22c111044","4eb76832-3eaf-4791-8c82-98d1522882e6","7d592442-fe86-4147-a8ad-7c4b2bd233cc","00336d69-fe57-45df-8b7b-ea5df17607a0","76a77c8e-15e2-42e5-ae10-e873aaea9b3f","df552290-c2a1-4987-8f15-2faed6536474","187f60ed-6539-4b12-b82c-18a875a9c53f","f7fe01da-6a4f-4f2f-9697-046a89d599d7","7c117795-cf1b-4152-833e-ad1487526381","6230fde3-f2a4-497f-8800-044d842a8ead","83e17f11-a4dd-4697-9ca2-9f7c23564131","9423b241-8e20-423e-a2fb-cc987992f2fa","b836c7c9-8da5-4a58-bda9-74765cbbc568","01a4b9f3-86d0-4523-9cb0-8b13220e065d","f1c745ef-7483-486a-9738-22c6e60ffc92","a4b1d604-1e4c-43fc-9cd4-80617e4d27d6","71fb64f7-3a44-4d82-93b8-0da55f286c52","ba264bdb-3ae8-49a0-9f10-ddb110d10e20","16709049-6be6-499c-9cca-7c95acf9bc7d","46bc321b-5946-4750-81c2-e97d0434462b","f22f33d5-994f-4033-9564-30e73f097d86","483102af-56e8-48f3-95d4-b988981990d5","36d2f5ee-004b-472b-9f5e-003cf8a058bf","da2fbe2d-771b-43d0-b73b-dc52683f68f1", "74c70086-4852-462f-808d-af36e0fafce1","29e80016-06ae-4ec1-886b-aa07d80f3955","2029f76c-7ac3-4718-a8a3-5bc7aa258a1f","eb5c4a5e-2d30-4e87-a05c-ce3084086e55","3c591a04-ab6b-46e7-b6fe-64b3e9f8c570","e91c0bcd-b934-4d46-83e3-59cb3b753d49","55f8b7c7-2255-44e2-9fd8-b67475932b55","09120a8e-c0df-433c-b3ac-b1630598210f"]
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -564,7 +532,7 @@ function saveJbean(id) {
 }
 async function doHelp() {
   for (let item of helpCode) {
-    const helpRes = await toHelp(item);
+    const helpRes = await toHelp(item.trim());
     if (helpRes.data.status === 5) {
       console.log(`助力机会已耗尽，跳出助力`);
       break;
@@ -631,7 +599,7 @@ function getHelp() {
         } else {
           data = JSON.parse(data);
           if (data.code === 200) {
-            console.log(`\n您的助力码shareId(互助码每天都是变化的)\n${data.data.shareId}\n`);
+            console.log(`\n您的助力码shareId(互助码每天都是变化的)\n\n"${data.data.shareId}",\n`);
             $.temp.push(data.data.shareId);
           }
         }

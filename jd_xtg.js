@@ -2,7 +2,7 @@
  * @Author: lxk0301 
  * @Date: 2020-10-21 17:04:04 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-22 09:35:04
+ * @Last Modified time: 2020-10-23 09:35:04
  */
 /**
  星推官脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
@@ -115,12 +115,12 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       $.done();
     })
 function showMsg() {
-  $.msg($.name, '', `京东账号${$.index}${$.UserName}\n星推官任务已做完\n活动链接https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html`, `{"open-url": "https://prodev.m.jd.com/mall/active/3gSzKSnvrrhYushciUpzHcDnkYE3/index.html"}`)
+  $.msg($.name, '', `京东账号${$.index}${$.UserName}\n任务已做完\n京豆详情点击弹窗跳转后即可查看\n京豆先到先得\n没有京豆就是已分完或者账号黑了`, {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"})
 }
 async function JD_XTG() {
   await getHomePage();
   if ($.homeData.code === 200) {
-    const { shopList, venueList, productList, shareId } = $.homeData.data[0];
+    const { shopList, venueList, productList, orderSkuList, shareId } = $.homeData.data[0];
     console.log(`\n===========活动${$.j + 1}-[${starID[$.j]}] 助力码==========\n${shareId}\n`);
     for (let item of shopList) {
       console.log(`\n任务一：关注${item['shopName']}`)
@@ -162,6 +162,16 @@ async function JD_XTG() {
         await doTask('product', item2['productId'], 2);
       }
     }
+    //付定金 TODO
+    // for (let item3 of orderSkuList) {
+    //   await doTask('order', item3['skuId'], 1);
+    //   await doTask('order', item3['skuId'], 2);
+    //   await doTask('order', item3['skuId'], 3);
+    //   await doTask('order', item3['skuId'], 0);
+    //
+    //   await doTask('order', item3['skuId'], 2);
+    //   await doTask('order', item3['skuId'], 1);
+    // }
     console.log(`\n开始抽奖\n`)
     await getDayPrizeStatus(4, `${$.activeId}#1`, 3);
     await getDayPrizeStatus(1, `${$.activeId}#2`, 3);

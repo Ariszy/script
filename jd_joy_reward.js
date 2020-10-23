@@ -1,6 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间; 2020-10-14
+更新时间; 2020-10-23
 兑换规则：一个账号一天只能兑换一次京豆。
 1-20级：340积分兑换20京豆, 21-25级：320积分换20京豆
 再往上的等级兑换规则目前不知，欢迎大家提供信息
@@ -138,7 +138,7 @@ async function joyReward() {
     }
     // $.done();
   } else {
-    console.log(`${$.name}异常,${JSON.stringify($.$.getExchangeRewardsRes)}`)
+    console.log(`${$.name}异常,${JSON.stringify($.getExchangeRewardsRes)}`)
   }
 }
 function getExchangeRewards() {
