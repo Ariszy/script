@@ -258,7 +258,7 @@ function iGotNotify(text, desp){
   return  new Promise(resolve => {
     if (IGOT_PUSH_KEY) {
       // 校验传入的IGOT_PUSH_KEY是否有效
-      const IGOT_PUSH_KEY_REGX = new new RegExp("/^[a-zA-Z0-9]{24}$/")
+      const IGOT_PUSH_KEY_REGX = new RegExp("^[a-zA-Z0-9]{24}$")
       if(!IGOT_PUSH_KEY_REGX.test(IGOT_PUSH_KEY)) {
         console.log('\n您所提供的IGOT_PUSH_KEY无效\n')
         resolve()
@@ -266,7 +266,7 @@ function iGotNotify(text, desp){
       } 
       const options = {
         url: `https://push.hellyw.com/${IGOT_PUSH_KEY.toLowerCase()}`,
-        body: {
+        form: {
           title: text,
           content: desp
         },
