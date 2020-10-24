@@ -1,6 +1,6 @@
 /*
 东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间:2020-10-20
+更新时间:2020-10-24
 东东农场活动链接：https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -1186,7 +1186,6 @@ async function waterFriendForFarm(shareCode) {
   $.waterFriendForFarmRes = await request('waterFriendForFarm', body);
 }
 async function showMsg() {
-  $.log(`\n${message}\n`);
   let ctrTemp;
   if ($.isNode() && process.env.FRUIT_NOTIFY_CONTROL) {
     ctrTemp = `${process.env.FRUIT_NOTIFY_CONTROL}` === 'false';
@@ -1195,16 +1194,13 @@ async function showMsg() {
   } else {
     ctrTemp = `${jdNotify}` === 'false';
   }
-  // jdNotify = `${notify.fruitNotifyControl}` === 'false' && `${jdNotify}` === 'false' && $.getdata('jdFruitNotify') === 'false';
   if (ctrTemp) {
     $.msg($.name, subTitle, message, option);
-    const notifyMessage = message.replace(/[\n\r]/g, '\n\n');
     if ($.isNode()) {
       await notify.sendNotify(`${$.name} - 账号${$.index} - ${UserName}`, `${subTitle}\n${message}`);
     }
-    // if ($.isNode()) {
-    //   await notify.BarkNotify(`${$.name}`, `${subTitle}\n${message}`);
-    // }
+  } else {
+    $.log(`\n${message}\n`);
   }
 }
 
