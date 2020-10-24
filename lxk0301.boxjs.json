@@ -762,6 +762,53 @@
         "https://raw.githubusercontent.com/58xinian/icon/master/jxc_mini.png",
         "https://raw.githubusercontent.com/58xinian/icon/master/jxc.png"
       ]
+    },
+    {
+      "id": "lxk0301Webhook",
+      "name": "Webhook",
+      "keys": [
+        "ACTIONS_TRIGGER_TOKEN",
+        "githubUser",
+        "repo",
+        "TRIGGER_KEYWORDS"
+      ],
+      "settings": [
+        {
+          "id": "ACTIONS_TRIGGER_TOKEN",
+          "name": "github token",
+          "val": "",
+          "type": "text",
+          "desc": "申请教程:https://www.jianshu.com/p/bb82b3ad1d11 记得勾选repo权限就行"
+        },
+        {
+          "id": "githubUser",
+          "name": "github 用户名",
+          "val": "",
+          "type": "text",
+          "desc": "例如：lxk0301"
+        },
+        {
+          "id": "repo",
+          "name": "仓库名称",
+          "val": "",
+          "type": "text",
+          "desc": "例如：scripts"
+        },
+        {
+          "id": "TRIGGER_KEYWORDS",
+          "name": "触发关键词",
+          "val": "",
+          "type": "text",
+          "desc": "yml文件里面repository_dispatch项目的types值"
+        }
+      ],
+      "author": "@lxk0301",
+      "repo": "https://github.com/lxk0301/scripts",
+      "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js",
+      "icons": [
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
+      ]
     }
   ]
 }

@@ -1,12 +1,19 @@
-//Personal access tokens，申请教程:https://www.jianshu.com/p/bb82b3ad1d11 记得勾选repo权限就行
-const $ = new Env('webhook触发脚本');
-let ACTIONS_TRIGGER_TOKEN = '';
-let TRIGGER_KEYWORDS = 'jd_joy_feedPets';//yml文件里面repository_dispatch项目的types值
+const $ = new Env('Webhook触发Action');
+let ACTIONS_TRIGGER_TOKEN = '';//Personal access tokens，申请教程:https://www.jianshu.com/p/bb82b3ad1d11 记得勾选repo权限就行
+let TRIGGER_KEYWORDS = '';//yml文件里面repository_dispatch项目的types值
 let githubUser = '';//github用户名，例:lxk0301
-let repo = 'scripts';//需要触发的 Github Action 所在的仓库名称 例:scripts
+let repo = '';//需要触发的 Github Action 所在的仓库名称 例:scripts
 
 !(async () => {
-  await hook();
+  ACTIONS_TRIGGER_TOKEN = $.getdata('ACTIONS_TRIGGER_TOKEN') ? $.getdata('ACTIONS_TRIGGER_TOKEN') : ACTIONS_TRIGGER_TOKEN;
+  githubUser = $.getdata('githubUser') ? $.getdata('githubUser') : githubUser;
+  repo = $.getdata('repo') ? $.getdata('repo') : repo;
+  TRIGGER_KEYWORDS = $.getdata('TRIGGER_KEYWORDS') ? $.getdata('TRIGGER_KEYWORDS') : TRIGGER_KEYWORDS;
+  if (ACTIONS_TRIGGER_TOKEN && githubUser && repo && TRIGGER_KEYWORDS) {
+    await hook();
+  } else {
+    $.msg($.name, `失败`, `关键信息未提供`)
+  }
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -32,7 +39,8 @@ function hook() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           // data = JSON.parse(data);
-          console.log('ddd----ddd', data)
+          // console.log('ddd----ddd', data)
+          $.msg($.name, ``, `成功\nhttps://github.com/${githubUser}/${repo}`, {"open-url": `https://github.com/${githubUser}/${repo}`})
         }
       } catch (e) {
         $.logErr(e, resp);
