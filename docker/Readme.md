@@ -45,12 +45,12 @@ jd_scripts:
     #京东种豆得豆
     - PLANT_BEAN_SHARECODES=""
     #京东农场
-    - FruitShareCodes=""
+    - FRUITSHARECODES=""
     #京东萌宠
-    - PetShareCodes=""
+    - PETSHARECODES=""
     - JOY_FEED_COUNT=""
     #京小超
-    - SuperMarketShareCodes=""
+    - SUPERMARKET_SHARECODES=""
     #兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
     - MARKET_COIN_TO_BEANS=""
     #是否开启debug模式打印日志
