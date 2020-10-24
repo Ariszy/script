@@ -12,7 +12,7 @@ let FruitShareCodes = [
   '6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6@9c52670d52ad4e1a812f894563c746ea',//账号二的好友shareCode，不同好友中间用@符号隔开
 ]
 // 判断github action里面是否有水果互助码
-if (process.env.FruitShareCodes) {
+if (process.env.FRUITSHARECODES) {
   if (process.env.FRUITSHARECODES.indexOf('&') > -1) {
     console.log(`您的东东农场互助码选择的是用&隔开\n`)
     FruitShareCodes = process.env.FRUITSHARECODES.split('&');
