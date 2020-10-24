@@ -9,9 +9,8 @@ on:
     - cron: '33 */3 * * *'
   watch:
     types: started
-  push:
-    branches: [ master ]
-
+  repository_dispatch:
+    types: speed
 jobs:
   build:
 

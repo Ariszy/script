@@ -9,6 +9,8 @@ on:
     - cron: '*/20 */1 * * *'
   watch:
     types: [started]
+  repository_dispatch:
+    types: joy_feedPets
 jobs:
   build:
 

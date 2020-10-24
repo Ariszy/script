@@ -9,7 +9,8 @@ on:
     - cron: '15 * * * *'
   watch:
     types: started
-
+  repository_dispatch:
+    types: superMarket
 jobs:
   build:
 

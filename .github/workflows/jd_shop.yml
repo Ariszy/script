@@ -9,7 +9,8 @@ on:
     - cron: '0 16 * * *'
   watch:
     types: started
-
+  repository_dispatch:
+    types: shop
 jobs:
   build:
 

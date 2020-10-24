@@ -9,7 +9,8 @@ on:
     - cron: '0 0,4,8,16 * * *'
   watch:
     types: started
-
+  repository_dispatch:
+    types: joy_reward
 jobs:
   build:
 
