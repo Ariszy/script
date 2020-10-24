@@ -239,8 +239,8 @@ async function predictionFruit() {
 //浇水十次
 async function doTenWater() {
   jdFruitBeanCard = $.getdata('jdFruitBeanCard') ? $.getdata('jdFruitBeanCard') : jdFruitBeanCard;
-  if ($.isNode() && process.env.jdFruitBeanCard) {
-    jdFruitBeanCard = process.env.jdFruitBeanCard;
+  if ($.isNode() && process.env.FRUIT_BEAN_CARD) {
+    jdFruitBeanCard = process.env.FRUIT_BEAN_CARD;
   }
   await myCardInfoForFarm();
 
@@ -343,8 +343,8 @@ async function doTenWaterAgain() {
     totalEnergy = $.farmInfo.farmUserPro.totalEnergy;
   }
   jdFruitBeanCard = $.getdata('jdFruitBeanCard') ? $.getdata('jdFruitBeanCard') : jdFruitBeanCard;
-  if ($.isNode() && process.env.jdFruitBeanCard) {
-    jdFruitBeanCard = process.env.jdFruitBeanCard;
+  if ($.isNode() && process.env.FRUIT_BEAN_CARD) {
+    jdFruitBeanCard = process.env.FRUIT_BEAN_CARD;
   }
   if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match('限时翻倍')) {
     console.log(`\n您设置的是水滴换豆功能,现在为您换豆`);

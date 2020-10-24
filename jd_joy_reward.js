@@ -93,8 +93,8 @@ async function joyReward() {
             if ($.exchangeRes.errorCode === 'buy_success') {
               console.log(`兑换${giftValue}成功,【宠物等级】${data.level}\n【消耗积分】${salePrice}个\n【剩余积分】${data.coin - salePrice}个\n`)
               let ctrTemp;
-              if ($.isNode() && process.env.jdJoyRewardNotify) {
-                ctrTemp = `${process.env.jdJoyRewardNotify}` === 'false';
+              if ($.isNode() && process.env.JD_JOY_REWARD_NOTIFY) {
+                ctrTemp = `${process.env.JD_JOY_REWARD_NOTIFY}` === 'false';
               } else if ($.getdata('jdJoyRewardNotify')) {
                 ctrTemp = $.getdata('jdJoyRewardNotify') === 'false';
               } else {

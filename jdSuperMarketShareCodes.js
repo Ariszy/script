@@ -12,15 +12,15 @@ let SuperMarketShareCodes = [
   'aURoM7PtY_Q@eU9Ya-y2N_5z9DvXwyIV0A@eU9YaOnjYK4j-GvWmXIWhA',//账号二的好友shareCode，不同好友中间用@符号隔开
 ]
 // 判断github action里面是否有京小超商圈互助码
-if (process.env.SuperMarketShareCodes) {
-  if (process.env.SuperMarketShareCodes.indexOf('&') > -1) {
+if (process.env.SUPERMARKET_SHARECODES) {
+  if (process.env.SUPERMARKET_SHARECODES.indexOf('&') > -1) {
     console.log(`您的京小超商圈互助码选择的是用&隔开\n`)
-    SuperMarketShareCodes = process.env.SuperMarketShareCodes.split('&');
-  } else if (process.env.SuperMarketShareCodes.indexOf('\n') > -1) {
+    SuperMarketShareCodes = process.env.SUPERMARKET_SHARECODES.split('&');
+  } else if (process.env.SUPERMARKET_SHARECODES.indexOf('\n') > -1) {
     console.log(`您的京小超商圈互助码选择的是用换行隔开\n`)
-    SuperMarketShareCodes = process.env.SuperMarketShareCodes.split('\n');
+    SuperMarketShareCodes = process.env.SUPERMARKET_SHARECODES.split('\n');
   } else {
-    SuperMarketShareCodes = process.env.SuperMarketShareCodes.split();
+    SuperMarketShareCodes = process.env.SUPERMARKET_SHARECODES.split();
   }
 } else if (process.env.JD_COOKIE) {
   console.log(`由于您secret里面未提供助力码，故此处运行将会给脚本内置的码进行助力，请知晓！`)

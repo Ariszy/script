@@ -13,14 +13,14 @@ let FruitShareCodes = [
 ]
 // 判断github action里面是否有水果互助码
 if (process.env.FruitShareCodes) {
-  if (process.env.FruitShareCodes.indexOf('&') > -1) {
+  if (process.env.FRUITSHARECODES.indexOf('&') > -1) {
     console.log(`您的东东农场互助码选择的是用&隔开\n`)
-    FruitShareCodes = process.env.FruitShareCodes.split('&');
-  } else if (process.env.FruitShareCodes.indexOf('\n') > -1) {
+    FruitShareCodes = process.env.FRUITSHARECODES.split('&');
+  } else if (process.env.FRUITSHARECODES.indexOf('\n') > -1) {
     console.log(`您的东东农场互助码选择的是用换行隔开\n`)
-    FruitShareCodes = process.env.FruitShareCodes.split('\n');
+    FruitShareCodes = process.env.FRUITSHARECODES.split('\n');
   } else {
-    FruitShareCodes = process.env.FruitShareCodes.split();
+    FruitShareCodes = process.env.FRUITSHARECODES.split();
   }
 } else if (process.env.JD_COOKIE) {
   console.log(`由于您secret里面未提供助力码，故此处运行将会给脚本内置的码进行助力，请知晓！`)

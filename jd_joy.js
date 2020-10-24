@@ -128,8 +128,8 @@ async function deskGoodsTask() {
 //参加双人赛跑
 async function joinTwoPeopleRun() {
   joyRunFlag = $.getdata('joyRunFlag') ? $.getdata('joyRunFlag') : joyRunFlag;
-  if ($.isNode() && process.env.joyRunFlag) {
-    joyRunFlag = process.env.joyRunFlag;
+  if ($.isNode() && process.env.JOY_RUN_FLAG) {
+    joyRunFlag = process.env.JOY_RUN_FLAG;
   }
   if (`${joyRunFlag}` === 'true') {
     console.log(`\n===========以下是双人赛跑信息========\n`)

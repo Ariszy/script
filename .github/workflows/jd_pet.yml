@@ -31,7 +31,7 @@ jobs:
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          PetShareCodes: ${{ secrets.PETSHARECODES }}
+          PETSHARECODES: ${{ secrets.PETSHARECODES }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           PET_NOTIFY_CONTROL: ${{ secrets.PET_NOTIFY_CONTROL }}

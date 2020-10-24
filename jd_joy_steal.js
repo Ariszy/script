@@ -179,8 +179,8 @@ async function helpFriendsFeed() {
   if ($.help_feed !== 200) {
     //可给好友喂食
     let ctrTemp;
-    if ($.isNode() && process.env.jdJoyHelpFeed) {
-      ctrTemp = `${process.env.jdJoyHelpFeed}` === 'true';
+    if ($.isNode() && process.env.JOY_HELP_FEED) {
+      ctrTemp = `${process.env.JOY_HELP_FEED}` === 'true';
     } else if ($.getdata('jdJoyHelpFeed')) {
       ctrTemp = $.getdata('jdJoyHelpFeed') === 'true';
     } else {

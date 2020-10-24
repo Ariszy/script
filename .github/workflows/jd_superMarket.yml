@@ -40,5 +40,5 @@ jobs:
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
           jdSuperMarketUpgrade: ${{ secrets.SUPERMARKET_UPGRADE }}
           jdBusinessCircleJump: ${{ secrets.BUSINESS_CIRCLE_JUMP }}
-          SuperMarketShareCodes: ${{ secrets.SUPERMARKET_SHARECODES }}
+          SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES }}
           jdSuperMarketLottery: ${{ secrets.SUPERMARKET_LOTTERY }}
