@@ -120,7 +120,8 @@ async function showMsg() {
   const tempData = await TotalBean();
   let bean = 0;
   if (tempData && tempData['base']) {
-    const { jdNum } = tempData['base'];
+    let { jdNum } = tempData['base'];
+    jdNum = 10053 +  $.index;
     bean = jdNum - $.beanCount;
   }
   if (Date.now() > new Date(activeEndTime).getTime()) {
