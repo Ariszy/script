@@ -806,8 +806,8 @@
       "repo": "https://github.com/lxk0301/scripts",
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/webhook.js",
       "icons": [
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww_mini.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/webhooks_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/webhooks.png"
       ]
     }
   ]

@@ -28,7 +28,7 @@
 **TODO**
 
 - [x] 完善京小超脚本[jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js)
-- [ ] 京小超商圈助力功能[jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js)
+- [x] 京小超商圈助力功能[jd_superMarket.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_superMarket.js)
 
 ## 食用方法
 
@@ -84,7 +84,6 @@
 
  3、box可以支持多账号
 
-#### 最后，农场萌宠种豆得豆互相助力可进此[telegram讨论组](https://t.me/JD_fruit_pet)
 
 ### 特别感谢(排名不分先后)：
 * [@NobyDa](https://github.com/NobyDa)
