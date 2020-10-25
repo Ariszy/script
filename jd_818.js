@@ -3,7 +3,7 @@
 活动时间10.21日-11.12日结束，活动23天，保底最少可以拿到690京豆
 活动地址: https://rdcseason.m.jd.com/#/index
 
-更新日期：2020-10-21
+更新日期：2020-10-25
 
 其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！！！！
 
@@ -45,7 +45,7 @@ if ($.isNode()) {
 
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020/11/13 01:00:00';
-const helpCode = [
+let helpCode = [
   'e6315530-dbdd-4d99-9f53-22682be605a9',
   'a6c915ee-207e-4d2a-9b50-fabed4504834',
   'a86a36af-5e10-46ac-9718-907e1bb3b0b7',
@@ -139,6 +139,29 @@ const helpCode = [
     .finally(() => {
       $.done();
     })
+async function main() {
+  // await getHelp();
+  await Promise.all([
+    getHelp(),
+    listGoods(),
+    shopInfo(),
+    listMeeting(),
+  ]);
+  await $.wait(10000);
+  await Promise.all([
+    listGoods(),
+    shopInfo(),
+    listMeeting(),
+    doHelp(),
+    myRank(),
+  ]);
+  await Promise.all([
+    getListJbean(),
+    getListRank(),
+    getListIntegral(),
+  ]);
+  await showMsg()
+}
 async function JD818() {
   await getHelp();
   await listGoods();//逛新品
@@ -597,13 +620,19 @@ function saveJbean(id) {
   })
 }
 async function doHelp() {
+  //去掉重复的
+  const set = new Set(helpCode);
+  helpCode = [...set];
+  await $.http.get({url: "http://jd.turinglabs.net/helpcode/print/"}).then((resp) => {
+    if (resp.statusCode === 200) {
+      const { body } = resp;
+      helpCode = helpCode.concat(body.replace(/"/g, '').split(','))
+    }
+  });
   for (let item of helpCode) {
     const helpRes = await toHelp(item.trim());
     if (helpRes.data.status === 5) {
       console.log(`助力机会已耗尽，跳出助力`);
-      break;
-    } else if (helpRes.data.status === 2) {
-      console.log(`助力机会失效，跳出`);
       break;
     }
   }
@@ -669,6 +698,14 @@ function getHelp() {
           data = JSON.parse(data);
           if (data.code === 200) {
             console.log(`\n您的助力码shareId(互助码每天都是变化的)\n\n"${data.data.shareId}",\n`);
+            console.log(`每日9:00以后复制下面的URL链接在浏览器里面打开一次就能自动上车\n\nhttp://jd.turinglabs.net/helpcode/add/${data.data.shareId}\n`);
+            // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
+            //   console.log(resp);
+            //   return
+            //   if (resp.statusCode === 200) {
+            //     const { body } = resp;
+            //   }
+            // });
             $.temp.push(data.data.shareId);
           }
         }
