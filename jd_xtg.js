@@ -121,7 +121,7 @@ async function showMsg() {
   let bean = 0;
   if (tempData && tempData['base']) {
     let { jdNum } = tempData['base'];
-    jdNum = 10053 +  $.index;
+    // jdNum = 10053 +  $.index;
     bean = jdNum - $.beanCount;
   }
   if (Date.now() > new Date(activeEndTime).getTime()) {
