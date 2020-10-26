@@ -121,7 +121,7 @@ async function doGetReward() {
       message += `【上期兑换京豆】${$.getReward.data.awardBean}个\n`;
       $.msg($.name, subTitle, message);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${notifyMessage}`);
+        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${message}`);
       }
       // if ($.isNode()) {
       //   await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n${message}`);
