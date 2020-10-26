@@ -3,7 +3,7 @@
 活动时间10.21日-11.12日结束，活动23天，保底最少可以拿到690京豆
 活动地址: https://rdcseason.m.jd.com/#/index
 
-更新日期：2020-10-25
+更新日期：2020-10-26
 
 其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！！！！
 
@@ -155,7 +155,7 @@ async function JD818() {
   await listGoods();//逛新品
   await shopInfo();//逛店铺
   await listMeeting();//逛会场
-  await $.wait(1000);
+  await $.wait(10000);
   //再次运行一次，避免出现遗漏的问题
   await listGoods();//逛新品
   await shopInfo();//逛店铺
@@ -625,6 +625,7 @@ async function doHelp() {
   helpCode = [...new Set(helpCode)];
   console.log(`去重后总助力码数量:${helpCode.length}`)
   for (let item of helpCode) {
+    if (!item) continue;
     const helpRes = await toHelp(item.trim());
     if (helpRes.data.status === 5) {
       console.log(`助力机会已耗尽，跳出助力`);
@@ -634,7 +635,7 @@ async function doHelp() {
 }
 function printAPI() {
   return new Promise(resolve => {
-    $.get({url: "http://jd.turinglabs.net/helpcode/print/"}, (err, resp, data) => {
+    $.get({url: "http://jd.turinglabs.net/helpcode/print/20/"}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
