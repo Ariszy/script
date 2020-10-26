@@ -275,7 +275,7 @@ function smtgSign() {
 // 商圈活动
 async function businessCircleActivity() {
   // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
-  const myCircleId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1602947898742';
+  const myCircleId = '-4msulYas0O2JsRhE-2TA5XZmBQ';
   const myTeamId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1603680929024';
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
