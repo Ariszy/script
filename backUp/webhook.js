@@ -17,7 +17,6 @@ let repo = '';//需要触发的 Github Action 所在的仓库名称 例:scripts
   repo = $.getdata('repo') ? $.getdata('repo') : repo;
   TRIGGER_KEYWORDS = $.getdata('TRIGGER_KEYWORDS') ? $.getdata('TRIGGER_KEYWORDS') : TRIGGER_KEYWORDS;
   TRIGGER_KEYWORDS = TRIGGER_KEYWORDS.split(',');
-  console.log('TRIGGER_KEYWORDS', $.getdata('TRIGGER_KEYWORDS'))
   for (let item of TRIGGER_KEYWORDS) {
     if (!item) {
       $.msg($.name, `失败`, `触发关键词未提供`)
@@ -37,8 +36,6 @@ let repo = '';//需要触发的 Github Action 所在的仓库名称 例:scripts
     }
     if (ACTIONS_TRIGGER_TOKEN && githubUser && repo && item) {
       await hook(item);
-    } else {
-      $.msg($.name, `失败`, `关键信息未提供`)
     }
   }
 })()
@@ -62,12 +59,16 @@ function hook(key) {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
+          if (data.match('404')) {
+            $.msg($.name, ``, `触发[${key}]失败,请仔细检查提供的参数`, {"open-url": `https://github.com/${githubUser}/${repo}`})
+          } else if (data.match('401')) {
+            $.msg($.name, ``, `触发[${key}]失败,github token权限不足`, {"open-url": `https://github.com/settings/tokens`})
+          } else {
+            console.log(`${JSON.stringify(err)}`)
+          }
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          // data = JSON.parse(data);
-          // console.log('ddd----ddd', data)
-          $.msg($.name, ``, `成功\nhttps://github.com/${githubUser}/${repo}`, {"open-url": `https://github.com/${githubUser}/${repo}`})
+          $.msg($.name, ``, `触发[${key}]成功`, {"open-url": `https://github.com/${githubUser}/${repo}/actions`})
         }
       } catch (e) {
         $.logErr(e, resp);
