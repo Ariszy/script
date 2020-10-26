@@ -28,6 +28,7 @@ cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 const $ = new Env('京东手机狂欢城');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
+let jdNotify = true;//是否开启推送互助码
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -710,6 +711,18 @@ function getHelp() {
           if (data.code === 200) {
             console.log(`\n您的助力码shareId(互助码每天都是变化的)\n\n"${data.data.shareId}",\n`);
             console.log(`每日9:00以后复制下面的URL链接在浏览器里面打开一次就能自动上车\n\nhttp://jd.turinglabs.net/helpcode/add/${data.data.shareId}\n`);
+            let ctrTemp;
+            if ($.isNode() && process.env.JD_818_SHAREID_NOTIFY) {
+              ctrTemp = `${process.env.JD_818_SHAREID_NOTIFY}` === 'true';
+            } else if ($.getdata('jd818ShareIdNotify')) {
+              ctrTemp = $.getdata('jd818ShareIdNotify') === 'true';
+            } else {
+              ctrTemp = `${jdNotify}` === 'true';
+            }
+            // 只在早晨9点钟触发一次
+            if(ctrTemp && new Date().getHours() === 1) await notify.sendNotify(`[${$.name}]互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n http://jd.turinglabs.net/helpcode/add/${data.data.shareId} \n\n ↑↑↑`, {
+              url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}`
+            })
             // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
             //   console.log(resp);
             //   return

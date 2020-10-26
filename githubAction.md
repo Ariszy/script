@@ -130,10 +130,11 @@
 | `TG_USER_ID`            |   telegram推送   | 非必须 | tg推送,填写[@getuseridbot](https://t.me/getuseridbot)中获取到的纯数字ID, [具体教程](https://github.com/lxk0301/scripts/pull/37#issuecomment-692415594) |
 | `DD_BOT_TOKEN`          |   钉钉推送   | 非必须 | 钉钉推送[官方文档](https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq) ,只需`https://oapi.dingtalk.com/robot/send?access_token=XXX` 等于符号后面的XXX， 注：如果钉钉推送只填写`DD_BOT_TOKEN`，那么安全设置需勾选`自定义关键词`，内容输入输入`账号`即可，其他安全设置不要勾选 |
 | `DD_BOT_SECRET`         |   钉钉推送   | 非必须 | 密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串 , 注:填写了`DD_BOT_TOKEN`和`DD_BOT_SECRET`，钉钉机器人安全设置只需勾选`加签`即可，其他选项不要勾选,再不懂看 [这个图](icon/DD_bot.png) |
-| `IGOT_PUSH_KEY`         |   iGot推送   | 非必须 | iGot推送 [参考文档](https://wahao.github.io/Bark-MP-helper/#/zh-cn/ ) |
+| `IGOT_PUSH_KEY`         |   iGot推送   | 非必须 | iGot聚合推送，支持多方式推送，确保消息可达。 [参考文档](https://wahao.github.io/Bark-MP-helper/#/zh-cn/ ) |
 | `PET_NOTIFY_CONTROL`    | 东东萌宠推送开关  | 非必须 | 控制京东萌宠是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)              |
 | `FRUIT_NOTIFY_CONTROL`  | 东东农场推送开关  | 非必须 | 控制京东农场是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)              |
-| `JD_JOY_REWARD_NOTIFY`  | 宠汪汪兑换京豆推送开关  | 非必须 | 控制jd_joy_reward.js脚本是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息)              |
+| `JD_JOY_REWARD_NOTIFY`  | 宠汪汪兑换京豆推送开关  | 非必须 | 控制jd_joy_reward.js脚本是否静默运行,`false`为否(发送推送通知消息),`true`为是(即：不发送推送通知消息) 
+| `JD_818_SHAREID_NOTIFY`  | 京东818互助码通知开关  | 非必须 | 控制jd_818.js脚本是否在获取互助码后通知,`true`为是(发送推送通知消息),`false`为否(即：不发送推送通知消息)              |
 | `JOY_FEED_COUNT`        | 宠汪汪喂食数量  | 非必须 | 控制jd_joy_feedPets.js脚本喂食数量  ,可以填的数字10,20,40,80 , 其他数字不可.              |
 | `JOY_HELP_FEED`         | 宠汪汪帮好友喂食  | 非必须 | 控制jd_joy_steal.js脚本是否给好友喂食,`false`为否,`true`为是(给好友喂食)              |
 | `JOY_RUN_FLAG`          | 宠汪汪参加双人赛跑  | 非必须 | 控制jd_joy.js脚本是否参加双人赛跑,`false`为否,`true`为是，脚本默认是`true`              |
@@ -190,12 +191,13 @@ Apple京东自营旗舰店
 
   > 如果你填写了上面五种推送通知方式中的某一个通知所需secret，那么脚本通知情况如下：
 
-  > 目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js三个脚本每次运行后都通知
+  > 目前默认只有jd_fruit.js,jd_pet.js,jd_bean_sign.js,jd_818.js四个脚本每次运行后都通知
 
   ```
 jd_plantBean.js是每周一收集京豆后通知一次，
 jd_joy_reward.js是每次兑换到了京豆通知一次，
 jd_blueCoin.js是每次兑换到了奖品通知一次，
+jd_818.js是每次获取新的互助码会通知一次，以帮助您快速上车，
 其余的脚本平常运行都是不通知，只有在京东cookie失效后，才会推送通知    
   ```
   - 如果填写了推送通知所需的secret后,运行上面有通知的脚本,还没收到通知的话,请自行查看action运行日志(如何查看日志教程请看上面的`如何查看action运行情况`),里面会推送通知发送失败的log

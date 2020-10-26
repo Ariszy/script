@@ -6,7 +6,7 @@ name: jd_818
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 4,10,16,22 * * *'
+    - cron: '0 1,4,10,16,22 * * *'
   watch:
     types: started
   repository_dispatch:
@@ -39,3 +39,4 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
+          JD_818_SHAREID_NOTIFY: ${{ secrets.JD_818_SHAREID_NOTIFY }}
