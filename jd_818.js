@@ -47,71 +47,57 @@ if ($.isNode()) {
 const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020/11/13 01:00:00';
 let helpCode = [
-  'e6315530-dbdd-4d99-9f53-22682be605a9',
-  'a6c915ee-207e-4d2a-9b50-fabed4504834',
-  'a86a36af-5e10-46ac-9718-907e1bb3b0b7',
-  'ba7c27d9-fd8f-4fed-ac77-a8f4cb1b6b03',
-  'a308f016-48cb-4d68-8bb5-613d86616bf0',
-  'de76309f-a155-4b54-81fe-5b87c7eb250d',
-  "357a2f62-24eb-4a8c-a1bf-e15c99b9b12e",
-  "61952c20-666c-48f2-a612-5664e790a1f7",
-  "3a1762d9-00d6-48d2-a15e-260cfe00e9f3",
-  "2bd8141e-d5e6-469f-81e5-284b5702f475",
-  "09e58900-735b-4c24-bff1-74004cf34a64",
-  "9b67730d-6b89-4c2f-8f95-75723f4f75df",
-  "a1784daa-31e2-4fc2-83a1-766c66622c45",
-  "c87ac1ae-77df-4fa3-8895-db2f32fd7b1e",
-  "c6ff9bd3-296d-4bf9-8a5a-523cd72df6cb",
-  "49ee613c-8d20-40d3-9d05-a4a15a114cd1",
-  "dc6efa0a-cd35-4dd2-9ff9-b5d9bf0a15eb",
-  '9246acfc-03c2-44bd-8abe-516101e6b07c',
-  '29503370-fd3d-4f4b-bff3-483ac5e18447',
-  '5e199233-1348-4caf-b1ab-97b765830fcb',
-  'c2243e72-df24-4fff-8c66-a22af6756094',
-  '7f32cc29-ba75-48fa-8200-813596a6415b',
-  "693ff6f1-328d-491d-be77-d23b1205764c",
-  "dfdec19e-9b9e-44b2-a0e9-05d4840d462c",
-  "0a14dbfd-0325-4df5-ade5-7b7ed02e0e1a",
-  "2de96c3a-7429-4714-be44-dc194e05d580",
-  "c613b058-8a51-4ee2-adc6-f6cd2e8f4ccf",
-  "492e45b8-5043-42b8-a1ae-567d49b98f91",
-  "278cc6ce-8088-456d-ab5b-bbfea69e5215",
-  "1c5bb35b-2a73-45fb-baf7-2c4112b3988f",
-  "a6beb2f5-3f86-498d-a2f2-84cdb0de28e9",
-  "bcf839d2-154d-461a-acd6-ee6e97d5119b",
-  "d17dd145-db93-400e-9f7b-b8464bc37b65",
-  "8fc6ba5a-e4a4-447d-890b-b5a5ba592a03",
-  "d3ec3859-7999-4c88-89a8-844f14427f71",
-  "0fb7b9fc-c4ba-4408-a728-f8e98ef1bf9b",
-  "0b0bf805-f649-4dd7-a1f5-7a002ef49b37",
-  "c4797680-dd46-43f4-a244-6f57ac7d9e5c",
-  "567cce4f-f1d6-46d2-b7af-07ff50d0c8b5",
-  "75c0df29-1f2e-455c-b840-24e7ae538a7e",
-  "5c5bfbae-a746-47f2-926d-fdb0353e10cc",
-  "3d5dd26b-8369-42de-b123-fc74b91b8646",
-  "bb708470-aee0-41d8-a7b6-882d36488321",
-  "953b49d8-84ca-46fe-ac19-bd4ef4c1b8fa",
-  "0f352785-b882-4965-9101-9fe7b1094721",
-  "d33386cf-725e-4f50-b3bd-fcfd7d0707b1",
-  "c63cc46c-4d1a-4329-96c0-39ac2d0d75b1",
-  "468a627d-3c95-4440-971b-f73ec8926370",
-  "a075bafc-a949-438f-8f25-9f3536ea46a8",
-  "516821eb-ae6e-4db9-bd91-372b64e5c62a",
-  "e9bd0af5-0999-4048-9c0f-d4ec691dd338",
-  "c87d18db-daf3-4cf7-8fc7-fc73e88a282c",
-  "4ec73a82-1b7e-4167-988b-0087187d2fae",
-  "04604622-4e76-4656-90db-dcce078af27b",
-  "34742af8-4c19-43ef-a7fe-ec52e474ce18",
-  "70d5ff4d-79d5-43a2-9699-c9bde4358cfb",
-  "92588512-c581-4986-818f-4e3421e37666",
-  "a9b84832-1b52-4f3b-87e6-2c630662b7c4",
-  "5243f3c8-68c0-444b-a687-9be7dc89e887",
-  "6ada3d37-2af8-429f-be2a-34c2138c112e",
-  "613c69d9-bfb9-4b8b-ba7e-639fac347b16",
-  "600f8821-decd-4499-b689-3165b4835bbc",
-  "032cf534-2840-435b-94c3-cf2b7fb3c21b",
-  "c6ae55e9-8a18-4b41-ac7a-07c518c58601",
-  'a2caced1-8c0c-4b2d-b1d7-7fdb33edf384',
+  '805b1a43-721f-47a5-b296-d64dacbc7852',
+  '17e7f2c4-a56f-4752-93b5-7601ddafad0a',
+  '57254ac7-75be-45c4-a5cb-292b0476c64b',
+  'd8795bb0-f98c-4eb4-b08c-d9fbe81a11c8',
+  '37ae3931-d7aa-444d-87ca-e5b75d8b0254',
+  '3b88a3d8-836b-4395-b9b4-4de119685ada',
+  "51cc90b5-fd98-45f3-b7a7-6118f6cd6799",
+  "385322ab-e56c-4eef-b127-65fa27014203",
+  "0950f15a-8bef-4029-acfd-ca63a636f60d",
+  "164ca465-3824-414b-b426-06558ea49d5f",
+  "977d2476-21dc-4d65-92f8-4ed64f0b3933",
+  "a738c296-0d67-4eee-99d7-1f8148aaf8a8",
+  "16737dd8-61b2-4196-b5ec-16d394f611d3",
+  "346fdd02-8e80-453a-86f7-e3024e42954c",
+  "f853571e-10a0-46f2-ba6b-d4b48e4acbc6",
+  '25204108-911f-4a27-b9a2-acc2a7b387fa',
+  '909181ff-ad56-4848-97e0-318dd4645d95',
+  'c95c87f1-09b8-4275-bc0a-c01786708cc2',
+  '7f60ebc1-e337-41ab-8324-b09851973ccd',
+  'b4253530-91a2-4d45-b1db-8b0f54dff607',
+  "486a454b-a699-4e54-b20c-adf5a360eb69",
+  "bd8ea7fd-7c1b-4c36-aaf6-9a2d5a27548d",
+  "57b9998d-b645-49cd-b7c6-1d7e85475b43",
+  "bd253ed4-4fb5-4d28-9c75-244887d37cf9",
+  "d3499dda-c8eb-47db-a203-305e30449896",
+  "b49660d4-0202-4c58-9d58-fe56b7bdcbe0",
+  "31e9e84c-d36e-4be2-b6d5-241b146f839b",
+  "5f2250b5-f9fe-4912-9422-4a5d5f58e14a",
+  "a14bed6b-c78b-49b1-9a29-4fbdf99e1b93",
+  "9042893b-0146-4500-bd99-2f9d0457b8dc",
+  "0ee1ec3c-28fe-4032-af43-c4d869796500",
+  "708feeb9-5460-4e8f-bc94-ac0f5d84b099",
+  "bd5936fd-4a92-4141-b21e-53d2f34f79b9",
+  "fc54885a-405d-4a8b-97e8-928c61d2bf47",
+  "6dfd6c9e-19c3-4e13-aa5c-a93639ced244",
+  "56774523-5480-44d0-bcd3-f0585db1bf6d",
+  "e506bf79-9d82-4195-ac91-6078072e7d9a",
+  "b846f267-a221-4b2e-9716-b7f34cdff6dc",
+  "bbaac5eb-f7ad-49a5-9f97-c9d78e6587e4",
+  "94506f98-545d-4e6b-9511-ddb2a3280731",
+  "df8a5f3b-aeb9-43a8-98c7-0487a226c7dc",
+  "b96f11a4-d0eb-4c99-a2d2-192f19af1f64",
+  "24e8d513-2b09-4287-bb67-bf64b3676e78",
+  "87c26b94-127a-48e1-981f-400888811537",
+  "15d54dc4-c54f-4263-a792-b812e7cdad68",
+  "fa79c421-fcc4-45c9-8dfd-4c5a9a95dee5",
+  "3d1850d9-159d-4d5a-87ea-3876b46243b8",
+  "747edbdd-696f-4c70-a7c1-0722aab93779",
+  "ce663308-26dd-4114-9e1f-33f532d4b9dd",
+  "f7f7a4c9-94c6-406d-b99b-f9fa2f66a4c3",
+  '8ee743d9-8347-4518-8e32-3b7f42c67726',
 ]
 !(async () => {
   if (!cookiesArr[0]) {
@@ -622,14 +608,22 @@ function saveJbean(id) {
   })
 }
 async function doHelp() {
-  const body = await printAPI();//访问收集的互助码
+  console.log(`脚本自带助力码数量:${helpCode.length}`)
+  let body = '', nowTime = Date.now();
+  const zone = new Date().getTimezoneOffset();
+  if (zone === 0) {
+    nowTime += 28800000;//UTC-0时区加上8个小时
+  }
+  //当天大于9:00才从API里面取收集的助力码
+  if (nowTime > new Date(nowTime).setHours(9, 0, 0, 0)) body = await printAPI();//访问收集的互助码
   if (body) {
     console.log(`printAPI返回助力码数量:${body.replace(/"/g, '').split(',').length}`)
     helpCode = helpCode.concat(body.replace(/"/g, '').split(','))
   }
+  console.log(`累计助力码数量:${helpCode.length}`)
   //去掉重复的
-  const set = new Set(helpCode);
-  helpCode = [...set];
+  helpCode = [...new Set(helpCode)];
+  console.log(`去重后总助力码数量:${helpCode.length}`)
   for (let item of helpCode) {
     const helpRes = await toHelp(item.trim());
     if (helpRes.data.status === 5) {
