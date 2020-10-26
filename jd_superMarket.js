@@ -127,6 +127,7 @@ async function drawLottery() {
 }
 async function help() {
   console.log(`\n开始助力好友`);
+  return
   for (let code of newShareCodes) {
     if (!code) continue;
     const res = await smtgDoAssistPkTask(code);
@@ -276,7 +277,7 @@ async function businessCircleActivity() {
     console.log(`joinStatus:${joinStatus}`);
     if (joinStatus === 0) {
       const res = await smtg_joinPkTeam(myTeamId, myCircleId);
-      console.log(res);
+      console.log(`res${JSON.stringify(res)}`);
     }
   }
   return
