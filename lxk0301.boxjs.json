@@ -776,7 +776,7 @@
           "name": "触发关键词",
           "val": "",
           "type": "text",
-          "desc": ".github/workflows/路径里面yml文件repository_dispatch项目的types值，例如jd_fruit.yml里面的值为fruit"
+          "desc": ".github/workflows/路径里面yml文件repository_dispatch项目的types值，例如jd_fruit.yml里面的值为fruit,多个使用英文逗号','隔开"
         }
       ],
       "author": "@lxk0301",

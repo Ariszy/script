@@ -16,10 +16,30 @@ let repo = '';//需要触发的 Github Action 所在的仓库名称 例:scripts
   githubUser = $.getdata('githubUser') ? $.getdata('githubUser') : githubUser;
   repo = $.getdata('repo') ? $.getdata('repo') : repo;
   TRIGGER_KEYWORDS = $.getdata('TRIGGER_KEYWORDS') ? $.getdata('TRIGGER_KEYWORDS') : TRIGGER_KEYWORDS;
-  if (ACTIONS_TRIGGER_TOKEN && githubUser && repo && TRIGGER_KEYWORDS) {
-    await hook();
-  } else {
-    $.msg($.name, `失败`, `关键信息未提供`)
+  TRIGGER_KEYWORDS = TRIGGER_KEYWORDS.split(',');
+  console.log('TRIGGER_KEYWORDS', $.getdata('TRIGGER_KEYWORDS'))
+  for (let item of TRIGGER_KEYWORDS) {
+    if (!item) {
+      $.msg($.name, `失败`, `触发关键词未提供`)
+      return
+    }
+    if (!ACTIONS_TRIGGER_TOKEN) {
+      $.msg($.name, `失败`, `github token未提供`)
+      return
+    }
+    if (!githubUser) {
+      $.msg($.name, `失败`, `github 用户名未提供`)
+      return
+    }
+    if (!repo) {
+      $.msg($.name, `失败`, `需触发的github仓库名未提供`)
+      return
+    }
+    if (ACTIONS_TRIGGER_TOKEN && githubUser && repo && item) {
+      await hook(item);
+    } else {
+      $.msg($.name, `失败`, `关键信息未提供`)
+    }
   }
 })()
     .catch((e) => {
@@ -29,10 +49,10 @@ let repo = '';//需要触发的 Github Action 所在的仓库名称 例:scripts
       $.done();
     })
 
-function hook() {
+function hook(key) {
   const options = {
     'url': `https://api.github.com/repos/${githubUser}/${repo}/dispatches`,
-    'body': `${JSON.stringify({"event_type": TRIGGER_KEYWORDS})}`,
+    'body': `${JSON.stringify({"event_type": key})}`,
     'headers': {
       'Accept': 'application/vnd.github.everest-preview+json',
       'Authorization': `token ${ACTIONS_TRIGGER_TOKEN}`
