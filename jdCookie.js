@@ -18,6 +18,7 @@ if (process.env.JD_COOKIE) {
   } else {
     CookieJDs = process.env.JD_COOKIE.split();
   }
+  console.log(`\n====================共有${CookieJDs.length}个京东账号Cookie=========`);
   console.log(`\n==================脚本执行来自 github action=====================\n`)
   console.log(`==================脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}=====================\n`)
   console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=====================\n`)
