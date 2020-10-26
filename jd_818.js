@@ -720,7 +720,7 @@ function getHelp() {
               ctrTemp = `${jdNotify}` === 'true';
             }
             // 只在早晨9点钟触发一次
-            if(ctrTemp && new Date().getHours() === 1) await notify.sendNotify(`[${$.name}]互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n http://jd.turinglabs.net/helpcode/add/${data.data.shareId} \n\n ↑↑↑`, {
+            if(ctrTemp && new Date().getHours() === 1 && $.isNode()) await notify.sendNotify(`[${$.name}]互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n http://jd.turinglabs.net/helpcode/add/${data.data.shareId} \n\n ↑↑↑`, {
               url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}`
             })
             // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {

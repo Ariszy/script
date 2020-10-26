@@ -401,13 +401,6 @@
           "desc": "开启后成功兑换到京豆也不发出系统弹窗通知"
         },
         {
-          "id": "jd818ShareIdNotify",
-          "name": "是否推送互助码",
-          "val": true,
-          "type": "boolean",
-          "desc": "关闭后，将不会主动发送818会场互助码"
-        },
-        {
           "id": "joyRewardName",
           "name": "是否兑换京豆",
           "val": "1",
