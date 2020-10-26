@@ -1,9 +1,10 @@
 /*
- * @Author: lxk0301 
- * @Date: 2020-10-24 23:02:04 
+ * @Author: lxk0301 https://github.com/lxk0301 
+ * @Date: 2020-10-24 18:53:29 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-24 23:04:14
+ * @Last Modified time: 2020-10-26 18:54:13
  */
+
 const $ = new Env('Webhook触发Action');
 let ACTIONS_TRIGGER_TOKEN = '';//Personal access tokens，申请教程:https://www.jianshu.com/p/bb82b3ad1d11 记得勾选repo权限就行
 let TRIGGER_KEYWORDS = '';//.github/workflows/路径里面yml文件里面repository_dispatch项目的types值，例如jd_fruit.yml里面的值为fruit

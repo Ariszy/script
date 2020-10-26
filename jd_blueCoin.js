@@ -18,7 +18,7 @@ const $ = new Env('京小超兑换奖品');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-let coinToBeans = $.getdata('coinToBeans') * 1 || 0; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
+let coinToBeans = $.getdata('coinToBeans') || 1000; //兑换多少数量的京豆（1-20之间，或者1000），0默认兑换不兑换，如需兑换把0改成1-20之间的数字或者1000即可
 let jdNotify = false;//是否开启静默运行，默认false关闭(即:奖品兑换成功后会发出通知提示)
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -63,7 +63,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
           }
         }
       }
-      if (coinToBeans) {
+      if (coinToBeans !== '0') {
         await smtgHome();
         await smtg_queryPrize();
       } else {
@@ -169,7 +169,7 @@ function smtg_queryPrize(timeout = 0){
           }
           if (data.data.bizCode === 0) {
             const { prizeList } = data.data.result;
-            if (coinToBeans === 1000) {
+            if (`${coinToBeans}` === '1000') {
               if (prizeList[1].beanType === 'BeanPackage') {
                 console.log(`查询换${prizeList[1].title}ID成功，ID:${prizeList[1].prizeId}`)
                 $.title = prizeList[1].title;
@@ -194,7 +194,7 @@ function smtg_queryPrize(timeout = 0){
                 console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
                 $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
               }
-            } else if (coinToBeans > 0 && coinToBeans <= 20) {
+            } else if (`${coinToBeans}` === '20') {
               if (prizeList[0].beanType === 'Bean') {
                 console.log(`查询换${prizeList[0].title}ID成功，ID:${prizeList[0].prizeId}`)
                 $.title = prizeList[0].title;
@@ -220,73 +220,11 @@ function smtg_queryPrize(timeout = 0){
                 console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
                 $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
               }
-            } else if (coinToBeans === 2801390972) {
-              //兑换 巧白酒精喷雾
+            } else {
+              //自定义输入兑换
               let prizeId = '', i;
               for (let index = 0; index < prizeList.length; index ++) {
-                if (prizeList[index].title === awardPrizeList[0]) {
-                  prizeId = prizeList[index].prizeId;
-                  i = index;
-                  $.title = prizeList[index].title;
-                  $.blueCost = prizeList[index].blueCost;
-                }
-              }
-              if (prizeId) {
-                if (prizeList[i].inStock === 506) {
-                  console.log(`失败，${awardPrizeList[0]}领光了，请明天再来`);
-                  $.beanerr = `失败，${awardPrizeList[0]}领光了，请明天再来`;
-                  return ;
-                }
-                if (prizeList[i].targetNum === prizeList[i].finishNum) {
-                  $.beanerr = `${prizeList[0].subTitle}`;
-                  return ;
-                }
-                if ($.totalBlue > $.blueCost) {
-                  await smtg_obtainPrize(prizeId);
-                } else {
-                  console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
-                  $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
-                }
-              } else {
-                console.log(`奖品兑换列表[${awardPrizeList[0]}]已下架`);
-                $.beanerr = `奖品兑换列表[${awardPrizeList[0]}]已下架`;
-              }
-            } else if (coinToBeans === 2801390982) {
-              //兑换 巧白西柚洗手液
-              let prizeId = '', i;
-              for (let index = 0; index < prizeList.length; index ++) {
-                if (prizeList[index].title === awardPrizeList[1]) {
-                  prizeId = prizeList[index].prizeId;
-                  i = index;
-                  $.title = prizeList[index].title;
-                  $.blueCost = prizeList[index].blueCost;
-                }
-              }
-              if (prizeId) {
-                if (prizeList[i].inStock === 506) {
-                  console.log(`失败，${awardPrizeList[1]}领光了，请明天再来`);
-                  $.beanerr = `失败，${awardPrizeList[1]}领光了，请明天再来`;
-                  return ;
-                }
-                if (prizeList[i].targetNum === prizeList[i].finishNum) {
-                  $.beanerr = `${prizeList[0].subTitle}`;
-                  return ;
-                }
-                if ($.totalBlue > $.blueCost) {
-                  await smtg_obtainPrize(prizeId);
-                } else {
-                  console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
-                  $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
-                }
-              } else {
-                console.log(`奖品兑换列表[${awardPrizeList[1]}]已下架`);
-                $.beanerr = `奖品兑换列表[${awardPrizeList[1]}]已下架`;
-              }
-            } else if (coinToBeans === 2801390984) {
-              //兑换 雏菊洗衣凝珠
-              let prizeId = '', i;
-              for (let index = 0; index < prizeList.length; index ++) {
-                if (prizeList[index].title === awardPrizeList[2]) {
+                if (prizeList[index].title === `${coinToBeans}`) {
                   prizeId = prizeList[index].prizeId;
                   i = index;
                   $.title = prizeList[index].title;
@@ -310,8 +248,8 @@ function smtg_queryPrize(timeout = 0){
                   $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
                 }
               } else {
-                console.log(`奖品兑换列表[${awardPrizeList[2]}]已下架`);
-                $.beanerr = `奖品兑换列表[${awardPrizeList[2]}]已下架`;
+                console.log(`奖品兑换列表[${coinToBeans}]已下架`);
+                $.beanerr = `奖品兑换列表[${coinToBeans}]已下架`;
               }
             }
           }
