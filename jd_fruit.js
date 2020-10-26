@@ -1,6 +1,6 @@
 /*
 东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间:2020-10-24
+更新时间:2020-10-26
 东东农场活动链接：https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -243,9 +243,9 @@ async function doTenWater() {
     jdFruitBeanCard = process.env.FRUIT_BEAN_CARD;
   }
   await myCardInfoForFarm();
-
-  if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match(`限时翻倍`)) {
-    console.log(`您设置的是使用水滴换豆卡，跳过10次浇水任务`)
+  const { fastCard, doubleCard, beanCard, signCard  } = $.myCardInfoRes;
+  if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match(`限时翻倍`) && beanCard > 0) {
+    console.log(`您设置的是使用水滴换豆卡，且背包有水滴换豆卡${beanCard}张, 跳过10次浇水任务`)
     return
   }
   if ($.farmTask.totalWaterTaskInit.totalWaterTaskTimes < $.farmTask.totalWaterTaskInit.totalWaterTaskLimit) {
@@ -355,10 +355,10 @@ async function doTenWaterAgain() {
       if ($.userMyCardRes.code === '0') {
         message += `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n`;
       }
+      return
     } else {
-      console.log(`您目前水滴:${totalEnergy}g,水滴换豆卡${$.myCardInfoRes.beanCard}张,暂不满足水滴换豆的条件`)
+      console.log(`您目前水滴:${totalEnergy}g,水滴换豆卡${$.myCardInfoRes.beanCard}张,暂不满足水滴换豆的条件,为您继续浇水`)
     }
-    return
   }
   // if (Date.now() < new Date(activeEndTime).getTime()) {
   //   if (totalEnergy >= 100 && $.myCardInfoRes.beanCard > 0) {
