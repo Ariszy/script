@@ -125,9 +125,13 @@ async function showMsg() {
     $.jdNum = tempData['base'].jdNum;
     console.log(`做完任务后京豆总计:${tempData['base'].jdNum}`);
     console.log(`活动活动京豆数量:${$.jdNum - $.beanCount}`);
-    //bean = jdNum - $.beanCount;
   }
-  if (Date.now() > new Date(activeEndTime).getTime()) {
+  let nowTime = Date.now();
+  const zone = new Date().getTimezoneOffset();
+  if (zone === 0) {
+    nowTime += 28800000;//UTC-0时区加上8个小时
+  }
+  if (nowTime > new Date(activeEndTime).getTime()) {
     $.msg($.name, '活动已结束', `请删除或禁用此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/lxk0301/scripts`, {"open-url": "https://github.com/lxk0301/scripts"});
     if ($.isNode()) await notify.sendNotify($.name + '活动已结束', `请删除此脚本\n如果帮助到您可以点下🌟STAR鼓励我一下,谢谢\n咱江湖再见\nhttps://github.com/lxk0301/scripts`)
   } else {
