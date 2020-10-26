@@ -725,7 +725,8 @@ function getHelp() {
             } else {
               ctrTemp = `${jdNotify}` === 'true';
             }
-            if(ctrTemp) await notify.sendNotify(`[${$.name}]互助码自动上车`, `您的互助码上车链接是 ↓↓↓ \n\n http://jd.turinglabs.net/helpcode/add/${data.data.shareId} \n\n ↑↑↑`, {
+            // 只在10点钟触发一次
+            if(ctrTemp && new Date().getHours() >= 9 && new Date().getHours() >= 12) await notify.sendNotify(`[${$.name}]互助码自动上车`, `您的互助码上车链接是 ↓↓↓ \n\n http://jd.turinglabs.net/helpcode/add/${data.data.shareId} \n\n ↑↑↑`, {
               url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}`
             })
             // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
