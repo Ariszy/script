@@ -1,3 +1,4 @@
+const querystring = require("querystring");
 const $ = new Env();
 // =======================================微信server酱通知设置区域===========================================
 //此处填你申请的SCKEY.
@@ -70,13 +71,13 @@ if (process.env.IGOT_PUSH_KEY) {
   IGOT_PUSH_KEY = process.env.IGOT_PUSH_KEY
 }
 
-async function sendNotify(text, desp) {
+async function sendNotify(text, desp, params = {}) {
   //提供五种通知
   await serverNotify(text, desp);
-  await BarkNotify(text, desp);
+  await BarkNotify(text, desp, params);
   await tgBotNotify(text, desp);
   await ddBotNotify(text, desp);
-  await iGotNotify(text, desp);
+  await iGotNotify(text, desp, params);
 }
 
 function serverNotify(text, desp) {
@@ -117,11 +118,11 @@ function serverNotify(text, desp) {
   })
 }
 
-function BarkNotify(text, desp) {
+function BarkNotify(text, desp, params={}) {
   return  new Promise(resolve => {
     if (BARK_PUSH) {
       const options = {
-        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}`,
+        url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}&${querystring.stringify(params)}`,
       }
       $.get(options, (err, resp, data) => {
         try {
@@ -253,7 +254,7 @@ function ddBotNotify(text, desp) {
   })
 }
 
-function iGotNotify(text, desp){
+function iGotNotify(text, desp, params={}){
   return  new Promise(resolve => {
     if (IGOT_PUSH_KEY) {
       // 校验传入的IGOT_PUSH_KEY是否有效
@@ -265,7 +266,7 @@ function iGotNotify(text, desp){
       } 
       const options = {
         url: `https://push.hellyw.com/${IGOT_PUSH_KEY.toLowerCase()}`,
-        body: `title=${text}&content=${desp}`,
+        body: `title=${text}&content=${desp}&${querystring.stringify(params)}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
