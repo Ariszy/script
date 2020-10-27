@@ -61,7 +61,7 @@ jd_scripts:
     - /bin/sh
     - -c
     - |
-      #crontab /scriptes/docker/my_crontab_list.sh #如果挂载了自定义任务文件 需要在 crond 的上面加行
+      #crontab /scripts/docker/my_crontab_list.sh #如果挂载了自定义任务文件 需要在 crond 的上面加行
       crond
       node
 ```
