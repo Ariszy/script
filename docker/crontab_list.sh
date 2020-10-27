@@ -18,3 +18,4 @@
 8 */3 * * * node /scripts/jd_speed.js >> /scripts/logs/jd_speed.log 2>&1
 11 1-23/5 * * * node /scripts/jd_superMarket.js >> /scripts/logs/jd_superMarket.log 2>&1
 55 23 * * * node /scripts/jd_unsubscribe.js >> /scripts/logs/jd_unsubscribe.log 2>&1
+0 */1 * * * node /scripts/jd_collectProduceScore.js >> /scripts/logs/jd_collectProduceScore.log 2>&1
