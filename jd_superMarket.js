@@ -92,7 +92,7 @@ async function jdSuperMarket() {
   await smtgSign();//每日签到
   await doDailyTask();//做日常任务，分享，关注店铺，
   await help();//商圈助力
-  await smtgQueryPkTask();//做商品PK任务
+  //await smtgQueryPkTask();//做商品PK任务
   await myProductList();//货架
   await drawLottery();
   await upgrade();//升级货架和商品
@@ -132,8 +132,8 @@ async function drawLottery() {
   }
 }
 async function help() {
-  console.log(`\n开始助力好友`);
   return
+  console.log(`\n开始助力好友`);
   for (let code of newShareCodes) {
     if (!code) continue;
     const res = await smtgDoAssistPkTask(code);
@@ -147,12 +147,14 @@ async function doDailyTask() {
     console.log(`\n日常赚钱任务       完成状态`)
     for (let item of taskList) {
       console.log(` ${item['title'].length < 4 ? item['title']+`\xa0` : item['title']}         ${item['finishNum'] === item['targetNum'] ? '已完成':'未完成'} ${item['finishNum']}/${item['targetNum']}`)
+    }
+    for (let item of taskList) {
       //领奖
       if (item.taskStatus === 1 && item.prizeStatus === 1) {
         const res = await smtgObtainShopTaskPrize(item.taskId);
-        console.log(`领取做完任务的奖励${JSON.stringify(res)}`)
+        console.log(`\n领取做完任务的奖励${JSON.stringify(res)}\n`)
       }
-      if (item.type === 1 && item.taskStatus === 0) {
+      if ((item.type === 1 || item.type === 11) && item.taskStatus === 0) {
         // 分享任务
         const res = await smtgDoShopTask(item.taskId);
         console.log(`${item.subTitle}结果${JSON.stringify(res)}`)
@@ -176,7 +178,16 @@ async function doDailyTask() {
           console.log(`${item.subTitle}结果${JSON.stringify(res)}`);
         }
       }
-      if ((item.type === 8 || item.type === 2) && item.taskStatus === 0) {
+      if (item.type === 10) {
+        //关注店铺
+        if (item.taskStatus === 0) {
+          console.log('开始关注店铺')
+          const itemId = item.content[item.type].itemId;
+          const res = await smtgDoShopTask(item.taskId, itemId);
+          console.log(`${item.subTitle}结果${JSON.stringify(res)}`);
+        }
+      }
+      if ((item.type === 8 || item.type === 2 || item.type === 10) && item.taskStatus === 0) {
         await doDailyTask();
       }
     }
@@ -275,15 +286,19 @@ function smtgSign() {
 // 商圈活动
 async function businessCircleActivity() {
   // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
-  const myCircleId = '-4msulYas0O2JsRhE-2TA5XZmBQ';
-  const myTeamId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1603680929024';
+  const myCircleId = 'IhM_beyxYPwg82i6iw';
+  const myTeamId = 'IhM_beyxYPwg82i6iw_1603680889867';
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
-    const { joinStatus } = smtg_getTeamPkDetailInfoRes.data.result;
+    const { joinStatus, pkStatus, inviteCount, currentUserPkInfo, pkUserPkInfo } = smtg_getTeamPkDetailInfoRes.data.result;
     console.log(`joinStatus:${joinStatus}`);
+    console.log(`pkStatus:${pkStatus}`);
     if (joinStatus === 0) {
       const res = await smtg_joinPkTeam(myTeamId, myCircleId);
       console.log(`res${JSON.stringify(res)}`);
+    } else if (joinStatus === 1) {
+      console.log(`我邀请的人数:${inviteCount}\n`)
+      console.log(`PK 我方队伍数量/对方队伍数量：${currentUserPkInfo.teamCount}/${pkUserPkInfo.teamCount}\n`);
     }
   }
   return
@@ -363,7 +378,7 @@ async function myProductList() {
   const shelfListRes = await smtg_shelfList();
   if (shelfListRes.data.bizCode === 0) {
     const { shelfList } = shelfListRes.data.result;
-    console.log(`货架数量:${shelfList && shelfList.length}`)
+    console.log(`\n货架数量:${shelfList && shelfList.length}`)
     for (let item of shelfList) {
       console.log(`\nshelfId/name : ${item.shelfId}/${item.name}`);
       console.log(`货架等级 level ${item.level}/${item.maxLevel}`);
@@ -1204,7 +1219,8 @@ function requireConfig() {
       cookiesArr.push($.getdata('CookieJD'));
       cookiesArr.push($.getdata('CookieJD2'));
     }
-    console.log(`共${cookiesArr.length}个京东账号\n`)
+    console.log(`共${cookiesArr.length}个京东账号\n`);
+    console.log(`京小超已改版,目前暂不用助力, 故无助力码`)
     if ($.isNode()) {
       Object.keys(jdShareCodes).forEach((item) => {
         if (jdShareCodes[item]) {
@@ -1241,8 +1257,8 @@ function requireConfig() {
         jdSuperMarketShareArr.push(temp.join('@'));
       }
     }
-    console.log(`\n京小超商圈助力码::${JSON.stringify(jdSuperMarketShareArr)}`);
-    console.log(`您提供了${jdSuperMarketShareArr.length}个账号的助力码\n`);
+    // console.log(`\n京小超商圈助力码::${JSON.stringify(jdSuperMarketShareArr)}`);
+    // console.log(`您提供了${jdSuperMarketShareArr.length}个账号的助力码\n`);
     resolve()
   })
 }
