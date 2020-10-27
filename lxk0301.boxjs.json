@@ -630,7 +630,7 @@
         {
           "id": "jdSuperMarketLottery",
           "name": "抽奖(招财进宝)",
-          "val": true,
+          "val": false,
           "type": "boolean",
           "desc": "运行脚本消耗金币进行抽奖，默认抽奖"
         },

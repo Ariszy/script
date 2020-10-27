@@ -30,7 +30,7 @@ let cookiesArr = [], cookie = '', jdSuperMarketShareArr = [], notify, newShareCo
 let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 let superMarketUpgrade = true;//自动升级,顺序:解锁升级商品、升级货架,true表示自动升级,false表示关闭自动升级
 let businessCircleJump = true;//小于对方300热力值自动更换商圈队伍,true表示运行,false表示禁止
-let drawLotteryFlag = true;//是否用金币去抽奖，true表示开启，false表示关闭。默认开启
+let drawLotteryFlag = false;//是否用500蓝币去抽奖，true表示开启，false表示关闭。默认关闭
 let UserName = '', message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
@@ -43,7 +43,7 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
   'aURoM7PtY_Q@eU9Ya-y2N_5z9DvXwyIV0A@eU9YaOnjYK4j-GvWmXIWhA',
 ]
-
+const inviteCode = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA"]
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -110,21 +110,22 @@ function showMsg() {
 }
 //抽奖功能(招财进宝)
 async function drawLottery() {
-  const smtg_lotteryIndexRes = await smtg_lotteryIndex();
+  console.log(`\n注意⚠:京小超抽奖已改版,花费500蓝币抽奖一次,现在脚本默认已关闭抽奖功能\n`);
   drawLotteryFlag = $.getdata('jdSuperMarketLottery') ? $.getdata('jdSuperMarketLottery') : drawLotteryFlag;
   if ($.isNode() && process.env.jdSuperMarketLottery) {
     drawLotteryFlag = process.env.jdSuperMarketLottery;
   }
   if (`${drawLotteryFlag}` === 'true') {
+    const smtg_lotteryIndexRes = await smtg_lotteryIndex();
     if (smtg_lotteryIndexRes && smtg_lotteryIndexRes.data.bizCode === 0) {
       const { result } = smtg_lotteryIndexRes.data
-      if (result.goldCoins > result.costCoins && result.remainedDrawTimes > 0) {
+      if (result.blueCoins > result.costCoins && result.remainedDrawTimes > 0) {
         const drawLotteryRes = await smtg_drawLottery();
-        console.log(`\n抽奖结果${JSON.stringify(drawLotteryRes)}`);
+        console.log(`\n花费${result.costCoins}蓝币抽奖结果${JSON.stringify(drawLotteryRes)}`);
         await drawLottery();
       } else {
-        console.log(`\n已抽奖或者金币不足`);
-        console.log(`详情：${JSON.stringify(smtg_lotteryIndexRes)}`)
+        console.log(`\n抽奖失败:已抽奖或者蓝币不足`);
+        console.log(`失败详情：\n现有蓝币:${result.blueCoins},抽奖次数:${result.remainedDrawTimes}`)
       }
     }
   } else {
@@ -146,7 +147,7 @@ async function doDailyTask() {
     const taskList = smtgQueryShopTaskRes.data.result.taskList;
     console.log(`\n日常赚钱任务       完成状态`)
     for (let item of taskList) {
-      console.log(` ${item['title'].length < 4 ? item['title']+`\xa0` : item['title']}         ${item['finishNum'] === item['targetNum'] ? '已完成':'未完成'} ${item['finishNum']}/${item['targetNum']}`)
+      console.log(` ${item['title'].length < 4 ? item['title']+`\xa0` : item['title'].slice(-4)}         ${item['finishNum'] === item['targetNum'] ? '已完成':'未完成'} ${item['finishNum']}/${item['targetNum']}`)
     }
     for (let item of taskList) {
       //领奖
@@ -290,9 +291,11 @@ async function businessCircleActivity() {
   const myTeamId = 'IhM_beyxYPwg82i6iw_1603680889867';
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
-    const { joinStatus, pkStatus, inviteCount, currentUserPkInfo, pkUserPkInfo } = smtg_getTeamPkDetailInfoRes.data.result;
+    const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo } = smtg_getTeamPkDetailInfoRes.data.result;
     console.log(`joinStatus:${joinStatus}`);
     console.log(`pkStatus:${pkStatus}`);
+    console.log(`pkStatus:${pkStatus}`);
+    console.log(`inviteCode:${inviteCode}`);
     if (joinStatus === 0) {
       const res = await smtg_joinPkTeam(myTeamId, myCircleId);
       console.log(`res${JSON.stringify(res)}`);
@@ -1144,7 +1147,7 @@ function smtg_productList() {
 }
 function smtg_lotteryIndex() {
   return new Promise((resolve) => {
-    $.get(taskUrl('smtg_lotteryIndex'), (err, resp, data) => {
+    $.get(taskUrl('smtg_lotteryIndex', {"costType":1,"channel":1}), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京小超: API查询请求失败 ‼️‼️')
@@ -1163,7 +1166,7 @@ function smtg_lotteryIndex() {
 function smtg_drawLottery() {
   return new Promise(async (resolve) => {
     await $.wait(1000);
-    $.get(taskUrl('smtg_drawLottery'), (err, resp, data) => {
+    $.get(taskUrl('smtg_drawLottery', {"costType":1,"channel":1}), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京小超: API查询请求失败 ‼️‼️')
