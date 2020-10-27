@@ -28,7 +28,7 @@ cron "1 0-18/6 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 const $ = new Env('京东手机狂欢城');
 
 const notify = $.isNode() ? require('./sendNotify') : '';
-let jdNotify = true;//是否开启推送互助码
+let jdNotify = false;//是否开启推送互助码
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
@@ -673,8 +673,6 @@ function getHelp() {
             let ctrTemp;
             if ($.isNode() && process.env.JD_818_SHAREID_NOTIFY) {
               ctrTemp = `${process.env.JD_818_SHAREID_NOTIFY}` === 'true';
-            } else if ($.getdata('jd818ShareIdNotify')) {
-              ctrTemp = $.getdata('jd818ShareIdNotify') === 'true';
             } else {
               ctrTemp = `${jdNotify}` === 'true';
             }
