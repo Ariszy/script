@@ -614,6 +614,9 @@ async function doHelp() {
   if (zone === 0) {
     nowTime += 28800000;//UTC-0时区加上8个小时
   }
+
+  console.log(`是否大于当天九点🕘:${nowTime > new Date(nowTime).setHours(9, 0, 0, 0)}`)
+
   //当天大于9:00才从API里面取收集的助力码
   if (nowTime > new Date(nowTime).setHours(9, 0, 0, 0)) body = await printAPI();//访问收集的互助码
   if (body) {
