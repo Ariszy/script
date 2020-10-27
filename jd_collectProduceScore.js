@@ -1,4 +1,5 @@
 /*
+京东全民营业领金币
 仅仅是收集一下京东双十一全名营业每秒产生的金币
 
 每小时的第20分运行一次
@@ -27,7 +28,7 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
     $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
     return;
   }
-  console.log(`\n小功能::仅仅是收集一下京东双十一全名营业每秒产生的金币\n`)
+  console.log(`\n小功能::仅仅是收集一下京东双十一全名营业每秒产生的金币,建议一个小时跑一次脚本\n`)
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
