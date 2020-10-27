@@ -4,7 +4,7 @@ jd_scripts:
   restart: always
   #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面两个的注释 ，通过 `volumes`挂载进去。
   # volumes:
-  #   - ./my_crontab_list.sh:/scriptes/docker/my_crontab_list.sh
+  #   - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
   tty: true
   environment:
     # 注意环境变量填写值的时候一律不需要引号（"）下面这些只是事例，根据自己的需求增加删除
@@ -39,6 +39,6 @@ jd_scripts:
     - /bin/sh
     - -c
     - |
-      #crontab /scriptes/docker/my_crontab_list.sh  #如果挂载了自定义任务文件 需要在 crond 的上面加行
+      #crontab /scripts/docker/my_crontab_list.sh  #如果挂载了自定义任务文件 需要在 crond 的上面加行
       crond
       node
