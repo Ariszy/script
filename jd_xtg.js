@@ -126,6 +126,7 @@ async function showMsg() {
     console.log(`做完任务后京豆总计:${tempData['base'].jdNum}`);
     console.log(`活动活动京豆数量:${$.jdNum - $.beanCount}`);
   }
+  await $.wait(500);
   let nowTime = Date.now();
   const zone = new Date().getTimezoneOffset();
   if (zone === 0) {
