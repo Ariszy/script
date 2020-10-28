@@ -40,12 +40,13 @@ hostname = wq.jd.com
  *
  */
 
-$ = new API("JD_Cookies", true);
 const CookieKey = "CookiesJD";
+$ = new API("CookiesJD", true);
 if ($request) GetCookie();
 
 function getCache() {
-  var cache = $.read(CookieKey) || "[]";
+  var cache = $.read(`#${CookieKey}`) || "[]";
+  console.log(cache);
   return JSON.parse(cache);
 }
 
