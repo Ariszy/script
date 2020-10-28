@@ -43,8 +43,8 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
   'aURoM7PtY_Q@eU9Ya-y2N_5z9DvXwyIV0A@eU9YaOnjYK4j-GvWmXIWhA',
 ]
-// const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA"];
-const inviteCodes = ["YF5-KbvnOA", "eU9YaLm0bq4i-TrUzSUUhA"];
+const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA"];
+//const inviteCodes = ["YF5-KbvnOA", "eU9YaLm0bq4i-TrUzSUUhA"];
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -289,7 +289,7 @@ function smtgSign() {
 async function businessCircleActivity() {
   // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
   const myCircleId = 'IhM_beyxYPwg82i6iw';
-  const myTeamId = 'IhM_beyxYPwg82i6iw_1603680889867';
+  const myTeamId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1603901056110';
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
     const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, pkActivityId } = smtg_getTeamPkDetailInfoRes.data.result;
