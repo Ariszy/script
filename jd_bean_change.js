@@ -75,7 +75,7 @@ async function bean() {
   do {
     let response = await getJingBeanBalanceDetail(page);
     console.log(`第${page}页: ${JSON.stringify(response)}`);
-    if (response.code === "0") {
+    if (response && response.code === "0") {
       page++;
       let detailList = response.detailList;
       for (let item of detailList) {
