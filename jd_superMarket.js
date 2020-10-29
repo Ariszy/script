@@ -43,8 +43,10 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
   'aURoM7PtY_Q@eU9Ya-y2N_5z9DvXwyIV0A@eU9YaOnjYK4j-GvWmXIWhA',
 ]
-const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA"];
+const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA", "eU9Ya-y2N_5z9DvXwyIV0A","aURoM7PtY_Q","eU9YaeS3Z6ol8zrRmnMb1Q"];
+const myTeamId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1603901056110';
 //const inviteCodes = ["YF5-KbvnOA", "eU9YaLm0bq4i-TrUzSUUhA"];
+
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -288,11 +290,9 @@ function smtgSign() {
 // 商圈活动
 async function businessCircleActivity() {
   // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
-  const myCircleId = 'IhM_beyxYPwg82i6iw';
-  const myTeamId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1603901056110';
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
-    const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, pkActivityId } = smtg_getTeamPkDetailInfoRes.data.result;
+    const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, prizeInfo, pkActivityId } = smtg_getTeamPkDetailInfoRes.data.result;
     console.log(`joinStatus:${joinStatus}`);
     console.log(`pkStatus:${pkStatus}`);
     console.log(`pkStatus:${pkStatus}`);
@@ -303,6 +303,25 @@ async function businessCircleActivity() {
     } else if (joinStatus === 1) {
       console.log(`我邀请的人数:${inviteCount}\n`)
       console.log(`PK 我方队伍数量/对方队伍数量：${currentUserPkInfo.teamCount}/${pkUserPkInfo.teamCount}\n`);
+    }
+    if (pkStatus === 1) {
+      console.log(`商圈PK进行中`)
+    } else if (pkStatus === 2) {
+      console.log(`商圈PK结束了`)
+      if (prizeInfo.pkPrizeStatus === 2) {
+        console.log(`开始领取商圈PK奖励`);
+        const receivedPkTeamPrize = await smtg_receivedPkTeamPrize();
+        console.log(`商圈PK奖励领取结果：${JSON.stringify(receivedPkTeamPrize)}`)
+        if (receivedPkTeamPrize.data.bizCode === 0) {
+          const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
+          message += `【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
+          if ($.isNode()) {
+            await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+          }
+        }
+      } else if (prizeInfo.pkPrizeStatus === 1) {
+        console.log(`商圈PK奖励已经领取`)
+      }
     }
   }
   return
@@ -933,6 +952,24 @@ function smtg_joinBusinessCircle(circleId) {
 function smtg_businessCircleIndex() {
   return new Promise((resolve) => {
     $.get(taskUrl('smtg_businessCircleIndex'), (err, resp, data) => {
+      try {
+        if (err) {
+          console.log('\n京小超: API查询请求失败 ‼️‼️')
+          console.log(JSON.stringify(err));
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp);
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function smtg_receivedPkTeamPrize() {
+  return new Promise((resolve) => {
+    $.get(taskUrl('smtg_receivedPkTeamPrize', {"channel": "1"}), (err, resp, data) => {
       try {
         if (err) {
           console.log('\n京小超: API查询请求失败 ‼️‼️')
