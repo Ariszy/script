@@ -79,7 +79,7 @@ function GetCookie() {
         var tipPrefix = "";
         if (updateCodkie) {
           updateCookiesData[updateIndex].cookie = CookieValue;
-          CookieName = "【账号" + updateIndex + 1 + "】";
+          CookieName = `【账号${updateIndex + 1}】`;
           tipPrefix = "更新京东";
         } else {
           updateCookiesData.push({
