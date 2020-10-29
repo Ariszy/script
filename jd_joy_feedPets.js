@@ -27,6 +27,9 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
+  let cookiesData = $.getdata('CookiesJD') || "[]";
+  cookiesData = JSON.parse(cookiesData);
+  cookiesArr = cookiesData.map(item => item.cookie);
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
