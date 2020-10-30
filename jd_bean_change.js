@@ -68,8 +68,8 @@ async function showMsg() {
 }
 async function bean() {
   //前一天的0:0:0时间戳
-  console.log(`北京时间零点时间戳:${parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000}`);
-  console.log(`北京时间2020-10-28 06:16:05::${new Date("2020/10/28 06:16:05+08:00").getTime()}`)
+  // console.log(`北京时间零点时间戳:${parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000}`);
+  // console.log(`北京时间2020-10-28 06:16:05::${new Date("2020/10/28 06:16:05+08:00").getTime()}`)
   const tm = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 - (24 * 60 * 60 * 1000);
   // 今天0:0:0时间戳
   const tm1 = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
