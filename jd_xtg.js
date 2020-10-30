@@ -91,7 +91,7 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
       $.index = i + 1;
       $.beanCount = 0;
       $.jdNum = 0;
-      console.log(`\n===============开始【京东账号${$.index}】${UserName}==================\n`);
+      console.log(`\n===============开始【京东账号${$.index}】${$.UserName}==================\n`);
       console.log(`一共${starID.length}个${$.name}任务，耗时会很久，请提前知晓`)
       const beforeTotal = await TotalBean();
       $.beanCount = beforeTotal && beforeTotal['base'].jdNum;
