@@ -14,6 +14,8 @@ RUN git clone https://github.com/lxk0301/scripts /scripts \
         && cd ~ \
         && npm install request
 
+ENV CDN_JD_DAILYBONUS true
+
 RUN crontab /scripts/docker/crontab_list.sh
 
 WORKDIR /scripts
