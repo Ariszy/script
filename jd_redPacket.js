@@ -2,28 +2,28 @@
  * @Author: lxk0301 
  * @Date: 2020-10-12 18:12:38 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-22 20:37:24
+ * @Last Modified time: 2020-10-30 20:37:24
 */
 /*
- 京东全民开红包（京东app->主页->领券->抢红包(在底部)）
- 已完成功能：
- ①浏览活动
- ②关注频道
- ③领取红包
- 未实现功能：
- 领3张券功能,邀请好友未实现
+京东全民开红包（京东app->主页->领券->抢红包(在底部)）
+已完成功能：
+①浏览活动
+②关注频道
+③领取红包
+未实现功能：
+领3张券功能,邀请好友未实现
 
- 支持京东双账号
- 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
- QuantumultX
- [task_local]
- #京东全民开红包
- 1 1 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, tag=京东全民开红包, enabled=true
- Loon
- [Script]
- cron "1 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, tag=京东全民开红包
- Surge
- 京东全民开红包 = type=cron,cronexp=1 1 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js
+支持京东双账号
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+QuantumultX
+[task_local]
+#京东全民开红包
+1 1 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, tag=京东全民开红包, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_redPacket.png, enabled=true
+Loon
+[Script]
+cron "1 1 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js, tag=京东全民开红包
+Surge
+京东全民开红包 = type=cron,cronexp=1 1 * * *,wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_redPacket.js
  */
 const $ = new Env('京东全民开红包');
 const notify = $.isNode() ? require('./sendNotify') : '';
