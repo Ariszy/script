@@ -48,7 +48,7 @@ let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //喂食数量默认10g,
       cookie = cookiesArr[i];
       UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
-      console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
+      console.log(`\n===============开始【京东账号${$.index}】${UserName}==================\n`);
       message = '';
       subTitle = '';
       if ($.isNode()) {
