@@ -45,9 +45,11 @@ if ($.isNode()) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
+      console.log(`\n===============开始【京东账号${$.index}】${$.UserName}==================\n`);
       $.beanCount = 0;
       $.incomeBean = 0;
       $.expenseBean = 0;
+      $.errorMsg = '';
       await TotalBean();
       await bean();
       await showMsg();
@@ -61,6 +63,7 @@ if ($.isNode()) {
       $.done();
     })
 async function showMsg() {
+  if ($.errorMsg) return
   if ($.isNode()) {
     await notify.sendNotify($.name, `账号${$.index}：${$.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   }
@@ -80,20 +83,25 @@ async function bean() {
     if (response && response.code === "0") {
       page++;
       let detailList = response.detailList;
-      for (let item of detailList) {
-        const date = item.date.replace(/-/g, '/') + "+08:00";
-        if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1) {
-          //昨日的
-          yesterdayArr.push(item);
-        } else if (tm > new Date(date).getTime()) {
-          //前天的
-          t = 1;
-          break;
+      if (detailList && detailList.length > 0) {
+        for (let item of detailList) {
+          const date = item.date.replace(/-/g, '/') + "+08:00";
+          if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1) {
+            //昨日的
+            yesterdayArr.push(item);
+          } else if (tm > new Date(date).getTime()) {
+            //前天的
+            t = 1;
+            break;
+          }
         }
+      } else {
+        $.errorMsg = `数据异常`;
+        $.msg($.name, ``, `账号${$.index}：${$.UserName}\n${$.errorMsg}`);
+        t = 1;
       }
     }
   } while (t === 0);
-  console.log(JSON.stringify(yesterdayArr));
   for (let item of yesterdayArr) {
     if (Number(item.amount) > 0) {
       $.incomeBean += Number(item.amount);
@@ -101,8 +109,8 @@ async function bean() {
       $.expenseBean += Number(item.amount);
     }
   }
-  console.log(`昨日收入：${$.incomeBean}个京豆 🐶`);
-  console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
+  // console.log(`昨日收入：${$.incomeBean}个京豆 🐶`);
+  // console.log(`昨日支出：${$.expenseBean}个京豆 🐶`)
 }
 function TotalBean() {
   return new Promise(async resolve => {
