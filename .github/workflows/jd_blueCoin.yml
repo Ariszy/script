@@ -17,16 +17,20 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        run: |
+          git clone https://github.com/lxk0301/scripts.git ~/scripts
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
       - name: npm install
         run: |
+          cd ~/scripts
           npm install
       - name: '运行 【京小超兑换奖品】'
         run: |
+          cd ~/scripts
           node jd_blueCoin.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
