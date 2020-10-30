@@ -1,7 +1,7 @@
 /*
 京小超兑换奖品脚本
 感谢@yangtingxiao提供
-更新时间：2020-10-21
+更新时间：2020-10-30
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -56,11 +56,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       //先兑换京豆
       if ($.isNode()) {
         if (process.env.MARKET_COIN_TO_BEANS) {
-          if ((process.env.MARKET_COIN_TO_BEANS * 1 >= 0 && process.env.MARKET_COIN_TO_BEANS * 1 <=20) || process.env.MARKET_COIN_TO_BEANS * 1 === 1000) {
-            coinToBeans = process.env.MARKET_COIN_TO_BEANS ? process.env.MARKET_COIN_TO_BEANS * 1 : coinToBeans;
-          } else {
-            console.log(`您输入的MARKET_COIN_T0_BEANS为非法数字，请重新填写`);
-          }
+          coinToBeans = process.env.MARKET_COIN_TO_BEANS;
         }
       }
       if (`${coinToBeans}` !== '0') {
