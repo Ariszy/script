@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-10-22
+更新时间：2020-10-31
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -75,8 +75,8 @@ if ($.isNode()) {
         }
         //运行完成后，删除下载的文件
         console.log('运行完成后，删除下载的文件\n')
-        await deleteFile(path);
-        await deleteFile(JD_DailyBonusPath);
+        await deleteFile(path);//删除result.txt
+        await deleteFile(JD_DailyBonusPath);//删除JD_DailyBonus.js
         console.log(`京东账号${$.index} ${UserName}京豆签到完成\n`);
       } catch (e) {
         console.log("京东签到脚本执行异常:" + e);
@@ -100,9 +100,12 @@ async function downFile () {
 
 async function changeFile (content) {
   let newContent = content.replace(/var Key = ''/, `var Key = '${cookie}'`);
+  if (process.env.JD_BEAN_STOP && process.env.JD_BEAN_STOP !== '0') {
+    newContent = newContent.replace(/var stop = 0/, `var stop = ${process.env.JD_BEAN_STOP * 1}`);
+  }
   const zone = new Date().getTimezoneOffset();
   if (zone === 0) {
-    //此处针对github action用户做的
+    //此处针对UTC-0时区用户做的
     newContent = newContent.replace(/tm\s=.*/, `tm = new Date(new Date().toLocaleDateString()).getTime() - 28800000;`);
   }
   await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
