@@ -276,7 +276,15 @@ function unsubscribeShopsFun(shopId) {
 function requireConfig() {
   return new Promise(resolve => {
     if ($.isNode() && process.env.UN_SUBSCRIBES) {
-      $.UN_SUBSCRIBES = process.env.UN_SUBSCRIBES.split('\n');
+      if (process.env.UN_SUBSCRIBES.indexOf('&') > -1) {
+        $.UN_SUBSCRIBES = process.env.UN_SUBSCRIBES.split('&');
+      } else if (process.env.UN_SUBSCRIBES.indexOf('\n') > -1) {
+        $.UN_SUBSCRIBES = process.env.UN_SUBSCRIBES.split('\n');
+      } else if (process.env.UN_SUBSCRIBES.indexOf('\\n') > -1) {
+        $.UN_SUBSCRIBES = process.env.UN_SUBSCRIBES.split('\\n');
+      } else {
+        $.UN_SUBSCRIBES = process.env.UN_SUBSCRIBES.split();
+      }
       console.log(`您secret设置的取关参数:\n${JSON.stringify($.UN_SUBSCRIBES)}`)
       goodPageSize = $.UN_SUBSCRIBES[0] || goodPageSize;
       shopPageSize = $.UN_SUBSCRIBES[1] || shopPageSize;
