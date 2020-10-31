@@ -64,13 +64,23 @@ if ($.isNode()) {
               BarkContent = content.substring(barkContentStart, barkContentEnd);
             }
           }
-          //由于在github action上面执行，故执行时间是UTC(国际标准时间)，现转换成北京时间
-          const beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
-          console.log(`执行完毕北京时间：${beanSignTime}`)
+          //不管哪个时区,这里得到的都是北京时间的时间戳;
+          const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+          // if (new Date().getTimezoneOffset() === 0) {
+          //   //UTC-0(国际标准时间)，现转换成北京时间
+          //   $.beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
+          // } else if (new Date().getTimezoneOffset() === -480) {
+          //   //UTC+8北京时间
+          //   $.beanSignTime = timeFormat(new Date().getTime());
+          // } else {
+          //   $.beanSignTime = timeFormat(UTC8);
+          // }
+          $.beanSignTime = timeFormat(UTC8);
+          console.log(`执行完毕北京时间：${$.beanSignTime}`)
           if (BarkContent) {
             // await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
             // BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
-            await notify.sendNotify(`账号${$.index} ${UserName}京豆签到`, `【签到时间】:  ${beanSignTime}\n${BarkContent}`);
+            await notify.sendNotify(`账号${$.index} ${UserName}京豆签到`, `【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
           }
         }
         //运行完成后，删除下载的文件
