@@ -696,7 +696,7 @@ function getHelp() {
             if (zone === 0) {
               NowHours += 8;//UTC-0时区加上8个小时
             }
-            if(ctrTemp && NowHours === 9 && $.isNode()) await notify.sendNotify(`[${$.name}]互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n http://jd.turinglabs.net/helpcode/add/${data.data.shareId} \n\n ↑↑↑`, {
+            if(ctrTemp && NowHours === 9 && $.isNode()) await notify.sendNotify(`[${$.name}]互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n ${addUrl}${data.data.shareId} \n\n ↑↑↑`, {
               url: `${addUrl}${data.data.shareId}`
             })
             // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
