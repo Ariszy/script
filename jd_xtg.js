@@ -25,7 +25,7 @@
  京东星推官 = type=cron,cronexp=2 0 * * *,wake-system=1,timeout=320,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
  */
 const $ = new Env('京东星推官');
-const activeEndTime = '2020/11/13 00:00:00';//活动结束时间
+const activeEndTime = '2020/11/12 23:59:59';//活动结束时间
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
@@ -102,9 +102,9 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
         $.j = index;
         await JD_XTG();
       }
-      console.log(`\n等待10秒后，再去领取奖励\n`)
+      console.log(`\n等待3秒后，再去领取奖励\n`)
       console.log(`做任务之前京豆总计:${$.beanCount}`)
-      await $.wait(10000);
+      await $.wait(3000);
       for (let index = 0; index < starID.length; index ++) {
         $.activeId = starID[index];
         $.j = index;
