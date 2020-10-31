@@ -55,18 +55,18 @@ const activeEndTime = '2020/11/13 01:00:00';
 const addUrl = 'http://jd.turinglabs.net/helpcode/create/';
 const printUrl = `http://jd.turinglabs.net/helpcode/print/20/`;
 let helpCode = [
-  '4db5438b-83bb-444b-b1ff-3bfa067ca2ad',
-  '777a5497-6c72-4165-8463-ed6f383c4fc1',
-  '9a747b3b-29f5-467e-8065-ee61739b751e',
-  'eb8b0b93-ac80-459c-b34a-237f63d3b659',
-  '67cae632-095f-4967-9aa5-afa613734d65',
-  '334f9c10-5816-4f78-a1b0-de1c434c4a8e',
-  '9fc3c1d5-9b41-4bec-a0be-8faa2d504fef',
-  '0e680ea1-fb7a-4163-bf76-3ad1313dc29d',
-  '00719f49-98fb-4283-b9ed-88ee4d298041',
-  '4bb9e198-a775-420f-af8e-5fe4f549778b',
-  '9e8de4fc-4082-4595-9b2f-733f8395863c',
-  '73ae4a12-ede3-4f55-970a-0490bd91d175',
+  'c34d6b64-87bc-4dcf-b840-85f7a9fc6b46',
+  'c7571a68-6c9d-4e1c-ace6-68ec357edae9',
+  'e5e4e896-4258-4f8c-98f9-7ddd79d50a2c',
+  'c5908eb4-e4a3-46ab-853d-9b4fc388a7ca',
+  '088a970a-04c2-4b06-8865-515f6c6f062e',
+  'e9a4f386-1298-47cd-acbf-89be58fa266d',
+  '7fc36938-101f-4fae-b1da-5f21981408f2',
+  '5ccc80ad-7ba6-4cec-92ab-b6dc69b0d322',
+  'e4f1406e-c060-4998-ab5e-ce5c0ccce401',
+  '0d62378a-73c4-472b-8d76-e3e8d4a48e43',
+  '482e2355-a3b7-431a-9557-e71da8b772b6',
+  '7afb1563-11df-4b2a-bee4-94ad8ddc962e',
 ]
 !(async () => {
   if (!cookiesArr[0]) {
