@@ -2,9 +2,10 @@ jd_scripts:
   image: akyakya/jd_scripts
   container_name: jd_scripts
   restart: always
-  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面两个的注释 ，通过 `volumes`挂载进去。
-  # volumes:
-  #   - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
+  #如果需要自定定义定时任务的需要自己写好`my_crontab_list.sh`文件 ，取消下面的挂载注释 ，通过 `volumes`挂载进去。
+  volumes:
+  #  - ./my_crontab_list.sh:/scripts/docker/my_crontab_list.sh
+    - ./logs:/scripts/logs
   tty: true
   environment:
     # 注意环境变量填写值的时候一律不需要引号（"）下面这些只是事例，根据自己的需求增加删除
