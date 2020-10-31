@@ -2,7 +2,7 @@
  * @Author: lxk0301 
  * @Date: 2020-10-21 17:04:04 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-30 09:35:04
+ * @Last Modified time: 2020-10-31 00:35:04
  */
 /**
  星推官脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
@@ -59,6 +59,7 @@ const starID = [
   'lgyangzishan',
   'laobansongweilong',
   'haiermaoxiaotong',
+  "skgwangyibo"
 ];
 const shareID = [
   'e646c144-28a7-4b1b-8145-5b0dbff107ec',
@@ -77,6 +78,7 @@ const shareID = [
   '921c376e-8cc5-4236-8242-ff8bb1b88a95',
   '8b3ce203-4b10-4c36-a87d-da8c82efe362',
   'c8e1feb3-6ab1-4410-8444-1de8bd22e041',
+  "dd6b5270-3e5e-436d-be0f-295a8604cf47"
 ];
 const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
 !(async () => {
