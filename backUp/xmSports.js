@@ -30,7 +30,8 @@ const headers = {
   'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
 }
 let login_token = '';
-const step = randomFriendPin(30000, 45000);
+//需要修改的运动步数波动范围
+const step = randomFriendPin($.getdata('xmMinStep')*1 || 19000, $.getdata('xmMaxStep')*1 || 25000);
 function getToken() {
   const body = JSON.parse($response.body);
   const loginToken = body.token_info.login_token;
