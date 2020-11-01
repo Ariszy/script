@@ -102,7 +102,7 @@
  3、box可以支持多账号
 
 ### 赞赏码(开发维护不易,请赏杯茶水费)
-<div align=center><img width="250" height="250" src="https://gitee.com/lxk0301/git-test/raw/master/photo_2020-10-30_16-36-36.jpg"/></div>
+<div align=center><img width="250" height="250" src="https://raw.githubusercontent.com/lxk0301/scripts/master/icon/thanks.jpg"/></div>
 
 ### 特别感谢(排名不分先后)：
 * [@NobyDa](https://github.com/NobyDa)
