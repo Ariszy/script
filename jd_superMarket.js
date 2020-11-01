@@ -298,6 +298,9 @@ async function businessCircleActivity() {
     console.log(`pkStatus:${pkStatus}`);
     console.log(`pkStatus:${pkStatus}`);
     console.log(`inviteCode:${inviteCode}`);
+    const updatePkActivityIdRes = await updatePkActivityId();
+    console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes.pkActivityId}`);
+    console.log(`\npkActivityId\n${pkActivityId}`);
     if (joinStatus === 0) {
       const updatePkActivityIdRes = await updatePkActivityId();
       console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes.pkActivityId}`);
