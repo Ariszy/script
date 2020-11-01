@@ -53,10 +53,10 @@ function getToken() {
 
 async function start() {
   login_token = $.getdata('xmSportsToken') ? $.getdata('xmSportsToken') : login_token;
-  console.log(`login_token:::${login_token}`)
+  // console.log(`login_token:::${login_token}`)
   if (login_token) {
     await get_app_token(login_token);
-    console.log(`$.tokenInfo${JSON.stringify($.tokenInfo)}`)
+    // console.log(`$.tokenInfo${JSON.stringify($.tokenInfo)}`)
     if ($.tokenInfo && $.tokenInfo.result === 'ok') {
       const {app_token, user_id} = $.tokenInfo.token_info;
       await get_time();
@@ -139,9 +139,10 @@ function get_time() {
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           console.log(data)
-          data = JSON.parse(data);
-          console.log(data.data.t)
-          $.t = data.data.t;
+          if (data) {
+            data = JSON.parse(data);
+            $.t = data.data.t;
+          }
         }
       } catch (e) {
         $.logErr(e, resp)

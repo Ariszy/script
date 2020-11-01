@@ -845,8 +845,8 @@
       "repo": "https://github.com/lxk0301/scripts",
       "script": "https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js",
       "icons": [
-        "https://raw.githubusercontent.com/58xinian/icon/master/webhooks_mini.png",
-        "https://raw.githubusercontent.com/58xinian/icon/master/webhooks.png"
+        "https://raw.githubusercontent.com/58xinian/icon/master/xmyd_mini.png",
+        "https://raw.githubusercontent.com/58xinian/icon/master/xmyd.png"
       ]
     }
   ]
