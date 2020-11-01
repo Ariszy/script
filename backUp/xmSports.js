@@ -1,21 +1,25 @@
 /*
 小米运动修改微信支付宝运动步数
+APP Store下载小米运动APP
+登入小米运动(登录方式必须是手机号码+密码(没有就用手机号码注册),下面的第三方账号(小米账号,Apple,微信)授权登录不行)
+登录成功后在 我的->第三方接入->绑定支付宝,微信
+小米运动只要不退出登录，就会自动获取新的token,即永久有效
 [MITM]
 hostname = account.huami.com
-surge
+Surge
 [Script]
-小米运动修改运动步数 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js
+小米运动修改运动步数 = type=cron,cronexp="15 17 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js
 小米运动获取Token = type=http-response,pattern=^https:\/\/account\.huami\.com\/v2\/client\/login, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js
 圈X
 [task_local]
 # 小米运动修改运动步数
-15 10 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js, tag=小米运动修改运动步数, enabled=true
+15 17 * * * https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js, tag=小米运动修改运动步数, enabled=true
 [rewrite_local]
 # 小米运动获取Token
 ^https:\/\/account\.huami\.com\/v2\/client\/login url script-response-body https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js
-LOON：
+Loon
 [Script]
-cron "15 10 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js, tag=小米运动修改运动步数
+cron "15 17 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js, tag=小米运动修改运动步数
 http-response ^https:\/\/account\.huami\.com\/v2\/client\/login script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/backUp/xmSports.js, requires-body=true, timeout=10, tag=小米运动获取Token
  */
 
@@ -28,31 +32,38 @@ const headers = {
 let login_token = '';
 const step = randomFriendPin(30000, 45000);
 function getToken() {
-  console.log($response.body);
   const body = JSON.parse($response.body);
-  login_token = body.token_info.login_token;
-  // $.log(`${$.name} token\n${LKYLToken}\n`)
-  // if ($.getdata('jdJoyRunToken')) {
-  //   $.msg($.name, '更新Token: 成功🎉', ``);
-  // } else {
-  //   $.msg($.name, '获取Token: 成功🎉', '');
-  // }
-  $.msg($.name, '获取Token: 成功🎉', '');
-  // $.setdata(LKYLToken, 'jdJoyRunToken');
+  const loginToken = body.token_info.login_token;
+  $.log(`${$.name} token\n${LKYLToken}\n`)
+  if ($.getdata('xmSportsToken')) {
+    $.msg($.name, '更新Token: 成功🎉', ``);
+  } else {
+    $.msg($.name, '获取Token: 成功🎉', '');
+  }
+  $.setdata(loginToken, 'xmSportsToken');
   $.done({ body: JSON.stringify(body) })
 }
+
 async function start() {
- await get_app_token(login_token);
- if ($.tokenInfo && $.tokenInfo.result === 'ok') {
-   const { app_token, user_id } = $.tokenInfo.token_info;
-   await get_time();
-   await change_step(app_token, user_id);
-   if ($.changeStepRes && $.changeStepRes.code === 1) {
-     console.log(`步数修改成功:${step}步`)
-   } else {
-     console.log(`修改运动步数失败`)
-   }
- }
+  login_token = $.getdata('xmSportsToken') ? $.getdata('xmSportsToken') : login_token;
+  if (login_token) {
+    await get_app_token(login_token);
+    if ($.tokenInfo && $.tokenInfo.result === 'ok') {
+      const {app_token, user_id} = $.tokenInfo.token_info;
+      await get_time();
+      await change_step(app_token, user_id);
+      if ($.changeStepRes && $.changeStepRes.code === 1) {
+        console.log(`步数修改成功:${step}步`);
+        $.msg($.name, '成功', `时间：${timeFormat(localtime())}\n修改步数：${step}步🏃‍`)
+      } else {
+        console.log(`修改运动步数失败`)
+      }
+    } else {
+      $.msg($.name, '失败', `Token已失效，请重新获取`)
+    }
+  } else {
+    $.msg($.name, `失败`, '暂无Token')
+  }
   $.done()
 }
 
