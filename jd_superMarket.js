@@ -305,13 +305,12 @@ async function businessCircleActivity() {
       const updatePkActivityIdRes = await updatePkActivityId();
       console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes.pkActivityId}`);
       console.log(`\npkActivityId\n${pkActivityId}`);
-      if (updatePkActivityIdRes && (updatePkActivityIdRes.pkActivityId !== pkActivityId)) {
-        console.log('不等于')
+      if (updatePkActivityIdRes && (updatePkActivityIdRes.pkActivityId === pkActivityId)) {
+        const res = await smtg_joinPkTeam(updatePkActivityIdRes.teamId, inviteCodes[randomFriendPin(0, inviteCodes.length - 1)], pkActivityId);
+        console.log(`res${JSON.stringify(res)}`);
       } else {
-        console.log('等于')
+        console.log('不等于')
       }
-      const res = await smtg_joinPkTeam(myTeamId, inviteCodes[randomFriendPin(0, inviteCodes.length - 1)], pkActivityId);
-      console.log(`res${JSON.stringify(res)}`);
     } else if (joinStatus === 1) {
       console.log(`我邀请的人数:${inviteCount}\n`)
       console.log(`PK 我方队伍数量/对方队伍数量：${currentUserPkInfo.teamCount}/${pkUserPkInfo.teamCount}\n`);
@@ -645,7 +644,7 @@ async function limitTimeProduct() {
 //=============================================脚本使用到的京东API=====================================
 function updatePkActivityId() {
   return new Promise(resolve => {
-    $.get({url: `https://raw.githubusercontent.com/Zero-S1/tmp/main/jd_smPkInfo.json`}, (err, resp, data) => {
+    $.get({url: `https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
