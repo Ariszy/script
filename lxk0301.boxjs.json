@@ -814,10 +814,9 @@
       "id": "xmSports",
       "name": "小米运动",
       "keys": [
-        "ACTIONS_TRIGGER_TOKEN",
-        "githubUser",
-        "repo",
-        "TRIGGER_KEYWORDS"
+        "xmSportsToken",
+        "xmMinStep",
+        "xmMaxStep"
       ],
       "settings": [
         {
