@@ -220,7 +220,7 @@ function smtg_queryPrize(timeout = 0){
               //自定义输入兑换
               let prizeId = '', i;
               for (let index = 0; index < prizeList.length; index ++) {
-                if (prizeList[index].title === `${coinToBeans}`) {
+                if (prizeList[index].title.indexOf(coinToBeans) > -1) {
                   prizeId = prizeList[index].prizeId;
                   i = index;
                   $.title = prizeList[index].title;
