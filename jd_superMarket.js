@@ -299,7 +299,7 @@ async function businessCircleActivity() {
     console.log(`inviteCode:${inviteCode}`);
     const updatePkActivityIdRes = await updatePkActivityId();
     console.log(`updatePkActivityIdRes:::${JSON.stringify(updatePkActivityIdRes)}`);
-    console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes.pkActivityId}`);
+    console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes && updatePkActivityIdRes.pkActivityId}`);
     console.log(`\npkActivityId\n${pkActivityId}`);
     if (joinStatus === 0) {
       const updatePkActivityIdRes = await updatePkActivityId();
@@ -642,6 +642,7 @@ async function limitTimeProduct() {
 //=============================================脚本使用到的京东API=====================================
 function updatePkActivityId() {
   return new Promise(resolve => {
+    //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json
     $.get({url: `https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json`}, (err, resp, data) => {
       try {
         if (err) {
