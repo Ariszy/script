@@ -1,4 +1,10 @@
 /*
+ * @Author: lxk0301 https://github.com/lxk0301 
+ * @Date: 2020-11-01 13:43:28 
+ * @Last Modified by:   lxk0301 
+ * @Last Modified time: 2020-11-01 13:43:28 
+ */
+/*
 小米运动修改微信支付宝运动步数
 APP Store下载小米运动APP
 登入小米运动(登录方式必须是手机号码+密码(没有就用手机号码注册),下面的第三方账号(小米账号,Apple,微信)授权登录不行)
@@ -35,7 +41,7 @@ const step = randomFriendPin($.getdata('xmMinStep')*1 || 19000, $.getdata('xmMax
 function getToken() {
   const body = JSON.parse($response.body);
   const loginToken = body.token_info.login_token;
-  $.log(`${$.name} token\n${LKYLToken}\n`)
+  $.log(`${$.name}token\n${loginToken}\n`)
   if ($.getdata('xmSportsToken')) {
     $.msg($.name, '更新Token: 成功🎉', ``);
   } else {
