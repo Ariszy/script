@@ -2,11 +2,10 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-10-26 18:54:16 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-27 18:54:37
+ * @Last Modified time: 2020-11-01 18:54:37
  */
 /*
 京小超(活动入口：京东APP-》首页-》京东超市-》底部东东超市)
-更新时间：2020-10-27
 现有功能：每日签到，日常任务（分享游戏，逛会场，关注店铺，卖货能手），收取金币，收取蓝币,商圈活动
 Some Functions Modified From https://github.com/Zero-S1/JD_tools/blob/master/JD_superMarket.py
 支持京东双账号
@@ -299,12 +298,11 @@ async function businessCircleActivity() {
     console.log(`pkStatus:${pkStatus}`);
     console.log(`inviteCode:${inviteCode}`);
     const updatePkActivityIdRes = await updatePkActivityId();
+    console.log(`updatePkActivityIdRes:::${JSON.stringify(updatePkActivityIdRes)}`);
     console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes.pkActivityId}`);
     console.log(`\npkActivityId\n${pkActivityId}`);
     if (joinStatus === 0) {
       const updatePkActivityIdRes = await updatePkActivityId();
-      console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes.pkActivityId}`);
-      console.log(`\npkActivityId\n${pkActivityId}`);
       if (updatePkActivityIdRes && (updatePkActivityIdRes.pkActivityId === pkActivityId)) {
         const res = await smtg_joinPkTeam(updatePkActivityIdRes.teamId, inviteCodes[randomFriendPin(0, inviteCodes.length - 1)], pkActivityId);
         console.log(`res${JSON.stringify(res)}`);
