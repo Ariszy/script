@@ -643,7 +643,8 @@ async function limitTimeProduct() {
 function updatePkActivityId() {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json
-    $.get({url: `https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json`}, (err, resp, data) => {
+    //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json
+    $.get({url: `https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
