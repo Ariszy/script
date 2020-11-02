@@ -488,7 +488,6 @@ function readShareCode() {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          console.log(data);
           data = JSON.parse(data);
         }
       } catch (e) {
@@ -515,7 +514,7 @@ function shareCodesFormat() {
     if (readShareCodeRes && readShareCodeRes.code === 200) {
       newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
     }
-    console.log(`格式化后第${$.index}个京东账号好友的助力码${JSON.stringify(newShareCodes)}`)
+    console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
 }

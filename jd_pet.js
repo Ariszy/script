@@ -421,17 +421,40 @@ async function showMsg() {
     $.log(`\n${message}\n`);
   }
 }
-function shareCodesFormat() {
+function readShareCode() {
   return new Promise(resolve => {
-    console.log(`第${$.index}个京东账号的助力码:::${jdPetShareArr[$.index - 1]}`)
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/pet/read/5/`}, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          data = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve(data);
+      }
+    })
+  })
+}
+function shareCodesFormat() {
+  return new Promise(async resolve => {
+    // console.log(`第${$.index}个京东账号的助力码:::${jdPetShareArr[$.index - 1]}`)
+    newShareCodes = [];
     if (jdPetShareArr[$.index - 1]) {
       newShareCodes = jdPetShareArr[$.index - 1].split('@');
     } else {
-      console.log(`由于您未提供shareCode,将采纳本脚本自带的助力码\n`)
+      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
-    console.log(`格式化后第${$.index}个京东账号的助力码${JSON.stringify(newShareCodes)}`)
+    const readShareCodeRes = await readShareCode();
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
+      newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
+    }
+    console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
 }
@@ -492,8 +515,9 @@ function requireConfig() {
         jdPetShareArr.push(temp.join('@'));
       }
     }
-    console.log(`jdPetShareArr::${JSON.stringify(jdPetShareArr)}`)
-    console.log(`jdPetShareArr账号长度::${jdPetShareArr.length}`)
+    // console.log(`jdPetShareArr::${JSON.stringify(jdPetShareArr)}`)
+    // console.log(`jdPetShareArr账号长度::${jdPetShareArr.length}`)
+    console.log(`您提供了${jdPetShareArr.length}个账号的东东萌宠助力码\n`);
     resolve()
   })
 }
