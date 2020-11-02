@@ -2,11 +2,12 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-10-29 16:25:41 
  * @Last Modified by:   lxk0301 
- * @Last Modified time: 2020-10-29 16:25:41 
+ * @Last Modified time: 2020-11-01 16:25:41
  */
 /*
 京豆变动通知脚本：https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js
-统计昨日京豆的变化情况，包括收入，支出，以及显示当前京豆数量
+统计昨日京豆的变化情况，包括收入，支出，以及显示当前京豆数量,目前小问题:下单使用京豆后,退款重新购买会出现异常
+网页查看地址 : https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean
 支持京东双账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 quantumultx
