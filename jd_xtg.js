@@ -2,7 +2,7 @@
  * @Author: lxk0301 
  * @Date: 2020-10-21 17:04:04 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-01 00:35:04
+ * @Last Modified time: 2020-11-02 00:35:04
  */
 /**
  星推官脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
@@ -83,7 +83,9 @@ const shareID = [
   '921c376e-8cc5-4236-8242-ff8bb1b88a95',
   '8b3ce203-4b10-4c36-a87d-da8c82efe362',
   'c8e1feb3-6ab1-4410-8444-1de8bd22e041',
-  "dd6b5270-3e5e-436d-be0f-295a8604cf47"
+  "dd6b5270-3e5e-436d-be0f-295a8604cf47",
+  "7aef5700-4fa0-43b8-98fa-3a09f46ea47c",
+  "be0ec81c-bf26-4b7b-9527-d02b0286e5af",
 ];
 const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
 !(async () => {

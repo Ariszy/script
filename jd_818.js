@@ -2,14 +2,12 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-08-18 09:25:47 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-29 09:26:12
+ * @Last Modified time: 2020-11-02 09:26:12
  */
 /*
 京东手机狂欢城活动，每日可获得30+以上京豆（其中20京豆是往期奖励，需第一天参加活动后，第二天才能拿到）
 活动时间10.21日-11.12日结束，活动23天，保底最少可以拿到690京豆
 活动地址: https://rdcseason.m.jd.com/#/index
-
-更新日期：2020-10-26
 
 其中有20京豆是往期奖励，需第一天参加活动后，第二天才能拿到！！！！
 
@@ -54,20 +52,7 @@ const JD_API_HOST = 'https://rdcseason.m.jd.com/api/';
 const activeEndTime = '2020/11/13 01:00:00';
 const addUrl = 'http://jd.turinglabs.net/helpcode/create/';
 const printUrl = `http://jd.turinglabs.net/helpcode/print/20/`;
-let helpCode = [
-  'c34d6b64-87bc-4dcf-b840-85f7a9fc6b46',
-  'c7571a68-6c9d-4e1c-ace6-68ec357edae9',
-  'e5e4e896-4258-4f8c-98f9-7ddd79d50a2c',
-  'c5908eb4-e4a3-46ab-853d-9b4fc388a7ca',
-  '088a970a-04c2-4b06-8865-515f6c6f062e',
-  'e9a4f386-1298-47cd-acbf-89be58fa266d',
-  '7fc36938-101f-4fae-b1da-5f21981408f2',
-  '5ccc80ad-7ba6-4cec-92ab-b6dc69b0d322',
-  'e4f1406e-c060-4998-ab5e-ce5c0ccce401',
-  '0d62378a-73c4-472b-8d76-e3e8d4a48e43',
-  '482e2355-a3b7-431a-9557-e71da8b772b6',
-  '7afb1563-11df-4b2a-bee4-94ad8ddc962e',
-]
+let helpCode = []
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
@@ -88,7 +73,7 @@ let helpCode = [
       // await main();
     }
   }
-  console.log($.temp)
+  // console.log($.temp)
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -583,14 +568,15 @@ async function doHelp() {
   if (zone === 0) {
     nowTime += 28800000;//UTC-0时区加上8个小时
   }
-
+  await updateShareCodes();
+  if (!$.updatePkActivityIdRes) await updateShareCodesCDN();
+  tempCode = $.updatePkActivityIdRes.shareCodes;
   console.log(`是否大于当天九点🕘:${nowTime > new Date(nowTime).setHours(9, 0, 0, 0)}`)
-
   //当天大于9:00才从API里面取收集的助力码
   if (nowTime > new Date(nowTime).setHours(9, 0, 0, 0)) body = await printAPI();//访问收集的互助码
   if (body) {
     console.log(`printAPI返回助力码数量:${body.replace(/"/g, '').split(',').length}`)
-    tempCode = helpCode.concat(body.replace(/"/g, '').split(','))
+    tempCode = tempCode.concat(body.replace(/"/g, '').split(','))
   }
   console.log(`累计助力码数量:${tempCode.length}`)
   //去掉重复的
@@ -825,6 +811,45 @@ function getListRank() {
         $.logErr(e, resp)
       } finally {
         resolve(data);
+      }
+    })
+  })
+}
+function updateShareCodes(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_shareCodes.json') {
+  return new Promise(resolve => {
+    //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_shareCodes.json
+    //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_shareCodes.json
+    $.get({url}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+        } else {
+          $.updatePkActivityIdRes = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+function updateShareCodesCDN(url = 'https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_shareCodes.json') {
+  return new Promise(resolve => {
+    //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_shareCodes.json
+    //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_shareCodes.json
+    $.get({url}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          $.updatePkActivityIdRes = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
       }
     })
   })
