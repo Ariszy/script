@@ -62,7 +62,9 @@ const starID = [
   'lgyangzishan',
   'laobansongweilong',
   'haiermaoxiaotong',
-  "skgwangyibo"
+  "skgwangyibo",
+  "kongtiaozhangjike",
+  "sanxingningjing",
 ];
 const shareID = [
   'e646c144-28a7-4b1b-8145-5b0dbff107ec',
