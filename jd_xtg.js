@@ -65,6 +65,7 @@ const starID = [
   "skgwangyibo",
   "kongtiaozhangjike",
   "sanxingningjing",
+  "xiaojiadianxiongziqi",
 ];
 const shareID = [
   'e646c144-28a7-4b1b-8145-5b0dbff107ec',
