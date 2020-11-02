@@ -42,8 +42,8 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
   'aURoM7PtY_Q@eU9Ya-y2N_5z9DvXwyIV0A@eU9YaOnjYK4j-GvWmXIWhA',
 ]
-const myTeamId = '-4msulYas0O2JsRhE-2TA5XZmBQ_1603901056110';
-const inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA", "eU9Ya-y2N_5z9DvXwyIV0A","aURoM7PtY_Q","eU9YaeS3Z6ol8zrRmnMb1Q"];
+let myTeamId = ['-4msulYas0O2JsRhE-2TA5XZmBQ_1603901056110', "Ih4-a-mwZPUj9Gy6iw_1604277683224", "eU9Ya77gZK5z-TqHn3UWhQ_1604277779750", "eU9YJpHUB65SlQiDqgBb_1604278378974"];
+let inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9YaOnjYK4j-GvWmXIWhA", "eU9Ya-y2N_5z9DvXwyIV0A","aURoM7PtY_Q","eU9YaeS3Z6ol8zrRmnMb1Q"];
 // const myTeamId = 'IhM_beyxYPwg82i6iw_1603900876017';
 // const inviteCodes = ["YF5-KbvnOA", "eU9YaLm0bq4i-TrUzSUUhA", "IhM_beyxYPwg82i6iw"];
 
@@ -292,22 +292,35 @@ async function businessCircleActivity() {
   // console.log(`\n商圈PK奖励,次日商圈大战开始的时候自动领领取\n`)
   const smtg_getTeamPkDetailInfoRes = await smtg_getTeamPkDetailInfo();
   if (smtg_getTeamPkDetailInfoRes && smtg_getTeamPkDetailInfoRes.data.bizCode === 0) {
-    const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, prizeInfo, pkActivityId } = smtg_getTeamPkDetailInfoRes.data.result;
+    const { joinStatus, pkStatus, inviteCount, inviteCode, currentUserPkInfo, pkUserPkInfo, prizeInfo, pkActivityId, teamId } = smtg_getTeamPkDetailInfoRes.data.result;
     console.log(`joinStatus:${joinStatus}`);
     console.log(`pkStatus:${pkStatus}`);
     console.log(`pkStatus:${pkStatus}`);
     console.log(`inviteCode:${inviteCode}`);
-    const updatePkActivityIdRes = await updatePkActivityId();
-    console.log(`updatePkActivityIdRes:::${JSON.stringify(updatePkActivityIdRes)}`);
-    console.log(`updatePkActivityIdRes.pkActivityId\n${updatePkActivityIdRes && updatePkActivityIdRes.pkActivityId}`);
+    console.log(`PK队伍teamId:${teamId}`);
+    await updatePkActivityId();
+    if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
+    console.log(`\nupdatePkActivityId返回的数据:::${JSON.stringify($.updatePkActivityIdRes)}`);
     console.log(`\npkActivityId\n${pkActivityId}`);
     if (joinStatus === 0) {
-      const updatePkActivityIdRes = await updatePkActivityId();
-      if (updatePkActivityIdRes && (updatePkActivityIdRes.pkActivityId === pkActivityId)) {
-        const res = await smtg_joinPkTeam(updatePkActivityIdRes.teamId, inviteCodes[randomFriendPin(0, inviteCodes.length - 1)], pkActivityId);
-        console.log(`res${JSON.stringify(res)}`);
+      await updatePkActivityId();
+      if (!$.updatePkActivityIdRes) await updatePkActivityIdCDN();
+      if ($.updatePkActivityIdRes && ($.updatePkActivityIdRes.pkActivityId === pkActivityId)) {
+        inviteCodes = $.updatePkActivityIdRes.inviteCode || inviteCodes;
+        myTeamId = $.updatePkActivityIdRes.teamId || myTeamId;
+
+        const randomNum = randomFriendPin(0, myTeamId.length - 1);
+
+        const res = await smtg_joinPkTeam(myTeamId[randomNum], inviteCodes[randomNum], pkActivityId);
+        if (res.data.bizCode === 0) {
+          console.log(`加入战队成功`)
+        } else if (res.data.bizCode === 229) {
+          console.log(`加入战队失败,该战队已满\n无法加入`)
+        } else {
+          console.log(`加入战队其他未知情况:${JSON.stringify(res)}`)
+        }
       } else {
-        console.log('不等于')
+        console.log('\nupdatePkActivityId请求返回的pkActivityId与京东服务器返回不一致,暂时不加入战队')
       }
     } else if (joinStatus === 1) {
       console.log(`我邀请的人数:${inviteCount}\n`)
@@ -640,22 +653,42 @@ async function limitTimeProduct() {
 }
 
 //=============================================脚本使用到的京东API=====================================
-function updatePkActivityId() {
+function updatePkActivityId(url = 'https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json') {
   return new Promise(resolve => {
     //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json
     //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json
-    $.get({url: `https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json`}, (err, resp, data) => {
+    $.get({url}, async (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
-          data = JSON.parse(data);
+          $.updatePkActivityIdRes = JSON.parse(data);
         }
       } catch (e) {
         $.logErr(e, resp)
       } finally {
-        resolve(data);
+        resolve();
+      }
+    })
+  })
+}
+function updatePkActivityIdCDN(url = 'https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json') {
+  return new Promise(resolve => {
+    //https://cdn.jsdelivr.net/gh/lxk0301/updateTeam@master/jd_superMarketTeam.json
+    //https://raw.githubusercontent.com/lxk0301/updateTeam/master/jd_superMarketTeam.json
+    $.get({url}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          $.updatePkActivityIdRes = JSON.parse(data);
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
       }
     })
   })
