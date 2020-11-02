@@ -1,6 +1,6 @@
 0 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1
 2 */1 * * * crontab /scripts/docker/${CRONTAB_LIST_FILE}
-0 0-18/6 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
+0 0-18/6,9 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
 0,10 0 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
 0 0,12,18 * * * node /scripts/jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
 0 0 * * * node /scripts/jd_blueCoin.js >> /scripts/logs/jd_blueCoin.log 2>&1
