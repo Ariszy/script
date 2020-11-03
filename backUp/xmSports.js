@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-11-01 13:43:28 
  * @Last Modified by:   lxk0301 
- * @Last Modified time: 2020-11-01 13:43:28 
+ * @Last Modified time: 2020-11-03 13:43:28 
  */
 /*
 小米运动修改微信支付宝运动步数
@@ -50,7 +50,7 @@ function getToken() {
     }
     $.setdata(loginToken, 'xmSportsToken');
   }
-  $.done({ body: JSON.stringify(body) })
+  $.done({})
 }
 
 async function start() {
