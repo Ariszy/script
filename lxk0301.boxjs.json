@@ -9,7 +9,17 @@
       "id": "JD_Cookies",
       "name": "京东多账号 Ck 管理",
       "keys": ["CookiesJD"],
-      "settings": [],
+      "settings": [
+        {
+          "id": "CookiesJD",
+          "name": "CK 列表",
+          "val": "",
+          "type": "textarea",
+          "autoGrow": true,
+          "rows": 8,
+          "desc": "CK 列表 (JSON 格式)"
+        }
+      ],
       "icons": [
         "https://raw.githubusercontent.com/Orz-3/mini/master/jd.png",
         "https://raw.githubusercontent.com/Orz-3/task/master/jd.png"
@@ -344,7 +354,14 @@
           "name": "静默运行",
           "val": true,
           "type": "boolean",
-          "desc": "运行宠汪汪脚本时不发出系统弹窗通知"
+          "desc": "运行宠汪汪(jd_joy.js)脚本时不发出系统弹窗通知"
+        },
+        {
+          "id": "jdJoyStealNotify",
+          "name": "静默运行",
+          "val": false,
+          "type": "boolean",
+          "desc": "运行宠汪汪(jd_joy_steal.js)脚本时不发出系统弹窗通知"
         },
         {
           "id": "jdJoyHelpFeed",

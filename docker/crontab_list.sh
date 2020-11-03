@@ -1,4 +1,6 @@
 0 */1 * * * git -C /scripts/ pull >> /scripts/logs/pull.log 2>&1
+# 每3天的23:50分清理一次日志
+50 23 */3 * * rm -rf /scripts/logs/*.log
 2 */1 * * * crontab /scripts/docker/${CRONTAB_LIST_FILE}
 0 0-18/6,9 * * * node /scripts/jd_818.js >> /scripts/logs/jd_818.log 2>&1
 0,10 0 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1

@@ -39,7 +39,7 @@ if ($.isNode()) {
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
   let cookiesData = $.getdata('CookiesJD') || "[]";
-  cookiesData = JSON.parse(cookiesData);
+  cookiesData = jsonParse(cookiesData);
   cookiesArr = cookiesData.map(item => item.cookie);
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
@@ -372,6 +372,17 @@ function taskPostUrl(type, id, status) {
       "Host": "urvsaggpt.m.jd.com",
       "Referer": "https://urvsaggpt.m.jd.com/static/index.html",
       "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+    }
+  }
+}
+function jsonParse(str) {
+  if (typeof str == "string") {
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      console.log(e);
+      $.msg($.name, '', '不要在BoxJS手动复制粘贴修改cookie')
+      return [];
     }
   }
 }

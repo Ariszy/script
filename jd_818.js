@@ -672,10 +672,12 @@ function getHelp() {
             console.log(`每日9:00以后复制下面的URL链接在浏览器里面打开一次就能自动上车\n\n${addUrl}${data.data.shareId}\n`);
             let ctrTemp;
             if ($.isNode() && process.env.JD_818_SHAREID_NOTIFY) {
+              console.log(`环境变量JD_818_SHAREID_NOTIFY::${process.env.JD_818_SHAREID_NOTIFY}`)
               ctrTemp = `${process.env.JD_818_SHAREID_NOTIFY}` === 'true';
             } else {
               ctrTemp = `${jdNotify}` === 'true';
             }
+            console.log(`是否发送上车推送链接:${ctrTemp ? '是': '否'}`)
             // 只在早晨9点钟触发一次
             let NowHours = new Date().getHours();
             const zone = new Date().getTimezoneOffset();
