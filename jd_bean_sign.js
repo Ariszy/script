@@ -55,15 +55,15 @@ if ($.isNode()) {
         // console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
         //发送通知
         if ($.isNode()) {
-          let content = "";
+          let notifyContent = "";
           let BarkContent = '';
           if (fs.existsSync(path)) {
-            content = fs.readFileSync(path, "utf8");
-            const barkContentStart = content.indexOf('【签到概览】')
+            notifyContent = await fs.readFileSync(path, "utf8");
+            const barkContentStart = notifyContent.indexOf('【签到概览】')
             // const barkContentEnd = content.indexOf("【左滑 '查看' 以显示签到详情】");
-            const barkContentEnd = content.length;
+            const barkContentEnd = notifyContent.length;
             if (barkContentStart > -1 && barkContentEnd > -1) {
-              BarkContent = content.substring(barkContentStart, barkContentEnd);
+              BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
             }
           }
           //不管哪个时区,这里得到的都是北京时间的时间戳;
@@ -120,7 +120,11 @@ async function changeFile (content) {
     //此处针对UTC-0时区用户做的
     newContent = newContent.replace(/tm\s=.*/, `tm = new Date(new Date().toLocaleDateString()).getTime() - 28800000;`);
   }
-  await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
+  try {
+    await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
+  } catch (e) {
+    console.log("京东签到写入文件异常:" + e);
+  }
 }
 async function deleteFile(path) {
   // 查看文件result.txt是否存在,如果存在,先删除
