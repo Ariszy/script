@@ -1,6 +1,6 @@
 /*
 种豆得豆 搬的https://github.com/uniqueque/QuantumultX/blob/4c1572d93d4d4f883f483f907120a75d925a693e/Script/jd_plantBean.js
-更新时间:2020-10-19
+更新时间：2020-11-03
 已支持IOS京东双账号,云端N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 会自动关注任务中的店铺跟商品
@@ -114,11 +114,8 @@ async function doGetReward() {
       message += `【上期兑换京豆】${$.getReward.data.awardBean}个\n`;
       $.msg($.name, subTitle, message);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${$.UserName}\n${message}`);
+        await notify.sendNotify(`${$.name}`, `京东账号${$.index} ${$.nickName}\n${message}`);
       }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${$.UserName}\n${message}`);
-      // }
     }
   } else if (awardState === '6') {
     //京豆已领取
@@ -353,7 +350,7 @@ function showTaskProcess() {
 //助力好友
 async function doHelp() {
   for (let plantUuid of newShareCodes) {
-    console.log(`开始助力京东账号${$.index} - ${$.UserName}的好友: ${plantUuid}`);
+    console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${plantUuid}`);
     if (!plantUuid) continue;
     if (plantUuid === $.myPlantUuid) {
       console.log(`\n跳过自己的plantUuid\n`)

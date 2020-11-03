@@ -1,6 +1,6 @@
 /*
  * @Author: lxk0301 https://github.com/lxk0301 
- * @Date: 2020-10-26 18:54:16 
+ * @Date: 2020-11-03 18:54:16
  * @Last Modified by: lxk0301
  * @Last Modified time: 2020-11-01 18:54:37
  */
@@ -30,7 +30,7 @@ let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false�
 let superMarketUpgrade = true;//自动升级,顺序:解锁升级商品、升级货架,true表示自动升级,false表示关闭自动升级
 let businessCircleJump = true;//小于对方300热力值自动更换商圈队伍,true表示运行,false表示禁止
 let drawLotteryFlag = false;//是否用500蓝币去抽奖，true表示开启，false表示关闭。默认关闭
-let UserName = '', message = '', subTitle;
+let message = '', subTitle;
 const JD_API_HOST = 'https://api.m.jd.com/api';
 
 //助力好友分享码
@@ -55,16 +55,26 @@ let inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
-      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       $.coincount = 0;//收取了多少个蓝币
       $.coinerr = "";
       $.blueCionTimes = 0;
-      console.log(`\n开始【京东账号${$.index}】${UserName}\n`);
+      $.isLogin = true;
+      $.nickName = '';
+      await TotalBean();
+      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取cookie`);
+        continue
+      }
       message = '';
       subTitle = '';
       //await shareCodesFormat();//格式化助力码
       await jdSuperMarket();
+      await showMsg();
       // await businessCircleActivity();
     }
   }
@@ -77,18 +87,6 @@ let inviteCodes = ["-4msulYas0O2JsRhE-2TA5XZmBQ", 'eU9Yar_mb_9z92_WmXNG0w', "eU9
     })
 async function jdSuperMarket() {
   await receiveGoldCoin();//收金币
-  if ($.goldCoinData.data.bizCode === 300) {
-    $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-    if ($.index === 1) {
-      $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-    } else if ($.index === 2){
-      $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-    }
-    if ($.isNode()) {
-      await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-    }
-    return
-  }
   await businessCircleActivity();//商圈活动
   await receiveBlueCoin();//收蓝币（小费）
   await receiveLimitProductBlueCoin();//收限时商品的蓝币
@@ -102,13 +100,12 @@ async function jdSuperMarket() {
   await manageProduct();
   await limitTimeProduct();
   await smtgHome();
-  await showMsg();
 }
 function showMsg() {
   $.log(`\n${message}\n`);
   jdNotify = $.getdata('jdSuperMarketNotify') ? $.getdata('jdSuperMarketNotify') : jdNotify;
   if (!jdNotify || jdNotify === 'false') {
-    $.msg($.name, subTitle ,`【京东账号${$.index}】${UserName}\n${message}`);
+    $.msg($.name, subTitle ,`【京东账号${$.index}】${$.nickName}\n${message}`);
   }
 }
 //抽奖功能(招财进宝)
@@ -237,7 +234,7 @@ function receiveBlueCoin(timeout = 0) {
             if  ($.data.data.bizCode === 0) {
               $.coincount += $.data.data.result.receivedBlue;
               $.blueCionTimes ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.blueCionTimes}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
+              console.log(`【京东账号${$.index}】${$.nickName} 第${$.blueCionTimes}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
               if (!$.data.data.result.isNextReceived) {
                 message += `【收取小费】${$.coincount}个\n`;
                 return
@@ -338,7 +335,7 @@ async function businessCircleActivity() {
           const { pkTeamPrizeInfoVO } = receivedPkTeamPrize.data.result;
           message += `【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功\n`;
           if ($.isNode()) {
-            await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+            await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈PK奖励】${pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
           }
         }
       } else if (prizeInfo.pkPrizeStatus === 1) {
@@ -397,9 +394,9 @@ async function businessCircleActivity() {
     console.log(`商圈PK奖励领取结果：${JSON.stringify(getPkPrizeRes)}`)
     if (getPkPrizeRes && getPkPrizeRes.data.bizCode === 0) {
       const { pkPersonPrizeInfoVO, pkTeamPrizeInfoVO } = getPkPrizeRes.data.result;
-      $.msg($.name, '', `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+      $.msg($.name, '', `【京东账号${$.index}】 ${$.nickName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${UserName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
+        await notify.sendNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【商圈PK奖励】${pkPersonPrizeInfoVO.blueCoin + pkTeamPrizeInfoVO.blueCoin}蓝币领取成功`)
       }
     }
   } else if (businessCirclePKDetailRes && businessCirclePKDetailRes.data.bizCode === 206) {
@@ -1367,7 +1364,46 @@ function requireConfig() {
     resolve()
   })
 }
-
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === 13) {
+              $.isLogin = false; //cookie过期
+              return
+            }
+            $.nickName = data['base'].nickname;
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 function taskUrl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}?functionId=${function_id}&appid=jdsupermarket&clientVersion=8.0.0&client=m&body=${escape(JSON.stringify(body))}&t=${Date.now()}`,

@@ -1,6 +1,6 @@
 /*
  * @Author: lxk0301 
- * @Date: 2020-10-12 20:35:07 
+ * @Date: 2020-11-03 20:35:07
  * @Last Modified by: lxk0301
  * @Last Modified time: 2020-10-12 20:37:10
  摇京豆(京东APP首页-领京豆-摇京豆)
@@ -49,8 +49,18 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
       $.freeTimes = 0;
       $.prizeBeanCount = 0;
       $.totalBeanCount = 0;
-      console.log(`\n开始【京东账号${$.index}】${$.UserName}${$.name}\n`);
+      $.isLogin = true;
+      $.nickName = '';
+      await TotalBean();
+      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取cookie`);
+        continue
+      }
       await clubLottery();
+      await showMsg();
     }
   }
 })()
@@ -65,7 +75,6 @@ async function clubLottery() {
   await doTasks();//做任务
   await getFreeTimes();//获取摇奖次数
   await shaking();//开始摇奖
-  await showMsg();
 }
 async function doTasks() {
   const browseTaskRes = await getTask('browseTask');
@@ -86,21 +95,7 @@ async function doTasks() {
       }
     }
   } else {
-    if (browseTaskRes.resultCode === '101') {
-      console.log(browseTaskRes.message);
-      $.msg($.name, `【提示】京东账号${$.index}${$.UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-      if ($.index === 1) {
-        $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-      } else if ($.index === 2){
-        $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-      }
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
-      }
-      return
-    } else {
-      console.log(`${JSON.stringify(browseTaskRes)}`)
-    }
+    console.log(`${JSON.stringify(browseTaskRes)}`)
   }
   const attentionTaskRes = await getTask('attentionTask');
   if (attentionTaskRes.success) {
@@ -137,7 +132,7 @@ async function shaking() {
 }
 function showMsg() {
   if ($.prizeBeanCount) {
-    $.msg(`${$.name}`, `京东账号${$.index} ${$.UserName}`, `【获得】${$.prizeBeanCount}京豆\n【账号总计】${$.totalBeanCount}京豆`);
+    $.msg(`${$.name}`, `京东账号${$.index} ${$.nickName}`, `【获得】${$.prizeBeanCount}京豆\n【账号总计】${$.totalBeanCount}京豆`);
   }
 }
 //====================API接口=================
@@ -218,6 +213,46 @@ function shakeBean() {
         $.logErr(e, resp);
       } finally {
         resolve(data);
+      }
+    })
+  })
+}
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === 13) {
+              $.isLogin = false; //cookie过期
+              return
+            }
+            $.nickName = data['base'].nickname;
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
       }
     })
   })

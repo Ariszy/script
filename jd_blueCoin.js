@@ -1,7 +1,7 @@
 /*
 京小超兑换奖品脚本
 感谢@yangtingxiao提供
-更新时间：2020-10-30
+更新时间：2020-11-03
 支持京东多个账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -31,8 +31,7 @@ if ($.isNode()) {
   cookiesArr.push($.getdata('CookieJD'));
   cookiesArr.push($.getdata('CookieJD2'));
 }
-let UserName = '';
-const awardPrizeList = ['免洗凝胶', '酒精喷雾', '柠檬果香洗手液'];
+
 const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
 !(async () => {
   if (!cookiesArr[0]) {
@@ -42,7 +41,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
   for (let i =0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
-      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
       $.data = {};
       $.coincount = 0;
@@ -52,7 +51,16 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       $.beanerr = "";
       $.title = '';
       //console.log($.coincount);
-      console.log(`\n===========开始【京东账号${$.index}】${UserName}==============\n`);
+      $.isLogin = true;
+      $.nickName = '';
+      await TotalBean();
+      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取cookie`);
+        continue
+      }
       //先兑换京豆
       if ($.isNode()) {
         if (process.env.MARKET_COIN_TO_BEANS) {
@@ -65,20 +73,14 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
       } else {
         console.log('查询到您设置的是不兑换京豆选项，现在为您跳过兑换京豆。如需兑换，请去BoxJs设置或者修改脚本coinToBeans\n')
       }
-      if ($.queryPrizeData && $.queryPrizeData.data.bizCode === 300) {
-        $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
-        if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-        }
-        continue;
-      }
+
       //再收取蓝币
       // await smtg_receiveCoin();
       // if ($.data.data.bizCode === 300)
       // {
-      //   $.msg($.name, `【提示】京东账号${$.index}${UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
+      //   $.msg($.name, `【提示】京东账号${$.index}${$.UserName} cookie已过期！请先获取cookie\n直接使用NobyDa的京东签到获取`, 'https://bean.m.jd.com/', {"open-url": "https://bean.m.jd.com/"});
       //   if ($.isNode()) {
-      //     await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
+      //     await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
       //   }
       //   if ($.index === 1) {
       //     $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
@@ -119,13 +121,13 @@ function smtg_receiveCoin(timeout = 0) {
         $.data = data;
         if ($.data.data.bizCode !== 0 && $.data.data.bizCode !== 809) {
           $.coinerr = `${$.data.data.bizMsg}`;
-          // console.log(`【京东账号${$.index}】${UserName} 收取蓝币失败：${$.data.data.bizMsg}`)
+          // console.log(`【京东账号${$.index}】${$.UserName} 收取蓝币失败：${$.data.data.bizMsg}`)
           return
         }
         if  ($.data.data.bizCode === 0) {
           $.coincount += $.data.data.result.receivedBlue;
           index ++;
-          console.log(`【京东账号${$.index}】${UserName} 第${index}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
+          console.log(`【京东账号${$.index}】${$.nickName} 第${index}次领蓝币成功，获得${$.data.data.result.receivedBlue}个\n`)
           if (!$.data.data.result.isNextReceived) return;
         }
         await  smtg_receiveCoin(3000);
@@ -283,32 +285,32 @@ function smtg_obtainPrize(prizeId, timeout = 0) {
           $.data = data;
           if ($.data.data.bizCode !== 0) {
             $.beanerr = `${$.data.data.bizMsg}`;
-            //console.log(`【京东账号${$.index}】${UserName} 换取京豆失败：${$.data.data.bizMsg}`)
+            //console.log(`【京东账号${$.index}】${$.nickName} 换取京豆失败：${$.data.data.bizMsg}`)
             return
           }
           if ($.data.data.bizCode === 0) {
             if (coinToBeans === 1000) {
               $.beanscount ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              console.log(`【京东账号${$.index}】${$.nickName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
             } else if (coinToBeans > 0 && coinToBeans <= 20) {
               $.beanscount ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              console.log(`【京东账号${$.index}】${$.nickName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.data.data.result.exchangeNum === 20 || $.beanscount === coinToBeans || $.data.data.result.blue < 500) return;
             } else if (coinToBeans === 2801390972) {
               //兑换巧白酒精喷雾
               $.beanscount ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              console.log(`【京东账号${$.index}】${$.nickName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
             } else if (coinToBeans === 2801390982) {
               //兑换巧白西柚洗手液
               $.beanscount ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              console.log(`【京东账号${$.index}】${$.nickName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
             } else if (coinToBeans === 2801390984) {
               //兑换雏菊洗衣凝珠
               $.beanscount ++;
-              console.log(`【京东账号${$.index}】${UserName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
+              console.log(`【京东账号${$.index}】${$.nickName} 第${$.data.data.result.exchangeNum}次换${$.title}成功`)
               if ($.beanscount === 1) return;
             }
           }
@@ -350,8 +352,8 @@ function smtgHome() {
 
 //通知
 async function msgShow() {
-  // $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
-  $.log(`\n【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
+  // $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n【收取蓝币】${$.coincount ? `${$.coincount}个` : $.coinerr }${coinToBeans ? `\n【兑换京豆】${ $.beanscount ? `${$.beanscount}个` : $.beanerr}` : ""}`);
+  $.log(`\n【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功` : $.beanerr}` : "您设置的是不兑换奖品"}\n`);
   let ctrTemp;
   if ($.isNode() && process.env.MARKET_REWARD_NOTIFY) {
     ctrTemp = `${process.env.MARKET_REWARD_NOTIFY}` === 'false';
@@ -362,11 +364,51 @@ async function msgShow() {
   }
   //默认只在兑换奖品成功后弹窗提醒。情况情况加，只打印日志，不弹窗
   if ($.beanscount && ctrTemp) {
-    $.msg($.name, ``, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
+    $.msg($.name, ``, `【京东账号${$.index}】${$.nickName}\n${coinToBeans ? `【兑换${$.title}】${ $.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`);
     if ($.isNode()) {
-      await notify.sendNotify($.name, `【京东账号${$.index}】${UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`)
+      await notify.sendNotify($.name, `【京东账号${$.index}】${$.UserName}\n${coinToBeans ? `【兑换${$.title}】${$.beanscount ? `成功，数量：${$.beanscount}个` : $.beanerr}` : "您设置的是不兑换奖品"}`)
     }
   }
+}
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === 13) {
+              $.isLogin = false; //cookie过期
+              return
+            }
+            $.nickName = data['base'].nickname;
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 function taskUrl(function_id, body = {}) {
   return {

@@ -1,6 +1,6 @@
 /*
  * @Author: lxk0301 https://github.com/lxk0301 
- * @Date: 2020-10-29 16:25:41 
+ * @Date: 2020-11-03 16:25:41
  * @Last Modified by:   lxk0301 
  * @Last Modified time: 2020-11-01 16:25:41
  */
@@ -74,9 +74,9 @@ if ($.isNode()) {
 async function showMsg() {
   if ($.errorMsg) return
   if ($.isNode()) {
-    await notify.sendNotify($.name, `账号${$.index}：${$.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
+    await notify.sendNotify($.name, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   }
-  $.msg($.name, '', `账号${$.index}：${$.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶`, {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
+  $.msg($.name, '', `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶`, {"open-url": "https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean"});
 }
 async function bean() {
   //前一天的0:0:0时间戳
@@ -106,7 +106,7 @@ async function bean() {
         }
       } else {
         $.errorMsg = `数据异常`;
-        $.msg($.name, ``, `账号${$.index}：${$.UserName}\n${$.errorMsg}`);
+        $.msg($.name, ``, `账号${$.index}：${$.nickName}\n${$.errorMsg}`);
         t = 1;
       }
     }

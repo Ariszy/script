@@ -1,6 +1,6 @@
 /*
 京东萌宠助手 搬得https://github.com/liuxiaoyucc/jd-helper/blob/master/pet/pet.js
-更新时间:2020-10-27
+更新时间：2020-11-03
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 // quantumultx
@@ -73,7 +73,7 @@ let goodsUrl = '', taskInfoKey = [];
 async function jdPet() {
   //查询jd宠物信息
   const initPetTownRes = await request('initPetTown');
-  message = `【京东账号${$.index}】${$.UserName}\n`;
+  message = `【京东账号${$.index}】${$.nickName}\n`;
   if (initPetTownRes.code === '0' && initPetTownRes.resultCode === '0' && initPetTownRes.message === 'success') {
     $.petInfo = initPetTownRes.result;
     if ($.petInfo.userStatus === 0) {
@@ -88,7 +88,7 @@ async function jdPet() {
       option['open-url'] = "openApp.jdMobile://";
       $.msg($.name, `【提醒⏰】${$.petInfo.goodsInfo.goodsName}已可领取`, '请去京东APP或微信小程序查看', option);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}奖品已可领取`, `京东账号${$.index} ${$.UserName}\n${$.petInfo.goodsInfo.goodsName}已可领取`);
+        await notify.sendNotify(`${$.name}奖品已可领取`, `京东账号${$.index} ${$.nickName}\n${$.petInfo.goodsInfo.goodsName}已可领取`);
       }
       return
     }
@@ -241,7 +241,7 @@ async function masterHelpInit() {
 async function slaveHelp() {
   let helpPeoples = '';
   for (let code of newShareCodes) {
-    console.log(`开始助力京东账号${$.index} - ${$.UserName}的好友: ${code}`);
+    console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${code}`);
     if (!code) continue;
     let response = await request(arguments.callee.name.toString(), {'shareCode': code});
     if (response.code === '0' && response.resultCode === '0') {
@@ -405,7 +405,7 @@ async function showMsg() {
   if (ctrTemp) {
     $.msg($.name, subTitle, message, option);
     if ($.isNode()) {
-      await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.UserName}`, `${subTitle}\n${message}`);
+      await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
     }
   } else {
     $.log(`\n${message}\n`);

@@ -1,6 +1,6 @@
 /*
  * @Author: lxk0301 
- * @Date: 2020-10-12 18:12:38 
+ * @Date: 2020-11-03 18:12:38
  * @Last Modified by: lxk0301
  * @Last Modified time: 2020-10-30 20:37:24
 */
@@ -55,7 +55,16 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
-      console.log(`\n开始【京东账号${$.index}】${$.UserName}\n`);
+      $.isLogin = true;
+      $.nickName = '';
+      await TotalBean();
+      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      if (!$.isLogin) {
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
+        $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
+        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取cookie`);
+        continue
+      }
       $.discount = 0;
       await redPacket();
       await showMsg();
@@ -243,7 +252,46 @@ function showMsg() {
 //     }
 //   })
 // }
-
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === 13) {
+              $.isLogin = false; //cookie过期
+              return
+            }
+            $.nickName = data['base'].nickname;
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
 
 function taskUrl(function_id, body) {
   return {

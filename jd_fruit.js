@@ -1,6 +1,6 @@
 /*
 东东水果:脚本更新地址 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_fruit.js
-更新时间:2020-10-26
+更新时间：2020-11-03
 东东农场活动链接：https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
@@ -75,7 +75,7 @@ async function jdFruit() {
   if ($.farmInfo.farmUserPro) {
     // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
     subTitle = `【水果名称】${$.farmInfo.farmUserPro.name}`;
-    message = `【京东账号${$.index}】${$.UserName}\n`;
+    message = `【京东账号${$.index}】${$.nickName}\n`;
     console.log(`\n【您的互助码shareCode】 ${$.farmInfo.farmUserPro.shareCode}\n`);
     console.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
     await masterHelpShare();//助力好友
@@ -83,7 +83,7 @@ async function jdFruit() {
       option['open-url'] = "openApp.jdMobile://";
       $.msg($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
+        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
       return
     } else if ($.farmInfo.treeState === 1){
@@ -93,7 +93,7 @@ async function jdFruit() {
       option['open-url'] = "openApp.jdMobile://";
       $.msg($.name, `【提醒⏰】请重新种植水果`, `上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n请去京东APP或微信小程序选购并种植新的水果\n`, option);
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}请重新种植水果`, `京东账号${$.index} ${$.UserName}\n上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n\n请去京东APP或微信小程序选购并种植新的水果`);
+        await notify.sendNotify(`${$.name}请重新种植水果`, `京东账号${$.index} ${$.nickName}\n上轮水果${$.farmInfo.farmUserPro.name}已兑换成功\n\n请去京东APP或微信小程序选购并种植新的水果`);
       }
       return
     }
@@ -273,11 +273,8 @@ async function doTenWater() {
       $.msg($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       $.done();
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
+        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
-      // }
     }
   } else {
     console.log('\n今日已完成10次浇水任务\n');
@@ -402,11 +399,8 @@ async function doTenWaterAgain() {
       $.msg($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       $.done();
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
+        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
-      // }
     }
   } else if (overageEnergy >= 10) {
     console.log("目前剩余水滴：【" + totalEnergy + "】g，可继续浇水");
@@ -433,11 +427,8 @@ async function doTenWaterAgain() {
       $.msg($.name, `【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取`, '请去京东APP或微信小程序查看', option);
       $.done();
       if ($.isNode()) {
-        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
+        await notify.sendNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.nickName}\n${$.farmInfo.farmUserPro.name}已可领取`);
       }
-      // if ($.isNode()) {
-      //   await notify.BarkNotify(`${$.name}水果已可领取`, `京东账号${$.index} ${$.UserName}\n${$.farmInfo.farmUserPro.name}已可领取`);
-      // }
     }
   } else {
     console.log("目前剩余水滴：【" + totalEnergy + "】g,不再继续浇水,保留部分水滴用于完成第二天【十次浇水得水滴】任务")
@@ -615,7 +606,7 @@ async function masterHelpShare() {
   console.log(`格式化后的助力码::${JSON.stringify(newShareCodes)}\n`);
 
   for (let code of newShareCodes) {
-    console.log(`开始助力京东账号${$.index} - ${$.UserName}的好友: ${code}`);
+    console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${code}`);
     if (!code) continue;
     if (code === $.farmInfo.farmUserPro.shareCode) {
       console.log('不能为自己助力哦，跳过自己的shareCode\n')
@@ -1191,7 +1182,7 @@ async function showMsg() {
   if (ctrTemp) {
     $.msg($.name, subTitle, message, option);
     if ($.isNode()) {
-      await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.UserName}`, `${subTitle}\n${message}`);
+      await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
     }
   } else {
     $.log(`\n${message}\n`);

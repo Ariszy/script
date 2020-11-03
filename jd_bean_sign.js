@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-10-31
+更新时间：2020-11-03
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -35,9 +35,11 @@ if ($.isNode()) {
   for (let i =0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
-      UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1])
       $.index = i + 1;
-      console.log(`开始京东账号${$.index} ${UserName}京豆签到\n`);
+      $.nickName = '';
+      await TotalBean();
+      console.log(`开始京东账号${$.index} ${$.nickName || $.UserName}京豆签到\n`);
       await changeFile(content);
       console.log('替换变量完毕')
       // 执行
@@ -80,14 +82,14 @@ if ($.isNode()) {
           if (BarkContent) {
             // await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
             // BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
-            await notify.sendNotify(`账号${$.index} ${UserName}京豆签到`, `【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
+            await notify.sendNotify(`账号${$.index} ${$.nickName || $.UserName}京豆签到`, `【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
           }
         }
         //运行完成后，删除下载的文件
         console.log('运行完成后，删除下载的文件\n')
         await deleteFile(path);//删除result.txt
         await deleteFile(JD_DailyBonusPath);//删除JD_DailyBonus.js
-        console.log(`京东账号${$.index} ${UserName}京豆签到完成\n`);
+        console.log(`京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成\n`);
       } catch (e) {
         console.log("京东签到脚本执行异常:" + e);
       }
@@ -128,6 +130,46 @@ async function deleteFile(path) {
     const unlinkRes = await fs.unlinkSync(path);
     // console.log('unlinkRes', unlinkRes)
   }
+}
+function TotalBean() {
+  return new Promise(async resolve => {
+    const options = {
+      "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+      "headers": {
+        "Accept": "application/json,text/plain, */*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Cookie": cookie,
+        "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1"
+      }
+    }
+    $.post(options, (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`${$.name} API请求失败，请检查网路重试`)
+        } else {
+          if (data) {
+            data = JSON.parse(data);
+            if (data['retcode'] === 13) {
+              $.isLogin = false; //cookie过期
+              return
+            }
+            $.nickName = data['base'].nickname;
+          } else {
+            console.log(`京东服务器返回空数据`)
+          }
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
 }
 function timeFormat(time) {
   let date;
