@@ -119,9 +119,9 @@ const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
         $.j = index;
         await JD_XTG();
       }
-      console.log(`\n等待3秒后，再去领取奖励\n`)
+      console.log(`\n等待8秒后，再去领取奖励\n`)
       console.log(`做任务之前京豆总计:${$.beanCount}`)
-      await $.wait(3000);
+      await $.wait(8000);
       for (let index = 0; index < starID.length; index ++) {
         $.activeId = starID[index];
         $.j = index;
