@@ -582,7 +582,7 @@ async function getExtraAward() {
       }
     } else {
       console.log("助力好友未达到5个");
-      message += `【额外奖励】领取失败,原因：助力好友未达5个\n`;
+      message += `【额外奖励】领取失败,原因：给您助力的人未达5个\n`;
     }
     if ($.masterHelpResult.masterHelpPeoples && $.masterHelpResult.masterHelpPeoples.length > 0) {
       let str = '';

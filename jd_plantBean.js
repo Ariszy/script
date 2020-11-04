@@ -102,6 +102,7 @@ async function jdPlantBean() {
     await doCultureBean();
     await doGetReward();
     await showTaskProcess();
+    await plantShareSupportList();
   } else {
     console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
   }
@@ -462,6 +463,25 @@ async function receiveNutrientsTask(awardType) {
     "awardType": `${awardType}`,
   }
   $.receiveNutrientsTaskRes = await requestGet(functionId, body);
+}
+async function plantShareSupportList() {
+  $.shareSupportList = await requestGet('plantShareSupportList', {"roundId": ""});
+  if ($.shareSupportList && $.shareSupportList.code === '0') {
+    const { data } = $.shareSupportList;
+    //当日北京时间0点时间戳
+    const UTC8_Zero_Time = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
+    //次日北京时间0点时间戳
+    const UTC8_End_Time = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 + (24 * 60 * 60 * 1000);
+    let friendList = [];
+    data.map(item => {
+      if (UTC8_Zero_Time <= item['createTime'] && item['createTime'] < UTC8_End_Time) {
+        friendList.push(item);
+      }
+    })
+    message += `【助力您的好友】共${friendList.length}人`;
+  } else {
+    console.log(`异常情况：${JSON.stringify($.shareSupportList)}`)
+  }
 }
 //助力好友的api
 async function helpShare(plantUuid) {

@@ -1,6 +1,6 @@
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js
-更新时间：2020-11-03
+更新时间：2020-11-04
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
@@ -224,7 +224,7 @@ async function masterHelpInit() {
       }
     } else {
       console.log("助力好友未达到5个")
-      message += `【额外奖励】领取失败，原因：助力好友未达5个\n`;
+      message += `【额外奖励】领取失败，原因：给您助力的人未达5个\n`;
     }
     if (res.result.masterHelpPeoples && res.result.masterHelpPeoples.length > 0) {
       console.log('帮您助力的好友的名单开始')
