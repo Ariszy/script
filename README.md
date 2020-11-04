@@ -41,7 +41,7 @@
 20.  京豆变动通知([jd_bean_change.js](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_bean_change.js))
 21.  以及其他一部分在特定时间可用的薅京豆脚本，如 [手机狂欢城](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_818.js) 、[星推官](https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js) 等。
 
-**脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), JSBox, Node.js**
+**脚本兼容: [QuantumultX](https://apps.apple.com/us/app/quantumult-x/id1443988620), [Surge](https://apps.apple.com/us/app/surge-4/id1442620678), [Loon](https://apps.apple.com/us/app/loon/id1373567447), 小火箭, JSBox, Node.js**
 
 **TODO**
 
@@ -80,7 +80,7 @@
 
   - 方法四Docker安装Cookie请见各自的说明。
 
-### 方法五：iOS系统的代理软件（QuantumultX, Surge, Loon）
+### 方法五：iOS系统的代理软件（QuantumultX, Surge, Loon, 小火箭）
 
 #### 以下内容只针对iOS用户
 
