@@ -2,11 +2,11 @@
 #!desc=iOS Tasks 模块配置
 #!system=ios
 
-# Loon软件Task配置 By lxk0301
+# Task模块配置 By lxk0301
 # GitHub主页(https://github.com/lxk0301/scripts)
 # TG讨论组 (https://t.me/JD_fruit_pet)
 # TG通知频道 (https://t.me/jdfruit)
-# Surge的Task脚本模块: https://raw.githubusercontent.com/lxk0301/scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule
+# Surge的Task脚本模块地址: https://raw.githubusercontent.com/lxk0301/scripts/master/Surge/lxk0301_Task.sgmodule.sgmodule
 
 [Script]
 
