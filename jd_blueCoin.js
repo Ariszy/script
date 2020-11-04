@@ -231,8 +231,8 @@ function smtg_queryPrize(timeout = 0){
               }
               if (prizeId) {
                 if (prizeList[i].inStock === 506) {
-                  console.log(`失败，${coinToBeans}领光了，请明天再来`);
-                  $.beanerr = `失败，${coinToBeans}领光了，请明天再来`;
+                  console.log(`失败，您输入设置的${coinToBeans}领光了，请明天再来`);
+                  $.beanerr = `失败，您输入设置的${coinToBeans}领光了，请明天再来`;
                   return ;
                 }
                 if (prizeList[i].targetNum === prizeList[i].finishNum) {
@@ -246,7 +246,7 @@ function smtg_queryPrize(timeout = 0){
                   $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
                 }
               } else {
-                console.log(`奖品兑换列表[${coinToBeans}]已下架`);
+                console.log(`奖品兑换列表[${coinToBeans}]已下架，请检查APP是否存在此商品，如存在请检查您的输入是否正确`);
                 $.beanerr = `奖品兑换列表[${coinToBeans}]已下架`;
               }
             }

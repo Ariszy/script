@@ -123,6 +123,9 @@ function BarkNotify(text, desp, params={}) {
     if (BARK_PUSH) {
       const options = {
         url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}&${querystring.stringify(params)}`,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
       }
       $.get(options, (err, resp, data) => {
         try {
