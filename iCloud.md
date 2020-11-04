@@ -1,6 +1,6 @@
 ## 1.安装 Node.js 环境
 
-[下载地址]: https://nodejs.org/zh-tw/download/
+[下载地址](https://nodejs.org/zh-tw/download/ )
 
 根据自己的操作系统下载
 
@@ -59,7 +59,7 @@ let CookieJDs = [
 
 ## 4.上传至腾讯云
 
-[腾讯云地址]: https://console.cloud.tencent.com/scf/index
+[腾讯云函数地址]( https://console.cloud.tencent.com/scf/index )
 
 登录后，点击管理控制台
 
@@ -91,9 +91,7 @@ let CookieJDs = [
 
 关于触发周期中的自定义触发周期，使用的是 Cron表达式，这个自行学习下吧
 
-[Corn文档]: https://cloud.tencent.com/document/product/583/9708#cron-.E8.A1.A8.E8.BE.BE.E5.BC.8F
-
-
+[Corn文档](https://cloud.tencent.com/document/product/583/9708#cron-.E8.A1.A8.E8.BE.BE.E5.BC.8F  )
 
 
 
