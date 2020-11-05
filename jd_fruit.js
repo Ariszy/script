@@ -909,7 +909,9 @@ async function getFullCollectionReward() {
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
-          $.duckRes = JSON.parse(data);
+          if (safeGet(data)) {
+            $.duckRes = JSON.parse(data);
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -1143,7 +1145,9 @@ async function initForFarm() {
           console.log(JSON.stringify(err));
           $.logErr(err);
         } else {
-          $.farmInfo = JSON.parse(data)
+          if (safeGet(data)) {
+            $.farmInfo = JSON.parse(data)
+          }
         }
       } catch (e) {
         $.logErr(e, resp)
@@ -1355,13 +1359,10 @@ function request(function_id, body = {}, timeout = 1000){
             console.log(JSON.stringify(err));
             console.log(`function_id:${function_id}`)
             $.logErr(err);
-            // if ($.isNode()) {
-            //   throw err
-            // } else {
-            //   throw new Error(err);
-            // }
           } else {
-            data = JSON.parse(data);
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+            }
           }
         } catch (e) {
           $.logErr(e, resp);
@@ -1372,7 +1373,17 @@ function request(function_id, body = {}, timeout = 1000){
     }, timeout)
   })
 }
-
+function safeGet(data) {
+  try {
+    if (typeof JSON.parse(data) == "object") {
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
+    console.log(`京东服务器访问数据为空，请检查自身设备网络情况`);
+    return false;
+  }
+}
 function taskUrl(function_id, body = {}) {
   return {
     url: `${JD_API_HOST}?functionId=${function_id}&appid=wh5&body=${escape(JSON.stringify(body))}`,
