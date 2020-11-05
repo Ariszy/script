@@ -27,9 +27,9 @@
 
  **增加入口文件**
 
-在项目文件夹内新建 `index.js`
+方案一：同一个仓库下同一个时间，执行多个脚本
 
-同一个仓库下同一个时间执行多个脚本
+在项目文件夹内新建 `index.js`
 
 编辑文件
 
@@ -42,9 +42,11 @@ exports.main_handler = async (event, context, callback) => {
 }
 
 ```
-此时，同一时间点下，同时执行多个脚本
+此时，同一时间点下，会同时执行多个脚本，触发器触发后，index.js文件中require()下的所有脚本都会被执行
 
-同一个仓库下不同的时间点分别执行不同的脚本（类似GitHub Action执行机制）
+方案二：同一个仓库下不同的时间点，分别执行不同的脚本（类似GitHub Action执行机制）
+
+在项目文件夹内新建 `index.js`
 
 编辑文件
 
@@ -59,10 +61,13 @@ exports.main_handler = async (event, context, callback) => {
 
 ```
 
-此时触发管理按照下图中进行设置，附加信息选择“是”，内容填写需要传递执行的具体脚本文件名，以回车键换行
+此时触发管理按照下图中进行设置，附加信息选择“是”，内容填写需要传递执行的具体脚本文件名，以回车键换行。触发器触发后，附加信息栏内的脚本会被执行，设置多个不同时间点的触发器达到类似GitHub Action的效果
 
 
 [![B20KxI.png](https://s1.ax1x.com/2020/11/05/B20KxI.png)](https://imgchr.com/i/B20KxI)
+[![BRCG0H.png](https://s1.ax1x.com/2020/11/05/BRCG0H.png)](https://imgchr.com/i/BRCG0H)
+
+注意：方案一与方案二不能混合到同一个index.js文件中使用，同一个仓库下，二者只能选择其一
 
 
  **增加cookie**
