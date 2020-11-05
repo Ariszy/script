@@ -1,6 +1,6 @@
 /*
 宠汪汪积分兑换奖品脚本, 目前脚本只兑换京豆，兑换京豆成功，才会发出通知提示，其他情况不通知。
-更新时间：2020-11-03
+更新时间：2020-11-05
 兑换规则：一个账号一天只能兑换一次京豆。
 1-20级：340积分兑换20京豆, 21-25级：320积分换20京豆
 再往上的等级兑换规则目前不知，欢迎大家提供信息
@@ -19,7 +19,7 @@ cron "0 0-16/8 * * *" script-path=https://raw.githubusercontent.com/lxk0301/scri
 宠汪汪积分兑换奖品 = type=cron,cronexp="0 0-16/8 * * *",wake-system=1,timeout=20,script-path=https://raw.githubusercontent.com/lxk0301/scripts/master/jd_joy_reward.js
  */
 const $ = new Env('宠汪汪积分兑换奖品');
-const joyRewardName = $.getdata('joyRewardName') || '1';//是否兑换京豆，默认开启兑换功能，其中'1'为兑换，'0'为不兑换京豆
+let joyRewardName = 20;//是否兑换京豆，默认开启兑换功能，其中20为兑换20京豆,500为兑换500京豆，0为不兑换京豆.数量有限先到先得
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -80,8 +80,21 @@ async function joyReward() {
     console.log(`宠物等级 ${data.level}\n`);
     console.log(`京东昵称 ${$.nickName}\n`);
     let saleInfoId = '', giftValue = '', extInfo = '', leftStock = 0, salePrice = 0;
+    let rewardNum = 0;
+    if ($.isNode() && process.env.JD_JOY_REWARD_NAME) {
+      rewardNum = process.env.JD_JOY_REWARD_NAME * 1;
+    } else if ($.getdata('joyRewardName')) {
+      if ($.getdata('joyRewardName') * 1 === 1) {
+        //兼容之前的BoxJs设置
+        rewardNum = 20;
+      } else {
+        rewardNum = $.getdata('joyRewardName') * 1;
+      }
+    } else {
+      rewardNum = joyRewardName;
+    }
     for (let item of giftSaleInfos) {
-      if (item.giftType === 'jd_bean') {
+      if (item.giftType === 'jd_bean' && item['giftValue'] === rewardNum) {
         saleInfoId = item.id;
         leftStock = item.leftStock;
         salePrice = item.salePrice;
@@ -89,8 +102,9 @@ async function joyReward() {
       }
     }
     console.log(`当前京豆库存:${leftStock}`)
+    console.log(`saleInfoId:${saleInfoId}`)
     // 兼容之前BoxJs兑换设置的数据
-    if (joyRewardName && (joyRewardName === '-1' || joyRewardName === '1' || joyRewardName === '20' || joyRewardName === '50' || joyRewardName === '100' || joyRewardName === '500' || joyRewardName === '1000')) {
+    if (rewardNum && (rewardNum === 1 || rewardNum === 20 || rewardNum === 50 || rewardNum === 100 || rewardNum === 500 || rewardNum === 1000)) {
       //开始兑换
       if (data.coin >= salePrice) {
         if (leftStock) {
@@ -118,17 +132,17 @@ async function joyReward() {
               //   await notify.BarkNotify(`${$.name}`, `【京东账号${$.index}】 ${$.nickName}\n【兑换${giftName}】成功\n【宠物等级】${data.level}\n【消耗积分】${salePrice}分\n【当前剩余】${data.coin - salePrice}积分`);
               // }
             } else if ($.exchangeRes && $.exchangeRes.errorCode === 'buy_limit') {
-              console.log('兑换失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~')
+              console.log(`兑换${rewardNum}京豆失败，原因：兑换京豆已达上限，请把机会留给更多的小伙伴~`)
               //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n兑换京豆已达上限\n请把机会留给更多的小伙伴~\n`)
             } else {
               console.log(`兑奖异常:${JSON.stringify($.exchangeRes)}`)
             }
           }
         } else {
-          console.log('兑换失败，原因：京豆库存不足，已抢完，请下一场再兑换')
+          console.log(`兑换${rewardNum}京豆失败，原因：京豆库存不足，已抢完，请下一场再兑换`)
         }
       } else {
-        console.log(`兑换失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
+        console.log(`兑换${rewardNum}京豆失败，原因：您目前只有${data.coin}积分，已不足兑换${giftValue}京豆所需的${salePrice}积分\n`)
         //$.msg($.name, `兑换${giftName}失败`, `【京东账号${$.index}】${$.nickName}\n目前只有${data.coin}积分\n已不足兑换${giftName}所需的${salePrice}积分\n`)
       }
     } else {
