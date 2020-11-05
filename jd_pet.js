@@ -420,13 +420,14 @@ async function showMsg() {
 }
 function readShareCode() {
   return new Promise(resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/pet/read/5/`}, (err, resp, data) => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/pet/read/10/`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
+            console.log('随机取10个码放到您固定的互助码后面')
             data = JSON.parse(data);
           }
         }
