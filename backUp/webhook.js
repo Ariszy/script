@@ -2,7 +2,7 @@
  * @Author: lxk0301 https://github.com/lxk0301 
  * @Date: 2020-10-24 18:53:29 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-10-26 18:54:13
+ * @Last Modified time: 2020-11-05 18:54:13
  */
 
 const $ = new Env('Webhook触发Action');
@@ -59,9 +59,9 @@ function hook(key) {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          if (data.match('404')) {
+          if (data && data.match('404')) {
             $.msg($.name, ``, `触发[${key}]失败,请仔细检查提供的参数`, {"open-url": `https://github.com/${githubUser}/${repo}`})
-          } else if (data.match('401')) {
+          } else if (data && data.match('401')) {
             $.msg($.name, ``, `触发[${key}]失败,github token权限不足`, {"open-url": `https://github.com/settings/tokens`})
           } else {
             console.log(`${JSON.stringify(err)}`)
