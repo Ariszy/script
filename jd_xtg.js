@@ -2,7 +2,7 @@
  * @Author: lxk0301 
  * @Date: 2020-10-21 17:04:04 
  * @Last Modified by: lxk0301
- * @Last Modified time: 2020-11-04 00:35:04
+ * @Last Modified time: 2020-11-05 00:35:04
  */
 /**
  星推官脚本 https://raw.githubusercontent.com/lxk0301/scripts/master/jd_xtg.js
@@ -11,7 +11,7 @@
  京豆先到先得！！！！！！！！！！！
  出现任务做完没领取的情况，就再运行一次脚本
  能做完所有的任务，包括自动抽奖,脚本会给内置的shareId助力
- 一共22个活动，耗时比较久，surge请加大timeout时间
+ 一共23个活动，耗时比较久，surge请加大timeout时间
  支持京东双账号
  脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
  // quantumultx
@@ -67,6 +67,7 @@ const starID = [
   "sanxingningjing",
   "xiaojiadianxiongziqi",
   "heidianliyitong",
+  "oulebzhangyixing",
 ];
 const shareID = [
   'e646c144-28a7-4b1b-8145-5b0dbff107ec',
@@ -88,6 +89,8 @@ const shareID = [
   "dd6b5270-3e5e-436d-be0f-295a8604cf47",
   "7aef5700-4fa0-43b8-98fa-3a09f46ea47c",
   "be0ec81c-bf26-4b7b-9527-d02b0286e5af",
+  "ecd890e0-db46-46c7-862e-cb9776c207dc",
+  "91ceb3eb-df84-471e-ad77-320cd95763ee",
 ];
 const JD_API_HOST = 'https://urvsaggpt.m.jd.com/guardianstar';
 !(async () => {
