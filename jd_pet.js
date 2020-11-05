@@ -32,13 +32,13 @@ let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好�
    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
   'MTAxODc2NTEzNTAwMDAwMDAwMjg3MDg2MA==@MTAxODc2NTEzMzAwMDAwMDAyNzUwMDA4MQ==@MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODc2NTEzNDAwMDAwMDAzMDI2MDI4MQ==@MTAxODcxOTI2NTAwMDAwMDAxOTQ3MjkzMw==',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==',
+  'MTAxODc2NTEzMjAwMDAwMDAzMDI3MTMyOQ==@MTAxODcxOTI2NTAwMDAwMDAyNjA4ODQyMQ==@MTAxODc2NTEzOTAwMDAwMDAyNzE2MDY2NQ==',
 ]
 let message = '', subTitle = '', option = {};
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 let goodsUrl = '', taskInfoKey = [];
-
+let randomCount = 20;
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -420,14 +420,14 @@ async function showMsg() {
 }
 function readShareCode() {
   return new Promise(resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/pet/read/10/`}, (err, resp, data) => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/pet/read/${randomCount}/`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log('随机取10个码放到您固定的互助码后面')
+            console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
             data = JSON.parse(data);
           }
         }

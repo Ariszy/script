@@ -31,12 +31,13 @@ let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
   '0a74407df5df4fa99672a037eec61f7e@dbb21614667246fabcfd9685b6f448f3@6fbd26cc27ac44d6a7fed34092453f77@61ff5c624949454aa88561f2cd721bf6',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'b1638a774d054a05a30a17d3b4d364b8@f92cb56c6a1349f5a35f0372aa041ea0@9c52670d52ad4e1a812f894563c746ea',
+  'b1638a774d054a05a30a17d3b4d364b8@f92cb56c6a1349f5a35f0372aa041ea0@9c52670d52ad4e1a812f894563c746ea@8175509d82504e96828afc8b1bbb9cb3',
 ]
 let message = '', subTitle = '', option = {}, isFruitFinished = false;
 const retainWater = 100;//保留水滴大于多少g,默认100g;
 let jdNotify = false;//是否关闭通知，false打开通知推送，true关闭通知推送
 let jdFruitBeanCard = false;//农场使用水滴换豆卡(如果出现限时活动时100g水换20豆,此时比浇水划算,推荐换豆),true表示换豆(不浇水),false表示不换豆(继续浇水),脚本默认是浇水
+let randomCount = 20;
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
   await requireConfig();
@@ -78,8 +79,8 @@ async function jdFruit() {
   await initForFarm();
   if ($.farmInfo.farmUserPro) {
     // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
-    subTitle = `【水果名称】${$.farmInfo.farmUserPro.name}`;
-    message = `【京东账号${$.index}】${$.nickName}\n`;
+    subTitle = `【京东账号${$.index}】${$.nickName}\n`;
+    message = `【水果名称】${$.farmInfo.farmUserPro.name}\n`;
     console.log(`\n【您的互助码shareCode】 ${$.farmInfo.farmUserPro.shareCode}\n`);
     console.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
     await masterHelpShare();//助力好友
@@ -1208,14 +1209,14 @@ function timeFormat(time) {
 }
 function readShareCode() {
   return new Promise(resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/farm/read/10/`}, (err, resp, data) => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/farm/read/${randomCount}/`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log('随机取10个码放到您固定的互助码后面')
+            console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
             data = JSON.parse(data);
           }
         }

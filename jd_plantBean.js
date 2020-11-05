@@ -42,7 +42,7 @@ let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
 let roundList = [];
 let awardState = '';//上期活动的京豆是否收取
-
+let randomCount = 20;
 !(async () => {
   await requireConfig();
   if (!cookiesArr[0]) {
@@ -498,14 +498,14 @@ async function plantBeanIndex() {
 }
 function readShareCode() {
   return new Promise(resolve => {
-    $.get({url: `http://api.turinglabs.net/api/v1/jd/bean/read/10/`}, (err, resp, data) => {
+    $.get({url: `http://api.turinglabs.net/api/v1/jd/bean/read/${randomCount}/`}, (err, resp, data) => {
       try {
         if (err) {
           console.log(`${JSON.stringify(err)}`)
           console.log(`${$.name} API请求失败，请检查网路重试`)
         } else {
           if (data) {
-            console.log('随机取10个码放到您固定的互助码后面')
+            console.log(`随机取个${randomCount}码放到您固定的互助码后面`)
             data = JSON.parse(data);
           }
         }
