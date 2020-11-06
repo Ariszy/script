@@ -27,8 +27,7 @@
     
 6. 按照以下格式形成自己的jd_cookie
       - `pt_key=复制插件搜索出来的key值;pt_pin=复制插件搜索出来的pin值;` ,后面的英文引号`;`是必须要的
-      - 给一个京东cookie具体示例 `pt_key=jdDC2F833333EFDGTCE5BD4AD1A952D4F4DF84A46052;pt_pin=jd_123456;`
-      - 两个京东账号cookie示例如下 `pt_key=abc;pt_pin=jd_123;&pt_key=def;pt_pin=jd_456;`,再多个依次类推,使用`&`隔开即可
+      - 给一个京东cookie具体示例 `pt_key=jdDC2F833333EFDGTCE5BD4AD1A952D4F4DF84A46052;pt_pin=jd_123456;`      
 
 7. 如果需获取第二个京东账号的cookie,不要在刚才的浏览器上面退出登录账号一(否则刚才获取的cookie会失效),需另外换一个浏览器(Chrome浏览器 `ctr+shift+n` 打开无痕模式也行),然后继续按上面步骤操作即可
 
