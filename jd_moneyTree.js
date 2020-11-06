@@ -50,7 +50,7 @@ let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
         $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取cookie`);
+        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         continue
       }
       message = '';
@@ -133,21 +133,7 @@ function user_info() {
                 }
               }
             } else {
-              if (res.resultCode === 3) {
-                $.isLogin = false;
-                $.msg($.name, `【提示】京东账号${$.index}${UserName}cookie已失效,请重新登录获取`, 'https://bean.m.jd.com/', { "open-url": "https://bean.m.jd.com/" });
-                if ($.index === 1) {
-                  $.setdata('', 'CookieJD');//cookie失效，故清空cookie。
-                } else if ($.index === 2){
-                  $.setdata('', 'CookieJD2');//cookie失效，故清空cookie。
-                }
-                if ($.isNode()) {
-                  await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-                }
-                // if ($.isNode()) {
-                //   await notify.BarkNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${UserName}\n请重新登录获取cookie`);
-                // }
-              }
+              console.log(`其他情况::${JSON.stringify(res)}`);
             }
           } else {
             console.log(`京豆api返回数据为空，请检查自身原因`)

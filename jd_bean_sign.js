@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-11-03
+更新时间：2020-11-06
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -39,65 +39,64 @@ if ($.isNode()) {
       $.index = i + 1;
       $.nickName = '';
       await TotalBean();
-      console.log(`开始京东账号${$.index} ${$.nickName || $.UserName}京豆签到\n`);
+      console.log(`*****************开始京东账号${$.index} ${$.nickName || $.UserName}京豆签到*******************\n`);
+      console.log(`⚠⚠⚠⚠⚠⚠⚠⚠  如遇到Bark APP推送通知消息失败的,请换用其他通知方式,Bark对推送内容长度有限制  ⚠⚠⚠⚠⚠⚠⚠⚠⚠\n`)
       await changeFile(content);
-      console.log('替换变量完毕')
-      // 执行
-      try {
-        if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID) || notify.IGOT_PUSH_KEY) {
-          await exec("node JD_DailyBonus.js >> result.txt");
-        } else {
-          // 如果没有提供通知推送，则打印日志
-          console.log('没有提供通知推送，则打印脚本执行日志')
-          await exec(`node JD_DailyBonus.js`, { stdio: "inherit" });
-        }
-        // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
-        // console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
-        //发送通知
-        if ($.isNode()) {
-          let notifyContent = "";
-          let BarkContent = '';
-          if (fs.existsSync(path)) {
-            notifyContent = await fs.readFileSync(path, "utf8");
-            const barkContentStart = notifyContent.indexOf('【签到概览】')
-            // const barkContentEnd = content.indexOf("【左滑 '查看' 以显示签到详情】");
-            const barkContentEnd = notifyContent.length;
-            if (barkContentStart > -1 && barkContentEnd > -1) {
-              BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
-            }
-          }
-          //不管哪个时区,这里得到的都是北京时间的时间戳;
-          const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
-          // if (new Date().getTimezoneOffset() === 0) {
-          //   //UTC-0(国际标准时间)，现转换成北京时间
-          //   $.beanSignTime = timeFormat(new Date().getTime() + 8 * 60 * 60 * 1000);
-          // } else if (new Date().getTimezoneOffset() === -480) {
-          //   //UTC+8北京时间
-          //   $.beanSignTime = timeFormat(new Date().getTime());
-          // } else {
-          //   $.beanSignTime = timeFormat(UTC8);
-          // }
-          $.beanSignTime = timeFormat(UTC8);
-          console.log(`执行完毕北京时间：${$.beanSignTime}`)
-          if (BarkContent) {
-            // await notify.BarkNotify(`账户${$.index} ${UserName}京豆签到`, `【签到时间】： ${beanSignTime}\n${BarkContent}`);
-            // BarkContent = BarkContent.replace(/[\n\r]/g, '\n\n');
-            await notify.sendNotify(`账号${$.index} ${$.nickName || $.UserName}京豆签到`, `【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
-          }
-        }
-        //运行完成后，删除下载的文件
-        console.log('运行完成后，删除下载的文件\n')
-        await deleteFile(path);//删除result.txt
-        await deleteFile(JD_DailyBonusPath);//删除JD_DailyBonus.js
-        console.log(`京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成\n`);
-      } catch (e) {
-        console.log("京东签到脚本执行异常:" + e);
-      }
+      await  execSign();
     }
   }
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
+async function execSign() {
+  console.log(`\n开始执行脚本签到，请稍等`)
+  try {
+    if (notify.SCKEY || notify.BARK_PUSH || notify.DD_BOT_TOKEN || (notify.TG_BOT_TOKEN && notify.TG_USER_ID) || notify.IGOT_PUSH_KEY) {
+      await exec("node JD_DailyBonus.js >> result.txt");
+    } else {
+      // 如果没有提供通知推送，则打印日志
+      console.log('没有提供通知推送，则打印脚本执行日志')
+      await exec(`node JD_DailyBonus.js`, { stdio: "inherit" });
+    }
+    // await exec("node JD_DailyBonus.js", { stdio: "inherit" });
+    // console.log('执行完毕', new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleDateString())
+    //发送通知
+    if ($.isNode()) {
+      let notifyContent = "";
+      let BarkContent = '';
+      if (fs.existsSync(path)) {
+        notifyContent = await fs.readFileSync(path, "utf8");
+        const barkContentStart = notifyContent.indexOf('【签到概览】')
+        const barkContentEnd = notifyContent.length;
+        if (process.env.JD_BEAN_SIGN_STOP_NOTIFY === 'true') return
+        if (process.env.JD_BEAN_SIGN_NOTIFY_SIMPLE === 'true') {
+          if (barkContentStart > -1 && barkContentEnd > -1) {
+            BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
+          }
+          BarkContent = BarkContent.split('\n\n')[0];
+        } else {
+          if (barkContentStart > -1 && barkContentEnd > -1) {
+            BarkContent = notifyContent.substring(barkContentStart, barkContentEnd);
+          }
+        }
+      }
+      //不管哪个时区,这里得到的都是北京时间的时间戳;
+      const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
+      $.beanSignTime = timeFormat(UTC8);
+      console.log(`脚本执行完毕时间：${$.beanSignTime}`)
+      if (BarkContent) {
+        await notify.sendNotify(`京豆签到 - 账号${$.index} - ${$.nickName || $.UserName}`, `【签到号 ${$.index}】: ${$.nickName || $.UserName}\n【签到时间】:  ${$.beanSignTime}\n${BarkContent}`);
+      }
+    }
+    //运行完成后，删除下载的文件
+    console.log('运行完成后，删除下载的文件\n')
+    await deleteFile(path);//删除result.txt
+    await deleteFile(JD_DailyBonusPath);//删除JD_DailyBonus.js
+    console.log(`*****************京东账号${$.index} ${$.nickName || $.UserName}京豆签到完成*******************\n`);
+  } catch (e) {
+    console.log("京东签到脚本执行异常:" + e);
+  }
+}
 async function downFile () {
   let url = '';
   if (process.env.CDN_JD_DAILYBONUS) {
@@ -111,6 +110,7 @@ async function downFile () {
 }
 
 async function changeFile (content) {
+  console.log(`开始替换变量`)
   let newContent = content.replace(/var Key = ''/, `var Key = '${cookie}'`);
   if (process.env.JD_BEAN_STOP && process.env.JD_BEAN_STOP !== '0') {
     newContent = newContent.replace(/var stop = 0/, `var stop = ${process.env.JD_BEAN_STOP * 1}`);
@@ -121,7 +121,8 @@ async function changeFile (content) {
     newContent = newContent.replace(/tm\s=.*/, `tm = new Date(new Date().toLocaleDateString()).getTime() - 28800000;`);
   }
   try {
-    await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8')
+    await fs.writeFileSync( './JD_DailyBonus.js', newContent, 'utf8');
+    console.log('替换变量完毕');
   } catch (e) {
     console.log("京东签到写入文件异常:" + e);
   }

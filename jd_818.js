@@ -71,7 +71,7 @@ let helpCode = []
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/`, {"open-url": "https://bean.m.jd.com/"});
         $.setdata('', `CookieJD${i ? i + 1 : "" }`);//cookie失效，故清空cookie。
-        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取cookie`);
+        if ($.isNode()) await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         continue
       }
       message = '';
@@ -693,7 +693,7 @@ function getHelp() {
             if (zone === 0) {
               NowHours += 8;//UTC-0时区加上8个小时
             }
-            if(ctrTemp && NowHours === 9 && $.isNode()) await notify.sendNotify(`[${$.name}]互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n ${addUrl}${data.data.shareId} \n\n ↑↑↑`, {
+            if(ctrTemp && NowHours === 9 && $.isNode()) await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}互助码自动上车`, `[9:00之后上车]您的互助码上车链接是 ↓↓↓ \n\n ${addUrl}${data.data.shareId} \n\n ↑↑↑`, {
               url: `${addUrl}${data.data.shareId}`
             })
             // await $.http.get({url: `http://jd.turinglabs.net/helpcode/add/${data.data.shareId}/`}).then((resp) => {
