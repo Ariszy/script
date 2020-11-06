@@ -99,11 +99,11 @@ let CookieJDs = [
 单击左侧导航栏【函数服务】，进入“函数服务”页面。
 在页面上方选择一个地域，最好选择离你常用地区近点的，不至于导致账号异常。单击【新建】。如下图所示：
 
-![iCloud1](../icon/iCloud1.png)
+![iCloud1](./icon/iCloud1.png)
 
 在“新建函数”页面填写函数基础信息，单击【下一步】。如下图所示：
 
-![iCloud2](../icon/iCloud2.png)
+![iCloud2](./icon/iCloud2.png)
 
 函数名称：可以自定义，比如为jd。
 运行环境：选择 “Nodejs 12.16”。
@@ -111,11 +111,11 @@ let CookieJDs = [
 
 确保环境为Nodejs 12.16，执行方法改为：index.main_handler，提交方式一定要选本地文件夹，然后从GitHub项目克隆Zip压缩包，解压成文件夹，然后点击这个上传把文件夹上传进来，完了后点击下面的高级设置。
 
-![iCloud3](../icon/iCloud3.png)
+![iCloud3](./icon/iCloud3.png)
 
 内存用不了太大，64MB就够了，超时时间改为最大的900秒，然后点击最下面的完成。
 
-![iCloud4](../icon/iCloud4.png)
+![iCloud4](./icon/iCloud4.png)
 
 ## 5.设置触发器
 
@@ -133,7 +133,7 @@ let CookieJDs = [
 
 关于触发周期中的自定义触发周期，使用的是 Cron表达式，这个自行学习下吧
 
-[Corn文档](https://cloud.tencent.com/document/product/583/9708#cron-.E8.A1.A8.E8.BE.BE.E5.BC.8F  )
+[Corn文档](https://cloud.tencent.com/document/product/583/9708#cron-.E8.A1.A8.E8.BE.BE.E5.BC.8F)
 
 
 
