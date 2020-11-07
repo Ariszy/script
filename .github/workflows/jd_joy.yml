@@ -18,19 +18,25 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - name: Checkout
-        run: |
-          git clone https://github.com/lxk0301/scripts.git ~/scripts
-      - name: Use Node.js 10.x
+        uses: actions/checkout@v2
+        with:
+          repository: lxk0301/scripts
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v2 # 使用 GitHub 官方的缓存 Action。
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
       - name: npm install
         run: |
-          cd ~/scripts
           npm install
       - name: '运行 【宠汪汪】'
         run: |
-          cd ~/scripts
           node jd_joy.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
