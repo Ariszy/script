@@ -15,19 +15,29 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 10.x
+
     if: github.event.repository.owner.id == github.event.sender.id
+
     steps:
       - name: Checkout
         run: |
           git clone https://github.com/lxk0301/scripts.git ~/scripts
-      - name: Use Node.js 10.x
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
-      - name: npm install
-        run: |
-          cd ~/scripts
-          npm install
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v2 # 使用 GitHub 官方的缓存 Action。
+        env:
+          cache-name: jd-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }} # 使用 package-lock.json 的 Hash 作为缓存的 key。也可以使用 package.json 代替
+      - run: npm i
       - name: '运行 【东东萌宠】'
         run: |
           cd ~/scripts
