@@ -82,7 +82,7 @@ exports.main_handler = async (event, context, callback) => {
 let CookieJDs = [
   'pt_key=xxx;pt_pin=xxx;', 
   'pt_key=zzz;pt_pin=zzz;',
-  'pt_key=aaa;pt_pin=xxxaaa
+  'pt_key=aaa;pt_pin=xxxaaa'
 ]
 ```
 

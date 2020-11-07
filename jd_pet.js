@@ -1,6 +1,6 @@
 /*
 东东萌宠 更新地址： https://raw.githubusercontent.com/lxk0301/scripts/master/jd_pet.js
-更新时间：2020-11-04
+更新时间：2020-11-07
 已支持IOS双京东账号,Node.js支持N个京东账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 
@@ -67,7 +67,6 @@ let randomCount = 20;
       option = {};
       await shareCodesFormat();
       await jdPet();
-      await showMsg();
     }
   }
 })()
@@ -113,6 +112,7 @@ async function jdPet() {
     await doTask();//做日常任务
     await feedPetsAgain();//再次投食
     await energyCollect();//收集好感度
+    await showMsg();
     console.log('全部任务完成, 如果帮助到您可以点下🌟STAR鼓励我一下, 明天见~');
   } else if (initPetTownRes.code === '0'){
     console.log(`初始化萌宠失败:  ${initPetTownRes.message}`);
