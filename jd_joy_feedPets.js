@@ -90,8 +90,8 @@ function showMsg() {
 }
 function feedPets(feedNum) {
   return new Promise(resolve => {
-    console.log(`您设置的喂食数量:${FEED_NUM}g\n`);
-    console.log(`实际的喂食数量:${feedNum}g\n`);
+    console.log(`您设置的喂食数量::${FEED_NUM}g\n`);
+    console.log(`实际的喂食数量::${feedNum}g\n`);
     const options = {
       url: `${JD_API_HOST}/pet/feed?feedCount=${feedNum}`,
       headers: {
