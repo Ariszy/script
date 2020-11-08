@@ -452,7 +452,7 @@ function shareCodesFormat() {
     }
     const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
-      newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
+      newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     }
     console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
@@ -474,8 +474,7 @@ function requireConfig() {
       })
       if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
     } else {
-      cookiesArr.push($.getdata('CookieJD'));
-      cookiesArr.push($.getdata('CookieJD2'));
+      cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')]);
     }
     console.log(`共${cookiesArr.length}个京东账号\n`)
     if ($.isNode()) {
