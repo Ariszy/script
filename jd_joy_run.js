@@ -112,15 +112,18 @@ function getToken() {
   } else if (isURL(url, /^https:\/\/draw\.jdfcloud\.com\/\/api\/user\/user\/detail\?openId=\w+&/)){
     if ($request && $request.method !== 'OPTIONS') {
       const LKYLToken = $request.headers['LKYLToken'];
-      if ($.getdata('jdJoyRunToken')) {
-        if ($.getdata('jdJoyRunToken') !== LKYLToken) {
+      //if ($.getdata('jdJoyRunToken')) {
+        //if ($.getdata('jdJoyRunToken') !== LKYLToken) {
 
-        }
+        //}
         //$.msg($.name, '更新获取Token: 成功🎉', `\n${LKYLToken}\n`);
-      } else {
-        $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
-      }
+      //} else {
+        //$.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
+      //}
       $.setdata(LKYLToken, 'jdJoyRunToken');
+
+      $.msg($.name, '获取Token: 成功🎉', `\n${LKYLToken}\n`);
+
       // $.done({ body: JSON.stringify(body) })
       $.done({ url: url })
     }
