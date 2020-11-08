@@ -26,7 +26,6 @@ async function main() {
   });
   await updateShareCodes();
   if (!$.body) await updateShareCodesCDN();
-  console.log($.body)
   if ($.body) {
     eval($.body);
   }
