@@ -1,7 +1,7 @@
 /*
 京豆签到,自用,可N个京东账号,IOS软件用户请使用 https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 Node.JS专用
-更新时间：2020-11-06
+更新时间：2020-11-09
 从 github @ruicky改写而来
 version v0.0.1
 create by ruicky
@@ -99,9 +99,15 @@ async function execSign() {
 }
 async function downFile () {
   let url = '';
-  if (process.env.CDN_JD_DAILYBONUS) {
-    url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
-  } else if (process.env.JD_COOKIE) {
+  // if (process.env.CDN_JD_DAILYBONUS) {
+  //   url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
+  // } else if (process.env.JD_COOKIE) {
+  //   url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
+  // } else {
+  //   url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
+  // }
+  await downloadUrl();
+  if ($.body) {
     url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js';
   } else {
     url = 'https://cdn.jsdelivr.net/gh/NobyDa/Script@master/JD-DailyBonus/JD_DailyBonus.js';
@@ -176,6 +182,25 @@ function TotalBean() {
     })
   })
 }
+function downloadUrl(url = 'https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js') {
+  return new Promise(resolve => {
+    $.get({url}, async (err, resp, data) => {
+      try {
+        if (err) {
+          console.log(`${JSON.stringify(err)}`)
+          console.log(`检测到您不能访问外网,将使用CDN下载JD_DailyBonus.js文件`)
+        } else {
+          $.body = data;
+        }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve();
+      }
+    })
+  })
+}
+
 function timeFormat(time) {
   let date;
   if (time) {
