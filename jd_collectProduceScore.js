@@ -46,11 +46,17 @@ async function collectProduceScore() {
   if ($.secretp) {
     const temp = {
       "taskId": "collectProducedCoin",
-      "rnd": "",
+      "rnd": getRnd(),
       "inviteId": "-1",
       "stealId": "-1"
     }
-    const body = encode(temp, $.secretp);
+    const extraData = {
+      "jj": 6,
+      "buttonid": "jmdd-react-smash_0",
+      "sceneid": "homePageh5",
+      "appid": '50073'
+    }
+    const body = encode(temp, $.secretp, extraData);
     await stall_collectProduceScore(body);
   }
 }
@@ -102,13 +108,16 @@ function getHomeData() {
     })
   })
 }
-function encode(data, aa) {
+function encode(data, aa, extraData) {
   const temp = {
-    "extraData": "{}",
-    "businessData": (JSON.stringify(data)),
+    "extraData": JSON.stringify(extraData),
+    "businessData": JSON.stringify(data),
     "secretp": aa,
   }
   return { "ss": (JSON.stringify(temp)) };
+}
+function getRnd() {
+  return Math.floor(1e6 * Math.random()).toString();
 }
 function taskPostUrl(functionId, body = {}) {
   return {
