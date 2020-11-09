@@ -17,8 +17,6 @@ if ($.isNode()) {
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
 } else {
-  cookiesArr.push($.getdata('CookieJD'));
-  cookiesArr.push($.getdata('CookieJD2'));
   cookiesArr.push(...[$.getdata('CookieJD'), $.getdata('CookieJD2')])
 }
 !(async () => {
