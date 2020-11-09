@@ -58,17 +58,19 @@
 
   - 需自行有云服务器，云函数等
 
-  - 腾云云函数使用 [简要说明](iCloud.md)
+  - 腾云云函数使用 [教程说明](iCloud.md)
         
 ### 方法三：GitHub Action（推荐）
 
  - 使用教程看 [GitHub Action教程](githubAction.md)
- - 云端需要用到的 [secrets集合/环境变量](https://github.com/lxk0301/scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
+ - GitHub Action 定时运行会有延迟(大概15分钟左右)
+ - GitHub Action需要用到的[Secrets集合](https://github.com/lxk0301/scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
  
 ### 方法四：Docker（NAS或VPS用户）
 
  - 可以精确控制任务运行时间，有三种办法：[docker办法一](https://github.com/lxk0301/scripts/tree/master/docker)、[docker办法二（和本地安装Node.js有点类似）](https://github.com/EvineDeng/jd-base)、[docker办法三](https://github.com/chinnkarahoi/jd-scripts-docker)
-
+ - [环境变量](https://github.com/lxk0301/scripts/blob/master/githubAction.md#%E4%B8%8B%E6%96%B9%E6%8F%90%E4%BE%9B%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84-secrets%E5%85%A8%E9%9B%86%E5%90%88)
+ 
 #### 注：以上四种运行机制都是Node.js，故您需仔细阅读下面几点
 
 
