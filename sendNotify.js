@@ -165,7 +165,7 @@ function tgBotNotify(text, desp) {
         }
       }
       if (process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
-        options.agent = {
+        const agent = {
           https: tunnel.httpsOverHttp({
             proxy: {
               host: process.env.TG_PROXY_HOST,
@@ -173,6 +173,7 @@ function tgBotNotify(text, desp) {
             }
           })
         }
+        Object.assign(options, { agent })
       }
       $.post(options, (err, resp, data) => {
         try {
