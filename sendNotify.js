@@ -1,4 +1,5 @@
 const querystring = require("querystring");
+const tunnel = require("tunnel");
 const $ = new Env();
 // =======================================微信server酱通知设置区域===========================================
 //此处填你申请的SCKEY.
@@ -161,6 +162,16 @@ function tgBotNotify(text, desp) {
         body: `chat_id=${TG_USER_ID}&text=${text.match(/.*?(?=\s?-)/g) && text.match(/.*?(?=\s?-)/g)[0]}\n\n${desp}&disable_web_page_preview=true`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+      if (process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
+        options.agent = {
+          https: tunnel.httpsOverHttp({
+            proxy: {
+              host: process.env.TG_PROXY_HOST,
+              port: process.env.TG_PROXY_PORT * 1
+            }
+          })
         }
       }
       $.post(options, (err, resp, data) => {
