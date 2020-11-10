@@ -1,4 +1,5 @@
-/*# File: .github/workflows/repo-sync.yml
+/*
+# File: .github/workflows/repo-sync.yml
 name: sync-lxk0301-scripts
 on:
   schedule:
