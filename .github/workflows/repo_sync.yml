@@ -9,7 +9,7 @@ on:
   push:
     branches: [ master ]
   repository_dispatch:
-    types: sync-ZhiYi-N-script
+    types: sync-lxk0301-jd_scripts
 jobs:
   repo-sync:
     env:
@@ -21,11 +21,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: sync lxk0301-scripts
+      - name: sync lxk0301-jd_scripts
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/lxk0301/scripts.git"
+          source_repo: "https://github.com/lxk0301/jd_scripts.git"
           source_branch: "master"
           destination_branch: "master"
           github_token: ${{ secrets.PAT }}
@@ -36,6 +36,6 @@ jobs:
         with:
           src: github/lxk0301
           dst: gitee/lxk0301
-          static_list: "scripts"
+          static_list: "jd_scripts"
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
