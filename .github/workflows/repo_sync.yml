@@ -1,4 +1,4 @@
-# File: .github/workflows/repo-sync.yml
+/*# File: .github/workflows/repo-sync.yml
 name: sync-lxk0301-scripts
 on:
   schedule:
@@ -39,3 +39,4 @@ jobs:
           static_list: "jd_scripts"
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
+*/
