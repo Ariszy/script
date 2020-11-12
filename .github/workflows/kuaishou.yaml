@@ -1,4 +1,4 @@
-name: 爱奇艺会员签到
+name: 快手极速版签到
 
 on:
   workflow_dispatch:
