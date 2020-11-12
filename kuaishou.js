@@ -15,7 +15,9 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./kuaishou.js', 'utf8')
-    content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
+    content = content.replace(/const cookieVal = $.getdata('cookie_ks'),/, `const cookieVal = '${KEY}'`)
+
+
     await fs.writeFileSync( './kuaishou.js', content, 'utf8')
 }
 
