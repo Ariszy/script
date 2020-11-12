@@ -24,7 +24,7 @@ jobs:
         run: |
           node kuaishou.js
         env:
-          iQIYI_COOKIE: ${{ secrets.KUAISHOU_COOKIE }}
+          KUAISHOU_COOKIE: ${{ secrets.KUAISHOU_COOKIE }}
           SEND_KEY: ${{ secrets.SEND_KEY }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
