@@ -65,15 +65,10 @@ if (isGetCookie) {
 }
 if ($.isNode()) {
   
-  cookieVal = process.env.KUAISHOU_COOKIE;
+  cookieVal = process.getdata('KUAISHOU_COOKIE');
  
 }
-    
-
-
-
-
-
+  
 function GetCookie() {
   if ($request.headers) {
     var CookieValue = $request.headers['Cookie'];
