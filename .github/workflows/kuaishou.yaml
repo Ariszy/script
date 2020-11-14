@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
+      uses: actions/checkout@v1
+      name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
-      - name: npm install
+       name: npm install
         run: |
           npm install
-      - name: "运行【快手极速版签到】"
+       name: "运行【快手极速版签到】"
         run: |
           node kuaishou.js
         env:
