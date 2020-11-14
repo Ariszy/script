@@ -68,8 +68,7 @@ if (isGetCookie) {
 if ($.isNode()) {
  if (process.env.KUAISHOU_COOKIE && process.env.KUAISHOU_COOKIE.split('&') && process.env.KUAISHOU_COOKIE.split('&').length > 0) {
   cookieVal = process.env.KUAISHOU_COOKIE.split('&');
-  # cookiekuaishou = $.setdata(CookieKuaishou, 'cookie_ks');    
- 
+
  };
   
 function GetCookie() {
