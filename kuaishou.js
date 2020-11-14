@@ -49,7 +49,7 @@ hostname = nebula.kuaishou.com
 */
 const logs = 0   //日志开关
 const $ = new Env('快手极速版')
-var cookieVal = $.getdata('cookie_ks');
+var cookieVal ='';
 let isGetCookie = typeof $request !== 'undefined'
 
 if (isGetCookie) {
@@ -67,9 +67,9 @@ if (isGetCookie) {
 
 if ($.isNode()) {
  if (process.env.KUAISHOU_COOKIE && process.env.KUAISHOU_COOKIE.split('&') && process.env.KUAISHOU_COOKIE.split('&').length > 0) {
-  CookieKuaishou = process.env.KUAISHOU_COOKIE.split('&');
-  var cookiekuaishou = $.setdata(CookieKuaishou, 'cookie_ks');    
- cookieVal= Object.keys(CookieKuaishou).forEach((item));
+  cookieVal = process.env.KUAISHOU_COOKIE.split('&');
+  # cookiekuaishou = $.setdata(CookieKuaishou, 'cookie_ks');    
+ 
  };
   
 function GetCookie() {
