@@ -64,15 +64,18 @@ if (isGetCookie) {
     .finally(() => $.done())
 }
 
-
-if (process.env.KUAISHOU_COOKIE && process.env.KUAISHOU_COOKIE.split('&') && process.env.KUAISHOU_COOKIE.split('&').length > 0) {
+if ($.isNode()) {
+  if (process.env.KUAISHOU_COOKIE && process.env.KUAISHOU_COOKIE.split('&') && process.env.KUAISHOU_COOKIE.split('&').length > 0) {
   var cookie_kuaishou = process.env.KUAISHOU_COOKIE.split('&');
   var cookiekuaishou = $.setdata(cookie_kuaishou, 'cookie_ks');
   console.log(`\n==================脚本执行来自 github action=====================\n`)
   console.log(`==================脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}=====================\n`)
   console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=====================\n`)
 }
-
+}else {
+    $.msg("写入" + $.name + "Cookie失败‼️", "", "配置错误, 无法读取请求头, ");
+  }
+$.done()
 
   
 function GetCookie() {
