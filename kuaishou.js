@@ -63,11 +63,16 @@ if (isGetCookie) {
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 }
-if ($.isNode()) {
-  
-  cookieVal = process.getdata('KUAISHOU_COOKIE');
- 
+
+
+if (process.env.KUAISHOU_COOKIE && process.env.KUAISHOU_COOKIE.split('&') && process.env.KUAISHOU_COOKIE.split('&').length > 0) {
+  cookieVal = process.env.KUAISHOU_COOKIE.split('&');
+  console.log(`\n==================脚本执行来自 github action=====================\n`)
+  console.log(`==================脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}=====================\n`)
+  console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=====================\n`)
 }
+
+
   
 function GetCookie() {
   if ($request.headers) {
