@@ -49,7 +49,7 @@ jobs:
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
           IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
-          jdSuperMarketUpgrade: ${{ secrets.SUPERMARKET_UPGRADE }}
+          SUPERMARKET_UPGRADE: ${{ secrets.SUPERMARKET_UPGRADE }}
           jdBusinessCircleJump: ${{ secrets.BUSINESS_CIRCLE_JUMP }}
           SUPERMARKET_SHARECODES: ${{ secrets.SUPERMARKET_SHARECODES }}
           jdSuperMarketLottery: ${{ secrets.SUPERMARKET_LOTTERY }}
