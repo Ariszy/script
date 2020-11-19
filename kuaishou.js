@@ -52,28 +52,19 @@ const $ = new Env('快手极速版')
 const cookieVal = $.getdata('cookie_ks');
 let isGetCookie = typeof $request !== 'undefined'
 
-let CookieJDs = [
+let KUAISHOU_COOKIEs = [
   '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
   '',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
 ]
 // 判断github action里面是否有京东ck
 if (process.env.KUAISHOU_COOKIE) {
-  if (process.env. KUAISHOU_COOKIE.indexOf('&') > -1) {
-    console.log(`您的cookie选择的是用&隔开\n`)
-    KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split('&');
-  } else if (process.env. KUAISHOU_COOKIE.indexOf('\n') > -1) {
-    console.log(`您的cookie选择的是用换行隔开\n`)
-    KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split('\n');
-  } else {
     KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split();
   }
-  console.log(`\n====================共有${KUAISHOU_COOKIEs.length}个京东账号Cookie=========\n`);
   console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
   // console.log(`\n==================脚本执行来自 github action=====================\n`)
 }
-for (let i = 0; i < KUAISHOU_COOKIEs.length; i++) {
-  const index = (i + 1 === 1) ? '' : (i + 1);
-  exports['KUAISHOU_COOKIE' + index] = KUAISHOU_COOKIEs[i];
+var CookieValue = KUAISHOU_COOKIEs;
+$.setdata(CookieValue, 'cookie_ks');
 }
 
 if (isGetCookie) {
