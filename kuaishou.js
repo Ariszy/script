@@ -59,10 +59,10 @@ let KUAISHOU_COOKIEs = [
 // 判断github action里面是否有京东ck
 if (process.env.KUAISHOU_COOKIE) {
     KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split();
-  }
+ 
   console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
   // console.log(`\n==================脚本执行来自 github action=====================\n`)
-}
+
 var CookieValue = KUAISHOU_COOKIEs;
 $.setdata(CookieValue, 'cookie_ks');
 }
