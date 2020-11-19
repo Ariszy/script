@@ -60,20 +60,20 @@ let CookieJDs = [
 if (process.env.KUAISHOU_COOKIE) {
   if (process.env. KUAISHOU_COOKIE.indexOf('&') > -1) {
     console.log(`您的cookie选择的是用&隔开\n`)
-    KUAISHOU_COOKIE s = process.env. KUAISHOU_COOKIE.split('&');
+    KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split('&');
   } else if (process.env. KUAISHOU_COOKIE.indexOf('\n') > -1) {
     console.log(`您的cookie选择的是用换行隔开\n`)
-    KUAISHOU_COOKIE s = process.env. KUAISHOU_COOKIE.split('\n');
+    KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split('\n');
   } else {
-    KUAISHOU_COOKIE s = process.env. KUAISHOU_COOKIE.split();
+    KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split();
   }
-  console.log(`\n====================共有${KUAISHOU_COOKIE s.length}个京东账号Cookie=========\n`);
+  console.log(`\n====================共有${KUAISHOU_COOKIEs.length}个京东账号Cookie=========\n`);
   console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
   // console.log(`\n==================脚本执行来自 github action=====================\n`)
 }
-for (let i = 0; i < KUAISHOU_COOKIE s.length; i++) {
+for (let i = 0; i < KUAISHOU_COOKIEs.length; i++) {
   const index = (i + 1 === 1) ? '' : (i + 1);
-  exports['KUAISHOU_COOKIE' + index] = KUAISHOU_COOKIE s[i];
+  exports['KUAISHOU_COOKIE' + index] = KUAISHOU_COOKIEs[i];
 }
 
 if (isGetCookie) {
