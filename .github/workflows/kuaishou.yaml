@@ -3,7 +3,7 @@ name: 快手极速版签到
 on:
   workflow_dispatch:
   schedule:
-  #  - cron: "2 10 * * *"
+    - cron: "2 10 * * *"
   watch:
     types: [started]
 
