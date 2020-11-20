@@ -38,4 +38,4 @@ jobs:
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-                  SYNCURL: https://github.com/yangtingxiao/QuantumultX/blob/raw/master/scripts/jd/jd_woHome.js
+                  SYNCURL: https://github.com/yangtingxiao/QuantumultX/raw/blob/master/scripts/jd/jd_woHome.js
