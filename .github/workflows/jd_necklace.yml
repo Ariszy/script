@@ -6,11 +6,11 @@ name: jd_shop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 16 * * *'
+    - cron: '10 0,20 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: shop
+    types: necklace
 jobs:
   build:
 
