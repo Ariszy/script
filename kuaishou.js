@@ -1,73 +1,22 @@
-/*
-更新时间: 2020-09-08 11:45
 
-本脚本仅适用于快手极速版签到
-获取Cookie方法:
-1.将下方[rewrite_local]和[MITM]地址复制的相应的区域
-下
-2.APP登陆账号后，以下方法获取Cookie
-打开设置页面:"积分兑好礼"
-
-3.非专业人士制作，欢迎各位大佬提出宝贵意见和指导
-仅测试Quantumult x，Surge、Loon自行测试
-by Macsuny
-感谢
-@Chavy
-@Nobyda
-~~~~~~~~~~~~~~~~
-
-Surge 4.0 :
-[Script]
-快手极速版 = type=cron,cronexp=35 5 0 * * *,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/kuaishou.js,script-update-interval=0
-
-快手极速版 = type=http-request,pattern=https:\/\/nebula\.kuaishou\.com\/nebula\/task\/earning\?,script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/kuaishou.js
-
-~~~~~~~~~~~~~~~~
-Loon 2.1.0+
-[Script]
-# 本地脚本
-cron "04 00 * * *" script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/kuaishou.js, enabled=true, tag=快手
-
-http-request https:\/\/nebula\.kuaishou\.com\/nebula\/task\/earning\? script-path=https://raw.githubusercontent.com/Sunert/Scripts/master/Task/kuaishou.js
-
------------------
-
-QX 1.0.7+ :
-[task_local]
-0 9 * * * kuaishou.js
-
-[rewrite_local]
-
-https:\/\/nebula\.kuaishou\.com\/nebula\/task\/earning\? url script-request-header kuaishou.js
-
-~~~~~~~~~~~~~~~~
-
-hostname = nebula.kuaishou.com
-
-~~~~~~~~~~~~~~~~
-
-*/
 const logs = 0   //日志开关
 const $ = new Env('快手极速版')
 const cookieVal = $.getdata('cookie_ks');
 let isGetCookie = typeof $request !== 'undefined'
 const notify = $.isNode() ? require('./sendNotify') : '';
 //const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const KEY = process.env.KUAISHOU_COOKIE
 
-let KUAISHOU_COOKIEs = [
-  '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
-  '',//账号二ck,例:pt_key=XXX;pt_pin=XXX;如有更多,依次类推
-]
 // 判断github action里面是否有京东ck
-if (process.env.KUAISHOU_COOKIE) {
-    KUAISHOU_COOKIEs = process.env. KUAISHOU_COOKIE.split();
- 
-  console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
+
+if ($.isNode()) {
+ $.setdata(KEY, 'cookie_ks');
+} else {
+ console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
   // console.log(`\n==================脚本执行来自 github action=====================\n`)
 
-var cookienode = KUAISHOU_COOKIEs;
-$.setdata(cookienode, 'cookie_ks');
 }
+  
 
 if (isGetCookie) {
    GetCookie()
