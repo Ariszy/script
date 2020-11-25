@@ -67,7 +67,7 @@ async function start() {
 
     //运行完成后，删除下载的文件
     console.log('运行完成后，删除下载的文件\n')
-    await deleteFile(path);
+    //await deleteFile(path);
 
 }
 
