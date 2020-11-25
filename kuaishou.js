@@ -51,6 +51,8 @@ const logs = 0   //日志开关
 const $ = new Env('快手极速版')
 const cookieVal = $.getdata('cookie_ks');
 let isGetCookie = typeof $request !== 'undefined'
+const notify = $.isNode() ? require('./sendNotify') : '';
+//const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 let KUAISHOU_COOKIEs = [
   '',//账号一ck,例:pt_key=XXX;pt_pin=XXX;
@@ -63,8 +65,8 @@ if (process.env.KUAISHOU_COOKIE) {
   console.log(`==================脚本执行- 北京时间(UTC+8)：${new Date(new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000).toLocaleString()}=====================\n`)
   // console.log(`\n==================脚本执行来自 github action=====================\n`)
 
-var CookieValue = KUAISHOU_COOKIEs;
-$.setdata(CookieValue, 'cookie_ks');
+var cookienode = KUAISHOU_COOKIEs;
+$.setdata(CookieValue, 'cookienode');
 }
 
 if (isGetCookie) {
