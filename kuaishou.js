@@ -66,7 +66,7 @@ if (process.env.KUAISHOU_COOKIE) {
   // console.log(`\n==================脚本执行来自 github action=====================\n`)
 
 var cookienode = KUAISHOU_COOKIEs;
-$.setdata(CookieValue, 'cookienode');
+$.setdata(cookienode, 'cookie_ks');
 }
 
 if (isGetCookie) {
