@@ -1,4 +1,4 @@
-name: qqyd
+name: 企鹅阅读
 
 on:
   workflow_dispatch:
