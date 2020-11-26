@@ -3,7 +3,7 @@ name: 微博每日签到打卡
 on:
   workflow_dispatch:
   schedule:
-     - cron: '5 10 * * *'
+     - cron: '5 0 * * *'
   watch:
     types: started
 jobs:
