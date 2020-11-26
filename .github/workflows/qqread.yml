@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: QQ_Read
+name: qqread
 
 on:
 
   schedule:
-    - cron: '2 */22 * * *'
+    - cron: '2 */11 * * *'
   watch:
     types: started
   repository_dispatch:
-    types: QQ_Read
+    types: qqread
 jobs:
   build:
 
@@ -37,13 +37,13 @@ jobs:
           npm install
       - name: '运行 【企鹅阅读】'
         run: |
-          node QQ_Read.js
+          node qqread.js
         env:
-          URL: ${{ secrets.URL }}
-          BODY: ${{ secrets.BODY }}
-          HEADER: ${{ secrets.HEADER }}
-          BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          qqreadurl: ${{ secrets.qqreadurl }}
+          qqreadheader: ${{ secrets.qqreadheader }}
+          qqreadtimeurl: ${{ secrets.qqreadtimeurl }}
+          qqreadtimeheader: ${{ secrets.qqreadtimeheader }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
           BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
