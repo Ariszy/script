@@ -26,6 +26,10 @@ jobs:
       - name: npm install
         run: |
           npm install
+          npm install got
+      - name: npm install
+        run: |
+          npm install
           npm install got #tough-cookie
       - name: ' 运行 【企鹅阅读】'
         run: |
