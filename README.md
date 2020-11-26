@@ -1,4 +1,4 @@
-此目录为方便ZhiYi-N修改快速找到脚本使用，所有脚本收录自互联网，都已署名作者，所有修改均为ZhiYi-N自用。
+此目录为方便ZhiYi-N修改快速找到脚本导航使用，所有脚本收录自互联网，都已署名作者，所有修改均为ZhiYi-N自用。
 
 action目前包括：
 1.  京东水果([jd_fruit.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_fruit.js))
@@ -24,9 +24,9 @@ action目前包括：
 21.  京喜工厂([jd_dreamFactory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js))
 22.  东东小窝([jd_small_home.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js))
 23.  以及其他一部分在特定时间可用的薅京豆脚本，如 [手机狂欢城](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_818.js) 、[星推官](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js) 等。
-24.  爱奇艺签到脚本([iQiYi.js])(https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js)
-25.  快手极速版(sunset脚本修改)([kuaishou.js])(https://raw.githubusercontent.com/ZhiYi-N/script/master/kuaishou.js)
-26.  微博签到([weibo.js])(https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js)
-27.  东东工厂([jd_jdfactory.js])(https://raw.githubusercontent.com/ZhiYi-N/jd_scripts/master/jd_jdfactory.js)
-28.  --企鹅阅读([QQ_Read.js])(https://raw.githubusercontent.com/ZhiYi-N/script/master/QQ_Read.js)
-29.  --京东赚赚([jdzz.js])(https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js)
+24.  爱奇艺签到脚本([iQiYi.js](https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js))
+25.  快手极速版(sunset脚本修改)([kuaishou.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/kuaishou.js))
+26.  微博签到([weibo.js](https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js))
+27.  东东工厂([jd_jdfactory.js](https://raw.githubusercontent.com/ZhiYi-N/jd_scripts/master/jd_jdfactory.js))
+28.  --企鹅阅读([QQ_Read.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/QQ_Read.js))
+29.  --京东赚赚([jdzz.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js))
