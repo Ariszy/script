@@ -24,9 +24,9 @@ action目前包括：
 21.  京喜工厂([jd_dreamFactory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_dreamFactory.js))
 22.  东东小窝([jd_small_home.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_small_home.js))
 23.  以及其他一部分在特定时间可用的薅京豆脚本，如 [手机狂欢城](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_818.js) 、[星推官](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_xtg.js) 等。
-24.  爱奇艺(nobyda)(BlueSkyClouds)([iQiYi.js](https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js))
-25.  快手极速版(sunset脚本修改)([kuaishou.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/kuaishou.js))
-26.  微博签到(sundry)([weibo.js](https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js))
+24.  爱奇艺(NobyDa)(BlueSkyClouds)([iQiYi.js](https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js))
+25.  快手极速版(Sunert脚本修改)([kuaishou.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/kuaishou.js))
+26.  微博签到(Sunert)([weibo.js](https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js))
 27.  东东工厂([jd_jdfactory.js](https://raw.githubusercontent.com/ZhiYi-N/jd_scripts/master/jd_jdfactory.js))
 28.  --企鹅阅读(ziye12)([QQ_Read.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/QQ_Read.js))
 29.  --京东赚赚(whyour)([jdzz.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js))
