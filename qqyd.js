@@ -14,7 +14,7 @@ const qqreadheader= process.env.READERHEAD
 const qqreadtimeurl = process.env.TIMEURL
 const qqreadtimeheader= process.env.TIMEHEAD
 // 以上需修改
-const SEND_KEY = ''
+const SEND_KEY = process.env.PUSHKEY
 
 async function downFile () {
     const url = 'https://raw.fastgit.org/ziye12/JavaScript/master/qqread.js'
@@ -26,13 +26,13 @@ async function changeFiele () {
     //替换信息
 	content = content.replace("const logs = 1;","const logs = 0;")
 	
-	content = content.replace("const qqreadurlVal = $.getdata(qqreadurlKey)",`const qqreadurlVal = '${URL}'`)
+	content = content.replace("const qqreadurlVal = $request.url",`const qqreadurlVal = '${URL}'`)
 	
-	content = content.replace("const qqreadheaderVal= $.getdata(qqreadheaderKey)",`const qqreadheaderVal= '${READERHEAD}'`)
+	content = content.replace("const qqreadheaderVal = JSON.stringify($request.headers)",`const qqreadheaderVal= JSON.stringify('${READERHEAD}')`)
 	
-	content = content.replace("const qqreadtimeurlVal = $.getdata(qqreadtimeurlKey)",`const qqreadtimeurlVal = '${TIMEURL}'`)
+	content = content.replace("const qqreadtimeurlVal = $request.url",`const qqreadtimeurlVal ='${TIMEURL}'`)
 	
-	content = content.replace("const qqreadtimeheaderVal= $.getdata(qqreadtimeheaderKey)",`const qqreadtimeheaderVal= '${TIMEHEAD}'`)
+	content = content.replace("const qqreadtimeheaderVal = JSON.stringify($request.headers)",`const qqreadtimeheaderVal= JSON.stringify('${TIMEHEAD}')`)
     
     await fs.writeFileSync( './qqread.js', content, 'utf8')
 }
