@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: QGsen/qeds
+          repository: ZhiYi-N/script
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -41,3 +41,14 @@ jobs:
       - name: '运行 【企鹅阅读】'
         run: |
           node qqread.js
+      env:
+          READERHEAD: ${{ secrets.READERHEAD }}
+          TIMEHEAD: ${{ secrets.TIMEHEAD }}
+          qqreadtimeurl: ${{ secrets.qqreadtimeurl }}
+          qqreadtimeheader: ${{ secrets.qqreadtimeheader }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          TG_USER_ID: ${{ secrets.TG_USER_ID }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          IGOT_PUSH_KEY: ${{ secrets.IGOT_PUSH_KEY }}
