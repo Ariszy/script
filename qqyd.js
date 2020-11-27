@@ -30,7 +30,7 @@ async function changeFiele () {
 	
 	content = content.replace(/const qqreadheaderVal = JSON.stringify($request.headers)/,`const qqreadheaderVal= JSON.stringify('${READERHEAD}')`)
 	
-	content = content.replace(/const qqreadtimeurlVal = $request.url：,`const qqreadtimeurlVal ='${TIMEURL}'`)
+	content = content.replace(/const qqreadtimeurlVal = $request.url/,`const qqreadtimeurlVal ='${TIMEURL}'`)
 	
 	content = content.replace(/const qqreadtimeheaderVal = JSON.stringify($request.headers)/,`const qqreadtimeheaderVal= JSON.stringify('${TIMEHEAD}')`)
     
