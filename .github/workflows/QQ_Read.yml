@@ -22,9 +22,12 @@ jobs:
           npm install
       - name: "运行【企鹅阅读】"
         run: |
-          node qqyd.js
+          node QQ_Read.js
         env:
-          COOKIE_QQYD: ${{ secrets.COOKIE_QQYD }}
+          URL: ${{ secrets.URL }}
+          READERHEAD: ${{ secrets.READERHEAD }}
+          TIMEURL: ${{ secrets.TIMEURL }}
+          TIMEHEAD: ${{ secrets.TIMEHEAD }}
           SEND_KEY: ${{ secrets.SEND_KEY }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
