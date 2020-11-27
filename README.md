@@ -31,4 +31,4 @@ lxk0301京东签到系列：
 27.  东东工厂([jd_jdfactory.js](https://raw.githubusercontent.com/ZhiYi-N/jd_scripts/master/jd_jdfactory.js))
 28.  企鹅阅读(ziye12)([qqyd.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/qqyd.js))
 29.  京东赚赚(whyour)([jdzz.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js))
-30.  十元街([jd_jdsyj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js))
+30.  十元街([jd_syj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js))
