@@ -23,35 +23,10 @@ let qqreadheaderVal, qqreadtimeurlVal, qqreadtimeheaderVal;
 const cookiesArr = [
   {
     qqreadheaderVal: JSON.stringify({
-      ywsession: "nvpq36mw3lpgt79kxtckycy07wc6rwiw",
-      Cookie:
-        "ywguid=1046800028;ywkey=ywHW8qZhlUtE;platform=android;channel=mqqmina;mpVersion=0.29.4",
-      Connection: "keep-alive",
-      "Content-Type": "application/json",
-      Accept: "*/*",
-      Host: "mqqapi.reader.qq.com",
-      "User-Agent": "QQ/8.4.18.4945 V1_AND_SQ_8.4.18_1558_YYB_D QQ/MiniApp",
-      Referer: "https://appservice.qq.com/1110657249/0.29.4/page-frame.html",
-      "Accept-Language": "zh-cn",
-      "Accept-Encoding": "gzip, deflate, br",
-      mpversion: "0.29.4",
+      process.env.READERHEAD
     }),
-    qqreadtimeurlVal:
-      "https://mqqapi.reader.qq.com/mqq/addReadTimeWithBid?scene=3001&refer=-1&bid=831934&readTime=7571&read_type=0&conttype=1&read_status=0&chapter_info=%5B%7B%222%22%3A%7B%22readTime%22%3A7571%2C%22pay_status%22%3A0%7D%7D%5D&sp=-1",
-    qqreadtimeheaderVal: JSON.stringify({
-      ywsession: "nvpq36mw3lpgt79kxtckycy07wc6rwiw",
-      Cookie:
-        "ywguid=1046800028;ywkey=ywHW8qZhlUtE;platform=android;channel=mqqmina;mpVersion=0.29.4",
-      Connection: "keep-alive",
-      "Content-Type": "application/json",
-      Accept: "*/*",
-      Host: "mqqapi.reader.qq.com",
-      "User-Agent": "QQ/8.4.18.4945 V1_AND_SQ_8.4.18_1558_YYB_D QQ/MiniApp",
-      Referer: "https://appservice.qq.com/1110657249/0.29.4/page-frame.html",
-      "Accept-Language": "zh-cn",
-      "Accept-Encoding": "gzip, deflate, br",
-      mpversion: "0.29.4",
-    }),
+    qqreadtimeurlVal: process.env.TIMEHEAD
+     ),
   }
 ]
 
