@@ -1,5 +1,6 @@
 // version v0.0.1
-// detail url: https://github.com/ziye12/JavaScript/blob/master/qqread.js
+// create by BlueSkyClouds
+// detail url: https://github.com/BlueskyClouds/iQIYI-DailyBonus
 
 const exec = require('child_process').execSync
 const fs = require('fs')
@@ -8,8 +9,8 @@ const download = require('download')
 const $ = new Env('快手极速版签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-// 以上需修改
-const SEND_KEY = process.env.PUSHKEY
+const KEY = process.env.KUAISHOU_COOKIE
+const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/Sunert/Scripts/master/Task/kuaishou.js'
@@ -18,10 +19,7 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./kuaishou.js', 'utf8')
-    //替换信息
-	
-	content = content.replace(/const cookieVal = $.getdata('cookie_ks')/,`const cookieVal = process.env.KUAISHOU_COOKIE`)
-    
+    content = content.replace(/const cookieVal = $.getdata('cookie_ks')/, `const cookieVal = ${KEY}`)
     await fs.writeFileSync( './kuaishou.js', content, 'utf8')
 }
 
@@ -36,8 +34,8 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!process.env.KUAISHOU_COOKIE) {
-        console.log('请填写相关参数后再继续')
+    if (!KEY) {
+        console.log('请填写 key 后在继续')
         return
     }
     // 下载最新代码
@@ -54,18 +52,22 @@ async function start() {
     if (fs.existsSync(path)) {
         content = fs.readFileSync(path, "utf8");
     }
-	var moment = require('moment');
+
     if(SEND_KEY) {
-        await notify.sendNotify("快手极速版签到 " + moment().format("YYYY-MM-DD HH:mm:ss"), content);
-        console.log("快手极速版签到 " + moment().format("YYYY-MM-DD HH:mm:ss"), content)
+        if (content.includes("Cookie")) {
+            await notify.sendNotify("快手极速版签到-" + new Date().toLocaleDateString(), content);
+            console.log("快手极速版签到-" + content)
+        }else{
+            console.log("快手极速版签到-" + content)
+        }
     }else{
-		console.log("快手极速版签到 " + moment().format("YYYY-MM-DD HH:mm:ss"), content)
-	}
+        await notify.sendNotify("快手极速版签到-" + new Date().toLocaleDateString(), content);
+        console.log("快手极速版签到-" + content)
+    }
 
     //运行完成后，删除下载的文件
-    console.log('运行完成，删除下载的文件\n')
+    console.log('运行完成后，删除下载的文件\n')
     await deleteFile(path);
-	await deleteFile("./kuaishou.js");
 
 }
 
