@@ -24,15 +24,15 @@ async function downFile () {
 async function changeFiele () {
     let content = await fs.readFileSync('./qqread.js', 'utf8')
     //替换信息
-	content = content.replace("const logs = 1;","const logs = 0;")
+	content = content.replace(/const logs = 1;/,"const logs = 0;")
 	
-	content = content.replace("const qqreadurlVal = $request.url",`const qqreadurlVal = '${URL}'`)
+	content = content.replace(/const qqreadurlVal = $request.url/,`const qqreadurlVal = '${URL}'`)
 	
-	content = content.replace("const qqreadheaderVal = JSON.stringify($request.headers)",`const qqreadheaderVal= JSON.stringify('${READERHEAD}')`)
+	content = content.replace(/const qqreadheaderVal = JSON.stringify($request.headers)/,`const qqreadheaderVal= JSON.stringify('${READERHEAD}')`)
 	
-	content = content.replace("const qqreadtimeurlVal = $request.url",`const qqreadtimeurlVal ='${TIMEURL}'`)
+	content = content.replace(/const qqreadtimeurlVal = $request.url：,`const qqreadtimeurlVal ='${TIMEURL}'`)
 	
-	content = content.replace("const qqreadtimeheaderVal = JSON.stringify($request.headers)",`const qqreadtimeheaderVal= JSON.stringify('${TIMEHEAD}')`)
+	content = content.replace(/const qqreadtimeheaderVal = JSON.stringify($request.headers)/,`const qqreadtimeheaderVal= JSON.stringify('${TIMEHEAD}')`)
     
     await fs.writeFileSync( './qqread.js', content, 'utf8')
 }
