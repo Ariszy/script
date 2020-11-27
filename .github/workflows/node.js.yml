@@ -17,17 +17,19 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: 14.x
 
     steps:
     - uses: actions/checkout@v2
     - name: qqyd ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        node-version: 14.x
+    -name: npm install
+     run: |
+       npm install
+       npm install got #tough-cookie
+   
     - name: ' 运行 【企鹅阅读】'
         run: |
           node qqyd.js
