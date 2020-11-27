@@ -24,7 +24,6 @@ async function downFile () {
 async function changeFiele () {
     let content = await fs.readFileSync('./qqread.js', 'utf8')
     //替换信息
-	content = content.replace(/const logs = 1;/,"const logs = 0;")
 	
 	content = content.replace(/const qqreadurlVal = $request.url/,`const qqreadurlVal = process.env.URL`)
 	
