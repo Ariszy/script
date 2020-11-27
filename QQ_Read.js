@@ -133,7 +133,7 @@ function GetCookie() {
 
    if($request &&$request.url.indexOf("init")>=0) {
 
-  const qqreadurlVal = 'https://mqqapi.reader.qq.com/mqq/user/init'
+  const qqreadurlVal = process.env.URL
 if (qqreadurlVal)        $.setdata(qqreadurlVal,qqreadurlKey)
     $.log(`[${jsname}] 获取url请求: 成功,qqreadurlVal: ${qqreadurlVal}`)
 
@@ -143,7 +143,7 @@ if (qqreadurlVal)        $.setdata(qqreadurlVal,qqreadurlKey)
     $.log(`[${jsname}] 获取阅读: 成功,qqreadbodyVal: ${qqreadbodyVal}`)
 
     
-const qqreadheaderVal = JSON.stringify('{"ywsession":"8rjmn4sf0q7y33lflu982q52sqd31umy","Cookie":"ywguid=330039327;ywkey=ywcKwPIfOpxF;platform=ios;channel=mqqmina;mpVersion=0.28.0","Connection":"keep-alive","Content-Type":"application/json","Accept":"*/*","Host":"mqqapi.reader.qq.com","User-Agent":"QQ/8.4.17.638 CFNetwork/1125.2 Darwin/19.4.0","Referer":"https://appservice.qq.com/1110657249/0.28.0/page-frame.html","Accept-Language":"zh-cn","Accept-Encoding":"gzip, deflate, br","mpversion":"0.28.0"}')
+const qqreadheaderVal = JSON.stringify(process.env.READERHEAD)
     if (qqreadheaderVal)        $.setdata(qqreadheaderVal,qqreadheaderKey)
     $.log(`[${jsname}] 获取Cookie: 成功,qqreadheaderVal: ${qqreadheaderVal}`)
     $.msg(qqreadheaderKey, `获取cookie: 成功🎉`, ``)
@@ -157,7 +157,7 @@ const qqreadheaderVal = JSON.stringify('{"ywsession":"8rjmn4sf0q7y33lflu982q52sq
 
 else if($request &&$request.url.indexOf("addReadTimeWithBid?")>=0) {
 
-  const qqreadtimeurlVal = $request.url
+  const qqreadtimeurlVal = process.env.TIMEURL
 if (qqreadtimeurlVal)        $.setdata(qqreadtimeurlVal,qqreadtimeurlKey)
     $.log(`[${jsname}] 获取阅读时长url: 成功,qqreadtimeurlVal: ${qqreadtimeurlVal}`)
 
@@ -165,7 +165,7 @@ if (qqreadtimeurlVal)        $.setdata(qqreadtimeurlVal,qqreadtimeurlKey)
  
 
 
-const qqreadtimeheaderVal = JSON.stringify($request.headers)
+const qqreadtimeheaderVal = JSON.stringify(process.env.TIMEHEADER)
     if (qqreadtimeheaderVal)        $.setdata(qqreadtimeheaderVal,qqreadtimeheaderKey)
     $.log(`[${jsname}] 获取时长header: 成功,qqreadtimeheaderVal: ${qqreadtimeheaderVal}`)
     $.msg(qqreadtimeheaderKey, `获取阅读时长cookie: 成功🎉`, ``)
