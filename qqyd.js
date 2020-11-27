@@ -8,11 +8,11 @@ const download = require('download')
 const $ = new Env('企鹅读书');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const qqreadurl = 'https://mqqapi.reader.qq.com/mqq/user/init'
+const qqreadurl = process.env.URL
 // 以下需修改
-const qqreadheader= ''
-const qqreadtimeurl = ''
-const qqreadtimeheader= ''
+const qqreadheader= process.env.READERHEAD
+const qqreadtimeurl = process.env.TIMEURL
+const qqreadtimeheader= process.env.TIMEHEAD
 // 以上需修改
 const SEND_KEY = ''
 
@@ -26,13 +26,13 @@ async function changeFiele () {
     //替换信息
 	content = content.replace("const logs = 1;","const logs = 0;")
 	
-	content = content.replace("const qqreadurlVal = $.getdata(qqreadurlKey)",`const qqreadurlVal = '${qqreadurl}'`)
+	content = content.replace("const qqreadurlVal = $.getdata(qqreadurlKey)",`const qqreadurlVal = '${URL}'`)
 	
-	content = content.replace("const qqreadheaderVal= $.getdata(qqreadheaderKey)",`const qqreadheaderVal= '${qqreadheader}'`)
+	content = content.replace("const qqreadheaderVal= $.getdata(qqreadheaderKey)",`const qqreadheaderVal= '${READERHEAD}'`)
 	
-	content = content.replace("const qqreadtimeurlVal = $.getdata(qqreadtimeurlKey)",`const qqreadtimeurlVal = '${qqreadtimeurl}'`)
+	content = content.replace("const qqreadtimeurlVal = $.getdata(qqreadtimeurlKey)",`const qqreadtimeurlVal = '${TIMEURL}'`)
 	
-	content = content.replace("const qqreadtimeheaderVal= $.getdata(qqreadtimeheaderKey)",`const qqreadtimeheaderVal= '${qqreadtimeheader}'`)
+	content = content.replace("const qqreadtimeheaderVal= $.getdata(qqreadtimeheaderKey)",`const qqreadtimeheaderVal= '${TIMEHEAD}'`)
     
     await fs.writeFileSync( './qqread.js', content, 'utf8')
 }
