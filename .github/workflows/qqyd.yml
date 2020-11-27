@@ -20,6 +20,8 @@ jobs:
       - name: npm install
         run: |
          npm install
+         npm install got
+         npm install tough-cookie
       - name: '运行 【qqyd】'
         run: |
           node qqyd.js
