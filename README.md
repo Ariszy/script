@@ -30,4 +30,4 @@ lxk0301京东签到系列：
 26.  微博签到(Sunert)([weibo.js](https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js))
 27.  东东工厂([jd_jdfactory.js](https://raw.githubusercontent.com/ZhiYi-N/jd_scripts/master/jd_jdfactory.js))
 28.  --企鹅阅读(ziye12)([QQ_Read.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/QQ_Read.js))
-29.  --京东赚赚(whyour)([jdzz.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js))
+29.  京东赚赚(whyour)([jdzz.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js))
