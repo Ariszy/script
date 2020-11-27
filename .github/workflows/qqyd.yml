@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        QQREADHEADERVAL: ${{ secrets.QQREADHEADERVAL }}
-        QQREADTIMEHEADERVAL: ${{ secrets.QQREADTIMEHEADERVAL }}
-        QQREADTIMEURLVAL: ${{ secrets.QQREADTIMEURLVAL }}
-        QQREADURLVAL: ${{ secrets.QQREADURLVAL }}
+        QQREADHEADERVAL: ${{ secrets.URL }}
+        QQREADTIMEHEADERVAL: ${{ secrets.READERHEAD }}
+        QQREADTIMEURLVAL: ${{ secrets.TIMEURL }}
+        QQREADURLVAL: ${{ secrets.TIMEHEAD }}
     steps:
       - name: Checkout
         run: |
