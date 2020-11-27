@@ -41,7 +41,7 @@ jobs:
       - name: '运行 【企鹅阅读】'
         run: |
           node qqread.js
-      env:
+        env:
           READERHEAD: ${{ secrets.READERHEAD }}
           TIMEHEAD: ${{ secrets.TIMEHEAD }}
           qqreadtimeurl: ${{ secrets.qqreadtimeurl }}
