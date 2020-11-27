@@ -17,7 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        COOKIE_QQYD: ${{ secrets.COOKIE_QQYD}}
+        URL: ${{ secrets.URL}}
+        READERHEAD: ${{ secrets.READERHEAD}}
+        TIMEURL: ${{ secrets.TIMEURL}}
+        TIMEHEAD: ${{ secrets.TIMEHEAD}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
