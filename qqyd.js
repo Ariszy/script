@@ -78,7 +78,7 @@ console.log(`北京时间 (UTC+08)：${new Date(new Date().getTime() + 8 * 60 * 
     }
     var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     //console.log(d.getHours() +'  '+ d.getMinutes());
-    if (content.includes("Cookie") && d.getHours()==22 && d.getMinutes()<=20 ) {
+    if (content.includes("今日阅读") && d.getHours()==22 && d.getMinutes()<=20 ) {
         await notify.sendNotify(`${$.name}` + `${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}`, content);
         console.log(content)
     } else {
