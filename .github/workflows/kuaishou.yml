@@ -31,7 +31,7 @@ jobs:
         run: |
           node kuaishou.js
         env:
-          PUSH_KEY: ${{ secrets.PUSH_KEY1 }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
