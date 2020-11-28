@@ -1,16 +1,22 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions 
+
 name: 快手极速版签到
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "2 10 * * *"
+    - cron: '2 10 * * *'
   watch:
     types: [started]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
+    env:
+        KUAISHOU_COOKIE: ${{ secrets.KUAISHOU_COOKIE }}
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 10.x
@@ -20,14 +26,15 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: "运行【快手极速版签到】"
+          npm install got #tough-cookie
+      - name: ' 运行 【快手极速版签到】'
         run: |
           node kuaishou.js
         env:
-          KUAISHOU_COOKIE: ${{ secrets.KUAISHOU_COOKIE }}
-          SEND_KEY: ${{ secrets.SEND_KEY }}
-          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY1 }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
+          BARK_SOUND: ${{ secrets.BARK_SOUND }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
+          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
