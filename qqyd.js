@@ -9,6 +9,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 
 const Secrets = {
     COOKIE_QQYD: process.env.COOKIE_QQYD,
+    const SEND_KEY = process.env.SEND_KEY,
     PUSH_KEY: process.env.PUSH_KEY, //server酱推送消息
     BARK_PUSH: process.env.BARK_PUSH, //Bark推送
     TG_BOT_TOKEN: process.env.TG_BOT_TOKEN, //TGBot推送Token
@@ -83,6 +84,18 @@ console.log(`北京时间 (UTC+08)：${new Date(new Date().getTime() + 8 * 60 * 
     } else {
         //await notify.sendNotify(`${$.name}` + `${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}`, content);
         console.log(content)
+    }
+
+if(SEND_KEY) {
+        if (content.includes("Cookie")) {
+            await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
+            console.log("企鹅阅读-" + content)
+        }else{
+            console.log("企鹅阅读-" + content)
+        }
+    }else{
+        await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
+        console.log("企鹅阅读-" + content)
     }
 
     //运行完成后，删除下载的文件
