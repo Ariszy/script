@@ -1,8 +1,6 @@
 const logs = 0   //日志开关
 const exec = require('child_process').execSync
 const fs = require('fs')
-
-const $ = new Env('爱奇艺会员签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const $ = new Env('快手极速版')
 const cookieVal = process.env.KUAISHOU_COOKIE
