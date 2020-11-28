@@ -5,7 +5,6 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const $ = new Env('快手极速版')
 const cookieVal = process.env.KUAISHOU_COOKIE
 const SEND_KEY = process.env.SEND_KEY
-const notify = $.isNode() ? require('./sendNotify') : '';
 let isGetCookie = typeof $request !== 'undefined'
 
 if (isGetCookie) {
