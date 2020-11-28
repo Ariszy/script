@@ -32,9 +32,7 @@ async function replaceWithSecrets(content, Secrets) {
             replacements.push({ key: "$.getdata(qqreadtimeurlKey)", value: JSON.stringify(Secrets.COOKIE_QQYD.split("\n")[2]) });
             replacements.push({ key: "$.getdata(qqreadtimeheaderKey)", value: JSON.stringify(Secrets.COOKIE_QQYD.split("\n")[3]) });
         }
-        if (Secrets.KUAISHOU_COOKIE) {
-            replacements.push({ key: "const cookieVal = $.getdata('cookie_ks')", value:const cookieVal = JSON.stringify(Secrets.KUAISHOU_COOKIE) });
-        }
+        
         await downloader(content);//检查所需额外js
     /*
         if (Secrets.MarketCoinToBeanCount && !isNaN(Secrets.MarketCoinToBeanCount)) {
