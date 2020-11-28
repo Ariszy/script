@@ -78,15 +78,16 @@ console.log(`北京时间 (UTC+08)：${new Date(new Date().getTime() + 8 * 60 * 
     }
     var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     //console.log(d.getHours() +'  '+ d.getMinutes());
-    if (content.includes("现金收益")) {
+    
+    /*if (content.includes("现金收益")) {
         await notify.sendNotify(`${$.name}` + `${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}`, content);
         console.log(content)
     } else {
         //await notify.sendNotify(`${$.name}` + `${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}`, content);
         console.log(content)
-    }
+    }*/
 
-    /* if(SEND_KEY) {
+    if(SEND_KEY) {
         if (content.includes("Cookie")) {
             await notify.sendNotify("快手极速版签到-" + new Date().toLocaleDateString(), content);
             console.log("快手极速版-" + content)
@@ -96,7 +97,7 @@ console.log(`北京时间 (UTC+08)：${new Date(new Date().getTime() + 8 * 60 * 
     }else{
         await notify.sendNotify("快手极速版-" + new Date().toLocaleDateString(), content);
         console.log("快手极速版-" + content)
-    }*/
+    }
 
     //运行完成后，删除下载的文件
     console.log('运行完成后，删除下载的文件\n')
