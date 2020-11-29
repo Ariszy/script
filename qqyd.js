@@ -76,9 +76,9 @@ console.log(`北京时间 (UTC+08)：${new Date(new Date().getTime() + 8 * 60 * 
         content = fs.readFileSync(path, "utf8").replace(/[\r\n]+/g, `\r\n`)//去掉回车换行;
         //console.log(content);
     }
-    var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+    var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString();
     //console.log(d.getHours() +'  '+ d.getMinutes());
-    if (content.includes("今日阅读") ) {
+    if (content.includes("今日阅读") && d.getHours()==17 && d.getMinutes()<=50) {
         await notify.sendNotify(`${$.name}` + `${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}`, content);
         console.log(content)
     } else {
