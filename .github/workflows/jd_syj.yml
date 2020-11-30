@@ -4,7 +4,7 @@
 name: jd_syj
 
 on:
-
+  workflow_dispatch:
   schedule:
     - cron: '10 7 * * *'
   watch:
