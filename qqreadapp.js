@@ -211,10 +211,12 @@ dd+="【账号信息查询】"+"当前账号"+$.quer.data.coinBalance+"💰金�
 function qedssign() {
   if (2 > -1) {
 
-$.setdata(process.env.QQREAD_COOKIE,'checkinheader')
+//$.setdata(process.env.QQREAD_COOKIE,'checkinheader')
 
+$.setdata(process.env.QQREAD_COOKIE.split("\n")[0],'checkinheader')
+$.setdata(process.env.QQREAD_COOKIE.split("\n")[1],'punchCardheader')
 
-$.setdata(process.env.QQREADER_COOKIE, 'punchCardheader')
+//$.setdata(process.env.QQREADER_COOKIE, 'punchCardheader')
 
 
 }
