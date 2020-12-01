@@ -1,6 +1,4 @@
 const $ = new Env('ZhiYi-N🚗')
-const notify = $.isNode() ? require('./sendNotify') : '';
-const SEND_KEY = process.env.SEND_KEY
 $.zdUrl = 'http://api.turinglabs.net/api/v1/jd/bean/create/qwmkwedt5pnudvik5qlpdqswshjc4o3tva4uqii/'
 $.ncUrl = 'http://api.turinglabs.net/api/v1/jd/farm/create/eb6c342da930464a997ed03b8bea49d9/'
 $.mcUrl = 'http://api.turinglabs.net/api/v1/jd/pet/create/MTAxODc2NTEzOTAwMDAwMDAyODI1NzQxNQ==/'
