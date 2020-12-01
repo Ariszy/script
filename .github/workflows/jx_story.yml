@@ -40,4 +40,4 @@ jobs:
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
                   JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT }}
                   JOY_RUN_FLAG: ${{ secrets.JOY_RUN_FLAG }}
-                  SYNCURL: https://github.com/whyour/hundun/raw/master/quanx/jx_story.js
+                  SYNCURL: https://github.com/ZhiYi-N/script/raw/master/jx_story.js
