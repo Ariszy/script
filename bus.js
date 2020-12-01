@@ -128,6 +128,8 @@ function showMsg() {
   });
 }
 
+var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+
 if(SEND_KEY) {
         if (content.includes("ZhiYi-N🚗")) {
             await notify.sendNotify("ZhiYi-N🚗-" + new Date().toLocaleDateString(), content);
