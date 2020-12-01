@@ -34,7 +34,6 @@ jobs:
       - name: '运行 【企鹅读书】'
         if: env.QQREAD_HEADER
         run: |
-          cd ~/JavaScript
           node qqyds.js
         env:
           
