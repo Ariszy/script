@@ -15,7 +15,6 @@ $.result = []
   await createDd()
   await createJx()
   await showMsg()
-  await notify()
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
