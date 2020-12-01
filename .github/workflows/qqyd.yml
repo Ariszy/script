@@ -30,7 +30,6 @@ jobs:
       - name: npm install
         if: env.QQREAD_HEADER
         run: |
-          cd ~/JavaScript
           npm install
       - name: '运行 【企鹅读书】'
         if: env.QQREAD_HEADER
