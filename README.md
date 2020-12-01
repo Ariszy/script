@@ -29,7 +29,7 @@ lxk0301京东签到系列：
 25.  快手极速版(Sunert脚本修改)([kuaishou.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/kuaishou.js))
 26.  微博签到(Sunert)([weibo.js](https://raw.githubusercontent.com/Sunert/Scripts/master/Task/weibo.js))
 27.  东东工厂([jd_jdfactory.js](https://raw.githubusercontent.com/ZhiYi-N/jd_scripts/master/jd_jdfactory.js))
-28.  企鹅阅读(ziye12)([qqyd.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/qqyd.js)[qqreads.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/qqyd.js))
+28.  企鹅阅读(ziye12)([qqyd.js]|(https://raw.githubusercontent.com/ZhiYi-N/script/master/qqyd.js)[qqreads.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/qqyd.js))
 29.  京东赚赚(whyour)([jdzz.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/jdzz.js))
 30.  十元街([jd_syj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js))
 31.  QQ阅读(𝐃d)([qqreadapp.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/qqreadapp.js))
