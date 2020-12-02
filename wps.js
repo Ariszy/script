@@ -53,7 +53,7 @@ async function start() {
     }
 
     if(SEND_KEY) {
-        if (content.includes("cookie")) {
+        if (content.includes("详情")) {
             await notify.sendNotify("WPS签到-" + new Date().toLocaleDateString(), content);
             console.log("WPS签到-" + content)
         }else{
