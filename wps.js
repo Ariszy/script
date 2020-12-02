@@ -5,8 +5,8 @@ const download = require('download')
 const $ = new Env('WPS签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const wps = process.env.WPS_COOKIE
-const wps1 = process.env.WPS_COOKIEE
+const WPS¥URL = process.env.WPS_URL
+const WPS_COOKIE = process.env.WPS_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
@@ -16,9 +16,9 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./wps.js', 'utf8')
-    content = content.replace("$.VAL_signhomeurl = $.getdata('chavy_signhomeurl_wps')", `$.VAL_signhomeurl = process.env.WPS_COOKIE`)
-    console.log('WPS', process.env.WPS_COOKIE.split("/n")[0])
-content = content.replace("$.VAL_signhomeheader = $.getdata('chavy_signhomeheader_wps')", `$.VAL_signhomeheader = process.env.WPS_COOKIEE`)
+    content = content.replace("$.VAL_signhomeurl = $.getdata('chavy_signhomeurl_wps')", `$.VAL_signhomeurl = process.env.WPS_URL`)
+    //console.log('WPS', process.env.WPS_COOKIE.split("/n")[0])
+    content = content.replace("$.VAL_signhomeheader = $.getdata('chavy_signhomeheader_wps')", `$.VAL_signhomeheader = process.env.WPS_COOKIE`)
     await fs.writeFileSync( './wps.js', content, 'utf8')
 }
 
@@ -53,7 +53,7 @@ async function start() {
     }
 
     if(SEND_KEY) {
-        if (content.includes("邀请")) {
+        if (content.includes("cookie")) {
             await notify.sendNotify("WPS签到-" + new Date().toLocaleDateString(), content);
             console.log("WPS签到-" + content)
         }else{
