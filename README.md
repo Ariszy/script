@@ -34,3 +34,4 @@ lxk0301京东签到系列：
 30.  十元街([jd_syj.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_syj.js))
 31.  QQ阅读(𝐃d)([qqreadapp.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/qqreadapp.js))
 32.  京喜金牌厂(whyour)([jx_story.js](https://raw.githubusercontent.com/whyour/hundun/master/quanx/jx_story.js))
+33.  WPS(Chavyleung)([wps.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/wps.js))
