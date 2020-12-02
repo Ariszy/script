@@ -18,7 +18,7 @@ jobs:
     env:
         WPS_COOKIE: ${{ secrets.WPS_COOKIE }}
         WPS_COOKIEE: ${{ secrets.WPS_COOKIEE }}
-   steps:
+    steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
