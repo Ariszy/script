@@ -60,7 +60,7 @@ async function start() {
             console.log("WPS签到-" + content)
         }
     }else{
-        await notify.sendNotify("WPS签到-" + new Date().toLocaleDateString(), content);
+       // await notify.sendNotify("WPS签到-" + new Date().toLocaleDateString(), content);
         console.log("WPS签到-" + content)
     }
 
