@@ -15,6 +15,8 @@ const Secrets = {
     JoyFeedCount: process.env.JDJoyFeedCount, //宠汪汪喂食数量
     FruitShareCodes: process.env.FruitShareCodes, //京东农场分享码
     Unsubscribe: process.env.UNSUBSCRIBE, //取关商铺
+    DDFACTORY_SHARECODES: process.env.DDFACTORY_SHARECODES, //东东工厂互助码
+    
 };
 
 async function changeFiele() {
