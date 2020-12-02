@@ -5,7 +5,7 @@ const download = require('download')
 const $ = new Env('WPS签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const WPS¥URL = process.env.WPS_URL
+const WPS_URL = process.env.WPS_URL
 const WPS_COOKIE = process.env.WPS_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 
