@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        WPS_COOKIE: ${{ secrets.WPS_COOKIE }}
-        WPS_COOKIEE: ${{ secrets.WPS_COOKIEE }}
+        WPS_URL: ${{ secrets.WPS_URL }}
+        WPS_COOKIE: ${{ secrets.WPS_COOKIE}}
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 10.x
