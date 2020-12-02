@@ -33,7 +33,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!wps) {
+    if (!WPS_COOKIE || !WPS_URL) {
         console.log('请填写 WPS_COOKIE 后在继续')
         return
     }
