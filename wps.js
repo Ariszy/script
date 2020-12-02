@@ -15,8 +15,9 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./wps.js', 'utf8')
-    content = content.replace("$.VAL_signhomeurl = $.getdata('chavy_signhomeurl_wps')", `$.VAL_signhomeurl = 'process.env.WPS_COOKIE.split("/n")[0]'`)
-    content = content.replace("$.VAL_signhomeheader = $.getdata('chavy_signhomeheader_wps')", `$.VAL_signhomeheader = 'process.env.WPS_COOKIE.split("/n")[1]' `)
+    content = content.replace("$.VAL_signhomeurl = $.getdata('chavy_signhomeurl_wps')", `$.VAL_signhomeurl = process.env.WPS_COOKIE.split("/n")[0]`)
+    console.log('WPS', process.env.WPS_COOKIE.split("/n")[0])
+content = content.replace("$.VAL_signhomeheader = $.getdata('chavy_signhomeheader_wps')", `$.VAL_signhomeheader = process.env.WPS_COOKIE.split("/n")[1] `)
     await fs.writeFileSync( './wps.js', content, 'utf8')
 }
 
