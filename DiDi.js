@@ -6,7 +6,7 @@ const $ = new Env('滴滴出行签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
 const DIDI_TOKEN = process.env.DIDI_TOKEN
-const CITY_NO = process.env.CITY_NO
+const DIDI_CITY = process.env.DIDI_CITY
 const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
@@ -16,9 +16,9 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./DiDi_new.js.js', 'utf8')
-    content = content.replace("$.Ticket = $.read("#DiDi")", `$.Ticket  = process.env.DIDI_TOKEN`)
+    content = content.replace("$.Ticket = $.read("DiDi")", `$.Ticket  = process.env.DIDI_TOKEN`)
     //console.log('WPS', process.env.WPS_COOKIE.split("/n")[0])
-    content = content.replace("$.city = $.read("#DiDi_city")", `$.city =  process.env.CITY_NO`)
+    content = content.replace("$.city = $.read("DiDi_city")", `$.city =  process.env.DIDI_CITY`)
     await fs.writeFileSync( './DiDi_new.js', content, 'utf8')
 }
 
@@ -33,7 +33,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!CITY_NO || !DIDI_TOKEN) {
+    if (!DIDI_CITY || !DIDI_TOKEN) {
         console.log('请填写 DIDI_TOKEN 后在继续')
         return
     }
