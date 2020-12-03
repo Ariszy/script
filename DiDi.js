@@ -16,8 +16,8 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./DiDi_new.js', 'utf8')
-    content = content.replace(/$.read("#DiDi")/, "process.env.DIDI_TOKEN")
-    content = content.replace(/$.read("#DiDi_city")/, "process.env.DIDI_CITY")
+    content = content.replace(/(=.*i".*$|$.i".*=)/, "= process.env.DIDI_TOKEN")
+    content = content.replace(/(=.*c.*$|$.c.*=)")/, "= process.env.DIDI_CITY")
     await fs.writeFileSync( './DiDi_new.js', content, 'utf8')
 }
 
