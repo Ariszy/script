@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        CITY_NO: ${{ secrets.CITY_NO }}
+        DIDI_CITY: ${{ secrets.DIDI_CITY}}
         DIDI_TOKEN: ${{ secrets.DIDI_TOKEN }}
     steps:
       - uses: actions/checkout@v1
