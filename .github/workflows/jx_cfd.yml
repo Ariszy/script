@@ -6,7 +6,7 @@ name: 京喜财富岛
 on:
     workflow_dispatch:
     schedule:
-        - cron: "30 15 * * *"
+        - cron: "12 * * *"
     watch:
         types: [started]
     repository_dispatch:
