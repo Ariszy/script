@@ -36,4 +36,4 @@ lxk0301京东签到系列：
 32.  京喜故事([jd_jsstory.js](https://raw.githubusercontent.com/lxk0301/jd_scripts/master/jd_jxstory.js))
 33.  WPS(Chavyleung)([wps.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/wps.js))
 34.  京喜财富岛(MoPoQAQ)([jx_cfd.js](https://raw.githubusercontent.com/MoPoQAQ/Script/main/Me/jx_cfd.js))
-35.  ---滴滴出行(zZpiglet)[DiDi.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/DiDi.js))
+35.  ---滴滴出行(zZPiglet)([DiDi.js](https://raw.githubusercontent.com/ZhiYi-N/script/master/DiDi.js))
