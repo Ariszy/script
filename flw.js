@@ -16,8 +16,8 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./flwhbziye.js', 'utf8')
-    content = content.replace("const flwhburlVal = $.getdata(flwhburlKey)", `const flwhburlVal = FLW_URL`)
-    content = content.replace("const flwhbheaderVal = $.getdata(flwhbheaderKey)", `const flwhbheaderVal = FLW_COOKIE`)
+    content = content.replace("const flwhburlVal = $.getdata(flwhburlKey)", `const flwhburlVal = process.env.FLW_URL`)
+    content = content.replace("const flwhbheaderVal = $.getdata(flwhbheaderKey)", `const flwhbheaderVal = process.env.FLW_COOKIE`)
     await fs.writeFileSync( './flwhbziye.js', content, 'utf8')
 }
 
