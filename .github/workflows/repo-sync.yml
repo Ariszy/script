@@ -1,7 +1,8 @@
-name: 同步上游仓库
+name: sync-ZhiYi-N-script
 on:
   schedule:
     - cron: '0 */2 * * *'
+  workflow_dispatch:
   watch:
     types: started
   repository_dispatch:
@@ -9,7 +10,7 @@ on:
 jobs:
   repo-sync:
     env:
-      PAT: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11
+      PAT: ${{ secrets.PAT }}
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
