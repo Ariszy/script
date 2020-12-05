@@ -35,6 +35,10 @@ async function replaceWithSecrets(content, Secrets) {
        if (Secrets.KUAISHOU_COOKIE) {
             replacements.push({ key: "$.getdata('cookie_ks')", value: JSON.stringify(Secrets.KUAISHOU_COOKIE) });
         }
+       if (Secrets.FLW_COOKIE) {
+            replacements.push({ key: "$.getdata(flwhburlKey)", value: JSON.stringify(Secrets.FLW_URL) });
+            replacements.push({ key: "$.getdata(flwhburlKey)", value: JSON.stringify(Secrets.FLW_COOKIE) });
+        }
         await downloader(content);//检查所需额外js
     /*
         if (Secrets.MarketCoinToBeanCount && !isNaN(Secrets.MarketCoinToBeanCount)) {
