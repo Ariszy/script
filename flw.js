@@ -87,12 +87,8 @@ var tz=''
 
 
 let isGetCookie = typeof $request !== 'undefined'
-if (isGetCookie) {
-   GetCookie();
-   $.done();
-} else {
    all()
-}
+
 
 
 
