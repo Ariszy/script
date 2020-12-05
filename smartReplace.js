@@ -37,7 +37,7 @@ async function replaceWithSecrets(content, Secrets) {
         }
        if (Secrets.FLW_COOKIE) {
             replacements.push({ key: "$.getdata(flwhburlKey)", value: JSON.stringify(Secrets.FLW_URL) });
-            replacements.push({ key: "$.getdata(flwhburlKey)", value: JSON.stringify(Secrets.FLW_COOKIE) });
+            replacements.push({ key: "$.getdata(flwhbheaderKey)", value: JSON.stringify(Secrets.FLW_COOKIE) });
         }
         await downloader(content);//检查所需额外js
     /*
