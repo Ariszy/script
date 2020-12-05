@@ -44,8 +44,9 @@ let isGetCookie = typeof $request !== 'undefined'
 
 
 function GetCookie() {
-   $.setdata(process.env.FLW_URL,flwhburlKey)
-   $.setdata(JSON.stringify(process.env.FLW_COOKIE),flwhbheaderKey)
+   $.setdata(process.env.FLW_URL,'flwhburlKey')
+   const flwhbheaderVal = JSON.stringify(process.env.FLW_COOKIE)
+   $.setdata(JSON.stringify(flwhbheaderVal),'flwhbheaderKey')
     
 }
 
