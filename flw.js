@@ -86,7 +86,7 @@ const flwhbbodyVal = ''
 var tz=''
 
 
-let isGetCookie = typeof $request !== 'undefined'
+let isGetCookie = typeof $request
    all()
 
 
