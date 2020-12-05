@@ -5,7 +5,7 @@ const download = require('download')
 const $ = new Env('返利网签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const FLW_URL = process.env.FLW_URL
+//const FLW_URL = process.env.FLW_URL
 const FLW_COOKIE = process.env.FLW_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 
@@ -16,7 +16,7 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./flwhbziye.js', 'utf8')
-    content = content.replace("const flwhburlVal = $.getdata(flwhburlKey)", `const flwhburlVal = JSON.parse(process.env.FLW_URL)`)
+    content = content.replace("const flwhburlVal = $.getdata(flwhburlKey)", `const flwhburlVal = 'https://huodong.fanli.com/h5/Fanlishare20201212/ajaxInit'`)
     content = content.replace("const flwhbheaderVal = $.getdata(flwhbheaderKey)", `const flwhbheaderVal = JSON.parse(process.env.FLW_COOKIE)`)
     await fs.writeFileSync( './flwhbziye.js', content, 'utf8')
 }
@@ -32,7 +32,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!FLW_COOKIE && !FLW_URL) {
+    if (!FLW_COOKIE ) {
         console.log('请填写 FLW_COOKIE 后在继续')
         return
     }
