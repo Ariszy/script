@@ -1,6 +1,3 @@
-
-/*ziye
-
 //返利网1212天天领现金，活动时间 12月  5号 9号到12号
 每天1.95
 
@@ -69,9 +66,9 @@ const flwhbheaderKey = 'flwhbhd'+jbid
 
 
 
-const flwhburlVal = process.env.FLW_URL
+const flwhburlVal = $.getdata(flwhburlKey)
 
-const flwhbheaderVal = process.env.FLW_COOKIE
+const flwhbheaderVal = $.getdata(flwhbheaderKey)
 
 const flwhbbodyVal = ''
 
@@ -86,31 +83,19 @@ const flwhbbodyVal = ''
 var tz=''
 
 
-let isGetCookie = typeof $request
+let isGetCookie = typeof $request !== 'undefined'
+
+   GetCookie();
    all()
 
 
 
 
 
-
 function GetCookie() {
-
-
-
-   if($request &&$request.url.indexOf("ajaxInit")>=0) {
-
-  const flwhburlVal = $request.url
-if (flwhburlVal)        $.setdata(flwhburlVal,flwhburlKey)
-    $.log(`[${jsname}] 获取url请求: 成功,flwhburlVal: ${flwhburlVal}`)
-const flwhbheaderVal = JSON.stringify($request.headers)
-    if (flwhbheaderVal)        $.setdata(flwhbheaderVal,flwhbheaderKey)
-    $.log(`[${jsname}] 获取Cookie: 成功,flwhbheaderVal: ${flwhbheaderVal}`)
-    $.msg(flwhbheaderKey, `获取Cookie: 成功🎉`, ``)
-  
-
-  }
-
+   $.setdata(process.env.FLW_URL,flwhburlKey)
+   $.setdata(process.env.FLW_COOKIE,flwhbheaderKey)
+    
 }
 
 
