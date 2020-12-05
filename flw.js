@@ -5,8 +5,8 @@ const download = require('download')
 const $ = new Env('返利网签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const FLW_URL = process.env.FLW_COOKIE.split.split("\n")[0]
-const FLW_COOKIE = process.env.FLW_COOKIE.split.split("\n")[1]
+const FLW_URL = process.env.FLW_URL
+const FLW_COOKIE = process.env.FLW_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
@@ -16,8 +16,8 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./flwhbziye.js', 'utf8')
-    content = content.replace("const flwhburlVal = $.getdata(flwhburlKey)", `const flwhburlVal = process.env.FLW_COOKIE.split.split("\n")[0]`)
-    content = content.replace("const flwhbheaderVal = $.getdata(flwhbheaderKey)", `const flwhbheaderVal = process.env.FLW_COOKIE.split.split("\n")[1]`)
+    content = content.replace("const flwhburlVal = $.getdata(flwhburlKey)", `const flwhburlVal = FLW_URL`)
+    content = content.replace("const flwhbheaderVal = $.getdata(flwhbheaderKey)", `const flwhbheaderVal = FLW_COOKIE`)
     await fs.writeFileSync( './flwhbziye.js', content, 'utf8')
 }
 
