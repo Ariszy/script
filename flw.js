@@ -5,7 +5,8 @@ const download = require('download')
 const $ = new Env('返利网签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const FLW_COOKIE = process.env.FLW_COOKIE
+const FLW_URL = process.env.FLW_COOKIE.split.split("\n")[0]
+const FLW_COOKIE = process.env.FLW_COOKIE.split.split("\n")[1]
 const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
@@ -31,7 +32,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!process.env.FLW_COOKIE.split.split("\n")[0] && process.env.FLW_COOKIE.split.split("\n")[1])) {
+    if (!FLW_COOKIE && !FLW_URL) {
         console.log('请填写 FLW_COOKIE 后在继续')
         return
     }
