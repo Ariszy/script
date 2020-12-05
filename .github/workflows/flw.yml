@@ -17,6 +17,7 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     env:
         FLW_COOKIE: ${{ secrets.FLW_COOKIE }}
+        FLW_URL: ${{ secrets.FLW_URL }}
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 10.x
