@@ -1,4 +1,4 @@
-name: 爱奇艺会员签到1
+name: 爱奇艺会员
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: "运行【爱奇艺会员签到】"
+      - name: "运行【爱奇艺会员】"
         run: |
           node iqiyi1.js
         env:
