@@ -11,7 +11,7 @@ const QQREAD_TIMEHD = process.env.QQREAD_TIMEHD
 
 let SEND_KEY = '';
 if(process.env.PUSH_KEY){
-  SEND_KEY = process.env.PUSH_KEYE
+  SEND_KEY = process.env.PUSH_KEY
 }
 if(process.env.BARK_PUSH){
   SEND_KEY = process.env.BARK_PUSH
