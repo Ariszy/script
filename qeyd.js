@@ -9,7 +9,12 @@ const QQREAD_TIMEURL = process.env.QQREAD_TIMEURL
 const QQREAD_BODY = process.env.QQREAD_BODY
 const QQREAD_TIMEHD = process.env.QQREAD_TIMEHD
 
-const SEND_KEY = process.env.SEND_KEY
+const SEND_KEY = ''
+if(process.env.PUSH_KEY){
+SEND_KEY = process.env.PUSH_KEY
+}else{
+SEND_KEY = process.env.SEND_KEY
+}
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js'
@@ -52,7 +57,7 @@ async function start() {
         content = fs.readFileSync(path, "utf8");
     }
     var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
-    if(!SEND_KEY) {
+    if(SEND_KEY) {
         if (content.includes("Cookie") && d.getHours()==9 && d.getMinutes()<=20) {
             await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
             console.log("企鹅阅读-" + content)
