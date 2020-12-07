@@ -16,8 +16,6 @@ if(process.env.PUSH_KEY){
 SEND_KEY = process.env.SEND_KEY
 }
 
-
-
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js'
     await download(url, './')
