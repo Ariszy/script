@@ -13,7 +13,7 @@ let SEND_KEY = '';
 if(process.env.PUSH_KEY){
   SEND_KEY = process.env.PUSH_KEYE
 }
-if(process.env.BARK_PUSH)
+if(process.env.BARK_PUSH){
   SEND_KEY = process.env.BARK_PUSH
 }
 if(process.env.TG_BOT_TOKEN){
