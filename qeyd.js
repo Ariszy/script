@@ -16,12 +16,12 @@ async function downFile () {
     await download(url, './')
 }
 
-/*async function changeFiele () {
-    let content = await fs.readFileSync('./iQIYI.js', 'utf8')
-    content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
-    await fs.writeFileSync( './iQIYI.js', content, 'utf8')
+async function changeFiele () {
+    let content = await fs.readFileSync('./qeyd.js', 'utf8')
+    //content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
+    await fs.writeFileSync( './qeyd.js', content, 'utf8')
 }
-*/
+
 async function deleteFile(path) {
     // 查看文件result.txt是  否存在,如果存在,先删除
     const fileExists = await fs.existsSync(path);
