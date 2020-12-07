@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【京东秒杀红包雨】'
         run: |
-          node jd_ms_redrain.js.js
+          node jd_ms_redrain.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
