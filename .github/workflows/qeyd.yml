@@ -6,7 +6,7 @@ name: qeyd
 on:
     workflow_dispatch:
     schedule:
-        - cron: "11 * * * *"
+        - cron: "*/11 * * * *"
     watch:
         types: [started]
     repository_dispatch:
