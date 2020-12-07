@@ -32,12 +32,10 @@ jobs:
                   QQREAD_BODY: ${{ secrets.QQREAD_BODY }}
                   QQREAD_TIMEURL: ${{ secrets.QQREAD_TIMEURL }}
                   QQREAD_TIMEHD: ${{ secrets.QQREAD_TIMEHD }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
-                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
                   TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-                  JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT }}
-                  JOY_RUN_FLAG: ${{ secrets.JOY_RUN_FLAG }}
-                  SYNCURL: https://github.com/ziye12/JavaScript/raw/master/Task/qqreads.js
