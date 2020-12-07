@@ -12,8 +12,18 @@ const QQREAD_TIMEHD = process.env.QQREAD_TIMEHD
 let SEND_KEY = '';
 if(process.env.PUSH_KEY){
   SEND_KEY = process.env.PUSH_KEYE
-}else{
-SEND_KEY = process.env.SEND_KEY
+}
+if(process.env.BARK_PUSH)
+  SEND_KEY = process.env.BARK_PUSH
+}
+if(process.env.TG_BOT_TOKEN){
+    SEND_KEY = process.env.TG_BOT_TOKEN
+}
+if(process.env.DD_BOT_TOKEN){
+    SEND_KEY = process.env.DD_BOT_TOKEN
+}
+if(proess,env.IGOT_PUSH_KEY){
+    SEND_KEY = process.env.IGOT_PUSH_KEY
 }
 
 async function downFile () {
@@ -23,7 +33,6 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./qeyd.js', 'utf8')
-    //content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
     await fs.writeFileSync( './qeyd.js', content, 'utf8')
 }
 
@@ -56,16 +65,16 @@ async function start() {
     if (fs.existsSync(path)) {
         content = fs.readFileSync(path, "utf8");
     }
-    var d = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+    var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     if(SEND_KEY) {
-        if (content.includes("Cookie") && d.getHours()==9 && d.getMinutes()<=20) {
+        if (content.includes("Cookie") && Time.getHours()==9 && Time.getMinutes()<=50) {
             await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
             console.log("企鹅阅读-" + content)
         }else{
             console.log("企鹅阅读-" + content)
         }
     }else{
-        //await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
+        await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
         console.log("企鹅阅读-" + content)
     }
 
