@@ -6,11 +6,11 @@ name: 京喜财富岛
 on:
     workflow_dispatch:
     schedule:
-        - cron: "12 * * * *"
+        - cron: "11 * * * *"
     watch:
         types: [started]
     repository_dispatch:
-        types: qqread
+        types: qqreads
 
 jobs:
     build:
