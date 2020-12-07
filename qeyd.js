@@ -67,7 +67,7 @@ async function start() {
     }
     var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     if(SEND_KEY) {
-        if (content.includes("Cookie") && Time.getHours()==9 && Time.getMinutes()<=50) {
+        if (content.includes("Cookie") && Time.getHours()==9 && Time.getMinutes()<=40) {
             await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
             console.log("企鹅阅读-" + content)
         }else{
