@@ -8,7 +8,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const QQREAD_TIMEURL = process.env.QQREAD_TIMEURL
 const QQREAD_BODY = process.env.QQREAD_BODY
 const QQREAD_TIMEHD = process.env.QQREAD_TIMEHD
-
+//只用于判断，推送是sendnodify
 let SEND_KEY = '';
 if(process.env.PUSH_KEY){
   SEND_KEY = process.env.PUSH_KEY
