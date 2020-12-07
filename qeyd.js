@@ -22,7 +22,7 @@ if(process.env.TG_BOT_TOKEN){
 if(process.env.DD_BOT_TOKEN){
     SEND_KEY = process.env.DD_BOT_TOKEN
 }
-if(proess.env.IGOT_PUSH_KEY){
+if(process.env.IGOT_PUSH_KEY){
     SEND_KEY = process.env.IGOT_PUSH_KEY
 }
 
