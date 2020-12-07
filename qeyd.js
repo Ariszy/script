@@ -11,10 +11,12 @@ const QQREAD_TIMEHD = process.env.QQREAD_TIMEHD
 
 let SEND_KEY = '';
 if(process.env.PUSH_KEY){
-SEND_KEY = process.env.PUSH_KEY
+  SEND_KEY = process.env.PUSH_KEY
 }else{
 SEND_KEY = process.env.SEND_KEY
 }
+
+
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js'
@@ -65,7 +67,7 @@ async function start() {
             console.log("企鹅阅读-" + content)
         }
     }else{
-        await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
+        //await notify.sendNotify("企鹅阅读-" + new Date().toLocaleDateString(), content);
         console.log("企鹅阅读-" + content)
     }
 
