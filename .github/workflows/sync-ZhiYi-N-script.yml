@@ -1,7 +1,7 @@
 name: sync-ZhiYi-N-script
 on:
   schedule:
-    - cron: '* */2 * * *'
+    - cron: '0 */2 * * *'
   workflow_dispatch:
   watch:
     types: started
