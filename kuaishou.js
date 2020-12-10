@@ -103,18 +103,6 @@ console.log(`北京时间 (UTC+08)：${new Date(new Date().getTime() + 8 * 60 * 
         console.log(content)
     }
 
-    /*if(SEND_KEY) {
-        if (content.includes("Cookie")) {
-            await notify.sendNotify("快手极速版签到-" + new Date().toLocaleDateString(), content);
-            console.log("快手极速版-" + content)
-        }else{
-            console.log("快手极速版-" + content)
-        }
-    }else{
-        await notify.sendNotify("快手极速版-" + new Date().toLocaleDateString(), content);
-        console.log("快手极速版-" + content)
-    }*/
-
     //运行完成后，删除下载的文件
     console.log('运行完成后，删除下载的文件\n')
     await deleteFile(path);
