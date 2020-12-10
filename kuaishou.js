@@ -3,7 +3,23 @@ const fs = require('fs')
 const download = require('download')
 const smartReplace = require("./smartReplace");
 
-const SEND_KEY = process.env.SEND_KEY
+let SEND_KEY = '';
+if(process.env.PUSH_KEY){
+  SEND_KEY = process.env.PUSH_KEY
+}
+if(process.env.BARK_PUSH){
+  SEND_KEY = process.env.BARK_PUSH
+}
+if(process.env.TG_BOT_TOKEN){
+    SEND_KEY = process.env.TG_BOT_TOKEN
+}
+if(process.env.DD_BOT_TOKEN){
+    SEND_KEY = process.env.DD_BOT_TOKEN
+}
+if(process.env.IGOT_PUSH_KEY){
+    SEND_KEY = process.env.IGOT_PUSH_KEY
+}
+
 const $ = new Env('快手极速版签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
