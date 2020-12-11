@@ -6,7 +6,7 @@ name: 京喜农场
 on:
     workflow_dispatch:
     schedule:
-        - cron: "0 9,12,18 * * *"
+        - cron: "0 1,4,10 * * *"
     watch:
         types: [started]
     repository_dispatch:
