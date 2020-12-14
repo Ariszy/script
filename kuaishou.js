@@ -65,7 +65,7 @@ async function start() {
     }
     var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     if(SEND_KEY) {
-        if (content.includes("Cookie") && Time.getHours()==9 && Time.getMinutes()<=40) {
+        if (content.includes("极速版") && Time.getHours()==9 && Time.getMinutes()<=40) {
             await notify.sendNotify("快手极速版-" + new Date().toLocaleDateString(), content);
             console.log("快手极速版-" + content)
         }else{
