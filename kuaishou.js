@@ -63,9 +63,9 @@ async function start() {
     if (fs.existsSync(path)) {
         content = fs.readFileSync(path, "utf8");
     }
-    var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
+   // var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     if(SEND_KEY) {
-        if (content.includes("极速版") && Time.getHours()==9 && Time.getMinutes()<=40) {
+        if (content.includes("极速版")) {
             await notify.sendNotify("快手极速版-" + new Date().toLocaleDateString(), content);
             console.log("快手极速版-" + content)
         }else{
