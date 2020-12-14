@@ -45,7 +45,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!QQREAD_BODY) {
+    if (!KS_TOKEN) {
         console.log('请填写 secret 后在继续')
         return
     }
