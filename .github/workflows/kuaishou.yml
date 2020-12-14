@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        KUAISHOU_COOKIE: ${{ secrets.KUAISHOU_COOKIE }}
+        KS_TOKEN: ${{ secrets. KS_TOKEN }}
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 10.x
