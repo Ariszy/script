@@ -4,6 +4,13 @@ $.ncUrl = 'http://api.turinglabs.net/api/v1/jd/farm/create/eb6c342da930464a997ed
 $.mcUrl = 'http://api.turinglabs.net/api/v1/jd/pet/create/MTAxODc2NTEzOTAwMDAwMDAyODI1NzQxNQ==/'
 $.ddUrl = 'http://api.turinglabs.net/api/v1/jd/ddfactory/create/P04z54XCjVWnYaS5m9cZx2atAcQ9eSrr5Cpuw/'
 $.jxUrl = 'http://api.turinglabs.net/api/v1/jd/jxfactory/create/IO6FIBzYeEztXOK7BigRuA==/'
+
+$.zdUrl = 'http://api.turinglabs.net/api/v1/jd/bean/create/e7lhibzb3zek3rus7xktpq2wmwzbccmdzsxerla/'
+$.ncUrl = 'http://api.turinglabs.net/api/v1/jd/farm/create/69c262ee6b414944869828915ae74be9/'
+$.mcUrl = 'http://api.turinglabs.net/api/v1/jd/pet/create/MTE1NDUyMjEwMDAwMDAwNDI1NDgwMjE=/'
+$.ddUrl = 'http://api.turinglabs.net/api/v1/jd/ddfactory/create/P04z54XCjVWnYaS5m9cZ2T_iXtCwUwWbrJw2hc/'
+$.jxUrl = 'http://api.turinglabs.net/api/v1/jd/jxfactory/create/zGL7La1hPe-boRUrceb6Gg=='
+
 $.result = []
 
 !(async () => {
