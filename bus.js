@@ -1,4 +1,9 @@
 const $ = new Env('ZhiYi-N🚗')
+const notify = $.isNode() ? require('./sendNotify') : '';
+if ($.isNode()){
+      console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+      console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=============\n`)
+  }
 const shareCodes = [
   {
     zd: "qwmkwedt5pnudvik5qlpdqswshjc4o3tva4uqii",
@@ -135,10 +140,14 @@ function createJx(jxUrl) {
   })
 }
 function showMsg() {
-  return new Promise((resolve) => {
+
+if ($.isNode()) {
+       await notify.sendNotify($.name, "", $.result.join('\n'))
+     }
+ /* return new Promise((resolve) => {
     $.msg($.name, "", $.result.join('\n'));
     resolve();
-  });
+  });*/
 }
 
 
