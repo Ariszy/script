@@ -47,7 +47,7 @@ function createZd(zdUrl) {
         const _data = JSON.parse(data)
         if (_data) {
           if(_data.message.indexOf("existe")!=-1){
-             message += `种豆得豆：已在上车`+'\n'
+             message += `种豆得豆：已在车上`+'\n'
            }else{
              message += `种豆得豆：完美上车`+'\n'
             }
