@@ -142,9 +142,10 @@ function createJx(jxUrl) {
 }
 async function showMsg() {
   if ($.isNode()){
-     await.notify.sendNotify(${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}+message)
+     $.log(message)
+     await.notify.sendNotify(message)
     }else{
-   //$.log(message)
+     $.log(message)
      $.msg(message)
  }
 
