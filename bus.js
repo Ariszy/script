@@ -140,10 +140,11 @@ function createJx(jxUrl) {
   })
 }
 async function showMsg() {
-
-if ($.isNode()) {
+return new Promise((resolve) => {
      await notify.sendNotify($.name, "", $.result.join('\n'))
-     }
+     resolve();
+    });
+
  /* return new Promise((resolve) => {
     $.msg($.name, "", $.result.join('\n'));
     resolve();
