@@ -2,6 +2,7 @@ const $ = new Env('ZhiYi-N🚗')
 const notify = $.isNode() ? require('./sendNotify') : '';
 var message = '';
 if ($.isNode()){
+      message += `\n\n 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()} \n\n`;
       console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
       console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=============\n`)
   }
@@ -142,8 +143,7 @@ function createJx(jxUrl) {
 }
 async function showMsg() {
   if ($.isNode()){
-     message += `\n\n========= 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()} \n\n`;
-    $.log(message)
+     $.log(message)
      await notify.sendNotify('ZhiYi-N🚗',message)
     }else{
      $.log(message)
