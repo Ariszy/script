@@ -139,11 +139,16 @@ function createJx(jxUrl) {
     })
   })
 }
-async function showMsg() {
+function showMsg() {
 return new Promise((resolve) => {
+  if ($.isNode()){
      await notify.sendNotify($.name, "", $.result.join('\n'))
-     resolve();
-    });
+    }else{
+   $.msg($.name, "", $.result.join('\n'));
+ }
+    resolve();
+  });
+ 
 
  /* return new Promise((resolve) => {
     $.msg($.name, "", $.result.join('\n'));
