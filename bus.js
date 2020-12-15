@@ -142,7 +142,7 @@ function createJx(jxUrl) {
 function showMsg() {
 
 if ($.isNode()) {
-       await notify.sendNotify($.name, "", $.result.join('\n'))
+     await notify.sendNotify($.name, "", $.result.join('\n'))
      }
  /* return new Promise((resolve) => {
     $.msg($.name, "", $.result.join('\n'));
