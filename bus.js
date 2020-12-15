@@ -140,16 +140,14 @@ function createJx(jxUrl) {
     })
   })
 }
-function showMsg() {
-return new Promise((resolve) => {
+async function showMsg() {
   if ($.isNode()){
-     notify.sendNotify(message)
+     await.notify.sendNotify(${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}+message)
     }else{
-   //$.msg($.name, "", $.result.join('\n'));
+   //$.log(message)
      $.msg(message)
  }
-    resolve();
-  });
+
  
 
  /* return new Promise((resolve) => {
