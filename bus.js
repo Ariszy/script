@@ -1,4 +1,5 @@
 const $ = new Env('ZhiYi-N🚗')
+const jsname = "ZhiYi-N🚗";
 const notify = $.isNode() ? require('./sendNotify') : '';
 var message = '';
 if ($.isNode()){
@@ -143,7 +144,7 @@ function createJx(jxUrl) {
 }
 async function showMsg() {
   if ($.isNode()){
-     $.log(message)
+     $.log(jsname+'\n'+message)
      await notify.sendNotify('ZhiYi-N🚗',message)
     }else{
      $.log(message)
