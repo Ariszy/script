@@ -1,5 +1,6 @@
 const $ = new Env('ZhiYi-N🚗')
 const notify = $.isNode() ? require('./sendNotify') : '';
+var message = '';
 if ($.isNode()){
       console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
       console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}=============\n`)
@@ -46,9 +47,9 @@ function createZd(zdUrl) {
         const _data = JSON.parse(data)
         if (_data) {
           if(_data.message.indexOf("existe")!=-1){
-             $.result.push(`种豆得豆：已在上车`)
+             message += `种豆得豆：已在上车`+'\n'
            }else{
-             $.result.push(`种豆得豆：完美上车`)
+             message += `种豆得豆：完美上车`+'\n'
             }
         }
       } catch (e) {
@@ -68,9 +69,9 @@ function createNc(ncUrl) {
       try {
         const _data = JSON.parse(data)
          if(_data.message.indexOf("existe")!=-1){
-             $.result.push(`京东农场：已在车上`)
+             message += `京东农场：已在车上`+'\n'
            }else{
-             $.result.push(`京东农场：完美上车`)
+             message += `京东农场：完美上车`+'\n'
             }
       } catch (e) {
         $.logErr(e, resp)
@@ -89,9 +90,9 @@ function createMc(mcUrl) {
       try {
         const _data = JSON.parse(data)
          if(_data.message.indexOf("existe")!=-1){
-             $.result.push(`京东萌宠：已在车上`)
+             message += `京东萌宠：已在车上`+'\n'
            }else{
-             $.result.push(`京东萌宠：完美上车`)
+             message += `京东萌宠：完美上车`+'\n'
             }
       } catch (e) {
         $.logErr(e, resp)
@@ -108,9 +109,9 @@ function createDd(ddUrl) {
       try {
         const _data = JSON.parse(data)
          if(_data.message.indexOf("existe")!=-1){
-             $.result.push(`东东工厂：已在车上`)
+             message += `东东工厂：已在车上`+'\n'
            }else{
-             $.result.push(`东东工厂：完美上车`)
+             message += `东东工厂：完美上车`+'\n'
             }
       } catch (e) {
         $.logErr(e, resp)
@@ -127,9 +128,9 @@ function createJx(jxUrl) {
       try {
         const _data = JSON.parse(data)
          if(_data.message.indexOf("existe")!=-1){
-             $.result.push(`京喜工厂：已在车上`)
+             message += `京喜工厂：已在车上`+'\n'
            }else{
-             $.result.push(`京喜工厂：完美上车`)
+             message += `京喜工厂：完美上车`+'\n'
             }
       } catch (e) {
         $.logErr(e, resp)
@@ -142,9 +143,10 @@ function createJx(jxUrl) {
 function showMsg() {
 return new Promise((resolve) => {
   if ($.isNode()){
-     notify.sendNotify($.name, "", $.result.join('\n'))
+     notify.sendNotify(message)
     }else{
-   $.msg($.name, "", $.result.join('\n'));
+   //$.msg($.name, "", $.result.join('\n'));
+     $.msg(message)
  }
     resolve();
   });
