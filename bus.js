@@ -143,7 +143,7 @@ function createJx(jxUrl) {
 async function showMsg() {
   if ($.isNode()){
      $.log(message)
-     await notify.sendNotify(message)
+     await notify.sendNotify('ZhiYi-N🚗',message)
     }else{
      $.log(message)
      $.msg(message)
