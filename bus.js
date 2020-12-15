@@ -142,8 +142,9 @@ function createJx(jxUrl) {
 }
 async function showMsg() {
   if ($.isNode()){
-     $.log(message)
-     await notify.sendNotify('ZhiYi-N🚗',message)
+     message += `\n\n========= 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()} \n\n`;
+    $.log(message)
+     await notify.sendNotify('8028班次公交车',message)
     }else{
      $.log(message)
      $.msg(message)
