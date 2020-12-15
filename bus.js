@@ -139,7 +139,7 @@ function createJx(jxUrl) {
     })
   })
 }
-function showMsg() {
+async function showMsg() {
 
 if ($.isNode()) {
      await notify.sendNotify($.name, "", $.result.join('\n'))
