@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【京东养猪】'
         run: |
-          node jdzz.js
+          node jd_jdzz.js
         env:
           JD_COOKIE: ${{ secrets.JD_COOKIE }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
