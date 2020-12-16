@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【京东养猪】'
+      - name: '运行 【京东赚赚】'
         run: |
           node jd_jdzz.js
         env:
