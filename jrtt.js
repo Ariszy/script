@@ -40,10 +40,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (! signurl) {
-        console.log('请填写 key 后在继续')
-        return
-    }
+   
     // 下载最新代码
     await downFile();
     console.log('下载代码完毕')
