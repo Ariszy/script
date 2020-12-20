@@ -168,7 +168,7 @@ function createZz(zzUrl) {
 async function showMsg() {
   if ($.isNode()){
      $.log(jsname+'\n'+message)
-     await notify.sendNotify(jsname, "", message)
+     await notify.sendNotify("ZhiYi-N🚗", message)
     }else{
      $.log(message)
      $.msg(jsname, "", message)
