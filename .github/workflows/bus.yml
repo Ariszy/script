@@ -3,7 +3,7 @@ name: Bus🚗
 on:
   workflow_dispatch:
   schedule:
-    - cron: "2 18 1,10,20 * *"
+    - cron: "2 18 30,31,9,19 * *"
   watch:
     types: [started]
 
