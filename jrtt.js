@@ -21,11 +21,11 @@ async function downFile () {
 async function changeFiele () {
     let content = await fs.readFileSync('./jrtt.js', 'utf8')
     content = content.replace("var farmurl = $.getdata('farmurl')", "var farmurl = process.env.JRTTFARMURL")
-    content = content.replace("var farmkey = $.getdata('farmkey')", "var farmkey = process.env.JRTTFARMKEY")
+    content = content.replace("var farmkey = $.getdata('farmkey')", "var farmkey = JSON.parse(process.env.JRTTFARMKEY)")
     content = content.replace("var signurl = $.getdata('signurl')", "var signurl = process.env.JRTTSIGNURL")
-    content = content.replace("var signkey = $.getdata('signkey')", "var signkey = process.env.JRTTSIGNKEY")
+    content = content.replace("var signkey = $.getdata('signkey')", "var signkey = JSON.parse(process.env.JRTTSIGNKEY)")
     content = content.replace("var readurl = $.getdata('readurl')", "var readurl = process.env.JRTTREADURL")
-    content = content.replace("var readkey = $.getdata('readkey')", "var readkey = process.env.JRTTREADKEY")
+    content = content.replace("var readkey = $.getdata('readkey')", "var readkey = JSON.parse(process.env.JRTTREADKEY)")
     await fs.writeFileSync( './jrtt.js', content, 'utf8')
 }
 
