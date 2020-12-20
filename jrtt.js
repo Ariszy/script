@@ -59,6 +59,7 @@ async function start() {
         content = fs.readFileSync(path, "utf8");
     }
 
+        var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
     if(SEND_KEY){
         if ( (d.getHours() == 12 && d.getMinutes() <= 20) || (d.getHours() == 23 && d.getMinutes() >= 40) ){
             await notify.sendNotify("今日头条极速版-" + new Date().toLocaleDateString(), content);
