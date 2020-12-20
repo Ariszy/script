@@ -60,7 +60,7 @@ async function start() {
     }
 
     if(SEND_KEY){
-        if ( (d.getHours() == 12 && d.getMinutes() <= 20) || (d.getHours() == 23 && d.getMinutes() >= 40) )
+        if ( (d.getHours() == 12 && d.getMinutes() <= 20) || (d.getHours() == 23 && d.getMinutes() >= 40) ){
             await notify.sendNotify("今日头条极速版-" + new Date().toLocaleDateString(), content);
             console.log("今日头条极速版-" + content)
         }else{
