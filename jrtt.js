@@ -40,7 +40,7 @@ async function deleteFile(path) {
 }
 
 async function start() {
-    if (!signkey) {
+    if (! signurl) {
         console.log('请填写 key 后在继续')
         return
     }
