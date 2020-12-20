@@ -35,7 +35,7 @@ jobs:
       - name: npm install
         run: |
           npm install
-      - name: '运行 【今日头条极速之】'
+      - name: '运行 【今日头条极速版】'
         run: |
           node jrtt.js
         env:
