@@ -59,14 +59,14 @@ async function start() {
         content = fs.readFileSync(path, "utf8");
     }
 
-    if(SEND_KEY) {
+    if(SEND_KEY){
         if ( (d.getHours() == 12 && d.getMinutes() <= 20) || (d.getHours() == 23 && d.getMinutes() >= 40) )
             await notify.sendNotify("今日头条极速版-" + new Date().toLocaleDateString(), content);
             console.log("今日头条极速版-" + content)
         }else{
             console.log("今日头条极速版-" + content)
         }
-    }else{
+   }else{
         await notify.sendNotify("今日头条极速版,持续通知，请填写通知key");
         console.log("今日头条极速版-" + content)
     }
