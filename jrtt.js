@@ -19,8 +19,13 @@ async function downFile () {
 }
 
 async function changeFiele () {
-    let content = await fs.readFileSync('./iQIYI.js', 'utf8')
-    content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
+    let content = await fs.readFileSync('./jrtt.js', 'utf8')
+    content = content.replace("var farmurl = $.getdata('farmurl')", "var farmurl = ${farmurl}")
+    content = content.replace("var farmkey = $.getdata('farmkey')", "var farmkey = ${farmkey}")
+    content = content.replace("var signurl = $.getdata('signurl')", "var signurl = ${signurl}")
+    content = content.replace("var signkey = $.getdata('signkey')", "var signkey = ${signkey}")
+    content = content.replace("var readurl = $.getdata('readurl')", "var readurl = ${readurl}")
+    content = content.replace("var readkey = $.getdata('readkey')", "var readkey = ${readkey}")
     await fs.writeFileSync( './jrtt.js', content, 'utf8')
 }
 
