@@ -136,9 +136,7 @@ if (!signurlArr[0]) {
       farmurl = farmurlArr[i];
       farmkey = farmkeyArr[i];
       readurl = readurlArr[i];
-
-articles =readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
-
+      articles = readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
       readkey = readkeyArr[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
@@ -147,7 +145,7 @@ await userinfo()
 await profit()
 await sign_in()
 await openbox()
-await reading()
+//await reading()
 await farm_sign_in()
 await openfarmbox()
 await landwarer()
