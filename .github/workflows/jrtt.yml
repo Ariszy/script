@@ -39,12 +39,12 @@ jobs:
         run: |
           node jrtt.js
         env:
-          signurl: ${{ secrets.JRTTSIGNURL }}
-          signkey: ${{ secrets.JRTTSIGNKEY }}
-          farmurl: ${{ secrets.JRTTFARMURL }}
-          farmkey: ${{ secrets.JRTTFARMKEY }}
-          readurl: ${{ secrets.JRTTREADURL }}
-          readkey: ${{ secrets.JRTTREADKEY }}
+          JRTTSIGNURL: ${{ secrets.JRTTSIGNURL }}
+          JRTTSIGNKEY: ${{ secrets.JRTTSIGNKEY }}
+          JRTTFARMURL: ${{ secrets.JRTTFARMURL }}
+          JRTTFARMKEY: ${{ secrets.JRTTFARMKEY }}
+          JRTTREADURL: ${{ secrets.JRTTREADURL }}
+          JRTTREADKEY: ${{ secrets.JRTTREADKEY }}
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
