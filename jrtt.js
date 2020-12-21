@@ -97,7 +97,7 @@ if (process.env.JRTTREADURL && process.env.JRTTREADURL.indexOf('#') > -1) {
     });
     Object.keys(signkey).forEach((item) => {
         if (signkeyArr[item]) {
-          signurlArr.push(signkey[item])
+          signkeyArr.push(signkey[item])
         }
     });
 //farm
