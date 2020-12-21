@@ -4,7 +4,7 @@ const notify = $.isNode() ?require('./sendNotify') : '';
 let signurlArr = [],signkeyArr=[]
 let farmurlArr = [],farmkeyArr=[]
 let readurlArr = [],readkeyArr=[]
-var articles =''
+//var articles =''
 let tz=1;//0关闭通知，1默认开启
 let invit=1;//新用户自动邀请，0关闭，1默认开启
 var coins=''
@@ -136,7 +136,6 @@ if (!signurlArr[0]) {
       farmurl = farmurlArr[i];
       farmkey = farmkeyArr[i];
       readurl = readurlArr[i];
-      articles = readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
       readkey = readkeyArr[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
@@ -368,7 +367,7 @@ function reading() {
 return new Promise((resolve, reject) => {
 //$.log(article)
   let readurl ={
-    url: `https://api3-normal-c-lq.snssdk.com/score_task/v1/task/get_read_bonus/?${articles}`,
+    url: `https://api3-normal-c-lq.snssdk.com/score_task/v1/task/get_read_bonus/?${readurl}`,
     headers :JSON.parse(readkey),
       timeout: 60000,
 }
