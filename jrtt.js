@@ -254,7 +254,7 @@ async function control(){
    }
    if(collect == 2){
       $.log('no opreation')
-      other +='\n\n生前何必久睡，死后自会长眠'
+      other +='\n\n生前何必久睡，死后自会长眠\n'
    }
    if(invited == 4 && invit== 1){
       await invitation();
@@ -703,10 +703,11 @@ return new Promise((resolve, reject) => {
    })
   } 
 
+var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
 async function showmsg(){
 if(tz==1){
       $.msg(jsname, "", other)
-    if ($.isNode()) {
+    if ($.isNode()&& (Time.getHours() == 12 && Time.getMinutes() <= 20) || (Time.getHours() == 23 && Time.getMinutes() >= 40)) {
        await notify.sendNotify($.name,other)
      }
    }
