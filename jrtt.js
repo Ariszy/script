@@ -96,7 +96,7 @@ if (process.env.JRTTREADURL && process.env.JRTTREADURL.indexOf('#') > -1) {
         }
     });
     Object.keys(signkey).forEach((item) => {
-        if (signkeyArr[item]) {
+        if (signkey[item]) {
           signkeyArr.push(signkey[item])
         }
     });
@@ -107,7 +107,7 @@ Object.keys(farmurl).forEach((item) => {
         }
     });
     Object.keys(farmkey).forEach((item) => {
-        if (farmkeyArr[item]) {
+        if (farmkey[item]) {
           farmkeyArr.push(signkey[item])
         }
     });
@@ -118,7 +118,7 @@ Object.keys(readurl).forEach((item) => {
         }
     });
     Object.keys(readkey).forEach((item) => {
-        if (readkeyArr[item]) {
+        if (readkey[item]) {
           readkeyArr.push(readkey[item])
         }
     });
