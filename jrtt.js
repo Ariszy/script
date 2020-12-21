@@ -1,6 +1,6 @@
 const jsname='今日头条极速版'
 const $ = Env(jsname)
-const notify = $.isNode() ?require('.sendNotify') : '';
+const notify = $.isNode() ?require('./sendNotify') : '';
 let signurlArr = [],signkeyArr=[]
 let farmurlArr = [],farmkeyArr=[]
 let readurlArr = [],readkeyArr=[]
