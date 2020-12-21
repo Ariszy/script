@@ -367,7 +367,7 @@ const articles = readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
 return new Promise((resolve, reject) => {
 //$.log(article)
   let readurl ={
-    url: `https://api3-normal-c-lq.snssdk.com/score_task/v1/task/get_read_bonus/?${readurl}`,
+    url: `https://api3-normal-c-lq.snssdk.com/score_task/v1/task/get_read_bonus/?${articles}`,
     headers :JSON.parse(readkey),
       timeout: 60000,
 }
