@@ -105,7 +105,7 @@ Object.keys(farmurl).forEach((item) => {
 //read
 Object.keys(readurl).forEach((item) => {
         if (readurl[item]) {
-          signurlArr.push(readurl[item])
+          readurlArr.push(readurl[item])
         }
     });
     Object.keys(readkey).forEach((item) => {
@@ -144,7 +144,7 @@ await userinfo()
 await profit()
 await sign_in()
 await openbox()
-//await reading()
+await reading()
 await farm_sign_in()
 await openfarmbox()
 await landwarer()
@@ -363,7 +363,7 @@ return new Promise((resolve, reject) => {
 //文章阅读30篇每天
 function reading() {
 //$.log(article)
-//const articles = readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
+const articles = readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
 return new Promise((resolve, reject) => {
 //$.log(article)
   let readurl ={
