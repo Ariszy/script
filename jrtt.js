@@ -33,7 +33,7 @@ if (isGetCookie) {
 } 
 if ($.isNode()) {
 //sign
-  if (process.env.JRTTSIGNURL && process.env.JETTSIGNURL.indexOf('#') > -1) {
+  if (process.env.JRTTSIGNURL && process.env.JRTTSIGNURL.indexOf('#') > -1) {
    signurl = process.env.JRTTSIGNURL.split('#');
    console.log(`您选择的是用"#"隔开\n`)
   }
