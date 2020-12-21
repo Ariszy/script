@@ -71,10 +71,11 @@ let other = ''
 var article =''
 var collect = ''
 var invited =''
-
+var hour=''
+var minute=''
 if ($.isNode()) {
-const hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
-const minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
+   hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
+   minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
 }else{
    hour = (new Date()).getHours();
    minute = (new Date()).getMinutes();
