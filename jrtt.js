@@ -53,6 +53,16 @@ const notify = $.isNode() ?require('./sendNotify') : '';
 let signurlArr = [],signkeyArr=[]
 let farmurlArr = [],farmkeyArr=[]
 let readurlArr = [],readkeyArr=[]
+
+var farmurl = $.getdata('farmurl')
+var farmkey = $.getdata('farmkey')
+
+var signurl = $.getdata('signurl')
+var signkey = $.getdata('signkey')
+
+var readurl = $.getdata('readurl')
+var readkey = $.getdata('readkey')
+
 //var articles =''
 let tz=1;//0关闭通知，1默认开启
 let invit=1;//新用户自动邀请，0关闭，1默认开启
@@ -61,8 +71,14 @@ let other = ''
 var article =''
 var collect = ''
 var invited =''
+
+if ($.isNode()) {
 const hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
 const minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
+}else{
+   hour = (new Date()).getHours();
+   minute = (new Date()).getMinutes();
+}
 
 //CK运行
 
