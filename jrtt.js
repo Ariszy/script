@@ -61,8 +61,8 @@ let other = ''
 var article =''
 var collect = ''
 var invited =''
-const hour = (new Date()).getHours();
-const minute = (new Date()).getMinutes();
+const hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
+const minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
 
 //CK运行
 
