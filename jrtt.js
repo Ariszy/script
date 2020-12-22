@@ -798,10 +798,11 @@ return new Promise((resolve, reject) => {
    })
   } 
 
+var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
 async function showmsg(){
 if(tz==1){
       $.msg(jsname, "", other)
-    if ($.isNode()) {
+    if ($.isNode()&& (Time.getHours() == 12 && Time.getMinutes() <= 20) || (Time.getHours() == 23 && Time.getMinutes() >= 40)) {
        await notify.sendNotify($.name,other)
      }
    }
