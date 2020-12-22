@@ -320,7 +320,7 @@ async function control(){
    }
    if(collect == 2){
       $.log('no opreation')
-      other +='\n\n生前何必久睡，死后自会长眠'
+      other +='\n\n生前何必久睡，死后自会长眠\n'
    }
    if(collect == 3){
   //$.log('1111111'+collect)
