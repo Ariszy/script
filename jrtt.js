@@ -684,8 +684,6 @@ if(result.data.sleep_unexchanged_score == 3600 || parseInt(result.data.sleep_las
           }else{
          collect =2
 }
-  
-           }
      }
         //$.log(1111)
         //$.msg(111)
