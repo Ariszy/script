@@ -53,7 +53,6 @@ const notify = $.isNode() ?require('./sendNotify') : '';
 let signurlArr = [],signkeyArr=[]
 let farmurlArr = [],farmkeyArr=[]
 let readurlArr = [],readkeyArr=[]
-
 var farmurl = $.getdata('farmurl')
 var farmkey = $.getdata('farmkey')
 
@@ -62,7 +61,6 @@ var signkey = $.getdata('signkey')
 
 var readurl = $.getdata('readurl')
 var readkey = $.getdata('readkey')
-
 //var articles =''
 let tz=1;//0关闭通知，1默认开启
 let invit=1;//新用户自动邀请，0关闭，1默认开启
@@ -73,6 +71,7 @@ var collect = ''
 var invited =''
 var hour=''
 var minute=''
+var stop=''
 if ($.isNode()) {
    hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
    minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
@@ -80,7 +79,6 @@ if ($.isNode()) {
    hour = (new Date()).getHours();
    minute = (new Date()).getMinutes();
 }
-
 //CK运行
 
 let isGetCookie = typeof $request !== 'undefined'
@@ -208,6 +206,7 @@ if (!signurlArr[0]) {
 await invite()
 await userinfo()
 await profit()
+await control()
 await sign_in()
 await openbox()
 await reading()
@@ -216,7 +215,7 @@ await openfarmbox()
 await landwarer()
 await double_reward()
 await sleepstatus()
-await walk()
+//await walk()
 await control()
 //await sleepstart()
 //await sleepstop()
@@ -317,14 +316,28 @@ async function control(){
   //$.log('1111111'+collect)
       await sleepstop();
       await collectcoins(coins);
+      $.msg('收取金币')
    }
    if(collect == 2){
       $.log('no opreation')
-      other +='\n\n生前何必久睡，死后自会长眠\n'
+      other +='\n\n生前何必久睡，死后自会长眠'
+   }
+   if(collect == 3){
+  //$.log('1111111'+collect)
+      //await sleepstop();
+      await collectcoins(coins);
+    //  $.msg('收取金币'+coins)
    }
    if(invited == 4 && invit== 1){
       await invitation();
    }
+   /*if( stop !== 1){
+      await sign_in()
+      await reading()
+      await farm_sign_in()
+      await openfarmbox()
+      await double_reward()
+   }*/
 }
 function invite() {
 //$.log(signkey)
@@ -358,7 +371,7 @@ return new Promise((resolve, reject) => {
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/invite/post_invite_code/?_request_from=web&device_platform=ios&ac=4G&${signurl}`,
     headers :JSON.parse(farmkey),
       timeout: 60000,
-    body: JSON.stringify({"invitecode" : "1188531898"})
+    body: JSON.stringify({"invitecode" : "1980436898"})
 }
 
    $.post(invitatonurl,(error, response, data) =>{
@@ -448,6 +461,7 @@ return new Promise((resolve, reject) => {
           other +='阅读进度'+result.data.icon_data.done_times+'/'+result.data.icon_data.read_limit+'\n'
       }
        if(result.err_no == 4){
+          stop = 1;
           other +='📣文章阅读\n'
           other +='文章阅读已达上限\n'
         }
@@ -480,6 +494,7 @@ return new Promise((resolve, reject) => {
           other +='签到完成\n'
          
 }else{
+          stop = 1;
           other +=result.message+'\n'
            }
         //$.log(1111)
@@ -545,10 +560,14 @@ return new Promise((resolve, reject) => {
         other += "还可以开启"+result.data.box_num+"个\n"
         
         }
-      if(result.status_code == 5003){
+      else if(result.status_code == 5003){
+        stop = 1;
         other +='📣农场宝箱\n'
         other +="已全部开启\n"
-           }
+        }
+      else{
+        stop = 0;
+        }
         //$.log(1111)
         //$.msg(111)
           resolve()
@@ -599,15 +618,17 @@ return new Promise((resolve, reject) => {
       if(result.status_code == 0) {
         other +='📣农场视频双倍离线奖励\n'
         other += '获得成功\n'
-        }else{
-          if(result.status_code==5033){
+        }else if(result.status_code==5033){
+            stop = 1;
             other += result.message+'\n'
-          }else{
+          }
+        else{
+            stop = 0;
         //$.log('8888888'+result.service_time)
         other +='📣农场视频双倍离线奖励\n'
         other +="无离线产量可领取\n"
            }
-  }
+  
         //$.log(1111)
         //$.msg(111)
           resolve()
@@ -653,27 +674,27 @@ return new Promise((resolve, reject) => {
 
    $.get(sleepstatusurl,(error, response, data) =>{
      const result = JSON.parse(data)
-       // $.log(data)
+       $.log(data)
       if(result.err_no == 0) {
           other +='📣查询睡觉状态\n🎉查询'+result.err_tips+'\n'
-        
-       if(result.data.sleeping == false){
+      if(result.data.sleeping == false){
           other +='当前状态:清醒着呢\n'
-//$.log('jjjjjjjjjj'+hour)
-         if(hour >= 20){
+//$.log('jjjjjjjjjj'+collect)
+        if(hour >= 20){
            collect=0 //await sleepstart()
            }else{
-if(result.data.sleep_unexchanged_score == 3600 || parseInt(result.data.sleep_last_time/3600) == 12){ 
+//$.log('uuuuu'+collect)
+if(result.data.history_amount!==0){ 
+//$.log('jjjjjjjjjj'+collect)
 //即使没有满足3600也在睡觉12小时后停止，以防封号
-         collect =1 //collect coins&sleepstop
+         coins=result.data.history_amount
+         collect =3 //collect coins
+//$.msg(collect)
           }else{
+//$.log('yyyy'+collect)
          collect=2
 }
-}}else{
-       
-            collect=2 //no opreation
-             }
-           }
+}}}
           else{
           other +='当前状态:酣睡中,已睡'+parseInt(result.data.sleep_last_time/3600)+'小时'+parseInt((result.data.sleep_last_time%3600)/60)+'分钟'+parseInt((result.data.sleep_last_time%3600)%60)+'秒\n'
           other +='预计可得金币'+result.data.sleep_unexchanged_score+'\n'
@@ -684,6 +705,7 @@ if(result.data.sleep_unexchanged_score == 3600 || parseInt(result.data.sleep_las
           }else{
          collect =2
 }
+   
      }
         //$.log(1111)
         //$.msg(111)
@@ -767,7 +789,7 @@ return new Promise((resolve, reject) => {
           other +='📣收取金币\n'+result.err_tips+'     获得金币:'+coins
           
 }     else{
-          other +='📣收取金币:'+'\n⚠️异常:'+result.err_tips+''
+          other +='📣收取金币:'+'\n⚠️异常:'+result.err_tips+'\n'
 }
         //$.log(1111)
         //$.msg(111)
@@ -776,11 +798,10 @@ return new Promise((resolve, reject) => {
    })
   } 
 
-var Time = new Date(new Date().getTime() + 8 * 60 * 60 * 1000);
 async function showmsg(){
 if(tz==1){
       $.msg(jsname, "", other)
-    if ($.isNode()&& (Time.getHours() == 12 && Time.getMinutes() <= 20) || (Time.getHours() == 23 && Time.getMinutes() >= 40)) {
+    if ($.isNode()) {
        await notify.sendNotify($.name,other)
      }
    }
