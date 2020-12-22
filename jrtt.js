@@ -661,11 +661,20 @@ return new Promise((resolve, reject) => {
           other +='当前状态:清醒着呢\n'
 //$.log('jjjjjjjjjj'+hour)
          if(hour >= 20){
-          collect=0 //await sleepstart()
+           collect=0 //await sleepstart()
            }else{
+if(result.data.sleep_unexchanged_score == 3600 || parseInt(result.data.sleep_last_time/3600) == 12){ 
+//即使没有满足3600也在睡觉12小时后停止，以防封号
+         collect =1 //collect coins&sleepstop
+          }else{
+         collect=2
+}
+}}else{
+       
             collect=2 //no opreation
              }
-            }else{
+           }
+          else{
           other +='当前状态:酣睡中,已睡'+parseInt(result.data.sleep_last_time/3600)+'小时'+parseInt((result.data.sleep_last_time%3600)/60)+'分钟'+parseInt((result.data.sleep_last_time%3600)%60)+'秒\n'
           other +='预计可得金币'+result.data.sleep_unexchanged_score+'\n'
           coins=result.data.sleep_unexchanged_score
