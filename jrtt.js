@@ -219,7 +219,7 @@ if (!signurlArr[0]) {
       await control()
       //await sleepstart()
       //await sleepstop()
-      await collectcoins(coins)
+      //await collectcoins(coins)
       await showmsg()
   }
  }
@@ -652,8 +652,8 @@ return new Promise((resolve, reject) => {
 function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
-    url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=ios&${signurl}`,
-    headers :JSON.parse(signkey),
+    url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${signurl}`,
+    headers :JSON.parse(farmkey),
       timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
 
