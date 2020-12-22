@@ -1,4 +1,5 @@
 /*
+⚠️action运行睡觉收取金币网络错误，情况未知，surge,loon,quan x正常。ac请手动收取睡觉3600金币，我尽快解决
 ⚠️多账号同一手机登录会导致用户名ck失效，显示会话过期，不用管
 ⚠️不在开首页宝箱时间内多次通过接口请求会出现账号异常，不用管，我试了可以提现成功
 
@@ -218,7 +219,7 @@ if (!signurlArr[0]) {
       await control()
       //await sleepstart()
       //await sleepstop()
-      await collectcoins(2517)
+      await collectcoins(coins)
       await showmsg()
   }
  }
@@ -651,8 +652,8 @@ return new Promise((resolve, reject) => {
 function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
-    url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&ac=4G&${signurl}`,
-    headers :JSON.parse(farmkey),
+    url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=ios&${signurl}`,
+    headers :JSON.parse(signkey),
       timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
 
