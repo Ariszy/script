@@ -308,7 +308,7 @@ async function control(){
    }
    if(collect == 2){
       $.log('no opreation')
-      other +='\n\n生前何必久睡，死后自会长眠\n'
+      $.other +='\n\n生前何必久睡，死后自会长眠\n'
    }
    if(collect == 3){
       await collectcoins(coins);
