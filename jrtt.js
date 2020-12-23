@@ -67,7 +67,7 @@ let tz=1;//0关闭通知，1默认开启
 let invit=1;//新用户自动邀请，0关闭，1默认开启
 const logs = 0;//0为关闭日志，1为开启
 var coins=''
-let other = ''
+$.other = '';
 var article =''
 var collect = ''
 var invited =''
@@ -284,14 +284,14 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs) $.log(data)
       if(result.err_no == 0) {
-          other +='📣首页签到\n'
-          other +='签到完成\n'
-          other +='获得'+result.data.score_amount+'金币\n'
-          other +='连续签到'+result.data.sign_times+'天\n'
+          $.other +='📣首页签到\n'
+          $.other +='签到完成\n'
+          $.other +='获得'+result.data.score_amount+'金币\n'
+          $.other +='连续签到'+result.data.sign_times+'天\n'
   
 }else{
-          other +='📣首页签到\n'
-          other +='今日已完成签到\n'
+          $.other +='📣首页签到\n'
+          $.other +='今日已完成签到\n'
            }
           resolve()
     })
@@ -367,12 +367,12 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs) $.log(data)
       if(result.message == 'success') {
-          other +='🎉'+result.data.name+'\n'
+          $.other +='🎉'+result.data.name+'\n'
   
 }     else if(result.message == 'error'){
-          other += '⚠️异常:'+result.data.description+'\n'
+          $.other += '⚠️异常:'+result.data.description+'\n'
            }else{
-          other += '⚠️异常'
+          $.other += '⚠️异常'
 }
           resolve()
     })
@@ -391,9 +391,9 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
         if(logs)$.log(data)
       if(result.err_no == 0) {
-          other +='🎉金币收益:'+result.data.score.amount+'\n🎉估计兑换现金:'+(result.data.score.amount/30000).toFixed(2)+'\n🎉'+'现金收益:'+result.data.cash.amount+'\n'      
+          $.other +='🎉金币收益:'+result.data.score.amount+'\n🎉估计兑换现金:'+(result.data.score.amount/30000).toFixed(2)+'\n🎉'+'现金收益:'+result.data.cash.amount+'\n'      
 }else{
-          other += '⚠️异常\n'
+          $.other += '⚠️异常\n'
            }
           resolve()
     })
@@ -413,17 +413,17 @@ return new Promise((resolve, reject) => {
    $.post(readurl,(error, response, data) =>{
      const result = JSON.parse(data)
       if(logs)  $.log(data)
-      other +='📣文章阅读\n'
+      $.other +='📣文章阅读\n'
       if(result.err_no == 0) {
-          other +='阅读完成'
-          other +='获得'+result.data.score_amount+'金币\n'
-          other +='阅读进度'+result.data.icon_data.done_times+'/'+result.data.icon_data.read_limit+'\n'
+          $.other +='阅读完成'
+          $.other +='获得'+result.data.score_amount+'金币\n'
+          $.other +='阅读进度'+result.data.icon_data.done_times+'/'+result.data.icon_data.read_limit+'\n'
       }
        if(result.err_no == 4){
-          other +='文章阅读已达上限\n'
+          $.other +='文章阅读已达上限\n'
         }
        if(result.err_no == 1028){
-          other +='这篇文章已经读过了\n'
+          $.other +='这篇文章已经读过了\n'
         }
           resolve()
     })
@@ -441,12 +441,12 @@ return new Promise((resolve, reject) => {
    $.get(farm_sign_inurl,(error, response, data) =>{
      const result = JSON.parse(data)
        if(logs) $.log(data)
-       other +='📣农场签到\n'
+       $.other +='📣农场签到\n'
       if(result.status_code == 0) {
-          other +='签到完成\n'
+          $.other +='签到完成\n'
          
 }else{
-          other +=result.message+'\n'
+          $.other +=result.message+'\n'
            }
           resolve()
     })
@@ -464,16 +464,16 @@ return new Promise((resolve, reject) => {
    $.post(openboxurl,(error, response, data) =>{
      const result = JSON.parse(data)
        if(logs) $.log(data)
-       other +='📣首页宝箱\n'
+       $.other +='📣首页宝箱\n'
       if(result.err_no == 0) {
-        other += '开启成功'
-        other += '获得金币'+result.data.score_amount+'个\n'
+        $.other += '开启成功'
+        $.other += '获得金币'+result.data.score_amount+'个\n'
         }
       else{
          if(result.err_no == 9){
-        other += result.err_tips+'\n'
+        $.other += result.err_tips+'\n'
         }else{
-        other +="不在开宝箱时间\n"
+        $.other +="不在开宝箱时间\n"
            }
     }
           resolve()
@@ -493,13 +493,13 @@ return new Promise((resolve, reject) => {
    $.get(openfarmboxurl,(error, response, data) =>{
      const result = JSON.parse(data)
        if(logs) $.log(data)
-       other +='📣农场宝箱\n'
+       $.other +='📣农场宝箱\n'
       if(result.status_code == 0) {
-        other += "第"+(5-result.data.box_num)+"开启成功"
-        other += "还可以开启"+result.data.box_num+"个\n"
+        $.other += "第"+(5-result.data.box_num)+"开启成功"
+        $.other += "还可以开启"+result.data.box_num+"个\n"
         }
       else if(result.status_code == 5003){
-        other +="已全部开启\n"
+        $.other +="已全部开启\n"
         }
           resolve()
     })
@@ -516,13 +516,13 @@ return new Promise((resolve, reject) => {
    $.get(landwaterurl,(error, response, data) =>{
      const result = JSON.parse(data)
         if(logs)$.log(data)
-       other +='📣农场浇水\n'
+       $.other +='📣农场浇水\n'
       if(result.status_code == '0') {
-        other += result.message+'\n'
-        other += '💧水滴剩余'+result.data.water+'\n'
+        $.other += result.message+'\n'
+        $.other += '💧水滴剩余'+result.data.water+'\n'
         }
       else{
-        other +=result.message+'\n'
+        $.other +=result.message+'\n'
            }
           resolve()
     })
@@ -541,15 +541,15 @@ return new Promise((resolve, reject) => {
    $.get(double_rewardurl,(error, response, data) =>{
      const result = JSON.parse(data)
        if(logs) $.log(data)
-        other +='📣农场视频双倍离线奖励\n'
+        $.other +='📣农场视频双倍离线奖励\n'
       if(result.status_code == 0) {
         other += '获得成功\n'
         }else if(result.status_code==5033){
-            other += result.message+'\n'
+            $.other += result.message+'\n'
           }
         else{
-        other +='📣农场视频双倍离线奖励\n'
-        other +="无离线产量可领取\n"
+        $.other +='📣农场视频双倍离线奖励\n'
+        $.other +="无离线产量可领取\n"
            }
           resolve()
     })
@@ -570,18 +570,18 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs)$.log(data)
       if(result.err_no == 0) {
-          other +='📣查询睡觉状态\n🎉查询'+result.err_tips+'\n'
+          $.other +='📣查询睡觉状态\n🎉查询'+result.err_tips+'\n'
       }
        if(result.data.sleeping == false){
-          other +='当前状态:清醒着呢\n'
+          $.other +='当前状态:清醒着呢\n'
          if(hour >= 20 || hour<=2){
           collect=0 //await sleepstart()
            }else{
             collect=2 //no opreation
              }
             }else{
-          other +='当前状态:酣睡中,已睡'+parseInt(result.data.sleep_last_time/3600)+'小时'+parseInt((result.data.sleep_last_time%3600)/60)+'分钟'+parseInt((result.data.sleep_last_time%3600)%60)+'秒\n'
-          other +='预计可得金币'+result.data.sleep_unexchanged_score+'\n'
+          $.other +='当前状态:酣睡中,已睡'+parseInt(result.data.sleep_last_time/3600)+'小时'+parseInt((result.data.sleep_last_time%3600)/60)+'分钟'+parseInt((result.data.sleep_last_time%3600)%60)+'秒\n'
+          $.other +='预计可得金币'+result.data.sleep_unexchanged_score+'\n'
           coins=result.data.sleep_unexchanged_score
          if(result.data.sleep_unexchanged_score == 3600 || parseInt(result.data.sleep_last_time/3600) == 12){ 
 //即使没有满足3600也在睡觉12小时后停止，以防封号
@@ -590,8 +590,6 @@ return new Promise((resolve, reject) => {
          collect =2
 }
      }
-        //$.log(1111)
-        //$.msg(111)
           resolve()
     })
    })
@@ -609,12 +607,12 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs) $.log(data)
       if(result.err_no == 0) {
-          other +='📣开始睡觉\n该睡觉了，开始睡觉'+result.err_tips+'\n'
+          $.other +='📣开始睡觉\n该睡觉了，开始睡觉'+result.err_tips+'\n'
   
 }     else if(result.err_no == 1052){
-          other +='📣开始睡觉\n'+result.err_tips+'\n'
+          $.other +='📣开始睡觉\n'+result.err_tips+'\n'
            }else{
-          other += '📣开始睡觉:'+'⚠️异常\n'
+          $.other += '📣开始睡觉:'+'⚠️异常\n'
 }
           resolve()
     })
@@ -633,12 +631,12 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs) $.log(data)
       if(result.err_no == 0) {
-          other +='📣停止睡觉\n'+result.err_tips+'\n'
+          $.other +='📣停止睡觉\n'+result.err_tips+'\n'
           
 }     else if(result.err_no == 1052){
-          other += '📣停止睡觉\n'+'还没开始睡觉\n'
+          $.other += '📣停止睡觉\n'+'还没开始睡觉\n'
            }else{
-          other +='📣停止睡觉:'+'\n⚠️异常'
+          $.other +='📣停止睡觉:'+'\n⚠️异常'
 }
           resolve()
     })
@@ -659,10 +657,10 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs)$.log(data)
       if(result.err_no == 0) {
-          other +='📣收取金币\n'+result.err_tips+'     获得金币:'+coins
+          $.other +='📣收取金币\n'+result.err_tips+'     获得金币:'+coins
           
 }     else{
-          other +='📣收取金币:'+'\n⚠️异常:'+result.err_tips+''
+          $.other +='📣收取金币:'+'\n⚠️异常:'+result.err_tips+''
 }
           resolve()
     })
@@ -674,7 +672,7 @@ if(tz==1){
     if ($.isNode()&& (Time.getHours() == 12 && Time.getMinutes() <= 20) || (Time.getHours() == 23 && Time.getMinutes() >= 40)) {
        await notify.sendNotify($.name,other)
      }else{
-      $.msg(jsname, "", other)
+      $.msg(jsname, "", $.other)
 }
    }
 
