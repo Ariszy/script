@@ -224,12 +224,8 @@ if (!signurlArr[0]) {
   }
  }
 })()
-  .catch((e) => {
-    $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
-  })
-  .finally(() => {
-    $.msg($.name, $.subt, $.desc.join('\n')), $.log('', `🔔 ${$.name}, 结束!`, ''), $.done()
-  })
+    .catch((e) => $.logErr(e))
+    .finally(() => $.done())
 
 function GetCookie() {
  if($request&&$request.url.indexOf("info")>=0) {
