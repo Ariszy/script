@@ -219,7 +219,7 @@ if (!signurlArr[0]) {
       await control()
       //await sleepstart()
       //await sleepstop()
-      await collectcoins(1000)
+      //await collectcoins(coins)
       await showmsg()
   }
  }
