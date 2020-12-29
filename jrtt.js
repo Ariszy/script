@@ -42,6 +42,7 @@ const notify = $.isNode() ?require('./sendNotify') : '';
 const signurlArr = [],signkeyArr=[]
 const farmurlArr = [],farmkeyArr=[]
 const readurlArr = [],readkeyArr=[]
+const collectckArr =[]
 let signurl = $.getdata('signurl')
 let signkey = $.getdata('signkey')
 
@@ -132,6 +133,17 @@ if (process.env.JRTTREADURL && process.env.JRTTREADURL.indexOf('#') > -1) {
   } else  {
    readkey = process.env.JRTTREADKEY.split()
   };
+//collect
+   if (process.env.JRTTCOLLECT && process.env.JRTTCOLLECT.indexOf('#') > -1) {
+   collectck = process.env.JRTTCOLLECT.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.JRTTCOLLECT && process.env.JRTTCOLLECT.indexOf('\n') > -1) {
+   collectck = process.env.JRTTCOLLET.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   collectck = process.env.JRTTCOLLECT.split()
+  };
 //sign
   Object.keys(signurl).forEach((item) => {
         if (signurl[item]) {
@@ -163,6 +175,12 @@ Object.keys(readurl).forEach((item) => {
     Object.keys(readkey).forEach((item) => {
         if (readkey[item]) {
           readkeyArr.push(readkey[item])
+        }
+    });
+//collect
+Object.keys(collectck).forEach((item) => {
+        if (collectck[item]) {
+          collectckArr.push(collectck[item])
         }
     });
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
@@ -199,9 +217,10 @@ if (!signurlArr[0]) {
       farmkey = farmkeyArr[i];
       readurl = readurlArr[i];
       readkey = readkeyArr[i];
+      collectck = collectck[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
-     await invite()
+      await invite()
       await userinfo()
       await profit()
       await sign_in()
@@ -225,8 +244,7 @@ if (!signurlArr[0]) {
 function GetCookie() {
  if($request&&$request.url.indexOf("info")>=0) {
   const farmurlVal = $request.url.split(`?`)[1]
-    if (farmurlVal) $.setdata(farmurlVal,
-'farmurl')
+    if (farmurlVal) $.setdata(farmurlVal,'farmurl')
     $.log(`[${jsname}] 获取farm请求: 成功,farmirlVal: ${farmurl}`)
     $.msg(`获取farmurl: 成功🎉`, ``)
    const jrttfarmKey = JSON.stringify($request.headers)
@@ -237,8 +255,7 @@ $.log(jrttfarmKey)
 }
   if($request&&$request.url.indexOf("sign_in")>=0) {
   const signurlVal = $request.url.split(`?`)[1]
-    if (signurlVal) $.setdata(signurlVal,
-'signurl')
+    if (signurlVal) $.setdata(signurlVal,'signurl')
     $.log(`[${jsname}] 获取sign请求: 成功,signurlVal: ${signurl}`)
     $.msg(`获取signurl: 成功🎉`, ``)
    const jrttsignKey = JSON.stringify($request.headers)
@@ -254,14 +271,12 @@ if($request&&$request.url.indexOf("get_read_bonus")>=0) {
   //const article = readurlVal.replace(/\d{3}$/,Math.floor(Math.random()*1000));
 //article = article.replace(/\d{3}$/, (Math.random()*1e3).toFixed(0).padStart(3,"0"));
 
-    if(article) $.setdata(article,
-'article')
-    if (readurlVal) $.setdata(readurlVal,
-'readurl')
+    if(article) $.setdata(article,'article')
+    if (readurlVal) $.setdata(readurlVal,'readurl')
     $.log(`[${jsname}] 获取read请求: 成功,readurlVal: ${readurl}`)
     $.msg(`获取readurl: 成功🎉`, ``)
    const jrttreadKey = JSON.stringify($request.headers)
-$.log(jrttreadKey)
+   $.log(jrttreadKey)
   if(jrttreadKey)        $.setdata(jrttreadKey,'readkey')
     $.log(`[${jsname}] 获取read请求: 成功,jrttreadKey: ${readkey}`)
     $.msg(`获取readkey: 成功🎉`, ``)
@@ -648,10 +663,14 @@ function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${signurl}`,
-    headers :JSON.parse(farmkey),
-      timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
-
+    timeout: 60000,
+    headers :{
+              'Cookie': collectck,
+              'Accept-Encoding': `gzip,deflate`,
+              'Content-Type': `application/json`,
+              'User-Agent': `Moilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X)AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+             }
 }
    $.post(collectcoinsurl,(error, response, data) =>{
      const result = JSON.parse(data)
