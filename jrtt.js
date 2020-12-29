@@ -60,7 +60,6 @@ var collect = ''
 var invited =''
 var hour=''
 var minute=''
-var farkey='{"Accept-Encoding": "gzip, deflate","Content-Type": "application/json","Cookie": "d_ticket=85512cf713869fa5def33da944daa97fc2b18;n_mh=LY0-E4KGLhDeaPd6SwHj4Mv96kAmGPyFicf_iIBEYhg;odin_tt=c289f233c00c9009f4d886d4a081ab2796bb6bc24400787c0333418c353061017e0169ba541c8812ad6842ece4096827dd2dea26eb260d29224027c3c77f3eb2;sessionid=e50f2539578133ed6d8ca0e0cc8a6302;sessionid_ss=e50f2539578133ed6d8ca0e0cc8a6302;sid_guard=e50f2539578133ed6d8ca0e0cc8a6302%7C1609226919%7C5184000%7CSat%2C+27-Feb-2021+07%3A28%3A39+GMT;sid_tt=e50f2539578133ed6d8ca0e0cc8a6302;uid_tt=028ed52eebaa730d20e3084ecb96298b;uid_tt_ss=028ed52eebaa730d20e3084ecb96298b;install_id=281124052412400;ttreq=1$671006702b8c288f9e195a8377f1d10741cc81a5;FRM=new;PIXIEL_RATIO=2;WIN_WH=414_795;passport_csrf_token=d9fc9a8d775b9e422ba88b9b7305f55e;i18next=score_task;MONITOR_WEB_ID=9574afe4-ea7b-4164-97cb-a76c3695d915","User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 12_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"}'
 if ($.isNode()) {
    hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
    minute = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getMinutes();
@@ -202,7 +201,7 @@ if (!signurlArr[0]) {
       readkey = readkeyArr[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
-     /* await invite()
+     await invite()
       await userinfo()
       await profit()
       await sign_in()
@@ -215,8 +214,8 @@ if (!signurlArr[0]) {
       await sleepstatus()
       await control()
       //await sleepstart()
-      //await sleepstop()*/
-      await collectcoins(2010)
+      //await sleepstop()
+      await collectcoins(coins)
       await showmsg()
   }
  }
@@ -649,7 +648,7 @@ function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${signurl}`,
-    headers :JSON.parse(farkey),
+    headers :JSON.parse(farmkey),
       timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
 
