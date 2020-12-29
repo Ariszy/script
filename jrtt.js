@@ -51,7 +51,6 @@ let farmkey = $.getdata('farmkey')
 
 let readurl = $.getdata('readurl')
 let readkey = $.getdata('readkey')
-let collectck=''
 //var articles =''
 const tz=1;//0关闭通知，1默认开启
 const invit=1;//新用户自动邀请，0关闭，1默认开启
@@ -221,7 +220,7 @@ if (!signurlArr[0]) {
       collectck = collectck[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
-     /* await invite()
+      /*await invite()
       await userinfo()
       await profit()
       await sign_in()
@@ -235,7 +234,7 @@ if (!signurlArr[0]) {
       await control()*/
       //await sleepstart()
       //await sleepstop()
-      await collectcoins(coins)
+      await collectcoins(2010)
       await showmsg()
   }
  }
