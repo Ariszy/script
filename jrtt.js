@@ -51,6 +51,7 @@ let farmkey = $.getdata('farmkey')
 
 let readurl = $.getdata('readurl')
 let readkey = $.getdata('readkey')
+let collectck=''
 //var articles =''
 const tz=1;//0关闭通知，1默认开启
 const invit=1;//新用户自动邀请，0关闭，1默认开启
