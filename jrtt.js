@@ -656,7 +656,7 @@ return new Promise((resolve, reject) => {
     body :JSON.stringify({score_amount: coins}),
 
 }
-
+  $.log(signurl+"111"+farmkey)
    $.post(collectcoinsurl,(error, response, data) =>{
      const result = JSON.parse(data)
        if(logs)$.log(data)
