@@ -201,7 +201,7 @@ if (!signurlArr[0]) {
       readkey = readkeyArr[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
-      await invite()
+     /* await invite()
       await userinfo()
       await profit()
       await sign_in()
@@ -214,8 +214,8 @@ if (!signurlArr[0]) {
       await sleepstatus()
       await control()
       //await sleepstart()
-      //await sleepstop()
-      //await collectcoins(coins)
+      //await sleepstop()*/
+      await collectcoins(2010)
       await showmsg()
   }
  }
