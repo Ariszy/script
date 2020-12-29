@@ -45,6 +45,7 @@ jobs:
           JRTTFARMKEY: ${{ secrets.JRTTFARMKEY }}
           JRTTREADURL: ${{ secrets.JRTTREADURL }}
           JRTTREADKEY: ${{ secrets.JRTTREADKEY }}
+          JRTTCOLLECT: ${{ secrets.JRTTCOLLECT }} 
           JD_DEBUG: ${{ secrets.JD_DEBUG }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
