@@ -580,7 +580,7 @@ return new Promise((resolve, reject) => {
           other +='📣查询睡觉状态\n🎉查询'+result.err_tips+'\n'
       if(result.data.sleeping == false){
           other +='当前状态:清醒着呢\n'
-        if(hour >= 20||hour<=2){
+        if(hour >= 20&&hour<=2){
            collect=0 //await sleepstart()
            }else{
 if(result.data.history_amount!==0){ 
