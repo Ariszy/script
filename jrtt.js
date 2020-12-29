@@ -139,7 +139,7 @@ if (process.env.JRTTREADURL && process.env.JRTTREADURL.indexOf('#') > -1) {
    console.log(`您选择的是用"#"隔开\n`)
   }
   else if (process.env.JRTTCOLLECT && process.env.JRTTCOLLECT.indexOf('\n') > -1) {
-   collectck = process.env.JRTTCOLLET.split('\n');
+   collectck = process.env.JRTTCOLLECT.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
    collectck = process.env.JRTTCOLLECT.split()
