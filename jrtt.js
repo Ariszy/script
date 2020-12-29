@@ -651,12 +651,11 @@ function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${sigurl}`,
-    headers :JSON.parse(farkey),
+    headers :JSON.parse(farmkey),
       timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
 
 }
-  $.log(signurl+"111"+farmkey)
    $.post(collectcoinsurl,(error, response, data) =>{
      const result = JSON.parse(data)
        if(logs)$.log(data)
