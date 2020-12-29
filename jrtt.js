@@ -566,25 +566,27 @@ return new Promise((resolve, reject) => {
        if(logs)$.log(data)
       if(result.err_no == 0) {
           other +='📣查询睡觉状态\n🎉查询'+result.err_tips+'\n'
+          }
       if(result.data.sleeping == false){
           other +='当前状态:清醒着呢\n'
         if(hour >= 20||hour<=2){
            collect=0 //await sleepstart()
            }else{
-if(result.data.history_amount!==0){ 
-//即使没有满足3600也在睡觉12小时后停止，以防封号
-         coins=result.data.history_amount
-         collect =3 //collect coins
-          }else{
-         collect=2
-}
-}}}
+             if(result.data.history_amount!==0){ 
+             //即使没有满足3600也在睡觉12小时后停止，以防封号
+             coins=result.data.history_amount
+             collect =3 //collect coins
+                }else{
+                  collect=2
+                       }
+         }
+      }
           else{
-         other  +='当前状态:酣睡中,已睡'+parseInt(result.data.sleep_last_time/3600)+'小时'+parseInt((result.data.sleep_last_time%3600)/60)+'分钟'+parseInt((result.data.sleep_last_time%3600)%60)+'秒\n'
+          other +='当前状态:酣睡中,已睡'+parseInt(result.data.sleep_last_time/3600)+'小时'+parseInt((result.data.sleep_last_time%3600)/60)+'分钟'+parseInt((result.data.sleep_last_time%3600)%60)+'秒\n'
           other +='预计可得金币'+result.data.sleep_unexchanged_score+'\n'
           coins=result.data.sleep_unexchanged_score
          if(result.data.sleep_unexchanged_score == 3600 || parseInt(result.data.sleep_last_time/3600) == 12){ 
-//即使没有满足3600也在睡觉12小时后停止，以防封号
+          //即使没有满足3600也在睡觉12小时后停止，以防封号
          collect =1 //collect coins&sleepstop
           }else{
          collect =2
