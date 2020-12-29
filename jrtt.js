@@ -221,7 +221,7 @@ if (!signurlArr[0]) {
       collectck = collectck[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
-      await invite()
+     /* await invite()
       await userinfo()
       await profit()
       await sign_in()
@@ -232,7 +232,7 @@ if (!signurlArr[0]) {
       await landwarer()
       await double_reward()
       await sleepstatus()
-      await control()
+      await control()*/
       //await sleepstart()
       //await sleepstop()
       await collectcoins(coins)
