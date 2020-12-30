@@ -14,7 +14,8 @@ boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.
 done 农场离线奖励(农场宝箱开完后，需要进农场再运行脚本才能开，有点问题)
 ##通过农场浇水激活上线，达到获取理想奖励目的，目前测试每天的离线奖励足够开启农场5个宝箱，不需要做其他任务，具体情况看后期是否需要，再添加除虫，开地，施肥，三餐奖励以及农场签到活动
 20点睡觉，获取完全后（3600）或睡觉12小时，自动醒来（防止封号）
-自动收取睡觉金币
+done自动收取睡觉金币action异常
+##请重新获取signkey，目前已经修复(signkey)都要用Accept-Encoding开头
 脚本初成，非专业人士制作，欢迎指正
 #右上角签到即可获取签到cookie
 #进一次农场即可获取农场cookie
@@ -242,8 +243,7 @@ $.log(jrttfarmKey)
     $.log(`[${jsname}] 获取sign请求: 成功,signurlVal: ${signurl}`)
     $.msg(`获取signurl: 成功🎉`, ``)
    const jrttsignKey = JSON.stringify($request.headers)
-$.log(jrttsignKey)
-  if(jrttsignKey)        $.setdata(jrttsignKey,'signkey')
+  if(jrttsignKey.indexOf("STUB")>=0)        $.setdata(jrttsignKey,'signkey')
     $.log(`[${jsname}] 获取sign请求: 成功,jrttsignKey: ${signkey}`)
     $.msg(`获取signkey: 成功🎉`, ``)
 }
