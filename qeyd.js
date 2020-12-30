@@ -33,6 +33,7 @@ async function downFile () {
 
 async function changeFiele () {
     let content = await fs.readFileSync('./qeyd.js', 'utf8')
+    content = content.replace("let CASH = "";", let CASH = 10;)
     await fs.writeFileSync( './qeyd.js', content, 'utf8')
 }
 
