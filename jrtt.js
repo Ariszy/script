@@ -267,7 +267,7 @@ $.log(jrttfarmKey)
     $.log(`[${jsname}] 获取sign请求: 成功,signurlVal: ${signurl}`)
     $.msg(`获取signurl: 成功🎉`, ``)
    const jrttsignKey = JSON.stringify($request.headers)
-  if(jrttsignKey.indexOf("STUB")>=0)        $.setdata(jrttsignKey,'signkey')
+  if(jrttsignKey)        $.setdata(jrttsignKey,'signkey')
     $.log(`[${jsname}] 获取sign请求: 成功,jrttsignKey: ${signkey}`)
     $.msg(`获取signkey: 成功🎉`, ``)
 }
