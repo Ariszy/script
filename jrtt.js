@@ -1,4 +1,4 @@
-/*
+	/*
 github：https://github.com/ZhiYi-N/script
 boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.boxjs.json
 转载留个名字，谢谢
@@ -43,6 +43,7 @@ const notify = $.isNode() ?require('./sendNotify') : '';
 const signurlArr = [],signkeyArr=[]
 const farmurlArr = [],farmkeyArr=[]
 const readurlArr = [],readkeyArr=[]
+const collectckArr = []
 let signurl = $.getdata('signurl')
 let signkey = $.getdata('signkey')
 
@@ -51,6 +52,8 @@ let farmkey = $.getdata('farmkey')
 
 let readurl = $.getdata('readurl')
 let readkey = $.getdata('readkey')
+
+let collectck = ''
 //var articles =''
 const tz=1;//0关闭通知，1默认开启
 const invit=1;//新用户自动邀请，0关闭，1默认开启
@@ -133,6 +136,19 @@ if (process.env.JRTTREADURL && process.env.JRTTREADURL.indexOf('#') > -1) {
   } else  {
    readkey = process.env.JRTTREADKEY.split()
   };
+
+//collect
+if (process.env.JRTTCOLLECT && process.env.JRTTCOLLECT.indexOf('#') > -1) {
+   collectck = process.env.JRTTCOLLECT.split('#');
+   console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.JRTTCOLLECT && process.env.JRTTCOLLECT.indexOf('\n') > -1) {
+   collectck = process.env.JRTTCOLLECT.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   collectck = process.env.JRTTCOLLECT.split()
+  };
+
 //sign
   Object.keys(signurl).forEach((item) => {
         if (signurl[item]) {
@@ -166,6 +182,14 @@ Object.keys(readurl).forEach((item) => {
           readkeyArr.push(readkey[item])
         }
     });
+
+//collect
+Object.keys(collectck).forEach((item) => {
+        if (collectck[item]) {
+          collectckArr.push(collectck[item])
+        }
+    });
+
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
     console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
  } else {
@@ -216,7 +240,7 @@ if (!signurlArr[0]) {
       await control()
       //await sleepstart()
       //await sleepstop()
-      await collectcoins(coins)
+      //await collectcoins(coins)
       await showmsg()
   }
  }
@@ -650,7 +674,7 @@ function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${signurl}`,
-    headers :JSON.parse(farmkey),
+    headers :JSON.parse(collectck),
       timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
 
