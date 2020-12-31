@@ -20,6 +20,18 @@ done自动收取睡觉金币action异常
 #右上角签到即可获取签到cookie
 #进一次农场即可获取农场cookie
 #读文章弹出金币获取读文章cookie
+
+31号我测试成功收取金币
+ACTION YML
+JRTTSIGNURL-signurl
+JRTTSIGNKEY-signkey（以x-tt-trace-id开头）
+JRTTFARMURL-farmurl
+JRTTFARMKEY-farmkey
+JRTTREADURL-readurl
+JRTTREADKEY-readkey
+JRTTCOLLECT-signkey（以Accepting-Encoding开头）
+
+
 [mitm]
 hostname = api3-normal-c-*.snssdk.com
 #圈x
