@@ -677,7 +677,7 @@ return new Promise((resolve, reject) => {
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${signurl}`,
     headers :JSON.parse(collectck),
     timeout: 60000,
-    body :JSON.stringify({score_amount: coins}),
+    body :JSON.stringify({score_amount: 3600}),
 
 }
 
