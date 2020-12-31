@@ -224,6 +224,7 @@ if (!signurlArr[0]) {
       farmkey = farmkeyArr[i];
       readurl = readurlArr[i];
       readkey = readkeyArr[i];
+      collectck = collectckArr[i];
       $.index = i + 1;
       console.log(`\n开始【今日头条极速版${$.index}】`)
       await invite()
