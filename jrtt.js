@@ -1,4 +1,4 @@
-	/*
+/*
 github：https://github.com/ZhiYi-N/script
 boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.boxjs.json
 转载留个名字，谢谢
@@ -674,8 +674,8 @@ function collectcoins(coins) {
 return new Promise((resolve, reject) => {
   let collectcoinsurl ={
     url: `https://api3-normal-c-lq.snssdk.com/luckycat/lite/v1/sleep/done_task/?_request_from=web&device_platform=undefined&${signurl}`,
-    headers :JSON.parse(collectck),
-      timeout: 60000,
+    headers :JSON.parse(JSON.stringify(collectck)),
+    timeout: 60000,
     body :JSON.stringify({score_amount: coins}),
 
 }
