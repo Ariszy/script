@@ -21,7 +21,8 @@ done自动收取睡觉金币action异常
 #进一次农场即可获取农场cookie
 #读文章弹出金币获取读文章cookie
 
-31号我测试成功收取金币
+action会出问题依旧，我一个停止睡觉不收金币，一个收金币不停止睡觉
+可以在代理工具每天8点cron运行一下，确保万无一失
 ACTION YML
 JRTTSIGNURL-signurl
 JRTTSIGNKEY-signkey（以x-tt-trace-id开头）
