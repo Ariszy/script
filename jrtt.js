@@ -692,7 +692,7 @@ if(tz==1){
        $.msg(jsname,'',other)
 }
    }else{
-      $.log(other)
+      $.log(jsname,'',other)
      }
 
 }
