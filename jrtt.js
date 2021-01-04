@@ -70,7 +70,7 @@ let collectck = ''
 //var articles =''
 const tz=1;//0关闭通知，1默认开启
 const invit=1;//新用户自动邀请，0关闭，1默认开启
-const logs =1;//0为关闭日志，1为开启
+const logs =0;//0为关闭日志，1为开启
 var coins=''
 var article =''
 var collect = ''
@@ -439,11 +439,11 @@ const articles = readurl.replace(/\d{3}$/,Math.floor(Math.random()*1000));
 return new Promise((resolve, reject) => {
   let readurl ={
     url: `https://api3-normal-c-lq.snssdk.com/score_task/v1/task/get_read_bonus/?${articles}`,
-    headers :JSON.parse(signkey),
+    headers :JSON.parse(farmkey),
       timeout: 60000,
 }
 
-   $.post(readurl,(error, response, data) =>{
+   $.get(readurl,(error, response, data) =>{
      const result = JSON.parse(data)
       if(logs)  $.log(data)
       other +='📣文章阅读\n'
