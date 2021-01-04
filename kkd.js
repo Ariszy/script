@@ -38,7 +38,7 @@ let kkdcookie = $.getdata('kkdcookie')
 let kkdbody = $.getdata('kkdbody')
 const logs = false //日志
 const invite = 1; //邀请码1为邀请
-//通知
+let tz = ($.getval('tz') || '1');//通知
 const invited = '';
 let lTadlist = '15884282854261489762';
 let gRadlist = '15884282854261489762';
