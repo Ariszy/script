@@ -27,7 +27,7 @@ if(process.env.IGOT_PUSH_KEY){
 }
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js'
+    const url = 'https://raw.githubusercontent.com/ZhiYi-N/script/master/qqreads.js'
     await download(url, './')
 }
 
