@@ -382,11 +382,9 @@ if(tz==1){
    }else{
     if ((hour == 12 && minute <= 20) || (hour == 23 && minute >= 40)) {
        $.msg(jsname,'',message)
-}else{
-      $.log(message)
 }
 }
- } else{
+   }else{
        $.log(message)
     }
  }
