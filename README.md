@@ -1,3 +1,7 @@
+tg:https://t.me/zhiyi_scripts
+tgchannel:https://t.me/ZhiYi_Script
+有bug欢迎反馈，为了不去大佬群里献丑，开了频道，频道和issue都可以，谢谢
+
 特别声明：
 
 1、本仓库发布的Script项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其合法性，准确性，完整性和有效性，请根据情况自行判断。
