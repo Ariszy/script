@@ -343,7 +343,7 @@ return new Promise((resolve, reject) => {
     timeout: 60000,
 }
    $.post(watch_videourl,(error, response, data) =>{
-     const result = JSON.parse(data)
+     //const result = JSON.parse(data)
        if(logs) $.log(data)
        message += '📣看视频\n'
       if(result.err_no == 10012){
