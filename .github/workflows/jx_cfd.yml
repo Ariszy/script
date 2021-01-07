@@ -27,7 +27,7 @@ jobs:
                   npm install
             - name: "运行 【京喜财富岛】"
               run: |
-                  node onlyOneExecute.js
+                  node jx_cfd.js
               env:
                   JD_COOKIE: ${{ secrets.JD_COOKIE }}
                   JD_DEBUG: ${{ secrets.JD_DEBUG }}
@@ -40,4 +40,3 @@ jobs:
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
                   JOY_FEED_COUNT: ${{ secrets.JOY_FEED_COUNT }}
                   JOY_RUN_FLAG: ${{ secrets.JOY_RUN_FLAG }}
-                  SYNCURL: https://github.com/MoPoQAQ/Script/raw/main/Me/jx_cfd.js
