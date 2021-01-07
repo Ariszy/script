@@ -335,7 +335,7 @@ $.log(no)
   } 
 
 //看视频
-function watch_video() {
+function watch_video(no) {
 return new Promise((resolve, reject) => {
   let watch_videourl ={
     url: `https://ib-hl.snssdk.com/luckycat/hotsoon/v1/task/done/daily_read_${no}m?${hotsoonreadheader}`,
@@ -352,10 +352,14 @@ return new Promise((resolve, reject) => {
            no=5
          return watch_video(no);
        }
-       else if(no != 60){
-            no= 2*no
+       else if(no == 20){
+            no= 30
           return watch_video(no);
         }
+      else if(no == 1 || no == 5 || no == 10 || no == 30){
+           no=2*no
+         return watch_video(no);
+          }
       else if(no == 60){
            message += '视频任务全部完成\n'
            if(hour >= 0){
