@@ -43,6 +43,7 @@ let hotsoonsigncookie = $.getdata('hotsoonsigncookie')
 let hotsoonadheader = $.getdata('hotsoonadheader')
 let hotsoonadkey = $.getdata('hotsoonadkey')
 let no = 1;
+let operate = 0;
 let hotsoonreadheader = $.getdata('hotsoonreadheader')
 let hotsoonreadkey = $.getdata('hotsoonreadkey')
 let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
@@ -365,6 +366,11 @@ return new Promise((resolve, reject) => {
      }
           }
       else if(result.err_no == 0) {
+         if(no==60&&operate==1){
+           no=1
+           return watch_video(no);
+      }
+
           message +='🎉'+result.err_tips+'获得:'+result.data.amount+"\n"
         }
       else{
