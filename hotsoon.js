@@ -17,16 +17,23 @@ hostname = *.snssdk.com
 #圈x
 [rewrite local]
 https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/done/daily_read_\d+m? url script-request-header https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js
+
 https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/done/draw_excitation_ad? url script-request-header https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js
-https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/sign_in_detail? url script-request-header https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js
+
+https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/sign_in_detail? script-request-header https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js
+
 #loon
 http-request ^https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/done/daily_read_\d+m? script-path=https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js, requires-body=true, timeout=10, tag=hotsoonread
+
 http-request https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/done/draw_excitation_ad? script-path=https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js, requires-body=true, timeout=10, tag=hotsoonad
+
 http-request https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/sign_in_detail? script-path=https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js, requires-body=true, timeout=10, tag=hotsoonsign
+
 #surge
 hotsoonsign = type=http-request,pattern=^https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/sign_in_detail?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js,script-update-interval=0
 hotsoonad = type=http-request,pattern=^https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/done/draw_excitation_ad?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js,script-update-interval=0
 hotsoonread = type=http-request,pattern=https://(\w+-\w+||\w+).snssdk.com/luckycat/hotsoon/v1/task/done/daily_read_\d+m?,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/Scripts/hotsoon.js,script-update-interval=0
+
 */
 
 
@@ -197,7 +204,8 @@ if (!hotsoonsignheaderArr[0]) {
       await treasure_task()
       await control()
       await profit()
-      await watch_video()
+      await skill()
+      await watch_video(no)
       await showmsg()
   }
  }
@@ -290,6 +298,7 @@ return new Promise((resolve, reject) => {
       url: `https://ib-hl.snssdk.com/luckycat/hotsoon/v1/task/done/draw_excitation_ad?${hotsoonadheader}`,
       headers: JSON.parse(hotsoonadkey),
       body:`{
+
 }`,
 	 timeout: 60000,
 }
@@ -310,7 +319,7 @@ return new Promise((resolve, reject) => {
 function profit() {
 return new Promise((resolve, reject) => {
   let profiturl ={
-    url: `https://i-hl.snssdk.com/luckycat/hotsoon/v1/wallet/profit_detail_page?income_type=2&num=80&${hotsoonsignheader}`,
+    url: `https://i-hl.snssdk.com/luckycat/hotsoon/v1/wallet/profit_detail_page?income_type=2&num=300&${hotsoonsignheader}`,
     headers :JSON.parse(hotsoonsignkey),
 }
    $.get(profiturl,(error, response, data) =>{
@@ -319,7 +328,6 @@ return new Promise((resolve, reject) => {
 for(let i =0;i<=result.data.profit_detail.score_income_list.length;i++){
 if(result.data.profit_detail.score_income_list[i].desc.match(/\d+/)) {
          no = result.data.profit_detail.score_income_list[i].desc.match(/\d+/)          
-$.log(no)
          break;
 }
 }
@@ -327,9 +335,30 @@ $.log(no)
     })
    })
   } 
+//skill
+function skill() {
+return new Promise((resolve, reject) => {
+  let skillurl ={
+    url: `https://i-hl.snssdk.com/luckycat/hotsoon/v1/wallet/profit_detail_page?income_type=2&num=50&${hotsoonsignheader}`,
+    headers :JSON.parse(hotsoonsignkey),
+}
+   $.get(skillurl,(error, response, data) =>{
+     const result = JSON.parse(data)
+        //if(logs)$.log(data)
+  if(data.match(/\-\d+/)){
+     message += '昨日金币'+data.match(/\-\d+/)
+     operate = 1;
+   }else{
+     operate = 0;
+}
+  return watch_video(no);      
+          resolve()
+    })
+   })
+  } 
 
 //看视频
-function watch_video() {
+function watch_video(no) {
 return new Promise((resolve, reject) => {
   let watch_videourl ={
     url: `https://ib-hl.snssdk.com/luckycat/hotsoon/v1/task/done/daily_read_${no}m?${hotsoonreadheader}`,
@@ -338,6 +367,7 @@ return new Promise((resolve, reject) => {
 }
    $.post(watch_videourl,(error, response, data) =>{
      const result = JSON.parse(data)
+       $.log(no+'hotsoon'+operate) 
        if(logs) $.log(data)
        message += '📣看视频\n'
       if(result.err_no == 10012){
@@ -350,33 +380,34 @@ return new Promise((resolve, reject) => {
             no= 30
           return watch_video(no);
         }
-       else if(no==1 || no==5||no==10||no==30){
-    	   no=2*no
-    	   return watch_video(no)
-      }
+      else if(no == 1 || no == 5 || no == 10 || no == 30){
+           no=2*no
+         return watch_video(no);
+          }
       else if(no == 60){
            message += '视频任务全部完成\n'
            if(hour >= 0){
            no = 1;
            return watch_video(no);
    }
-           }
+ }
         else{
            return showmsg();
-     }
-          }
+     }}
       else if(result.err_no == 0) {
-         if(no==60&&operate==1){
+          if(no==60&&operate==1){
            no=1
            return watch_video(no);
-      }
-
+      }else{
           message +='🎉'+result.err_tips+'获得:'+result.data.amount+"\n"
+           return showmsg()
+}
         }
       else{
           message += '⚠️异常:'+result.err_tips+'\n'+'请重新获取readkey\n'
           let other = '⚠️异常:'+result.err_tips+'请重新获取readkey\n'
-          //$.msg(jsname,'',other)
+          $.msg(jsname,'',other)
+          return showmsg()
       }
           resolve()
     })
