@@ -14,7 +14,8 @@ const shareCodes = [
     mc: "MTAxODc2NTEzOTAwMDAwMDAyODI1NzQxNQ==",
     dd: "P04z54XCjVWnYaS5m9cZx2atAcQ9eSrr5Cpuw",
     jx: "IO6FIBzYeEztXOK7BigRuA==",
-    zz:"AUWE54s_5tm9oVhiJmR0b"
+    zz: "AUWE54s_5tm9oVhiJmR0b",
+    joy: "Fxn3_9qt5P_Rt3JFz7yZyg=="
   },
   {
     zd: "e7lhibzb3zek3rus7xktpq2wmwzbccmdzsxerla",
@@ -22,7 +23,8 @@ const shareCodes = [
     mc: "MTE1NDUyMjEwMDAwMDAwNDI1NDgwMjE=",
     dd: "P04z54XCjVWnYaS5m9cZ2T_iXtCwUwWbrJw2hc",
     jx: "zGL7La1hPe-boRUrceb6Gg==",
-    zz:"AUWE5m6rEyj1cDmXx1HQenA"
+    zz: "AUWE5m6rEyj1cDmXx1HQenA",
+   joy: "Fxn3_89ghy_Rt3JFz7yZyg=="
   },
 
 ];
@@ -30,13 +32,14 @@ $.result = []
 
 !(async () => {
   for (let i = 0; i < shareCodes.length; i++) {
-    const { zd, nc, mc, dd, jx,zz} = shareCodes[i];
+    const { zd, nc, mc, dd, jx, zz, joy} = shareCodes[i];
     zd && await createZd(`http://api.turinglabs.net/api/v1/jd/bean/create/${zd}/`)
     nc && await createNc(`http://api.turinglabs.net/api/v1/jd/farm/create/${nc}/`)
     mc && await createMc(`http://api.turinglabs.net/api/v1/jd/pet/create/${mc}/`)
     dd && await createDd(`http://api.turinglabs.net/api/v1/jd/ddfactory/create/${dd}/`)
     jx && await createJx(`http://api.turinglabs.net/api/v1/jd/jxfactory/create/${jx}/`)
-    zz &await createZz(`https://code.chiang.fun/api/v1/jd/jdzz/create/${zz}/`)
+    zz &&await createZz(`https://code.chiang.fun/api/v1/jd/jdzz/create/${zz}/`)
+    joy &&await createJoy(`https://code.chiang.fun/api/v1/jd/jdcrazyjoy/create/${joy}/`)
   }
   await showMsg()
 })()
@@ -164,11 +167,29 @@ function createZz(zzUrl) {
     })
   })
 }
-
+function createJoy(joyUrl) {
+  return new Promise((resolve) => {
+    const url = { url: joyUrl }
+    $.get(url, (err, resp, data) => {
+      try {
+        const _data = JSON.parse(data)
+         if(_data.msg.indexOf("Exists")!=-1){
+             message += `crazyJoy：已在车上`+'\n'
+           }else{
+             message += `crazyJoy：完美上车`+'\n'
+            }
+      } catch (e) {
+        $.logErr(e, resp)
+      } finally {
+        resolve()
+      }
+    })
+  })
+}
 async function showMsg() {
   if ($.isNode()){
      $.log(jsname+'\n'+message)
-     await notify.sendNotify("ZhiYi-N🚗", message)
+     await notify.sendNotify(jsname, "", message)
     }else{
      $.log(message)
      $.msg(jsname, "", message)
