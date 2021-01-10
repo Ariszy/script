@@ -346,7 +346,7 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
         //if(logs)$.log(data)
   if(data.match(/\-\d+/)){
-     message += '昨日金币'+data.match(/\-\d+/)
+     message += '昨日金币'+data.match(/\-\d+/)+'\n'
      operate = 1;
    }else{
      operate = 0;
