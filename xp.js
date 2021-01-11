@@ -70,7 +70,7 @@ if ($.isNode()) {
   } else  {
    goldbody = process.env.VIDEOBODY.split()
   };
-if (process.env. GOLDBODY && process.env.GOLDBODY.indexOf('#') > -1) {
+  if (process.env.GOLDBODY && process.env.GOLDBODY.indexOf('#') > -1) {
    goldbody = process.env.GOLDBODY.split('#');
   }
   else if (process.env.GOLDBODY && process.env.GOLDBODY.split('\n').length > 0) {
