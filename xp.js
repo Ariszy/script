@@ -71,12 +71,12 @@ if ($.isNode()) {
 //video
   Object.keys(videoheader).forEach((item) => {
         if (videoheader[item]) {
-          signheaderArr.push(videoheader[item])
+          videoheaderArr.push(videoheader[item])
         }
     });
     Object.keys(videobody).forEach((item) => {
         if (videobody[item]) {
-          signcookieArr.push(videobody[item])
+          videobodyArr.push(videobody[item])
         }
     });
     console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
