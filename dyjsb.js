@@ -375,11 +375,13 @@ return new Promise((resolve, reject) => {
 
 async function showmsg(){
 if(tz==1){
+    $.log(message)
     if ($.isNode()){
     if ((hour == 12 && minute <= 20) || (hour == 23 && minute >= 40)) {
        await notify.sendNotify($.name,message)
      }
    }else{
+    $.log(message)
     if ((hour == 12 && minute <= 20) || (hour == 23 && minute >= 40)) {
        $.msg(jsname,'',message)
 }
