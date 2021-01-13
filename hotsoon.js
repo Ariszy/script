@@ -203,8 +203,8 @@ if (!hotsoonsignheaderArr[0]) {
       await sign_in()
       await treasure_task()
       await control()
-      await profit()
-      await skill()
+      await tasklist()
+      //await skill()
       await watch_video(no)
       await showmsg()
   }
@@ -315,28 +315,33 @@ return new Promise((resolve, reject) => {
    })
   })
  } 
-//profit
-function profit() {
+//tasklist
+function tasklist() {
 return new Promise((resolve, reject) => {
-  let profiturl ={
-    url: `https://i-hl.snssdk.com/luckycat/hotsoon/v1/wallet/profit_detail_page?income_type=2&num=300&${hotsoonsignheader}`,
+  let tasklisturl ={
+    url: `https://i.snssdk.com/luckycat/hotsoon/v1/task/page?&polaris_${hotsoonsignheader}`,
     headers :JSON.parse(hotsoonsignkey),
 }
-   $.get(profiturl,(error, response, data) =>{
+   $.get(tasklisturl,(error, response, data) =>{
      const result = JSON.parse(data)
         if(logs)$.log(data)
-for(let i =0;i<=result.data.profit_detail.score_income_list.length;i++){
-if(result.data.profit_detail.score_income_list[i].desc.match(/\d+分钟/)) {
-         no = result.data.profit_detail.score_income_list[i].desc.match(/\d+/)          
-         break;
-}
+      for(let i = 1;i<=7;i++){
+        if(result.data.daily_tasks[i].completed == false) {
+         no = result.data.daily_tasks[i].name.match(/\d+/)          
+         //$.log(no)
+          break;
+       }
+         else if(result.data.daily_tasks[i].completed == true){
+          no = result.data.daily_tasks[i+1].name.match(/\d+/)
+           if(no == 'undefined') done;
+         }
 }
           resolve()
     })
    })
   } 
 //skill
-function skill() {
+/*function skill() {
 return new Promise((resolve, reject) => {
   let skillurl ={
     url: `https://i-hl.snssdk.com/luckycat/hotsoon/v1/wallet/profit_detail_page?income_type=2&num=50&${hotsoonsignheader}`,
@@ -356,7 +361,7 @@ return new Promise((resolve, reject) => {
     })
    })
   } 
-
+*/
 //看视频
 function watch_video(no) {
 return new Promise((resolve, reject) => {
