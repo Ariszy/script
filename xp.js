@@ -1,5 +1,4 @@
-
-/*
+	/*
 tgchannel：https://t.me/ZhiYi_Script
 github：https://github.com/ZhiYi-N/script
 boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.boxjs.json
@@ -38,9 +37,12 @@ const logs =0;//0为关闭日志，1为开启
 var hour=''
 var minute=''
 var currentdate = ''
+var newtime = ''
+let headers;
 var gold = "0"
 var live = "0"
 let no;
+var coins= '0';
 const liveid = '1348602411185672599'
 if ($.isNode()) {
    hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
@@ -129,9 +131,10 @@ if (!videoheaderArr[0]) {
       //await invite()
       await getNowFormatDate()
       await profit()
+      await balance()
       await status()
       await control()
-      //await watch_video()
+      //await withdraw()
       //await watch_livevideo()
       await showmsg()
   }
@@ -160,21 +163,40 @@ if($request&&$request.body.indexOf('"type":2')>=0) {
  }
  }
 async function control(){
+   if(coins >= 1 && hour == 0){
+      await withdraw();
+}
    if(goldbody && gold == 1){
       await watch_goldvideo();
    }else{
       await watch_video();
 }
-   if(no < 50){
+   if(no < 50 && hour >= 8 && hour <= 23){
        await watch_livevideo();
 }
 }
+//balance
+function balance() {
+return new Promise((resolve, reject) => {
+  let balanceurl ={
+    url: 'https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/balance.json',
+    headers :JSON.parse(headers),
+}
+   $.get(balanceurl,(error, response, data) =>{
+     const result = JSON.parse(data)
+        if(logs)$.log(data)
+     message += '金币余额：'+result.data.coinSum+'\n现金余额：'+result.data.balanceSum/100+'\n'
+    coins = result.data.balanceSum/100;
+          resolve()
+    })
+   })
+  } 
 //profit
 function profit() {
 return new Promise((resolve, reject) => {
   let profiturl ={
     url: 'https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/list_gold_coin.json?date=&actTypeId=0&size=5',
-    headers :JSON.parse(videoheader),
+    headers :JSON.parse(headers),
 }
    $.get(profiturl,(error, response, data) =>{
      const result = JSON.parse(data)
@@ -182,7 +204,7 @@ return new Promise((resolve, reject) => {
      let num = data.match(/"type":1/i)? data.match(/"type":1/ig).length : 0
      $.log('xpvideo'+num)
      if(num >= 5){gold = 1}
-     message += '🎉当前金币余额'+result.data[0].totalCoinAmt+'\n'
+     //message += '🎉当前金币余额'+result.data[0].totalCoinAmt+'\n'
           resolve()
     })
    })
@@ -192,7 +214,7 @@ function watch_video() {
 return new Promise((resolve, reject) => {
   let watch_videourl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
-    headers: JSON.parse(videoheader),
+    headers: JSON.parse(headers),
     body: videobody,
     timeout: 30000
 }
@@ -218,7 +240,7 @@ function watch_goldvideo() {
 return new Promise((resolve, reject) => {
   let watch_goldvideourl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
-    headers: JSON.parse(videoheader),
+    headers: JSON.parse(headers),
     body: goldbody,
     timeout: 60000
 }
@@ -244,7 +266,7 @@ function status() {
 return new Promise((resolve, reject) => {
   let statusurl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/list_gold_coin.json?date=${currentdate}&actTypeId=10&size=60`,
-    headers :JSON.parse(videoheader),
+    headers :JSON.parse(headers),
 }
    $.get(statusurl,(error, response, data) =>{
      const result = JSON.parse(data)
@@ -263,7 +285,7 @@ $.log(liveids)
 return new Promise((resolve, reject) => {
   let watch_livevideourl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_redbag_by_live.json`,
-    headers: JSON.parse(videoheader),
+    headers: JSON.parse(headers),
     //timeout: 60000,
     body: `{"actId":"252","liveId":"${liveids}"}`
 }
@@ -276,6 +298,28 @@ return new Promise((resolve, reject) => {
       }else{
           message +='⚠️异常'+result.errorDesc+'\n'
           live = 0;
+           }
+          resolve()
+    })
+   })
+  } 
+//withdraw
+function withdraw() {
+return new Promise((resolve, reject) => {
+  let withdrawurl ={
+    url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/activity/v1/withdraw.json`,
+    headers: JSON.parse(headers),
+    //timeout: 60000,
+    body: `{"source":"WX_APP_KA_HTZP","bizType":2,"amount":100}`
+}
+   $.post(withdrawurl,(error, response, data) =>{
+     const result = JSON.parse(data)
+       if(logs) $.log(data)
+          message += '📣一元提现\n'
+      if(result.resultCode == 1) {
+          message += result.data.remark+'\n'
+      }else{
+          message +=message += result.data.remark+'\n'
            }
           resolve()
     })
@@ -298,6 +342,8 @@ if ($.isNode()) {
     if (strDate >= 0 && strDate <= 9) {
         strDate = "0" + strDate;
     }
+    newtime = new Date().getTime()
+    headers = videoheader.replace(/\d{21,33}/,`31348493177781673984${newtime}`)
     currentdate = year + seperator1 + month + seperator1 + strDate;
 //$.log(currentdate)
 }
