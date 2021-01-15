@@ -1,4 +1,4 @@
-	/*
+/*
 tgchannel：https://t.me/ZhiYi_Script
 github：https://github.com/ZhiYi-N/script
 boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.boxjs.json
@@ -42,7 +42,9 @@ let headers;
 var gold = "0"
 var live = "0"
 let no;
-var coins= '0';
+var video= '0'
+var coins= '0'
+let stop;
 const liveid = '1348602411185672599'
 if ($.isNode()) {
    hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
@@ -149,15 +151,13 @@ if($request&&$request.url.indexOf("give_gold_coin_by_video")>=0) {
     $.log(`[${jsname}] 获取video请求: 成功,videoheader: ${videoheader}`)
     $.msg(`videoheader${$.idx}: 成功🎉`, ``)
 }
-
 if($request.body.indexOf('isFinishWatch')&& $request.body.indexOf('"type":2')<=0) {
    const videobody = $request.body
     if(videobody)  $.setdata(videobody,`videobody${$.idx}`)
     $.log(`[${jsname}] 获取video请求: 成功,videobody: ${videobody}`)
     $.msg(`videobody${$.idx}: 成功🎉`, ``)
  }
-
-if($request.body.indexOf('isFinishWatch')&& $request.body.indexOf('"type":2')>=0) {
+if($request.body.indexOf('isFinishWatch')&&$request.body.indexOf('"type":2')>=0) {
    const goldbody = $request.body
     if(goldbody)  $.setdata(goldbody,`goldbody${$.idx}`)
     $.log(`[${jsname}] 获取goldvideo请求: 成功,goldbody: ${goldbody}`)
@@ -165,7 +165,7 @@ if($request.body.indexOf('isFinishWatch')&& $request.body.indexOf('"type":2')>=0
  }
  }
 async function control(){
-   if(coins >= 1 && hour == 0){
+   if(coins >= 1 && hour == 21){
       await withdraw();
 }
    if(goldbody && gold == 1){
@@ -173,7 +173,7 @@ async function control(){
    }else{
       await watch_video();
 }
-   if(no < 50 && hour >= 8 && hour < 23){
+   if(no < 50 && hour >= 8 && hour <= 23){
        await watch_livevideo();
 }
 }
@@ -213,10 +213,12 @@ return new Promise((resolve, reject) => {
   } 
 //video
 function watch_video() {
+video = '13'+Math.floor(Math.random()*123456789101112131)
+$.log(video)
 return new Promise((resolve, reject) => {
   let watch_videourl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
-    headers: JSON.parse(headers),
+    headers: JSON.parse(headers.replace(/\d{19}/g,`${video}`)),
     body: videobody,
     timeout: 30000
 }
@@ -239,10 +241,12 @@ return new Promise((resolve, reject) => {
   } 
 //goldvideo
 function watch_goldvideo() {
+video = '13'+Math.floor(Math.random()*123456789101112131)
+$.log(video)
 return new Promise((resolve, reject) => {
   let watch_goldvideourl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/day_cash/v1/give_gold_coin_by_video.json`,
-    headers: JSON.parse(headers),
+    headers: JSON.parse(headers.replace(/\d{19}/g,`${video}`)),
     body: goldbody,
     timeout: 60000
 }
@@ -311,7 +315,6 @@ return new Promise((resolve, reject) => {
   let withdrawurl ={
     url: `https://veishop.iboxpay.com/nf_gateway/nf_customer_activity/activity/v1/withdraw.json`,
     headers: JSON.parse(headers),
-    //timeout: 60000,
     body: `{"source":"WX_APP_KA_HTZP","bizType":2,"amount":100}`
 }
    $.post(withdrawurl,(error, response, data) =>{
