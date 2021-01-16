@@ -331,7 +331,7 @@ return new Promise((resolve, reject) => {
      const result = JSON.parse(data)
        if(logs) $.log(data)
           message += '📣一元提现\n'
-      if(result.resultCode == 1) {
+      if(result.resultCode == 15) {
           message += result.data.remark+'\n'
       }else{
           message +=message += result.data.remark+'\n'
