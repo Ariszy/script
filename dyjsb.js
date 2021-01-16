@@ -5,6 +5,16 @@ boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.
 转载留个名字，谢谢
 邀请码：8025524531
 我的--输入邀请码，立得一元，直接提现，谢谢
+
+ACTION YML
+signheader - SIGNHEADER
+signcookie - SIGNCOOKIE
+stepheader - STEPHEADER
+stepkey - STEPKEY
+readheader - READHEADER
+readkey - READKEY
+
+
 作者：执意ZhiYi-N
 目前包含：
 签到
