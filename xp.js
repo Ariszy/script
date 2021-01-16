@@ -8,6 +8,13 @@ boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.
 1.长按【复制】整条信息
 2.下载并打开笑谱App：http://jzi7.cn/7szkKX 
 谢谢
+
+ACTION YML
+videoheader - VIDEOHEADER（需要每天一更新）
+videobody - VIDEOBODY
+goldbody - GOLDBODY
+
+
 作者：执意ZhiYi-N
 目前只有看视频，群友推荐，欢迎推荐
 脚本初成，非专业人士制作，欢迎指正
