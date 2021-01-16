@@ -2,6 +2,17 @@
 github：https://github.com/ZhiYi-N/script
 boxjs：https://raw.githubusercontent.com/ZhiYi-N/Private-Script/master/ZhiYi-N.boxjs.json
 转载留个名字，谢谢
+
+
+ACTION YML
+signheader - SIGNHEADER
+signkey - SIGNKEY
+adheader - ADHEADER
+adkey - ADKEY
+readheader - READERHEADER
+readkey - READKEY
+
+
 作者：执意ZhiYi-N
 目前包含：
 签到
