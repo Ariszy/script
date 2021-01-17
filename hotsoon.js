@@ -197,6 +197,9 @@ if (!hotsoonsignheaderArr[0]) {
     $.msg($.name, '【提示】请先获取火山视频极速版一cookie')
     return;
   }
+
+if ($.isNode()) {
+  while(true){
    console.log(`------------- 共${hotsoonsignheaderArr.length}个账号----------------\n`)
   for (let i = 0; i < hotsoonsignheaderArr.length; i++) {
     if (hotsoonsignheaderArr[i]) {
@@ -217,8 +220,36 @@ if (!hotsoonsignheaderArr[0]) {
       //await skill()
       await watch_video(no)
       await showmsg()
-  }
+   }
  }
+      console.log(`========================本次任务执行完毕，休息1分钟==============================\n`);
+      await $.wait(120000)
+
+    }
+  }else{
+ console.log(`------------- 共${hotsoonsignheaderArr.length}个账号----------------\n`)
+  for (let i = 0; i < hotsoonsignheaderArr.length; i++) {
+    if (hotsoonsignheaderArr[i]) {
+      message = ''
+      hotsoonsignheader = hotsoonsignheaderArr[i];
+      hotsoonsignkey = hotsoonsignkeyArr[i];
+      hotsoonadheader = hotsoonadheaderArr[i];
+      hotsoonadkey = hotsoonadkeyArr[i];
+      hotsoonreadheader = hotsoonreadheaderArr[i];
+      hotsoonreadkey = hotsoonreadkeyArr[i];
+      $.index = i + 1;
+      console.log(`\n开始【火山视频极速版${$.index}】`)
+      //await userinfo()
+      await sign_in()
+      await treasure_task()
+      await control()
+      await tasklist()
+      //await skill()
+      await watch_video(no)
+      await showmsg()
+   }
+ }
+}
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
