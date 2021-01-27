@@ -206,9 +206,9 @@ async function control(){
    }else{
       await watch_video();
 }
-   /*if(no < 50 && hour >= 8 && hour <= 23){
+   if(no < 50 && hour >= 8 && hour <= 23){
        await watch_livevideo();
-}*/
+}
 }
 //balance
 function balance() {
