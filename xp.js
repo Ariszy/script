@@ -39,7 +39,7 @@ var minute=''
 var currentdate = ''
 var newtime = ''
 let headers;
-var gold = "0"
+var gold = 0
 var live = "0"
 let no,cash;
 var draw = '1';
@@ -209,7 +209,7 @@ async function control(){
    if(cash>0 && coins >= cash && hour == 0 && draw == 1){
       await withdraw();
 }
-   if(goldbody && gold == 1){
+   if(gold == 1){
       await watch_goldvideo();
    }else{
       await watch_video();
