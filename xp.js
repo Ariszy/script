@@ -146,9 +146,9 @@ if (!videoheaderArr[0]) {
       await balance()
       await status()
       await day_cash()
-      await control()
+      //await control()
       //await withdraw()
-      //await watch_livevideo()
+      await watch_livevideo()
       await showmsg()
   }
  }
@@ -172,9 +172,9 @@ console.log(`========================本次任务执行完毕，休息1分钟===
       await profit()
       await balance()
       await status()
-      await control()
+      //await control()
       //await withdraw()
-      //await watch_livevideo()
+      await watch_livevideo()
       await showmsg()
   }
  }
