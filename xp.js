@@ -353,8 +353,8 @@ return new Promise((resolve, reject) => {
       if(result.resultCode == 1) {
           message += '获得'+result.data.goldCoinAmt+'\n'
       }else{
-          message +='⚠️异常'+result.errorDesc+'\n'
           live = 0;
+          $.msg('⚠️异常'+result.errorDesc+'\n')
           $.done()
            }
           resolve()
