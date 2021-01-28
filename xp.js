@@ -355,6 +355,7 @@ return new Promise((resolve, reject) => {
       }else{
           message +='⚠️异常'+result.errorDesc+'\n'
           live = 0;
+          $done()
            }
           resolve()
     })
