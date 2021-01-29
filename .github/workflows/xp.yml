@@ -37,7 +37,7 @@ jobs:
           npm install
       - name: '运行 【笑谱】'
         run: |
-          node xp.js
+          node xp1.js
         env:
           VIDEOHEADER: ${{ secrets.VIDEOHEADER }}
           VIDEOBODY: ${{ secrets.VIDEOBODY }}
