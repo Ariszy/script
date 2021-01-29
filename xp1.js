@@ -45,7 +45,7 @@ var draw = '1';
 var video= '0'
 var coins='0'
 let stop;
-let goldbody = videobody.replace('type":1','type":2')
+let goldbody = $.getdata('videobody').replace('type":1','type":2')
 const liveid = '1348602411185672599'
 if ($.isNode()) {
    hour = new Date( new Date().getTime() + 8 * 60 * 60 * 1000 ).getHours();
