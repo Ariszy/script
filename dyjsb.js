@@ -63,7 +63,7 @@ let stepkey = $.getdata('stepkey')
 
 let readheader = $.getdata('readheader')
 let readkey = $.getdata('readkey')
-let tz = ($.getval('tz') || '1');//0关闭通知，1默认开启
+let tz = ($.getval('tz') || '0');//0关闭通知，1默认开启
 const invite=1;//新用户自动邀请，0关闭，1默认开启
 const logs =1;//0为关闭日志，1为开启
 var hour=''
